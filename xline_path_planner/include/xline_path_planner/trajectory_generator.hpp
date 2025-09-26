@@ -7,7 +7,7 @@
 #include <cmath>
 #include <algorithm>
 
-#include "daosnrs_planning/common_types.hpp"
+#include "xline_path_planner/common_types.hpp"
 
 namespace daosnrs_planning
 {

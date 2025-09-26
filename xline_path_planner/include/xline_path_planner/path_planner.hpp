@@ -7,8 +7,8 @@
 #include <algorithm>
 #include <cmath>
 
-#include "daosnrs_planning/common_types.hpp"
-#include "daosnrs_planning/grid_map_generator.hpp"
+#include "xline_path_planner/common_types.hpp"
+#include "xline_path_planner/grid_map_generator.hpp"
 
 // 添加OpenCV头文件
 #include <opencv2/opencv.hpp>

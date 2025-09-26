@@ -4,11 +4,11 @@
 #include <filesystem>
 
 #include "rclcpp/rclcpp.hpp"
-#include "daosnrs_planning/cad_parser.hpp"
-#include "daosnrs_planning/grid_map_generator.hpp"
-#include "daosnrs_planning/path_planner.hpp"
-#include "daosnrs_planning/trajectory_generator.hpp"
-#include "daosnrs_planning/output_formatter.hpp"
+#include "xline_path_planner/cad_parser.hpp"
+#include "xline_path_planner/grid_map_generator.hpp"
+#include "xline_path_planner/path_planner.hpp"
+#include "xline_path_planner/trajectory_generator.hpp"
+#include "xline_path_planner/output_formatter.hpp"
 
 using namespace daosnrs_planning;
 
@@ -26,7 +26,7 @@ public:
   void updateParameters()
   {
     // 设置文件路径参数
-    cad_file_path = "/root/daosnrs_q5/src/daosnrs_planning/path_visualizations/cad_8.json";
+    cad_file_path = "/root/xline_path_planner/cad_data/cad_transformed.json";
     output_file_path = "/root/daosnrs_q5/src/daosnrs_planning/path_visualizations/path_from_cad.json";
     path_visualization_dir = "/root/daosnrs_q5/src/daosnrs_planning/path_visualizations";
 

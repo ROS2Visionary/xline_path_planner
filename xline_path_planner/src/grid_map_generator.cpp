@@ -1,4 +1,4 @@
-#include "daosnrs_planning/grid_map_generator.hpp"
+#include "xline_path_planner/grid_map_generator.hpp"
 #include <iostream>
 
 namespace daosnrs_planning

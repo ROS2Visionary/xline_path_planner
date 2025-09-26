@@ -1,4 +1,4 @@
-#include "daosnrs_planning/trajectory_generator.hpp"
+#include "xline_path_planner/trajectory_generator.hpp"
 #include <iostream>
 
 namespace daosnrs_planning

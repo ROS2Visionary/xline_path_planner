@@ -7,7 +7,7 @@
 #include <limits>
 #include <string>
 
-#include "daosnrs_planning/common_types.hpp"
+#include "xline_path_planner/common_types.hpp"
 
 // 添加OpenCV头文件
 #include <opencv2/opencv.hpp>
