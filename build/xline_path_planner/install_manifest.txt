@@ -1,0 +1,16 @@
+/root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node
+/root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/package_run_dependencies/xline_path_planner
+/root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/parent_prefix_path/xline_path_planner
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.sh
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.dsv
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.sh
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.dsv
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.bash
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.sh
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.zsh
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.dsv
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.dsv
+/root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/packages/xline_path_planner
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig.cmake
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig-version.cmake
+/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.xml
