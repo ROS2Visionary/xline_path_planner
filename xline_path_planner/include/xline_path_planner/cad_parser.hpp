@@ -58,8 +58,17 @@ namespace daosnrs_planning
 {
 
 /**
+ * @brief 角度单位类型
+ */
+enum class AngleUnit
+{
+  DEGREES,  ///< 角度制
+  RADIANS   ///< 弧度制
+};
+
+/**
  * @brief CAD解析器配置结构体
- * 定义单位缩放等解析参数。
+ * 定义单位缩放与角度单位等解析参数。
  */
 struct CADParserConfig
 {
@@ -75,6 +84,12 @@ struct CADParserConfig
    * true：启用单位换算；false：不换算（以原始单位工作）。
    */
   bool auto_scale_coordinates = true;
+
+  /**
+   * @brief 角度单位（应用于圆弧等角度字段）
+   * 默认按“度”处理；若输入JSON角度已为弧度，请设置为 AngleUnit::RADIANS。
+   */
+  AngleUnit angle_unit = AngleUnit::DEGREES;
 };
 
 /**

@@ -239,6 +239,36 @@ Line CADParser::parse_line(const nlohmann::json& json_line)
     line.end = parse_point(json_line["end"]);
   }
 
+  // 可选元数据
+  if (json_line.contains("line_type") && json_line["line_type"].is_string())
+  {
+    line.line_type = json_line["line_type"].get<std::string>();
+  }
+  if (json_line.contains("thickness") && json_line["thickness"].is_number())
+  {
+    line.thickness = json_line["thickness"].get<double>();
+  }
+  if (json_line.contains("hidden") && json_line["hidden"].is_boolean())
+  {
+    line.hidden = json_line["hidden"].get<bool>();
+  }
+  if (json_line.contains("layer_id") && json_line["layer_id"].is_number_integer())
+  {
+    line.layer_id = json_line["layer_id"].get<int32_t>();
+  }
+  if (json_line.contains("layer") && json_line["layer"].is_string())
+  {
+    line.layer = json_line["layer"].get<std::string>();
+  }
+  if (json_line.contains("color") && json_line["color"].is_string())
+  {
+    line.color = json_line["color"].get<std::string>();
+  }
+  if (json_line.contains("selected") && json_line["selected"].is_boolean())
+  {
+    line.selected = json_line["selected"].get<bool>();
+  }
+
   // 长度由（可能缩放后的）起止点计算
   line.length = line.start.distance(line.end);
   return line;
@@ -347,6 +377,36 @@ Circle CADParser::parse_circle(const nlohmann::json& json_circle)
     circle.radius = convert_units(json_circle["radius"].get<double>());
   }
 
+  // 可选元数据（继承自Line）
+  if (json_circle.contains("line_type") && json_circle["line_type"].is_string())
+  {
+    circle.line_type = json_circle["line_type"].get<std::string>();
+  }
+  if (json_circle.contains("thickness") && json_circle["thickness"].is_number())
+  {
+    circle.thickness = json_circle["thickness"].get<double>();
+  }
+  if (json_circle.contains("hidden") && json_circle["hidden"].is_boolean())
+  {
+    circle.hidden = json_circle["hidden"].get<bool>();
+  }
+  if (json_circle.contains("layer_id") && json_circle["layer_id"].is_number_integer())
+  {
+    circle.layer_id = json_circle["layer_id"].get<int32_t>();
+  }
+  if (json_circle.contains("layer") && json_circle["layer"].is_string())
+  {
+    circle.layer = json_circle["layer"].get<std::string>();
+  }
+  if (json_circle.contains("color") && json_circle["color"].is_string())
+  {
+    circle.color = json_circle["color"].get<std::string>();
+  }
+  if (json_circle.contains("selected") && json_circle["selected"].is_boolean())
+  {
+    circle.selected = json_circle["selected"].get<bool>();
+  }
+
   // 更新圆周长
   circle.length = 2.0 * M_PI * circle.radius;
 
@@ -385,17 +445,46 @@ Arc CADParser::parse_arc(const nlohmann::json& json_arc)
     arc.radius = convert_units(json_arc["radius"].get<double>());
   }
 
-  auto to_radians = [](double angle_val) {
-    // 角度自动识别：若数值大于2π则视为度
-    const double two_pi = 2.0 * M_PI;
-    if (std::fabs(angle_val) > two_pi)
+  // 可选元数据（继承自Line）
+  if (json_arc.contains("line_type") && json_arc["line_type"].is_string())
+  {
+    arc.line_type = json_arc["line_type"].get<std::string>();
+  }
+  if (json_arc.contains("thickness") && json_arc["thickness"].is_number())
+  {
+    arc.thickness = json_arc["thickness"].get<double>();
+  }
+  if (json_arc.contains("hidden") && json_arc["hidden"].is_boolean())
+  {
+    arc.hidden = json_arc["hidden"].get<bool>();
+  }
+  if (json_arc.contains("layer_id") && json_arc["layer_id"].is_number_integer())
+  {
+    arc.layer_id = json_arc["layer_id"].get<int32_t>();
+  }
+  if (json_arc.contains("layer") && json_arc["layer"].is_string())
+  {
+    arc.layer = json_arc["layer"].get<std::string>();
+  }
+  if (json_arc.contains("color") && json_arc["color"].is_string())
+  {
+    arc.color = json_arc["color"].get<std::string>();
+  }
+  if (json_arc.contains("selected") && json_arc["selected"].is_boolean())
+  {
+    arc.selected = json_arc["selected"].get<bool>();
+  }
+
+  // 将角度按配置转换为弧度
+  auto to_radians = [&](double angle_val) {
+    if (config_.angle_unit == AngleUnit::DEGREES)
     {
       return angle_val * M_PI / 180.0;
     }
-    return angle_val;
+    return angle_val;  // 已为弧度
   };
 
-  // 解析起始/结束角度（兼容 snake_case 与 camelCase）
+  // 解析起始/结束角度（兼容 snake_case 与 camelCase），并按配置统一为弧度
   double start_val = 0.0;
   double end_val = 2.0 * M_PI;
   if (json_arc.contains("start_angle") && !json_arc["start_angle"].is_null())
@@ -503,6 +592,12 @@ void CADParser::store_by_layer(const std::shared_ptr<Line>& geom, const std::str
   std::transform(lname.begin(), lname.end(), lname.begin(), [](unsigned char c) { return std::tolower(c); });
 
   auto contains = [&](const char* kw) { return !lname.empty() && lname.find(kw) != std::string::npos; };
+
+  // 记录解析得到的图层名称（若有）到几何元数据中，便于后续可视化/调试
+  if (!layer_name.empty())
+  {
+    geom->layer = layer_name;
+  }
 
   if (contains("空洞") || contains("hole") || contains("hollow") || contains("void") || contains("opening"))
   {

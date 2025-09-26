@@ -243,17 +243,33 @@ enum class RouteType
 };
 
 /**
- * @brief 线段基类
- * 作为所有几何图元的基类
+ * @brief 几何实体基类（直线为核心，圆/弧继承）
+ * 说明：
+ *  - 与新JSON格式对齐，新增若干可选元数据字段（line_type/thickness/hidden/layer/layer_id/color/selected）。
+ *  - start/end/length 在直线中直接来源于JSON，在圆/弧中按中心/半径/角度推导。
  */
 struct Line
 {
-  int32_t id = 0;                          ///< 线段ID
-  GeometryType type = GeometryType::LINE;  ///< 几何类型
-  Point3D start;                           ///< 起点
-  Point3D end;                             ///< 终点
-  double length = 0.0;                     ///< 线段长度
-  bool is_printed = false;                 ///< 是否已绘制标志
+  // 基本标识
+  int32_t id = 0;                          ///< 实体ID（来自JSON的id）
+  GeometryType type = GeometryType::LINE;  ///< 几何类型（Line/Circle/Curve/Arc）
+
+  // 几何参数
+  Point3D start;                           ///< 起点（line直接提供；circle/arc为推导点）
+  Point3D end;                             ///< 终点（line直接提供；circle起点=终点；arc按角度推导）
+  double length = 0.0;                     ///< 几何长度（线段长度/圆周长/弧长）
+
+  // 绘制状态（内部使用）
+  bool is_printed = false;                 ///< 是否已被处理/绘制（规划阶段使用）
+
+  // 新JSON相关的可选元数据（若存在则填充）
+  std::string line_type;                   ///< 线型（如"continuous"）
+  double thickness = 0.0;                  ///< 线宽/厚度
+  bool hidden = false;                     ///< 是否隐藏
+  std::string layer;                       ///< 图层名称（由layer_id映射得到或直接来自元素内layer）
+  int32_t layer_id = -1;                   ///< 图层ID（与layers[*].layer_id对应）
+  std::string color;                       ///< 颜色（十六进制，如"#FFFFFF"）
+  bool selected = false;                   ///< 是否被选中（仅元数据，规划不依赖）
 
   /**
    * @brief 默认构造函数
@@ -297,8 +313,9 @@ struct Line
 };
 
 /**
- * @brief 曲线结构体，继承自Line
- * 表示贝塞尔曲线或NURBS曲线
+ * @brief 曲线结构体，继承自Line（预留未来扩展）
+ * 说明：当前新JSON未提供曲线规范；保留对Bézier/NURBS的基本支持，
+ *       以便后续若引入曲线数据可直接对接。
  */
 struct Curve : public Line
 {
@@ -333,7 +350,7 @@ struct Curve : public Line
 
 /**
  * @brief 圆形结构体，继承自Line
- * 表示一个圆
+ * 表示一个圆（center+radius），start/end为圆上的同一点（x轴正向），length为周长。
  */
 struct Circle : public Line
 {
@@ -377,7 +394,7 @@ struct Circle : public Line
 
 /**
  * @brief 圆弧结构体，继承自Circle
- * 表示一个圆弧
+ * 表示一个圆弧（center+radius+start_angle+end_angle），角度单位为弧度。
  */
 struct Arc : public Circle
 {
