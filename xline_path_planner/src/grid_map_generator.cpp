@@ -21,36 +21,20 @@ bool GridMapGenerator::generate_from_cad(const CADData& cad_data)
   // 调整地图大小
   resize(width, height);
 
-  // 首先光栅化轴线，使用2作为标记值
-  for (const auto& line : cad_data.axis_lines)
+  // 首先光栅化“路径”线，使用2作为标记值（后续转回0，表示可通行）
+  for (const auto& line : cad_data.path_lines)
   {
     // 将轴线标记为值 2
     convertToGridLine(line, 2);
   }
 
-  // 然后光栅化墙线和其他非障碍物线条，使用1作为标记值
-  for (const auto& line : cad_data.wall_lines)
+  // 光栅化“障碍物”和“空洞”边界，使用1作为标记值
+  for (const auto& line : cad_data.obstacle_lines)
   {
     convertToGridLine(line, 1);
   }
 
-  for (const auto& line : cad_data.control_lines)
-  {
-    convertToGridLine(line, 1);
-  }
-
-  for (const auto& line : cad_data.cross_lines)
-  {
-    convertToGridLine(line, 1);
-  }
-
-  // 将障碍物线添加到地图中，使用1作为标记值
-  for (const auto& line : cad_data.barrier_lines)
-  {
-    convertToGridLine(line, 1);
-  }
-
-  for (const auto& line : cad_data.low_barrier_lines)
+  for (const auto& line : cad_data.hole_lines)
   {
     convertToGridLine(line, 1);
   }
@@ -70,7 +54,7 @@ bool GridMapGenerator::generate_from_cad(const CADData& cad_data)
 
   // 保存轴线的位置供可视化使用
   axis_points_.clear();
-  for (const auto& line : cad_data.axis_lines)
+  for (const auto& line : cad_data.path_lines)
   {
     store_axis_line_points(line);
   }
@@ -971,32 +955,15 @@ void GridMapGenerator::calculate_map_bounds(const CADData& cad_data)
   };
 
   // 遍历所有线段更新边界
-  for (const auto& line : cad_data.axis_lines)
+  for (const auto& line : cad_data.path_lines)
   {
     update_bounds_from_line(line);
   }
-
-  for (const auto& line : cad_data.wall_lines)
+  for (const auto& line : cad_data.obstacle_lines)
   {
     update_bounds_from_line(line);
   }
-
-  for (const auto& line : cad_data.control_lines)
-  {
-    update_bounds_from_line(line);
-  }
-
-  for (const auto& line : cad_data.cross_lines)
-  {
-    update_bounds_from_line(line);
-  }
-
-  for (const auto& line : cad_data.barrier_lines)
-  {
-    update_bounds_from_line(line);
-  }
-
-  for (const auto& line : cad_data.low_barrier_lines)
+  for (const auto& line : cad_data.hole_lines)
   {
     update_bounds_from_line(line);
   }

@@ -157,7 +157,8 @@ private:
     }
 
     // 5. 保存轨迹
-    save_trajectory(output_formatter, all_trajectory_points, cad_data.map_id);
+    // 无map_id，使用默认值或由上层决定；此处传固定1
+    save_trajectory(output_formatter, all_trajectory_points, 1);
   }
 
   // 1: 解析CAD文件
@@ -174,8 +175,8 @@ private:
     // 获取CAD数据的副本，以便我们可以修改它
     cad_data = cad_parser.get_cad_data();
 
-    // 打印轴线信息
-    RCLCPP_INFO(this->get_logger(), "Parsed CAD data with %zu axis lines", cad_data.axis_lines.size());
+    // 打印路径线信息
+    RCLCPP_INFO(this->get_logger(), "Parsed CAD data with %zu path lines", cad_data.path_lines.size());
 
     return true;
   }
@@ -270,7 +271,7 @@ private:
       {
         // 绘图路径 - 查找匹配的线
         std::shared_ptr<Line> line_ptr;
-        for (const auto& line : cad_data.axis_lines)
+        for (const auto& line : cad_data.path_lines)
         {
           if (line->id == segment.line_id)
           {

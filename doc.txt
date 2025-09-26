@@ -1,1 +1,5 @@
 ros2 run xline_path_planner planner_node
+
+
+
+无需保留对旧格式的兼容，为了有更好的扩展性，xline_path_planner/include/xline_path_planner/cad_parser.hpp中的类别由字段"layers"决定，也就是说需要动态确定类别。请深度分析我的需求并实现

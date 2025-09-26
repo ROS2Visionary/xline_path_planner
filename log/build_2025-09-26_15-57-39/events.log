@@ -1,0 +1,287 @@
+[0.000000] (-) TimerEvent: {}
+[0.000276] (xline_path_planner) JobQueued: {'identifier': 'xline_path_planner', 'dependencies': OrderedDict()}
+[0.000438] (xline_path_planner) JobStarted: {'identifier': 'xline_path_planner'}
+[0.057031] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'cmake'}
+[0.061642] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'build'}
+[0.062777] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '--build', '/root/xline_path_planner/build/xline_path_planner', '--', '-j8', '-l8'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('PYTHON_BASIC_REPL', '1'), ('HOSTNAME', 'ee14746cbf7f'), ('GIT_ASKPASS', '/root/.vscode-server/bin/0f0d87fa9e96c856c5212fc86db137ac0d783365/extensions/git/dist/askpass.sh'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('SHLVL', '2'), ('BROWSER', '/root/.vscode-server/bin/0f0d87fa9e96c856c5212fc86db137ac0d783365/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/xline_path_planner'), ('TERM_PROGRAM_VERSION', '1.104.1'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-b8908e89-807c-48e9-91f8-c5bb94440f21.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/root/.vscode-server/bin/0f0d87fa9e96c856c5212fc86db137ac0d783365/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/root/.vscode-server/bin/0f0d87fa9e96c856c5212fc86db137ac0d783365/node'), ('VSCODE_PYTHON_AUTOACTIVATE_GUARD', '1'), ('REMOTE_CONTAINERS', 'true'), ('COLORTERM', 'truecolor'), ('ROS_DISTRO', 'humble'), ('COLCON_PREFIX_PATH', '/opt/ros/humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-5b46ce69-2c30-4723-ab7c-1f399f546b8d.sock'), ('LOGNAME', 'root'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('CLAUDE_CODE_SSE_PORT', '56961'), ('USER_ZDOTDIR', '/root'), ('TERM', 'xterm-256color'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/root/.vscode-server/bin/0f0d87fa9e96c856c5212fc86db137ac0d783365/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand'), ('DISPLAY', 'host.docker.internal:0'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-5b46ce69-2c30-4723-ab7c-1f399f546b8d.sock"]'), ('LANG', 'en_US.UTF-8'), ('PYTHONSTARTUP', '/root/.vscode-server/data/User/workspaceStorage/5dbce636098c18612159c0b5b4229411/ms-python.python/pythonrc.py'), ('VSCODE_INJECTION', '1'), ('TERM_PROGRAM', 'vscode'), ('VSCODE_GIT_IPC_HANDLE', '/tmp/vscode-git-c92802ca56.sock'), ('DEBIAN_FRONTEND', ''), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-5b46ce69-2c30-4723-ab7c-1f399f546b8d.sock'), ('SHELL', '/usr/bin/zsh'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('ENABLE_IDE_INTEGRATION', 'true'), ('ZDOTDIR', '/root'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.097921] (-) TimerEvent: {}
+[0.198882] (-) TimerEvent: {}
+[0.300198] (-) TimerEvent: {}
+[0.401189] (-) TimerEvent: {}
+[0.502173] (-) TimerEvent: {}
+[0.580218] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target planner_node\x1b[0m\n'}
+[0.603113] (-) TimerEvent: {}
+[0.646555] (xline_path_planner) StdoutLine: {'line': b'[ 28%] \x1b[32mBuilding CXX object CMakeFiles/planner_node.dir/src/main.cpp.o\x1b[0m\n'}
+[0.647114] (xline_path_planner) StdoutLine: {'line': b'[ 28%] \x1b[32mBuilding CXX object CMakeFiles/planner_node.dir/src/cad_parser.cpp.o\x1b[0m\n'}
+[0.649691] (xline_path_planner) StdoutLine: {'line': b'[ 71%] \x1b[32mBuilding CXX object CMakeFiles/planner_node.dir/src/grid_map_generator.cpp.o\x1b[0m\n'}
+[0.651540] (xline_path_planner) StdoutLine: {'line': b'[ 85%] \x1b[32mBuilding CXX object CMakeFiles/planner_node.dir/src/path_planner.cpp.o\x1b[0m\n'}
+[0.651976] (xline_path_planner) StdoutLine: {'line': b'[ 85%] \x1b[32mBuilding CXX object CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o\x1b[0m\n'}
+[0.652096] (xline_path_planner) StdoutLine: {'line': b'[ 85%] \x1b[32mBuilding CXX object CMakeFiles/planner_node.dir/src/output_formatter.cpp.o\x1b[0m\n'}
+[0.703960] (-) TimerEvent: {}
+[0.804868] (-) TimerEvent: {}
+[0.908362] (-) TimerEvent: {}
+[1.010087] (-) TimerEvent: {}
+[1.111033] (-) TimerEvent: {}
+[1.212097] (-) TimerEvent: {}
+[1.313211] (-) TimerEvent: {}
+[1.414093] (-) TimerEvent: {}
+[1.514961] (-) TimerEvent: {}
+[1.616064] (-) TimerEvent: {}
+[1.717289] (-) TimerEvent: {}
+[1.817956] (-) TimerEvent: {}
+[1.919109] (-) TimerEvent: {}
+[2.023554] (-) TimerEvent: {}
+[2.128953] (-) TimerEvent: {}
+[2.240548] (-) TimerEvent: {}
+[2.357576] (-) TimerEvent: {}
+[2.459922] (-) TimerEvent: {}
+[2.560902] (-) TimerEvent: {}
+[2.661961] (-) TimerEvent: {}
+[2.787214] (-) TimerEvent: {}
+[2.914030] (-) TimerEvent: {}
+[3.053058] (-) TimerEvent: {}
+[3.163135] (-) TimerEvent: {}
+[3.271928] (-) TimerEvent: {}
+[3.381511] (-) TimerEvent: {}
+[3.541862] (-) TimerEvent: {}
+[3.654735] (-) TimerEvent: {}
+[3.780728] (-) TimerEvent: {}
+[3.884028] (-) TimerEvent: {}
+[3.992225] (-) TimerEvent: {}
+[4.093620] (-) TimerEvent: {}
+[4.194313] (-) TimerEvent: {}
+[4.297007] (-) TimerEvent: {}
+[4.398069] (-) TimerEvent: {}
+[4.499993] (-) TimerEvent: {}
+[4.602267] (-) TimerEvent: {}
+[4.704158] (-) TimerEvent: {}
+[4.806245] (-) TimerEvent: {}
+[4.911252] (-) TimerEvent: {}
+[5.012671] (-) TimerEvent: {}
+[5.120186] (-) TimerEvent: {}
+[5.221205] (-) TimerEvent: {}
+[5.324155] (-) TimerEvent: {}
+[5.425099] (-) TimerEvent: {}
+[5.525966] (-) TimerEvent: {}
+[5.626991] (-) TimerEvent: {}
+[5.728087] (-) TimerEvent: {}
+[5.829020] (-) TimerEvent: {}
+[5.931016] (-) TimerEvent: {}
+[6.033092] (-) TimerEvent: {}
+[6.135081] (-) TimerEvent: {}
+[6.237059] (-) TimerEvent: {}
+[6.339229] (-) TimerEvent: {}
+[6.441044] (-) TimerEvent: {}
+[6.543249] (-) TimerEvent: {}
+[6.645127] (-) TimerEvent: {}
+[6.746036] (-) TimerEvent: {}
+[6.847946] (-) TimerEvent: {}
+[6.900765] (xline_path_planner) StderrLine: {'line': b'\x1b[01m\x1b[K/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kbool daosnrs_planning::GridMapGenerator::save_as_image(const string&, const daosnrs_planning::CADData&, const daosnrs_planning::GridMapVisualizationConfig&) const\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[6.901902] (xline_path_planner) StderrLine: {'line': b'\x1b[01m\x1b[K/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:140:83:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Kcad_data\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[6.902540] (xline_path_planner) StderrLine: {'line': b'  140 | bool GridMapGenerator::save_as_image(const std::string& file_path, \x1b[01;35m\x1b[Kconst CADData& cad_data\x1b[m\x1b[K,\n'}
+[6.902846] (xline_path_planner) StderrLine: {'line': b'      |                                                                    \x1b[01;35m\x1b[K~~~~~~~~~~~~~~~^~~~~~~~\x1b[m\x1b[K\n'}
+[6.926029] (xline_path_planner) StderrLine: {'line': b'\x1b[01m\x1b[K/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid daosnrs_planning::GridMapGenerator::store_axis_line_points(const std::shared_ptr<daosnrs_planning::Line>&)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[6.926873] (xline_path_planner) StderrLine: {'line': b'\x1b[01m\x1b[K/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:739:64:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<daosnrs_planning::Point3D>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} and \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[6.927588] (xline_path_planner) StderrLine: {'line': b'  739 |         if (curve->degree <= 3 && \x1b[01;35m\x1b[Kcurve->control_points.size() >= curve->degree + 1\x1b[m\x1b[K)\n'}
+[6.927811] (xline_path_planner) StderrLine: {'line': b'      |                                   \x1b[01;35m\x1b[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[6.949160] (-) TimerEvent: {}
+[7.050136] (-) TimerEvent: {}
+[7.151273] (-) TimerEvent: {}
+[7.253166] (-) TimerEvent: {}
+[7.337821] (xline_path_planner) StderrLine: {'line': b'\x1b[01m\x1b[K/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<daosnrs_planning::RouteSegment> daosnrs_planning::PathPlanner::plan_paths(const daosnrs_planning::CADData&, const daosnrs_planning::PathOffsetConfig&)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[7.338185] (xline_path_planner) StderrLine: {'line': b'\x1b[01m\x1b[K/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:84:47:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<daosnrs_planning::Line> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[7.338381] (xline_path_planner) StderrLine: {'line': b'   84 |   if (!lines_to_draw.empty() && \x1b[01;35m\x1b[Kprinted_count == cad_data.path_lines.size()\x1b[m\x1b[K)\n'}
+[7.338538] (xline_path_planner) StderrLine: {'line': b'      |                                 \x1b[01;35m\x1b[K~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[7.354112] (-) TimerEvent: {}
+[7.455212] (-) TimerEvent: {}
+[7.555937] (-) TimerEvent: {}
+[7.616425] (xline_path_planner) StderrLine: {'line': b'\x1b[01m\x1b[K/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kcv::Mat daosnrs_planning::PathPlanner::create_path_image(const daosnrs_planning::PathVisualizationConfig&)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[7.617250] (xline_path_planner) StderrLine: {'line': b'\x1b[01m\x1b[K/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:959:10:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused variable \xe2\x80\x98\x1b[01m\x1b[Kresolution\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable\x07-Wunused-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[7.618088] (xline_path_planner) StderrLine: {'line': b'  959 |   double \x1b[01;35m\x1b[Kresolution\x1b[m\x1b[K = grid_map_generator_->get_resolution();\n'}
+[7.618308] (xline_path_planner) StderrLine: {'line': b'      |          \x1b[01;35m\x1b[K^~~~~~~~~~\x1b[m\x1b[K\n'}
+[7.656293] (-) TimerEvent: {}
+[7.756936] (-) TimerEvent: {}
+[7.858310] (-) TimerEvent: {}
+[7.959198] (-) TimerEvent: {}
+[8.059968] (-) TimerEvent: {}
+[8.161025] (-) TimerEvent: {}
+[8.262515] (-) TimerEvent: {}
+[8.369376] (-) TimerEvent: {}
+[8.472774] (-) TimerEvent: {}
+[8.574983] (-) TimerEvent: {}
+[8.676841] (-) TimerEvent: {}
+[8.778111] (-) TimerEvent: {}
+[8.879652] (-) TimerEvent: {}
+[8.985915] (-) TimerEvent: {}
+[9.172153] (-) TimerEvent: {}
+[9.302081] (-) TimerEvent: {}
+[9.411488] (-) TimerEvent: {}
+[9.533343] (-) TimerEvent: {}
+[9.636846] (-) TimerEvent: {}
+[9.739970] (-) TimerEvent: {}
+[9.841912] (-) TimerEvent: {}
+[9.943425] (-) TimerEvent: {}
+[10.049065] (-) TimerEvent: {}
+[10.154559] (-) TimerEvent: {}
+[10.272244] (-) TimerEvent: {}
+[10.381789] (-) TimerEvent: {}
+[10.485107] (-) TimerEvent: {}
+[10.592420] (-) TimerEvent: {}
+[10.693960] (-) TimerEvent: {}
+[10.795363] (-) TimerEvent: {}
+[10.900444] (-) TimerEvent: {}
+[11.001525] (-) TimerEvent: {}
+[11.108120] (-) TimerEvent: {}
+[11.218128] (-) TimerEvent: {}
+[11.319093] (-) TimerEvent: {}
+[11.423304] (-) TimerEvent: {}
+[11.525092] (-) TimerEvent: {}
+[11.632570] (-) TimerEvent: {}
+[11.737380] (-) TimerEvent: {}
+[11.838922] (-) TimerEvent: {}
+[11.940222] (-) TimerEvent: {}
+[12.042039] (-) TimerEvent: {}
+[12.142966] (-) TimerEvent: {}
+[12.246510] (-) TimerEvent: {}
+[12.353339] (-) TimerEvent: {}
+[12.454143] (-) TimerEvent: {}
+[12.554941] (-) TimerEvent: {}
+[12.663104] (-) TimerEvent: {}
+[12.766929] (-) TimerEvent: {}
+[12.870439] (-) TimerEvent: {}
+[12.971949] (-) TimerEvent: {}
+[13.085409] (-) TimerEvent: {}
+[13.187189] (-) TimerEvent: {}
+[13.288739] (-) TimerEvent: {}
+[13.510447] (-) TimerEvent: {}
+[13.619250] (-) TimerEvent: {}
+[13.720025] (-) TimerEvent: {}
+[13.888518] (-) TimerEvent: {}
+[13.991109] (-) TimerEvent: {}
+[14.094124] (-) TimerEvent: {}
+[14.196099] (-) TimerEvent: {}
+[14.298144] (-) TimerEvent: {}
+[14.400219] (-) TimerEvent: {}
+[14.503629] (-) TimerEvent: {}
+[14.605203] (-) TimerEvent: {}
+[14.705959] (-) TimerEvent: {}
+[14.807143] (-) TimerEvent: {}
+[14.914603] (-) TimerEvent: {}
+[15.016003] (-) TimerEvent: {}
+[15.117036] (-) TimerEvent: {}
+[15.218080] (-) TimerEvent: {}
+[15.319096] (-) TimerEvent: {}
+[15.420996] (-) TimerEvent: {}
+[15.522162] (-) TimerEvent: {}
+[15.622963] (-) TimerEvent: {}
+[15.723994] (-) TimerEvent: {}
+[15.825171] (-) TimerEvent: {}
+[15.926059] (-) TimerEvent: {}
+[16.027054] (-) TimerEvent: {}
+[16.128044] (-) TimerEvent: {}
+[16.229010] (-) TimerEvent: {}
+[16.330081] (-) TimerEvent: {}
+[16.431055] (-) TimerEvent: {}
+[16.532128] (-) TimerEvent: {}
+[16.632999] (-) TimerEvent: {}
+[16.734139] (-) TimerEvent: {}
+[16.834966] (-) TimerEvent: {}
+[16.936175] (-) TimerEvent: {}
+[17.036923] (-) TimerEvent: {}
+[17.138130] (-) TimerEvent: {}
+[17.238945] (-) TimerEvent: {}
+[17.339958] (-) TimerEvent: {}
+[17.441004] (-) TimerEvent: {}
+[17.541957] (-) TimerEvent: {}
+[17.643057] (-) TimerEvent: {}
+[17.744093] (-) TimerEvent: {}
+[17.845014] (-) TimerEvent: {}
+[17.945940] (-) TimerEvent: {}
+[18.046949] (-) TimerEvent: {}
+[18.148091] (-) TimerEvent: {}
+[18.249000] (-) TimerEvent: {}
+[18.350027] (-) TimerEvent: {}
+[18.451384] (-) TimerEvent: {}
+[18.553164] (-) TimerEvent: {}
+[18.654070] (-) TimerEvent: {}
+[18.755058] (-) TimerEvent: {}
+[18.855987] (-) TimerEvent: {}
+[18.956986] (-) TimerEvent: {}
+[19.058195] (-) TimerEvent: {}
+[19.158956] (-) TimerEvent: {}
+[19.260024] (-) TimerEvent: {}
+[19.360994] (-) TimerEvent: {}
+[19.462121] (-) TimerEvent: {}
+[19.563166] (-) TimerEvent: {}
+[19.664018] (-) TimerEvent: {}
+[19.765130] (-) TimerEvent: {}
+[19.866198] (-) TimerEvent: {}
+[19.968006] (-) TimerEvent: {}
+[20.069217] (-) TimerEvent: {}
+[20.170995] (-) TimerEvent: {}
+[20.272055] (-) TimerEvent: {}
+[20.377930] (-) TimerEvent: {}
+[20.480921] (-) TimerEvent: {}
+[20.581947] (-) TimerEvent: {}
+[20.683237] (-) TimerEvent: {}
+[20.784999] (-) TimerEvent: {}
+[20.886055] (-) TimerEvent: {}
+[20.987018] (-) TimerEvent: {}
+[21.088144] (-) TimerEvent: {}
+[21.189139] (-) TimerEvent: {}
+[21.290134] (-) TimerEvent: {}
+[21.391186] (-) TimerEvent: {}
+[21.492068] (-) TimerEvent: {}
+[21.593068] (-) TimerEvent: {}
+[21.693995] (-) TimerEvent: {}
+[21.795114] (-) TimerEvent: {}
+[21.896263] (-) TimerEvent: {}
+[21.997382] (-) TimerEvent: {}
+[22.099174] (-) TimerEvent: {}
+[22.199952] (-) TimerEvent: {}
+[22.301106] (-) TimerEvent: {}
+[22.402090] (-) TimerEvent: {}
+[22.503117] (-) TimerEvent: {}
+[22.555420] (xline_path_planner) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable planner_node\x1b[0m\n'}
+[22.603940] (-) TimerEvent: {}
+[22.704931] (-) TimerEvent: {}
+[22.805967] (-) TimerEvent: {}
+[22.906959] (-) TimerEvent: {}
+[23.007934] (-) TimerEvent: {}
+[23.108931] (-) TimerEvent: {}
+[23.210005] (-) TimerEvent: {}
+[23.311047] (-) TimerEvent: {}
+[23.412101] (-) TimerEvent: {}
+[23.513080] (-) TimerEvent: {}
+[23.613965] (-) TimerEvent: {}
+[23.714985] (-) TimerEvent: {}
+[23.816011] (-) TimerEvent: {}
+[23.917156] (-) TimerEvent: {}
+[24.018099] (-) TimerEvent: {}
+[24.026442] (xline_path_planner) StdoutLine: {'line': b'[100%] Built target planner_node\n'}
+[24.056153] (xline_path_planner) CommandEnded: {'returncode': 0}
+[24.061865] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'install'}
+[24.079029] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '--install', '/root/xline_path_planner/build/xline_path_planner'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('PYTHON_BASIC_REPL', '1'), ('HOSTNAME', 'ee14746cbf7f'), ('GIT_ASKPASS', '/root/.vscode-server/bin/0f0d87fa9e96c856c5212fc86db137ac0d783365/extensions/git/dist/askpass.sh'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('SHLVL', '2'), ('BROWSER', '/root/.vscode-server/bin/0f0d87fa9e96c856c5212fc86db137ac0d783365/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/xline_path_planner'), ('TERM_PROGRAM_VERSION', '1.104.1'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-b8908e89-807c-48e9-91f8-c5bb94440f21.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/root/.vscode-server/bin/0f0d87fa9e96c856c5212fc86db137ac0d783365/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/root/.vscode-server/bin/0f0d87fa9e96c856c5212fc86db137ac0d783365/node'), ('VSCODE_PYTHON_AUTOACTIVATE_GUARD', '1'), ('REMOTE_CONTAINERS', 'true'), ('COLORTERM', 'truecolor'), ('ROS_DISTRO', 'humble'), ('COLCON_PREFIX_PATH', '/opt/ros/humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-5b46ce69-2c30-4723-ab7c-1f399f546b8d.sock'), ('LOGNAME', 'root'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('CLAUDE_CODE_SSE_PORT', '56961'), ('USER_ZDOTDIR', '/root'), ('TERM', 'xterm-256color'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/root/.vscode-server/bin/0f0d87fa9e96c856c5212fc86db137ac0d783365/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand'), ('DISPLAY', 'host.docker.internal:0'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-5b46ce69-2c30-4723-ab7c-1f399f546b8d.sock"]'), ('LANG', 'en_US.UTF-8'), ('PYTHONSTARTUP', '/root/.vscode-server/data/User/workspaceStorage/5dbce636098c18612159c0b5b4229411/ms-python.python/pythonrc.py'), ('VSCODE_INJECTION', '1'), ('TERM_PROGRAM', 'vscode'), ('VSCODE_GIT_IPC_HANDLE', '/tmp/vscode-git-c92802ca56.sock'), ('DEBIAN_FRONTEND', ''), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-5b46ce69-2c30-4723-ab7c-1f399f546b8d.sock'), ('SHELL', '/usr/bin/zsh'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('ENABLE_IDE_INTEGRATION', 'true'), ('ZDOTDIR', '/root'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[24.097147] (xline_path_planner) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[24.099542] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node\n'}
+[24.119010] (-) TimerEvent: {}
+[24.157497] (xline_path_planner) StdoutLine: {'line': b'-- Set runtime path of "/root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node" to ""\n'}
+[24.157878] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/package_run_dependencies/xline_path_planner\n'}
+[24.158139] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/parent_prefix_path/xline_path_planner\n'}
+[24.158404] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.sh\n'}
+[24.158566] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.dsv\n'}
+[24.158708] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.sh\n'}
+[24.159210] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.dsv\n'}
+[24.159339] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.bash\n'}
+[24.159435] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.sh\n'}
+[24.159677] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.zsh\n'}
+[24.159964] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.dsv\n'}
+[24.160198] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.dsv\n'}
+[24.161073] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/packages/xline_path_planner\n'}
+[24.161942] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig.cmake\n'}
+[24.162226] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig-version.cmake\n'}
+[24.162469] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.xml\n'}
+[24.169732] (xline_path_planner) CommandEnded: {'returncode': 0}
+[24.220517] (-) TimerEvent: {}
+[24.223812] (xline_path_planner) JobEnded: {'identifier': 'xline_path_planner', 'rc': 0}
+[24.225815] (-) EventReactorShutdown: {}

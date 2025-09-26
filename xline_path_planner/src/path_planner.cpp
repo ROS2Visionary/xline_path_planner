@@ -41,14 +41,14 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
 
   std::vector<RouteSegment> path_segments;
 
-  // 打印CAD数据中轴线的数量
-  std::cout << "Total axis lines in CAD data: " << cad_data.axis_lines.size() << std::endl;
+  // 打印CAD数据中路径线的数量
+  std::cout << "Total path lines in CAD data: " << cad_data.path_lines.size() << std::endl;
 
   // 统计各类型的轴线数量和已绘制状态
   int line_count = 0, circle_count = 0, arc_count = 0, curve_count = 0, other_count = 0;
   int printed_count = 0, unprinted_count = 0;
 
-  for (const auto& line : cad_data.axis_lines)
+  for (const auto& line : cad_data.path_lines)
   {
     if (line->type == GeometryType::LINE)
       line_count++;
@@ -71,17 +71,17 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
     }
   }
 
-  std::cout << "Axis line types: " << line_count << " lines, " << circle_count << " circles, " << arc_count << " arcs, "
+  std::cout << "Path line types: " << line_count << " lines, " << circle_count << " circles, " << arc_count << " arcs, "
             << curve_count << " curves, " << other_count << " other types" << std::endl;
 
   std::cout << "Printed/Unprinted status: " << printed_count << " printed, " << unprinted_count << " unprinted"
             << std::endl;
 
   // 收集所有轴线，无论其is_printed状态
-  std::vector<std::shared_ptr<Line>> lines_to_draw = cad_data.axis_lines;
+  std::vector<std::shared_ptr<Line>> lines_to_draw = cad_data.path_lines;
 
   // 如果所有线段都被标记为已打印，但我们仍然需要处理它们
-  if (!lines_to_draw.empty() && printed_count == cad_data.axis_lines.size())
+  if (!lines_to_draw.empty() && printed_count == cad_data.path_lines.size())
   {
     std::cout << "All lines are marked as printed. Forcing processing of all lines..." << std::endl;
     // 将所有线段标记为未打印，以便处理它们

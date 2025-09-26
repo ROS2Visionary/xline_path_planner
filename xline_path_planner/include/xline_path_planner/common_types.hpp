@@ -604,14 +604,11 @@ struct ExecutionNode
  */
 struct CADData
 {
-  int32_t map_id = 0;                                    ///< 地图ID
-  std::vector<Point3D> origin_points;                    ///< 原点坐标集合
-  std::vector<std::shared_ptr<Line>> axis_lines;         ///< 轴线集合
-  std::vector<std::shared_ptr<Line>> wall_lines;         ///< 墙线集合
-  std::vector<std::shared_ptr<Line>> control_lines;      ///< 控制线集合
-  std::vector<std::shared_ptr<Line>> cross_lines;        ///< 十字线集合
-  std::vector<std::shared_ptr<Line>> barrier_lines;      ///< 障碍物线集合
-  std::vector<std::shared_ptr<Line>> low_barrier_lines;  ///< 低障碍物线集合
+  // 说明：根据新需求，简化为三类集合，图层名称由JSON中的"layers"决定
+  std::vector<Point3D> origin_points;                           ///< 原点坐标集合（若提供）
+  std::vector<std::shared_ptr<Line>> path_lines;                ///< 路径（用于实际绘制/规划）
+  std::vector<std::shared_ptr<Line>> obstacle_lines;            ///< 障碍物（不可通行边界）
+  std::vector<std::shared_ptr<Line>> hole_lines;                ///< 空洞（区域内孔洞边界）
 };
 
 /**

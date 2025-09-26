@@ -4,7 +4,6 @@
 CMakeFiles/planner_node.dir/src/cad_parser.cpp.o
  /root/xline_path_planner/xline_path_planner/src/cad_parser.cpp
  /usr/include/stdc-predef.h
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/cad_parser.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/cad_parser.hpp
  /usr/include/c++/11/string
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h
@@ -217,7 +216,6 @@ CMakeFiles/planner_node.dir/src/cad_parser.cpp.o
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h
  /usr/include/c++/11/bits/fstream.tcc
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/common_types.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/common_types.hpp
  /usr/include/c++/11/cmath
  /usr/include/math.h
@@ -354,7 +352,6 @@ CMakeFiles/planner_node.dir/src/cad_parser.cpp.o
 CMakeFiles/planner_node.dir/src/grid_map_generator.cpp.o
  /root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp
  /usr/include/stdc-predef.h
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/grid_map_generator.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/grid_map_generator.hpp
  /usr/include/c++/11/vector
  /usr/include/c++/11/bits/stl_algobase.h
@@ -579,7 +576,6 @@ CMakeFiles/planner_node.dir/src/grid_map_generator.cpp.o
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h
  /usr/include/c++/11/bits/charconv.h
  /usr/include/c++/11/bits/basic_string.tcc
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/common_types.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/common_types.hpp
  /usr/include/c++/11/stdexcept
  /usr/include/opencv4/opencv2/opencv.hpp
@@ -1462,9 +1458,7 @@ CMakeFiles/planner_node.dir/src/main.cpp.o
  /opt/ros/humble/include/rclcpp/rclcpp/wait_set_policies/thread_safe_synchronization.hpp
  /opt/ros/humble/include/rclcpp/rclcpp/wait_set_policies/detail/write_preferring_read_write_lock.hpp
  /opt/ros/humble/include/rclcpp/rclcpp/wait_set_template.hpp
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/cad_parser.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/cad_parser.hpp
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/common_types.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/common_types.hpp
  /usr/include/nlohmann/json.hpp
  /usr/include/c++/11/cstddef
@@ -1521,7 +1515,6 @@ CMakeFiles/planner_node.dir/src/main.cpp.o
  /usr/include/nlohmann/ordered_map.hpp
  /usr/include/nlohmann/detail/macro_unscope.hpp
  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/grid_map_generator.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/grid_map_generator.hpp
  /usr/include/opencv4/opencv2/opencv.hpp
  /usr/include/opencv4/opencv2/opencv_modules.hpp
@@ -1651,17 +1644,13 @@ CMakeFiles/planner_node.dir/src/main.cpp.o
  /usr/include/opencv4/opencv2/video.hpp
  /usr/include/opencv4/opencv2/video/tracking.hpp
  /usr/include/opencv4/opencv2/video/background_segm.hpp
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/path_planner.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/path_planner.hpp
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/trajectory_generator.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/trajectory_generator.hpp
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/output_formatter.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/output_formatter.hpp
 
 CMakeFiles/planner_node.dir/src/output_formatter.cpp.o
  /root/xline_path_planner/xline_path_planner/src/output_formatter.cpp
  /usr/include/stdc-predef.h
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/output_formatter.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/output_formatter.hpp
  /usr/include/c++/11/vector
  /usr/include/c++/11/bits/stl_algobase.h
@@ -1874,7 +1863,6 @@ CMakeFiles/planner_node.dir/src/output_formatter.cpp.o
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h
  /usr/include/c++/11/bits/fstream.tcc
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/common_types.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/common_types.hpp
  /usr/include/c++/11/cmath
  /usr/include/math.h
@@ -2011,7 +1999,6 @@ CMakeFiles/planner_node.dir/src/output_formatter.cpp.o
 CMakeFiles/planner_node.dir/src/path_planner.cpp.o
  /root/xline_path_planner/xline_path_planner/src/path_planner.cpp
  /usr/include/stdc-predef.h
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/path_planner.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/path_planner.hpp
  /usr/include/c++/11/vector
  /usr/include/c++/11/bits/stl_algobase.h
@@ -2236,10 +2223,8 @@ CMakeFiles/planner_node.dir/src/path_planner.cpp.o
  /usr/include/c++/11/tr1/poly_hermite.tcc
  /usr/include/c++/11/tr1/poly_laguerre.tcc
  /usr/include/c++/11/tr1/riemann_zeta.tcc
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/common_types.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/common_types.hpp
  /usr/include/c++/11/stdexcept
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/grid_map_generator.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/grid_map_generator.hpp
  /usr/include/opencv4/opencv2/opencv.hpp
  /usr/include/opencv4/opencv2/opencv_modules.hpp
@@ -2431,7 +2416,6 @@ CMakeFiles/planner_node.dir/src/path_planner.cpp.o
 CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o
  /root/xline_path_planner/xline_path_planner/src/trajectory_generator.cpp
  /usr/include/stdc-predef.h
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/trajectory_generator.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/trajectory_generator.hpp
  /usr/include/c++/11/vector
  /usr/include/c++/11/bits/stl_algobase.h
@@ -2656,7 +2640,6 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o
  /usr/include/c++/11/bits/node_handle.h
  /usr/include/c++/11/bits/unordered_map.h
  /usr/include/c++/11/bits/erase_if.h
- /root/xline_path_planner/xline_path_planner/include/daosnrs_planning/common_types.hpp
  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/common_types.hpp
  /usr/include/c++/11/stdexcept
  /usr/include/c++/11/iostream

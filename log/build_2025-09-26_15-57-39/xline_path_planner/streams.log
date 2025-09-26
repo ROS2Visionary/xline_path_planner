@@ -1,0 +1,47 @@
+[0.069s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
+[0.580s] [35m[1mConsolidate compiler generated dependencies of target planner_node[0m
+[0.646s] [ 28%] [32mBuilding CXX object CMakeFiles/planner_node.dir/src/main.cpp.o[0m
+[0.647s] [ 28%] [32mBuilding CXX object CMakeFiles/planner_node.dir/src/cad_parser.cpp.o[0m
+[0.649s] [ 71%] [32mBuilding CXX object CMakeFiles/planner_node.dir/src/grid_map_generator.cpp.o[0m
+[0.651s] [ 85%] [32mBuilding CXX object CMakeFiles/planner_node.dir/src/path_planner.cpp.o[0m
+[0.652s] [ 85%] [32mBuilding CXX object CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o[0m
+[0.652s] [ 85%] [32mBuilding CXX object CMakeFiles/planner_node.dir/src/output_formatter.cpp.o[0m
+[6.901s] [01m[K/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:[m[K In member function ‘[01m[Kbool daosnrs_planning::GridMapGenerator::save_as_image(const string&, const daosnrs_planning::CADData&, const daosnrs_planning::GridMapVisualizationConfig&) const[m[K’:
+[6.902s] [01m[K/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:140:83:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kcad_data[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[6.902s]   140 | bool GridMapGenerator::save_as_image(const std::string& file_path, [01;35m[Kconst CADData& cad_data[m[K,
+[6.905s]       |                                                                    [01;35m[K~~~~~~~~~~~~~~~^~~~~~~~[m[K
+[6.926s] [01m[K/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:[m[K In member function ‘[01m[Kvoid daosnrs_planning::GridMapGenerator::store_axis_line_points(const std::shared_ptr<daosnrs_planning::Line>&)[m[K’:
+[6.927s] [01m[K/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:739:64:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kstd::vector<daosnrs_planning::Point3D>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} and ‘[01m[Kint[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+[6.927s]   739 |         if (curve->degree <= 3 && [01;35m[Kcurve->control_points.size() >= curve->degree + 1[m[K)
+[6.927s]       |                                   [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K
+[7.338s] [01m[K/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:[m[K In member function ‘[01m[Kstd::vector<daosnrs_planning::RouteSegment> daosnrs_planning::PathPlanner::plan_paths(const daosnrs_planning::CADData&, const daosnrs_planning::PathOffsetConfig&)[m[K’:
+[7.338s] [01m[K/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:84:47:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<daosnrs_planning::Line> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+[7.338s]    84 |   if (!lines_to_draw.empty() && [01;35m[Kprinted_count == cad_data.path_lines.size()[m[K)
+[7.338s]       |                                 [01;35m[K~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[7.617s] [01m[K/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:[m[K In member function ‘[01m[Kcv::Mat daosnrs_planning::PathPlanner::create_path_image(const daosnrs_planning::PathVisualizationConfig&)[m[K’:
+[7.617s] [01m[K/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:959:10:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kresolution[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+[7.618s]   959 |   double [01;35m[Kresolution[m[K = grid_map_generator_->get_resolution();
+[7.618s]       |          [01;35m[K^~~~~~~~~~[m[K
+[22.555s] [100%] [32m[1mLinking CXX executable planner_node[0m
+[24.026s] [100%] Built target planner_node
+[24.057s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
+[24.079s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /root/xline_path_planner/build/xline_path_planner
+[24.097s] -- Install configuration: ""
+[24.099s] -- Installing: /root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node
+[24.157s] -- Set runtime path of "/root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node" to ""
+[24.157s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/package_run_dependencies/xline_path_planner
+[24.158s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/parent_prefix_path/xline_path_planner
+[24.158s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.sh
+[24.158s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.dsv
+[24.158s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.sh
+[24.159s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.dsv
+[24.159s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.bash
+[24.159s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.sh
+[24.159s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.zsh
+[24.160s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.dsv
+[24.160s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.dsv
+[24.161s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/packages/xline_path_planner
+[24.162s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig.cmake
+[24.162s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig-version.cmake
+[24.162s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.xml
+[24.170s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /root/xline_path_planner/build/xline_path_planner

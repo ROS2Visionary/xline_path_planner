@@ -1,5 +1,39 @@
+/*
+================================================================================
+CAD 解析实现（超详细中文注释）
+--------------------------------------------------------------------------------
+目标与能力
+  - 解析新一代 CAD JSON（cad_transformed.json）中的几何数据，仅处理：
+    • 直线（type: "line"）
+    • 圆   （type: "circle"）
+    • 圆弧（type: "arc"）
+  - 动态分类：依据 lines[*].layer_id → layers[*].name 将图元归入 CADData 三大集合：
+    • path_lines（路径）
+    • obstacle_lines（障碍物）
+    • hole_lines（空洞）
+  - 单位换算：若启用，则将毫米等原始单位转换为米（默认 /1000）。
+  - 角度单位自动识别：|value| > 2π 视为“度”并转换为弧度。
+
+整体流程
+  1) 读取与解析 JSON（含健壮性检查）
+  2) 构建 layer_id → layer_name 映射（若有）
+  3) 遍历 lines：解析三类几何 → 分类入 CADData
+  4) 输出解析统计并返回成功与否
+
+健壮性与兼容
+  - 缺失关键字段（如 line 缺失 start/end）→ 跳过该元素但不中断流程
+  - 所有异常在 parse() 内部捕获，返回 false，不向外抛出
+  - 坐标键名 x/X, y/Y, z/Z 兼容
+
+扩展位点
+  - store_by_layer 中的关键词可改为配置化（例如注入词表）
+  - 可按需新增其它几何类型的解析与下游处理
+================================================================================
+*/
 #include "xline_path_planner/cad_parser.hpp"
 #include <iostream>
+#include <algorithm>
+#include <cctype>
 
 namespace daosnrs_planning
 {
@@ -8,6 +42,22 @@ CADParser::CADParser(const CADParserConfig& config) : config_(config)
 {
 }
 
+/*
+解析流程总览（parse）
+--------------------------------
+输入：
+  - file_path：CAD JSON 文件路径（UTF-8）。
+行为：
+  1) 打开并解析 JSON；
+  2) 清空内部数据（clear）；
+  3) 构建图层映射（build_layer_map）；
+  4) 遍历 lines：按 type 调用 parse_line/parse_circle/parse_arc 解析；
+  5) 根据图层名称（由 layer_id → name 或元素内 layer）分类（store_by_layer）；
+  6) 打印解析统计，成功返回 true（至少解析到一个几何），否则返回 false。
+健壮性：
+  - 缺失关键字段的元素跳过处理；
+  - 任何异常均被捕获并返回 false。
+*/
 bool CADParser::parse(const std::string& file_path)
 {
   try
@@ -27,200 +77,97 @@ bool CADParser::parse(const std::string& file_path)
 
     // 清除之前的数据
     clear();
+    // 预先构建 layer_id -> layer_name 映射，供分类用
+    build_layer_map(cad_json);
 
-    // 解析地图ID
-    if (cad_json.contains("mapId"))
+    // 新格式：仅解析根节点"lines"，支持 line/circle/arc 三类
+    if (!cad_json.contains("lines") || !cad_json["lines"].is_array())
     {
-      cad_data_.map_id = cad_json["mapId"];
+      std::cerr << "Invalid CAD JSON: missing 'lines' array" << std::endl;
+      return false;
     }
 
-    // 解析原点坐标
-    if (cad_json.contains("origin") && cad_json["origin"].is_array())
+    const auto& lines = cad_json["lines"];
+    size_t parsed_lines = 0, parsed_arcs = 0, parsed_circles = 0;
+    for (const auto& item : lines)
     {
-      for (const auto& point : cad_json["origin"])
+      std::string t = "line";
+      if (item.contains("type") && item["type"].is_string())
       {
-        cad_data_.origin_points.push_back(parse_point(point));
+        t = item["type"].get<std::string>();
+        for (auto& c : t)
+          c = static_cast<char>(::tolower(c));
       }
-    }
 
-    // 解析轴线
-    if (cad_json.contains("axisLines") && cad_json["axisLines"].is_array())
-    {
-      std::cout << "Processing " << cad_json["axisLines"].size() << " axis lines" << std::endl;
-
-      for (const auto& line : cad_json["axisLines"])
+      // 提取图层名称（使用layer_id映射）
+      std::string layer_name;
+      if (item.contains("layer_id") && (item["layer_id"].is_number_integer()))
       {
-        if (line.contains("type"))
+        int lid = item["layer_id"].get<int>();
+        auto it = layer_id_to_name_.find(lid);
+        if (it != layer_id_to_name_.end())
         {
-          int type = line["type"];
-          std::cout << "Processing line with type: " << type
-                    << ", ID: " << (line.contains("lineId") ? line["lineId"].get<int>() : -1) << std::endl;
-
-          if (type == 1)
-          {
-            cad_data_.axis_lines.push_back(std::make_shared<Line>(parse_line(line)));
-          }
-          else if (type == 4)
-          {
-            cad_data_.axis_lines.push_back(std::make_shared<Circle>(parse_circle(line)));
-          }
-          else if (type == 6)
-          {
-            cad_data_.axis_lines.push_back(std::make_shared<Curve>(parse_curve(line)));
-          }
-          else if (type == 7)
-          {
-            cad_data_.axis_lines.push_back(std::make_shared<Arc>(parse_arc(line)));
-          }
-          else
-          {
-            std::cerr << "Unrecognized line type: " << type << std::endl;
-          }
+          layer_name = it->second;
         }
       }
-    }
-
-    // 解析墙线
-    if (cad_json.contains("wallLines") && cad_json["wallLines"].is_array())
-    {
-      for (const auto& line : cad_json["wallLines"])
+      if (layer_name.empty() && item.contains("layer") && item["layer"].is_string())
       {
-        if (line.contains("type"))
+        layer_name = item["layer"].get<std::string>();
+      }
+
+      if (t == "line")
+      {
+        if (!item.contains("start") || !item.contains("end"))
         {
-          int type = line["type"];
-          if (type == 1)
-          {
-            cad_data_.wall_lines.push_back(std::make_shared<Line>(parse_line(line)));
-          }
-          else if (type == 4)
-          {
-            cad_data_.wall_lines.push_back(std::make_shared<Circle>(parse_circle(line)));
-          }
-          else if (type == 6)
-          {
-            cad_data_.wall_lines.push_back(std::make_shared<Curve>(parse_curve(line)));
-          }
-          else if (type == 7)
-          {
-            cad_data_.wall_lines.push_back(std::make_shared<Arc>(parse_arc(line)));
-          }
+          continue;
         }
+        if (!item["start"].is_object() || !item["end"].is_object())
+        {
+          continue;
+        }
+        auto line_ptr = std::make_shared<Line>(parse_line(item));
+        store_by_layer(line_ptr, layer_name);
+        ++parsed_lines;
+      }
+      else if (t == "circle")
+      {
+        if (!item.contains("center") || !item.contains("radius"))
+        {
+          continue;
+        }
+        if (!item["center"].is_object())
+        {
+          continue;
+        }
+        auto circle_ptr = std::make_shared<Circle>(parse_circle(item));
+        store_by_layer(circle_ptr, layer_name);
+        ++parsed_circles;
+      }
+      else if (t == "arc")
+      {
+        if (!item.contains("center") || !item.contains("radius"))
+        {
+          continue;
+        }
+        if (!item["center"].is_object())
+        {
+          continue;
+        }
+        auto arc_ptr = std::make_shared<Arc>(parse_arc(item));
+        store_by_layer(arc_ptr, layer_name);
+        ++parsed_arcs;
+      }
+      else
+      {
+        // 其他类型（如text）忽略
+        continue;
       }
     }
 
-    // 解析控制线
-    if (cad_json.contains("controlLines") && cad_json["controlLines"].is_array())
-    {
-      for (const auto& line : cad_json["controlLines"])
-      {
-        if (line.contains("type"))
-        {
-          int type = line["type"];
-          if (type == 1)
-          {
-            cad_data_.control_lines.push_back(std::make_shared<Line>(parse_line(line)));
-          }
-          else if (type == 4)
-          {
-            cad_data_.control_lines.push_back(std::make_shared<Circle>(parse_circle(line)));
-          }
-          else if (type == 6)
-          {
-            cad_data_.control_lines.push_back(std::make_shared<Curve>(parse_curve(line)));
-          }
-          else if (type == 7)
-          {
-            cad_data_.control_lines.push_back(std::make_shared<Arc>(parse_arc(line)));
-          }
-        }
-      }
-    }
+    std::cout << "Parsed from 'lines' (by layers): " << parsed_lines << " line(s), " << parsed_circles << " circle(s), "
+              << parsed_arcs << " arc(s)" << std::endl;
 
-    // 解析十字线
-    if (cad_json.contains("crossLines") && cad_json["crossLines"].is_array())
-    {
-      for (const auto& line : cad_json["crossLines"])
-      {
-        if (line.contains("type"))
-        {
-          int type = line["type"];
-          if (type == 1)
-          {
-            cad_data_.cross_lines.push_back(std::make_shared<Line>(parse_line(line)));
-          }
-          else if (type == 4)
-          {
-            cad_data_.cross_lines.push_back(std::make_shared<Circle>(parse_circle(line)));
-          }
-          else if (type == 6)
-          {
-            cad_data_.cross_lines.push_back(std::make_shared<Curve>(parse_curve(line)));
-          }
-          else if (type == 7)
-          {
-            cad_data_.cross_lines.push_back(std::make_shared<Arc>(parse_arc(line)));
-          }
-        }
-      }
-    }
-
-    // 解析障碍物线
-    if (cad_json.contains("barrierLines") && cad_json["barrierLines"].is_array())
-    {
-      for (const auto& line : cad_json["barrierLines"])
-      {
-        if (line.contains("type"))
-        {
-          int type = line["type"];
-          if (type == 1)
-          {
-            cad_data_.barrier_lines.push_back(std::make_shared<Line>(parse_line(line)));
-          }
-          else if (type == 4)
-          {
-            cad_data_.barrier_lines.push_back(std::make_shared<Circle>(parse_circle(line)));
-          }
-          else if (type == 6)
-          {
-            cad_data_.barrier_lines.push_back(std::make_shared<Curve>(parse_curve(line)));
-          }
-          else if (type == 7)
-          {
-            cad_data_.barrier_lines.push_back(std::make_shared<Arc>(parse_arc(line)));
-          }
-        }
-      }
-    }
-
-    // 解析低障碍物线
-    if (cad_json.contains("lowbarrierLines") && cad_json["lowbarrierLines"].is_array())
-    {
-      for (const auto& line : cad_json["lowbarrierLines"])
-      {
-        if (line.contains("type"))
-        {
-          int type = line["type"];
-          if (type == 1)
-          {
-            cad_data_.low_barrier_lines.push_back(std::make_shared<Line>(parse_line(line)));
-          }
-          else if (type == 4)
-          {
-            cad_data_.low_barrier_lines.push_back(std::make_shared<Circle>(parse_circle(line)));
-          }
-          else if (type == 6)
-          {
-            cad_data_.low_barrier_lines.push_back(std::make_shared<Curve>(parse_curve(line)));
-          }
-          else if (type == 7)
-          {
-            cad_data_.low_barrier_lines.push_back(std::make_shared<Arc>(parse_arc(line)));
-          }
-        }
-      }
-    }
-
-    return true;
+    return (parsed_lines + parsed_arcs + parsed_circles) > 0;
   }
   catch (const std::exception& e)
   {
@@ -249,6 +196,15 @@ const CADParserConfig& CADParser::get_config() const
   return config_;
 }
 
+/*
+单位换算（convert_units）
+--------------------------------
+用途：
+  - 当 auto_scale_coordinates=true 时，将原始数值按 unit_conversion_factor 进行缩放。
+    典型配置为 1000.0（毫米→米）。
+注意：
+  - 仅对“数值型”字段调用（坐标分量/半径/长度等）。
+*/
 double CADParser::convert_units(double value) const
 {
   if (config_.auto_scale_coordinates)
@@ -262,63 +218,35 @@ Line CADParser::parse_line(const nlohmann::json& json_line)
 {
   Line line;
 
-  if (json_line.contains("lineId"))
+  // 读取可选的 id（若无则保持默认0）
+  // id
+  if (json_line.contains("id") && json_line["id"].is_number_integer())
   {
-    line.id = json_line["lineId"];
+    line.id = json_line["id"].get<int32_t>();
   }
 
-  if (json_line.contains("type"))
+  // 设置几何类型为直线；新 JSON 无 hasPrinted 语义，默认未绘制
+  line.type = GeometryType::LINE;
+  line.is_printed = false;  // 新格式无此语义，默认为未绘制
+
+  // 解析起点/终点：新格式使用 start/end，对象内为 x/y(/z)
+  if (json_line.contains("start") && json_line["start"].is_object())
   {
-    line.type = static_cast<GeometryType>(json_line["type"].get<int>());
+    line.start = parse_point(json_line["start"]);
+  }
+  if (json_line.contains("end") && json_line["end"].is_object())
+  {
+    line.end = parse_point(json_line["end"]);
   }
 
-  if (json_line.contains("hasPrinted"))
-  {
-    line.is_printed = json_line["hasPrinted"];
-  }
-
-  if (json_line.contains("Length"))
-  {
-    double length_value = json_line["Length"].get<double>();
-    line.length = convert_units(length_value);
-  }
-
-  // 解析直线的起点和终点
-  if (json_line.contains("Origin") && json_line.contains("Direction") && json_line.contains("Length"))
-  {
-    Point3D origin = parse_point(json_line["Origin"]);
-    line.start = origin;
-
-    // 提取方向向量
-    double dx = 0.0, dy = 0.0, dz = 0.0;
-    if (json_line["Direction"].contains("X"))
-    {
-      dx = json_line["Direction"]["X"];
-    }
-    if (json_line["Direction"].contains("Y"))
-    {
-      dy = json_line["Direction"]["Y"];
-    }
-    if (json_line["Direction"].contains("Z"))
-    {
-      dz = json_line["Direction"]["Z"];
-    }
-
-    // 计算终点 - 注意：这里使用原始长度计算，然后再进行单位转换
-    double length = json_line["Length"].get<double>();
-    double scaled_length = convert_units(length);
-
-    // 使用方向向量和缩放后的长度计算终点
-    line.end.x = origin.x + dx * scaled_length;
-    line.end.y = origin.y + dy * scaled_length;
-    line.end.z = origin.z + dz * scaled_length;
-  }
-
+  // 长度由（可能缩放后的）起止点计算
+  line.length = line.start.distance(line.end);
   return line;
 }
 
 Curve CADParser::parse_curve(const nlohmann::json& json_curve)
 {
+  // 说明：当前新 JSON 未定义曲线（curve）规范，此方法保留用于未来扩展。
   Curve curve;
 
   if (json_curve.contains("lineId"))
@@ -397,42 +325,36 @@ Circle CADParser::parse_circle(const nlohmann::json& json_circle)
 {
   Circle circle;
 
-  if (json_circle.contains("lineId"))
+  // id
+  if (json_circle.contains("id") && json_circle["id"].is_number_integer())
   {
-    circle.id = json_circle["lineId"];
+    circle.id = json_circle["id"].get<int32_t>();
   }
 
-  if (json_circle.contains("type"))
-  {
-    circle.type = static_cast<GeometryType>(json_circle["type"].get<int>());
-  }
-
-  if (json_circle.contains("hasPrinted"))
-  {
-    circle.is_printed = json_circle["hasPrinted"];
-  }
+  // 明确几何类型与默认绘制标志
+  circle.type = GeometryType::CIRCLE;
+  circle.is_printed = false;  // 新格式无此语义
 
   // 解析圆心
-  if (json_circle.contains("Center"))
+  if (json_circle.contains("center"))
   {
-    circle.center = parse_point(json_circle["Center"]);
+    circle.center = parse_point(json_circle["center"]);
   }
 
-  // 解析半径
-  if (json_circle.contains("Radius"))
+  // 解析半径（单位换算）
+  if (json_circle.contains("radius"))
   {
-    double radius_value = json_circle["Radius"].get<double>();
-    circle.radius = convert_units(radius_value);
-
-    // 更新圆周长
-    circle.length = 2.0 * M_PI * circle.radius;
-
-    // 设置起点和终点
-    circle.start.x = circle.center.x + circle.radius;
-    circle.start.y = circle.center.y;
-    circle.start.z = circle.center.z;
-    circle.end = circle.start;  // 圆是闭合的，起点=终点
+    circle.radius = convert_units(json_circle["radius"].get<double>());
   }
+
+  // 更新圆周长
+  circle.length = 2.0 * M_PI * circle.radius;
+
+  // 设置起点和终点
+  circle.start.x = circle.center.x + circle.radius;
+  circle.start.y = circle.center.y;
+  circle.start.z = circle.center.z;
+  circle.end = circle.start;  // 圆是闭合的，起点=终点
 
   return circle;
 }
@@ -441,53 +363,61 @@ Arc CADParser::parse_arc(const nlohmann::json& json_arc)
 {
   Arc arc;
 
-  if (json_arc.contains("lineId"))
+  // id
+  if (json_arc.contains("id") && json_arc["id"].is_number_integer())
   {
-    arc.id = json_arc["lineId"];
+    arc.id = json_arc["id"].get<int32_t>();
   }
 
-  if (json_arc.contains("type"))
-  {
-    arc.type = static_cast<GeometryType>(json_arc["type"].get<int>());
-  }
-
-  if (json_arc.contains("hasPrinted"))
-  {
-    arc.is_printed = json_arc["hasPrinted"];
-  }
+  // 明确几何类型与默认绘制标志
+  arc.type = GeometryType::ARC;
+  arc.is_printed = false;  // 新格式无此语义
 
   // 解析圆心
-  if (json_arc.contains("Center"))
+  if (json_arc.contains("center"))
   {
-    arc.center = parse_point(json_arc["Center"]);
+    arc.center = parse_point(json_arc["center"]);
   }
 
-  // 解析半径
-  if (json_arc.contains("Radius"))
+  // 解析半径（单位换算）
+  if (json_arc.contains("radius"))
   {
-    double radius_value = json_arc["Radius"].get<double>();
-    arc.radius = convert_units(radius_value);
+    arc.radius = convert_units(json_arc["radius"].get<double>());
   }
 
-  // 解析起始角度
-  if (json_arc.contains("StartAngle") && !json_arc["StartAngle"].is_null())
+  auto to_radians = [](double angle_val) {
+    // 角度自动识别：若数值大于2π则视为度
+    const double two_pi = 2.0 * M_PI;
+    if (std::fabs(angle_val) > two_pi)
+    {
+      return angle_val * M_PI / 180.0;
+    }
+    return angle_val;
+  };
+
+  // 解析起始/结束角度（兼容 snake_case 与 camelCase）
+  double start_val = 0.0;
+  double end_val = 2.0 * M_PI;
+  if (json_arc.contains("start_angle") && !json_arc["start_angle"].is_null())
   {
-    arc.start_angle = json_arc["StartAngle"].get<double>();
+    start_val = json_arc["start_angle"].get<double>();
   }
-  else
+  else if (json_arc.contains("startAngle") && !json_arc["startAngle"].is_null())
   {
-    arc.start_angle = 0.0;
+    start_val = json_arc["startAngle"].get<double>();
   }
 
-  // 解析结束角度
-  if (json_arc.contains("EndAngle") && !json_arc["EndAngle"].is_null())
+  if (json_arc.contains("end_angle") && !json_arc["end_angle"].is_null())
   {
-    arc.end_angle = json_arc["EndAngle"].get<double>();
+    end_val = json_arc["end_angle"].get<double>();
   }
-  else
+  else if (json_arc.contains("endAngle") && !json_arc["endAngle"].is_null())
   {
-    arc.end_angle = 2.0 * M_PI;
+    end_val = json_arc["endAngle"].get<double>();
   }
+
+  arc.start_angle = to_radians(start_val);
+  arc.end_angle = to_radians(end_val);
 
   // 计算起点和终点
   arc.start.x = arc.center.x + arc.radius * std::cos(arc.start_angle);
@@ -512,26 +442,85 @@ Arc CADParser::parse_arc(const nlohmann::json& json_arc)
 Point3D CADParser::parse_point(const nlohmann::json& json_point)
 {
   Point3D point;
-
-  if (json_point.contains("X"))
+  // 支持小写/大写键（x/X, y/Y, z/Z），并对数值进行单位换算
+  if (json_point.contains("x"))
   {
-    double x_value = json_point["X"].get<double>();
-    point.x = convert_units(x_value);
+    point.x = convert_units(json_point["x"].get<double>());
+  }
+  else if (json_point.contains("X"))
+  {
+    point.x = convert_units(json_point["X"].get<double>());
   }
 
-  if (json_point.contains("Y"))
+  if (json_point.contains("y"))
   {
-    double y_value = json_point["Y"].get<double>();
-    point.y = convert_units(y_value);
+    point.y = convert_units(json_point["y"].get<double>());
+  }
+  else if (json_point.contains("Y"))
+  {
+    point.y = convert_units(json_point["Y"].get<double>());
   }
 
-  if (json_point.contains("Z"))
+  if (json_point.contains("z"))
   {
-    double z_value = json_point["Z"].get<double>();
-    point.z = convert_units(z_value);
+    point.z = convert_units(json_point["z"].get<double>());
+  }
+  else if (json_point.contains("Z"))
+  {
+    point.z = convert_units(json_point["Z"].get<double>());
   }
 
   return point;
+}
+
+void CADParser::build_layer_map(const nlohmann::json& cad_json)
+{
+  layer_id_to_name_.clear();
+  if (!cad_json.contains("layers") || !cad_json["layers"].is_array())
+  {
+    return;
+  }
+
+  for (const auto& layer : cad_json["layers"])
+  {
+    if (!layer.is_object())
+      continue;
+    if (!layer.contains("name") || !layer["name"].is_string())
+      continue;
+    std::string name = layer["name"].get<std::string>();
+    if (layer.contains("layer_id") && layer["layer_id"].is_number_integer())
+    {
+      int id = layer["layer_id"].get<int>();
+      layer_id_to_name_[id] = name;
+    }
+  }
+}
+
+void CADParser::store_by_layer(const std::shared_ptr<Line>& geom, const std::string& layer_name)
+{
+  // 基于图层名称关键字进行分类（不区分大小写），默认归入“路径”集合
+  std::string lname = layer_name;
+  std::transform(lname.begin(), lname.end(), lname.begin(), [](unsigned char c) { return std::tolower(c); });
+
+  auto contains = [&](const char* kw) { return !lname.empty() && lname.find(kw) != std::string::npos; };
+
+  if (contains("空洞") || contains("hole") || contains("hollow") || contains("void") || contains("opening"))
+  {
+    cad_data_.hole_lines.push_back(geom);
+  }
+  else if (contains("障碍") || contains("barrier") || contains("obstacle"))
+  {
+    cad_data_.obstacle_lines.push_back(geom);
+  }
+  else if (contains("路径") || contains("path") || contains("axis") || contains("draw") || contains("drawing"))
+  {
+    cad_data_.path_lines.push_back(geom);
+  }
+  else
+  {
+    // 未知图层归入路径集合，保证后续模块可工作
+    cad_data_.path_lines.push_back(geom);
+  }
 }
 
 }  // namespace daosnrs_planning
