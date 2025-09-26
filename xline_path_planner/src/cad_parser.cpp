@@ -91,6 +91,11 @@ bool CADParser::parse(const std::string& file_path)
     size_t parsed_lines = 0, parsed_arcs = 0, parsed_circles = 0;
     for (const auto& item : lines)
     {
+      // 若存在 selected 且为 false，则舍弃该元素
+      if (item.contains("selected") && item["selected"].is_boolean() && !item["selected"].get<bool>())
+      {
+        continue;
+      }
       std::string t = "line";
       if (item.contains("type") && item["type"].is_string())
       {

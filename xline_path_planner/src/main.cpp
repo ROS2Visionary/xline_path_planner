@@ -27,8 +27,8 @@ public:
   {
     // 设置文件路径参数
     cad_file_path = "/root/xline_path_planner/cad_data/cad_transformed.json";
-    output_file_path = "/root/daosnrs_q5/src/daosnrs_planning/path_visualizations/path_from_cad.json";
-    path_visualization_dir = "/root/daosnrs_q5/src/daosnrs_planning/path_visualizations";
+    output_file_path = "/root/xline_path_planner/path_visualizations/path_from_cad.json";
+    path_visualization_dir = "/root/xline_path_planner/path_visualizations";
 
     // 设置可视化参数
     grid_map_scale = 4;              // 栅格地图缩放因子

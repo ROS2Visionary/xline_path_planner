@@ -1,3 +1,4 @@
+source install/setup.sh
 ros2 run xline_path_planner planner_node
 
 
