@@ -30,25 +30,25 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 15,
+				"line" : 17,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 37,
+				"line" : 41,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 28,
+				"line" : 30,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 32,
+				"line" : 35,
 				"parent" : 0
 			},
 			{
@@ -66,7 +66,7 @@
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 23,
+				"line" : 25,
 				"parent" : 0
 			},
 			{
@@ -126,7 +126,7 @@
 					"path" : "/opt/ros/humble/include/rclcpp"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 8,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/ament_index_cpp"
 				},
@@ -465,6 +465,11 @@
 				"role" : "libraries"
 			},
 			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libyaml-cpp.so.0.7.0",
+				"role" : "libraries"
+			},
+			{
 				"backtrace" : 5,
 				"fragment" : "/opt/ros/humble/lib/librclcpp.so",
 				"role" : "libraries"
@@ -577,6 +582,7 @@
 				"role" : "libraries"
 			},
 			{
+				"backtrace" : 5,
 				"fragment" : "/opt/ros/humble/lib/libament_index_cpp.so",
 				"role" : "libraries"
 			},

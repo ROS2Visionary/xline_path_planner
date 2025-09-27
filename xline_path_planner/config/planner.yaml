@@ -1,0 +1,38 @@
+# 路径规划器配置（按类别组织）
+
+files:
+  cad_file_path: "/root/xline_path_planner/cad_data/cad_2_transformed.json"
+  output_file_path: "/root/xline_path_planner/path_visualizations/path_from_cad.json"
+  path_visualization_dir: "/root/xline_path_planner/path_visualizations"
+
+visualization:
+  # 同时用于栅格与路径可视化
+  scale: 4
+  show_grid_lines: true
+  use_antialiasing: true
+  image_format: "png"
+  save_path_visualization: true
+
+cad_parser:
+  unit_conversion_factor: 1000.0   # 毫米->米
+  auto_scale_coordinates: true
+  angle_unit: "DEGREES"            # 可选: DEGREES | RADIANS
+
+grid_map:
+  resolution: 0.005   # 米/格
+  padding: 0.1        # 地图边界填充(米)
+
+offsets:
+  left_offset: -0.05
+  right_offset: 0.05
+  printer_type: "LEFT_PRINTER"   # 可选: LEFT_PRINTER | RIGHT_PRINTER | BOTH_PRINTERS
+
+path_planner:
+  transition_speed: 0.5     # m/s
+  drawing_speed: 0.3        # m/s
+  path_extension_length: 0.1
+
+trajectory:
+  max_velocity: 0.5         # m/s
+  max_acceleration: 0.5     # m/s^2
+

@@ -1,1 +1,1 @@
-rclcpp;ament_lint_auto;ament_lint_common
+rclcpp;ament_index_cpp;yaml-cpp;ament_lint_auto;ament_lint_common

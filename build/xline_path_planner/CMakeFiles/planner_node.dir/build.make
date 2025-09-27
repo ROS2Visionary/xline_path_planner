@@ -207,6 +207,7 @@ planner_node: /usr/lib/x86_64-linux-gnu/libopencv_viz.so.4.5.4d
 planner_node: /usr/lib/x86_64-linux-gnu/libopencv_wechat_qrcode.so.4.5.4d
 planner_node: /usr/lib/x86_64-linux-gnu/libopencv_xobjdetect.so.4.5.4d
 planner_node: /usr/lib/x86_64-linux-gnu/libopencv_xphoto.so.4.5.4d
+planner_node: /usr/lib/x86_64-linux-gnu/libyaml-cpp.so.0.7.0
 planner_node: /opt/ros/humble/lib/librclcpp.so
 planner_node: /usr/lib/x86_64-linux-gnu/libopencv_highgui.so.4.5.4d
 planner_node: /usr/lib/x86_64-linux-gnu/libopencv_datasets.so.4.5.4d

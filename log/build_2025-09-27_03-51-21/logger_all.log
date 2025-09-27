@@ -1,0 +1,168 @@
+[0.247s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--packages-select', 'xline_path_planner', '--cmake-args', '-DCMAKE_BUILD_TYPE=Release']
+[0.248s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=8, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['xline_path_planner'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, cmake_args=['-DCMAKE_BUILD_TYPE=Release'], cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7fee77565e10>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7fee77565960>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7fee77565960>>, mixin_verb=('build',))
+[0.730s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.730s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.730s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.730s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.730s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.730s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.731s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/root/xline_path_planner'
+[0.731s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.731s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.731s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.732s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.732s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.732s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.732s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.732s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.732s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.826s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.827s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.827s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.827s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.827s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.827s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.828s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.828s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.828s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extensions ['ignore', 'ignore_ament_install']
+[0.828s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extension 'ignore'
+[0.829s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extension 'ignore_ament_install'
+[0.829s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extensions ['colcon_pkg']
+[0.829s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extension 'colcon_pkg'
+[0.829s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extensions ['colcon_meta']
+[0.829s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extension 'colcon_meta'
+[0.829s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extensions ['ros']
+[0.829s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extension 'ros'
+[0.829s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extensions ['cmake', 'python']
+[0.830s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extension 'cmake'
+[0.830s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extension 'python'
+[0.830s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extensions ['python_setup_py']
+[0.830s] Level 1:colcon.colcon_core.package_identification:_identify(cad_data) by extension 'python_setup_py'
+[0.831s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extensions ['ignore', 'ignore_ament_install']
+[0.831s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extension 'ignore'
+[0.831s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extension 'ignore_ament_install'
+[0.831s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extensions ['colcon_pkg']
+[0.832s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extension 'colcon_pkg'
+[0.832s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extensions ['colcon_meta']
+[0.833s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extension 'colcon_meta'
+[0.833s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extensions ['ros']
+[0.833s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extension 'ros'
+[0.833s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extensions ['cmake', 'python']
+[0.834s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extension 'cmake'
+[0.834s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extension 'python'
+[0.834s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extensions ['python_setup_py']
+[0.834s] Level 1:colcon.colcon_core.package_identification:_identify(docs) by extension 'python_setup_py'
+[0.834s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.834s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.835s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.835s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.835s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.835s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.835s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extensions ['ignore', 'ignore_ament_install']
+[0.836s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extension 'ignore'
+[0.836s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extension 'ignore_ament_install'
+[0.836s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extensions ['colcon_pkg']
+[0.837s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extension 'colcon_pkg'
+[0.837s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extensions ['colcon_meta']
+[0.837s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extension 'colcon_meta'
+[0.837s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extensions ['ros']
+[0.837s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extension 'ros'
+[0.838s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extensions ['cmake', 'python']
+[0.838s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extension 'cmake'
+[0.838s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extension 'python'
+[0.839s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extensions ['python_setup_py']
+[0.839s] Level 1:colcon.colcon_core.package_identification:_identify(path_visualizations) by extension 'python_setup_py'
+[0.839s] Level 1:colcon.colcon_core.package_identification:_identify(xline_path_planner) by extensions ['ignore', 'ignore_ament_install']
+[0.840s] Level 1:colcon.colcon_core.package_identification:_identify(xline_path_planner) by extension 'ignore'
+[0.840s] Level 1:colcon.colcon_core.package_identification:_identify(xline_path_planner) by extension 'ignore_ament_install'
+[0.840s] Level 1:colcon.colcon_core.package_identification:_identify(xline_path_planner) by extensions ['colcon_pkg']
+[0.840s] Level 1:colcon.colcon_core.package_identification:_identify(xline_path_planner) by extension 'colcon_pkg'
+[0.841s] Level 1:colcon.colcon_core.package_identification:_identify(xline_path_planner) by extensions ['colcon_meta']
+[0.841s] Level 1:colcon.colcon_core.package_identification:_identify(xline_path_planner) by extension 'colcon_meta'
+[0.842s] Level 1:colcon.colcon_core.package_identification:_identify(xline_path_planner) by extensions ['ros']
+[0.842s] Level 1:colcon.colcon_core.package_identification:_identify(xline_path_planner) by extension 'ros'
+[0.849s] DEBUG:colcon.colcon_core.package_identification:Package 'xline_path_planner' with type 'ros.ament_cmake' and name 'xline_path_planner'
+[0.849s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.850s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.850s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.850s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.850s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.904s] Level 5:colcon.colcon_core.verb:set package 'xline_path_planner' build argument 'cmake_args' from command line to '['-DCMAKE_BUILD_TYPE=Release']'
+[0.905s] Level 5:colcon.colcon_core.verb:set package 'xline_path_planner' build argument 'cmake_target' from command line to 'None'
+[0.905s] Level 5:colcon.colcon_core.verb:set package 'xline_path_planner' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.905s] Level 5:colcon.colcon_core.verb:set package 'xline_path_planner' build argument 'cmake_clean_cache' from command line to 'False'
+[0.905s] Level 5:colcon.colcon_core.verb:set package 'xline_path_planner' build argument 'cmake_clean_first' from command line to 'False'
+[0.905s] Level 5:colcon.colcon_core.verb:set package 'xline_path_planner' build argument 'cmake_force_configure' from command line to 'False'
+[0.906s] Level 5:colcon.colcon_core.verb:set package 'xline_path_planner' build argument 'ament_cmake_args' from command line to 'None'
+[0.906s] Level 5:colcon.colcon_core.verb:set package 'xline_path_planner' build argument 'catkin_cmake_args' from command line to 'None'
+[0.906s] Level 5:colcon.colcon_core.verb:set package 'xline_path_planner' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.906s] DEBUG:colcon.colcon_core.verb:Building package 'xline_path_planner' with the following arguments: {'ament_cmake_args': None, 'build_base': '/root/xline_path_planner/build/xline_path_planner', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCMAKE_BUILD_TYPE=Release'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/root/xline_path_planner/install/xline_path_planner', 'merge_install': False, 'path': '/root/xline_path_planner/xline_path_planner', 'symlink_install': False, 'test_result_base': None}
+[0.907s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.909s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.911s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/root/xline_path_planner/xline_path_planner' with build type 'ament_cmake'
+[0.911s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/root/xline_path_planner/xline_path_planner'
+[0.919s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.919s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.919s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.945s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /root/xline_path_planner/xline_path_planner -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner
+[2.719s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /root/xline_path_planner/xline_path_planner -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner
+[2.720s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
+[24.363s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
+[24.384s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /root/xline_path_planner/build/xline_path_planner
+[24.412s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(xline_path_planner)
+[24.415s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /root/xline_path_planner/build/xline_path_planner
+[24.419s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner' for CMake module files
+[24.422s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner' for CMake config files
+[24.425s] Level 1:colcon.colcon_core.shell:create_environment_hook('xline_path_planner', 'cmake_prefix_path')
+[24.426s] INFO:colcon.colcon_core.shell:Creating environment hook '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/hook/cmake_prefix_path.ps1'
+[24.429s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/hook/cmake_prefix_path.dsv'
+[24.431s] INFO:colcon.colcon_core.shell:Creating environment hook '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/hook/cmake_prefix_path.sh'
+[24.433s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner/lib'
+[24.434s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner/bin'
+[24.434s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner/lib/pkgconfig/xline_path_planner.pc'
+[24.436s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner/lib/python3.10/site-packages'
+[24.437s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner/bin'
+[24.437s] INFO:colcon.colcon_core.shell:Creating package script '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.ps1'
+[24.442s] INFO:colcon.colcon_core.shell:Creating package descriptor '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.dsv'
+[24.444s] INFO:colcon.colcon_core.shell:Creating package script '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.sh'
+[24.446s] INFO:colcon.colcon_core.shell:Creating package script '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.bash'
+[24.448s] INFO:colcon.colcon_core.shell:Creating package script '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.zsh'
+[24.450s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/root/xline_path_planner/install/xline_path_planner/share/colcon-core/packages/xline_path_planner)
+[24.451s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(xline_path_planner)
+[24.452s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner' for CMake module files
+[24.453s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner' for CMake config files
+[24.453s] Level 1:colcon.colcon_core.shell:create_environment_hook('xline_path_planner', 'cmake_prefix_path')
+[24.454s] INFO:colcon.colcon_core.shell:Creating environment hook '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/hook/cmake_prefix_path.ps1'
+[24.457s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/hook/cmake_prefix_path.dsv'
+[24.459s] INFO:colcon.colcon_core.shell:Creating environment hook '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/hook/cmake_prefix_path.sh'
+[24.461s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner/lib'
+[24.461s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner/bin'
+[24.461s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner/lib/pkgconfig/xline_path_planner.pc'
+[24.461s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner/lib/python3.10/site-packages'
+[24.462s] Level 1:colcon.colcon_core.environment:checking '/root/xline_path_planner/install/xline_path_planner/bin'
+[24.463s] INFO:colcon.colcon_core.shell:Creating package script '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.ps1'
+[24.464s] INFO:colcon.colcon_core.shell:Creating package descriptor '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.dsv'
+[24.465s] INFO:colcon.colcon_core.shell:Creating package script '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.sh'
+[24.466s] INFO:colcon.colcon_core.shell:Creating package script '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.bash'
+[24.467s] INFO:colcon.colcon_core.shell:Creating package script '/root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.zsh'
+[24.468s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/root/xline_path_planner/install/xline_path_planner/share/colcon-core/packages/xline_path_planner)
+[24.469s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[24.469s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[24.470s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[24.470s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[24.494s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[24.494s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[24.495s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[24.495s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[24.498s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.Spawn.ExecFailed: /usr/bin/dbus-launch terminated abnormally without any error message
+[24.499s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[24.500s] INFO:colcon.colcon_core.shell:Creating prefix script '/root/xline_path_planner/install/local_setup.ps1'
+[24.503s] INFO:colcon.colcon_core.shell:Creating prefix util module '/root/xline_path_planner/install/_local_setup_util_ps1.py'
+[24.509s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/root/xline_path_planner/install/setup.ps1'
+[24.511s] INFO:colcon.colcon_core.shell:Creating prefix script '/root/xline_path_planner/install/local_setup.sh'
+[24.513s] INFO:colcon.colcon_core.shell:Creating prefix util module '/root/xline_path_planner/install/_local_setup_util_sh.py'
+[24.514s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/root/xline_path_planner/install/setup.sh'
+[24.516s] INFO:colcon.colcon_core.shell:Creating prefix script '/root/xline_path_planner/install/local_setup.bash'
+[24.517s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/root/xline_path_planner/install/setup.bash'
+[24.519s] INFO:colcon.colcon_core.shell:Creating prefix script '/root/xline_path_planner/install/local_setup.zsh'
+[24.523s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/root/xline_path_planner/install/setup.zsh'

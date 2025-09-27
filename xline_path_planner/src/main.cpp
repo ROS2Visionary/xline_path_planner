@@ -3,6 +3,9 @@
 #include <fstream>
 #include <filesystem>
 
+#include <yaml-cpp/yaml.h>
+#include "ament_index_cpp/get_package_share_directory.hpp"
+
 #include "rclcpp/rclcpp.hpp"
 #include "xline_path_planner/cad_parser.hpp"
 #include "xline_path_planner/grid_map_generator.hpp"
@@ -25,51 +28,133 @@ public:
 
   void updateParameters()
   {
-    // 设置文件路径参数
-    cad_file_path = "/root/xline_path_planner/cad_data/cad_2_transformed.json";
-    output_file_path = "/root/xline_path_planner/path_visualizations/path_from_cad.json";
-    path_visualization_dir = "/root/xline_path_planner/path_visualizations";
+    // 1) 定位并加载 YAML 配置文件
+    std::string yaml_path;
+    try
+    {
+      auto share_dir = ament_index_cpp::get_package_share_directory("xline_path_planner");
+      yaml_path = share_dir + "/config/planner.yaml";
+    }
+    catch (const std::exception& e)
+    {
+      RCLCPP_FATAL(this->get_logger(), "无法获取包共享目录: %s", e.what());
+      throw;
+    }
 
-    // 设置可视化参数
-    grid_map_scale = 4;              // 栅格地图缩放因子
-    show_grid_lines = true;          // 显示栅格线
-    image_format = "png";            // 图像格式
-    use_antialiasing = true;         // 使用抗锯齿
-    save_path_visualization = true;  // 保存路径可视化图像
+    if (!std::filesystem::exists(yaml_path))
+    {
+      RCLCPP_FATAL(this->get_logger(), "配置文件不存在: %s", yaml_path.c_str());
+      throw std::runtime_error("配置文件缺失");
+    }
 
-    // 设置CAD解析参数
-    cad_unit_conversion = 1000.0;  // 将毫米转为米
+    YAML::Node root;
+    try
+    {
+      root = YAML::LoadFile(yaml_path);
+    }
+    catch (const std::exception& e)
+    {
+      RCLCPP_FATAL(this->get_logger(), "读取配置文件失败: %s", e.what());
+      throw;
+    }
 
-    // 设置栅格地图参数
-    grid_resolution = 0.005;  // 栅格分辨率(米/格)
-    grid_padding = 0.1;       // 地图边界填充(米)
+    auto require = [&](const YAML::Node& n, const char* path_desc)
+    {
+      if (!n || n.IsNull())
+      {
+        std::string msg = std::string("配置缺失: ") + path_desc;
+        RCLCPP_FATAL(this->get_logger(), "%s", msg.c_str());
+        throw std::runtime_error(msg);
+      }
+    };
 
-    // 设置路径规划参数
-    left_offset = -0.05;                // 左侧打印机偏移(米)
-    right_offset = 0.05;                // 右侧打印机偏移(米)
-    printer_type_str = "LEFT_PRINTER";  // 默认使用左侧打印机
-    transition_speed = 0.5;             // 转场速度(米/秒)
-    drawing_speed = 0.3;                // 绘图速度(米/秒)
-    path_extension_length = 0.1;        // 路径延长长度(米)
+    // 2) 读取 文件路径 参数
+    YAML::Node files = root["files"];
+    require(files, "files");
+    require(files["cad_file_path"], "files.cad_file_path");
+    require(files["output_file_path"], "files.output_file_path");
+    require(files["path_visualization_dir"], "files.path_visualization_dir");
+    cad_file_path = files["cad_file_path"].as<std::string>();
+    output_file_path = files["output_file_path"].as<std::string>();
+    path_visualization_dir = files["path_visualization_dir"].as<std::string>();
 
-    // 设置轨迹生成参数
-    max_velocity = 0.5;      // 最大速度(米/秒)
-    max_acceleration = 0.5;  // 最大加速度(米/秒²)
+    // 3) 读取 可视化 参数（用于栅格与路径可视化）
+    YAML::Node vis = root["visualization"];
+    require(vis, "visualization");
+    require(vis["scale"], "visualization.scale");
+    require(vis["show_grid_lines"], "visualization.show_grid_lines");
+    require(vis["use_antialiasing"], "visualization.use_antialiasing");
+    require(vis["image_format"], "visualization.image_format");
+    require(vis["save_path_visualization"], "visualization.save_path_visualization");
+    grid_map_scale = vis["scale"].as<int>();
+    show_grid_lines = vis["show_grid_lines"].as<bool>();
+    use_antialiasing = vis["use_antialiasing"].as<bool>();
+    image_format = vis["image_format"].as<std::string>();
+    save_path_visualization = vis["save_path_visualization"].as<bool>();
 
-    // 验证CAD文件路径是否为空
+    // 4) 读取 CAD 解析 参数
+    YAML::Node cad = root["cad_parser"];
+    require(cad, "cad_parser");
+    require(cad["unit_conversion_factor"], "cad_parser.unit_conversion_factor");
+    require(cad["auto_scale_coordinates"], "cad_parser.auto_scale_coordinates");
+    require(cad["angle_unit"], "cad_parser.angle_unit");
+    cad_unit_conversion = cad["unit_conversion_factor"].as<double>();
+    bool auto_scale = cad["auto_scale_coordinates"].as<bool>();
+    std::string angle_unit_str = cad["angle_unit"].as<std::string>();
+
+    // 5) 读取 栅格地图 参数
+    YAML::Node grid = root["grid_map"];
+    require(grid, "grid_map");
+    require(grid["resolution"], "grid_map.resolution");
+    require(grid["padding"], "grid_map.padding");
+    grid_resolution = grid["resolution"].as<double>();
+    grid_padding = grid["padding"].as<double>();
+
+    // 6) 读取 偏移与规划 参数
+    YAML::Node offsets = root["offsets"];
+    require(offsets, "offsets");
+    require(offsets["left_offset"], "offsets.left_offset");
+    require(offsets["right_offset"], "offsets.right_offset");
+    require(offsets["printer_type"], "offsets.printer_type");
+    left_offset = offsets["left_offset"].as<double>();
+    right_offset = offsets["right_offset"].as<double>();
+    printer_type_str = offsets["printer_type"].as<std::string>();
+
+    YAML::Node planner = root["path_planner"];
+    require(planner, "path_planner");
+    require(planner["transition_speed"], "path_planner.transition_speed");
+    require(planner["drawing_speed"], "path_planner.drawing_speed");
+    require(planner["path_extension_length"], "path_planner.path_extension_length");
+    transition_speed = planner["transition_speed"].as<double>();
+    drawing_speed = planner["drawing_speed"].as<double>();
+    path_extension_length = planner["path_extension_length"].as<double>();
+
+    // 7) 读取 轨迹 参数
+    YAML::Node traj = root["trajectory"];
+    require(traj, "trajectory");
+    require(traj["max_velocity"], "trajectory.max_velocity");
+    require(traj["max_acceleration"], "trajectory.max_acceleration");
+    max_velocity = traj["max_velocity"].as<double>();
+    max_acceleration = traj["max_acceleration"].as<double>();
+
+    // 8) 基于读取参数进行配置对象赋值与检查
     if (cad_file_path.empty())
     {
-      RCLCPP_ERROR(this->get_logger(), "CAD文件路径未提供");
-      return;
+      RCLCPP_FATAL(this->get_logger(), "CAD文件路径未提供或为空");
+      throw std::runtime_error("缺少CAD文件路径");
     }
 
-    // 创建路径可视化目录（如果不存在）
     if (save_path_visualization)
     {
-      std::filesystem::create_directories(path_visualization_dir);
+      std::error_code ec;
+      std::filesystem::create_directories(path_visualization_dir, ec);
+      if (ec)
+      {
+        RCLCPP_ERROR(this->get_logger(), "创建可视化目录失败: %s", ec.message().c_str());
+      }
     }
 
-    // 设置打印机类型
+    // 打印机类型
     PrinterType printer_type = PrinterType::LEFT_PRINTER;
     if (printer_type_str == "RIGHT_PRINTER")
     {
@@ -79,42 +164,63 @@ public:
     {
       printer_type = PrinterType::BOTH_PRINTERS;
     }
+    else if (printer_type_str == "LEFT_PRINTER")
+    {
+      printer_type = PrinterType::LEFT_PRINTER;
+    }
+    else
+    {
+      RCLCPP_FATAL(this->get_logger(), "未知的打印机类型: %s", printer_type_str.c_str());
+      throw std::runtime_error("非法的printer_type");
+    }
 
-    // 配置CAD解析器参数
+    // CAD 解析配置
     cad_parser_config.unit_conversion_factor = cad_unit_conversion;
-    cad_parser_config.auto_scale_coordinates = true;
+    cad_parser_config.auto_scale_coordinates = auto_scale;
+    if (angle_unit_str == "DEGREES" || angle_unit_str == "degrees" || angle_unit_str == "deg")
+    {
+      cad_parser_config.angle_unit = AngleUnit::DEGREES;
+    }
+    else if (angle_unit_str == "RADIANS" || angle_unit_str == "radians" || angle_unit_str == "rad")
+    {
+      cad_parser_config.angle_unit = AngleUnit::RADIANS;
+    }
+    else
+    {
+      RCLCPP_FATAL(this->get_logger(), "未知的角度单位: %s", angle_unit_str.c_str());
+      throw std::runtime_error("非法的angle_unit");
+    }
 
-    // 配置栅格地图参数
+    // 栅格地图参数
     grid_map_config.resolution = grid_resolution;
     grid_map_config.padding = grid_padding;
 
-    // 配置路径规划器参数
+    // 路径规划参数
     path_planner_config.transition_speed = transition_speed;
     path_planner_config.drawing_speed = drawing_speed;
     path_planner_config.path_extension_length = path_extension_length;
 
-    // 配置偏移参数
+    // 偏移参数
     offset_config.left_offset = left_offset;
     offset_config.right_offset = right_offset;
     offset_config.printer_type = printer_type;
 
-    // 配置轨迹生成器参数
+    // 轨迹参数
     trajectory_config.max_velocity = max_velocity;
     trajectory_config.max_acceleration = max_acceleration;
 
-    // 配置栅格地图可视化参数
-    grid_viz_config.scale = 4;  // 栅格地图缩放因子
+    // 可视化参数（同时用于栅格与路径）
+    grid_viz_config.scale = grid_map_scale;
     grid_viz_config.show_grid_lines = show_grid_lines;
     grid_viz_config.use_antialiasing = use_antialiasing;
     grid_viz_config.image_format = image_format;
 
-    // 配置路径可视化参数
     path_viz_config.scale = grid_map_scale;
     path_viz_config.show_grid_lines = show_grid_lines;
     path_viz_config.use_antialiasing = use_antialiasing;
     path_viz_config.image_format = image_format;
 
-    RCLCPP_INFO(this->get_logger(), "路径规划节点已初始化完成");
+    RCLCPP_INFO(this->get_logger(), "配置加载完成: %s", yaml_path.c_str());
   }
 
 private:

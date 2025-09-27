@@ -8,6 +8,8 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(ament_index_cpp REQUIRED)
+find_package(yaml-cpp REQUIRED)
 # OpenCV is required by the planner and visualization utilities
 find_package(OpenCV REQUIRED)
 
@@ -27,15 +29,22 @@ target_include_directories(planner_node PUBLIC
 )
 target_link_libraries(planner_node
   ${OpenCV_LIBS}
+  yaml-cpp
 )
 target_compile_features(planner_node PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 ament_target_dependencies(
   planner_node
   "rclcpp"
+  "ament_index_cpp"
 )
 
 install(TARGETS planner_node
   DESTINATION lib/${PROJECT_NAME})
+
+# Install configuration files (YAML)
+install(DIRECTORY config
+  DESTINATION share/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

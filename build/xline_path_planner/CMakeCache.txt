@@ -508,6 +508,9 @@ xline_path_planner_SOURCE_DIR:STATIC=/root/xline_path_planner/xline_path_planner
 //Path to a program.
 xmllint_BIN:FILEPATH=/usr/bin/xmllint
 
+//The directory containing a CMake configuration file for yaml-cpp.
+yaml-cpp_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/yaml-cpp
+
 //The directory containing a CMake configuration file for yaml.
 yaml_DIR:PATH=/opt/ros/humble/cmake
 
