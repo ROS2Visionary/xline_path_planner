@@ -77,61 +77,142 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
       auto it = id2line.find(seg.line_id);
       if (it != id2line.end()) src = it->second;
 
-      // 若仅两个点，则导出为 line，使用 start/end 结构；否则仍输出 polyline
-      if (seg.points.size() == 2)
+      // 根据源几何类型进行导出，确保圆/圆弧被正确导出，且包含起点/终点
+      if (src && src->type == GeometryType::CIRCLE)
       {
-        const auto& p0 = seg.points.front();
-        const auto& p1 = seg.points.back();
+        // 圆：输出 center/radius，并补充 start/end
+        const Circle* circle = dynamic_cast<const Circle*>(src);
+        nlohmann::json j;
+        j["id"] = (src ? src->id : seg.line_id);
+        j["type"] = "circle";
+        j["order"] = static_cast<int>(seg_idx);
+        j["work"] = true;
 
-        nlohmann::json line;
-        line["id"] = (src ? src->id : seg.line_id);
-        line["type"] = "line";
-        line["order"] = static_cast<int>(seg_idx);
-        line["work"] = true; // 绘图段：工作
-
-        line["line_type"] = (src ? src->line_type : std::string("continuous"));
-        line["thickness"] = (src ? src->thickness : 1.0);
-        line["hidden"] = (src ? src->hidden : false);
-        line["layer"] = (src && !src->layer.empty()) ? src->layer : std::string("Default");
-        line["color"] = (src && !src->color.empty()) ? src->color : std::string("#FFFFFF");
+        j["line_type"] = (src ? src->line_type : std::string("continuous"));
+        j["thickness"] = (src ? src->thickness : 1.0);
+        j["hidden"] = (src ? src->hidden : false);
+        j["layer"] = (src && !src->layer.empty()) ? src->layer : std::string("Default");
+        j["color"] = (src && !src->color.empty()) ? src->color : std::string("#FFFFFF");
         if (src)
         {
-          line["selected"] = src->selected;
-          line["layer_id"] = src->layer_id;
+          j["selected"] = src->selected;
+          j["layer_id"] = src->layer_id;
         }
 
-        line["start"] = { {"x", p0.x}, {"y", p0.y} };
-        line["end"] = { {"x", p1.x}, {"y", p1.y} };
+        if (circle)
+        {
+          j["center"] = { {"x", circle->center.x}, {"y", circle->center.y} };
+          j["radius"] = circle->radius;
+        }
 
-        root["lines"].push_back(line);
+        const auto& p0 = seg.points.front();
+        const auto& p1 = seg.points.back();
+        j["start"] = { {"x", p0.x}, {"y", p0.y} };
+        j["end"] = { {"x", p1.x}, {"y", p1.y} };
+
+        root["lines"].push_back(j);
+      }
+      else if (src && src->type == GeometryType::ARC)
+      {
+        // 圆弧：输出 center/radius/start_angle/end_angle（度），并补充 start/end
+        const Arc* arc = dynamic_cast<const Arc*>(src);
+        nlohmann::json j;
+        j["id"] = (src ? src->id : seg.line_id);
+        j["type"] = "arc";
+        j["order"] = static_cast<int>(seg_idx);
+        j["work"] = true;
+
+        j["line_type"] = (src ? src->line_type : std::string("continuous"));
+        j["thickness"] = (src ? src->thickness : 1.0);
+        j["hidden"] = (src ? src->hidden : false);
+        j["layer"] = (src && !src->layer.empty()) ? src->layer : std::string("Default");
+        j["color"] = (src && !src->color.empty()) ? src->color : std::string("#FFFFFF");
+        if (src)
+        {
+          j["selected"] = src->selected;
+          j["layer_id"] = src->layer_id;
+        }
+
+        if (arc)
+        {
+          j["center"] = { {"x", arc->center.x}, {"y", arc->center.y} };
+          j["radius"] = arc->radius;
+          // 角度以度导出（避免依赖 M_PI）
+          auto rad2deg = [](double r) { return r * 180.0 / 3.14159265358979323846; };
+          j["start_angle"] = rad2deg(arc->start_angle);
+          j["end_angle"] = rad2deg(arc->end_angle);
+        }
+
+        const auto& p0 = seg.points.front();
+        const auto& p1 = seg.points.back();
+        j["start"] = { {"x", p0.x}, {"y", p0.y} };
+        j["end"] = { {"x", p1.x}, {"y", p1.y} };
+
+        root["lines"].push_back(j);
       }
       else
       {
-        nlohmann::json poly;
-        poly["id"] = (src ? src->id : seg.line_id);
-        poly["type"] = "polyline";
-        poly["order"] = static_cast<int>(seg_idx);
-        poly["work"] = true; // 绘图段：工作
-
-        poly["line_type"] = (src ? src->line_type : std::string("continuous"));
-        poly["thickness"] = (src ? src->thickness : 1.0);
-        poly["hidden"] = (src ? src->hidden : false);
-        poly["layer"] = (src && !src->layer.empty()) ? src->layer : std::string("Default");
-        poly["color"] = (src && !src->color.empty()) ? src->color : std::string("#FFFFFF");
-        if (src)
+        // 非圆/圆弧：保留之前的 line/polyline 导出策略
+        if (seg.points.size() == 2)
         {
-          poly["selected"] = src->selected;
-          poly["layer_id"] = src->layer_id;
-        }
+          const auto& p0 = seg.points.front();
+          const auto& p1 = seg.points.back();
 
-        nlohmann::json vertices = nlohmann::json::array();
-        for (const auto& p : seg.points)
+          nlohmann::json line;
+          line["id"] = (src ? src->id : seg.line_id);
+          line["type"] = "line";
+          line["order"] = static_cast<int>(seg_idx);
+          line["work"] = true; // 绘图段：工作
+
+          line["line_type"] = (src ? src->line_type : std::string("continuous"));
+          line["thickness"] = (src ? src->thickness : 1.0);
+          line["hidden"] = (src ? src->hidden : false);
+          line["layer"] = (src && !src->layer.empty()) ? src->layer : std::string("Default");
+          line["color"] = (src && !src->color.empty()) ? src->color : std::string("#FFFFFF");
+          if (src)
+          {
+            line["selected"] = src->selected;
+            line["layer_id"] = src->layer_id;
+          }
+
+          line["start"] = { {"x", p0.x}, {"y", p0.y} };
+          line["end"] = { {"x", p1.x}, {"y", p1.y} };
+
+          root["lines"].push_back(line);
+        }
+        else
         {
-          vertices.push_back({ {"x", p.x}, {"y", p.y} });
-        }
-        poly["vertices"] = vertices;
+          nlohmann::json poly;
+          poly["id"] = (src ? src->id : seg.line_id);
+          poly["type"] = "polyline";
+          poly["order"] = static_cast<int>(seg_idx);
+          poly["work"] = true; // 绘图段：工作
 
-        root["lines"].push_back(poly);
+          poly["line_type"] = (src ? src->line_type : std::string("continuous"));
+          poly["thickness"] = (src ? src->thickness : 1.0);
+          poly["hidden"] = (src ? src->hidden : false);
+          poly["layer"] = (src && !src->layer.empty()) ? src->layer : std::string("Default");
+          poly["color"] = (src && !src->color.empty()) ? src->color : std::string("#FFFFFF");
+          if (src)
+          {
+            poly["selected"] = src->selected;
+            poly["layer_id"] = src->layer_id;
+          }
+
+          nlohmann::json vertices = nlohmann::json::array();
+          for (const auto& p : seg.points)
+          {
+            vertices.push_back({ {"x", p.x}, {"y", p.y} });
+          }
+          poly["vertices"] = vertices;
+          // 同步给出起点/终点，避免消费端仅解析 start/end 的场景
+          const auto& p0 = seg.points.front();
+          const auto& p1 = seg.points.back();
+          poly["start"] = { {"x", p0.x}, {"y", p0.y} };
+          poly["end"] = { {"x", p1.x}, {"y", p1.y} };
+
+          root["lines"].push_back(poly);
+        }
       }
     }
   }
@@ -156,6 +237,7 @@ nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start
   j["layer_id"] = 1000000;
   j["layer"] = "TRANSITION";
   j["color"] = "#D3D3D3";
+  j["opacity"] = 0.5;
   j["order"] = order;
   j["work"] = false;
 

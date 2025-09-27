@@ -32,6 +32,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 1,
       "selected": false,
       "start": {
@@ -74,6 +75,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 3,
       "selected": false,
       "start": {
@@ -116,6 +118,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 5,
       "selected": false,
       "start": {
@@ -158,6 +161,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 7,
       "selected": false,
       "start": {
@@ -200,6 +204,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 9,
       "selected": false,
       "start": {
@@ -242,6 +247,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 11,
       "selected": false,
       "start": {
@@ -284,6 +290,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 13,
       "selected": false,
       "start": {
@@ -326,6 +333,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 15,
       "selected": false,
       "start": {
@@ -368,6 +376,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 17,
       "selected": false,
       "start": {
@@ -410,6 +419,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 19,
       "selected": false,
       "start": {
@@ -452,6 +462,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 21,
       "selected": false,
       "start": {
@@ -494,6 +505,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 23,
       "selected": false,
       "start": {
@@ -536,6 +548,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 25,
       "selected": false,
       "start": {
@@ -578,6 +591,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 27,
       "selected": false,
       "start": {
@@ -620,6 +634,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 29,
       "selected": false,
       "start": {
@@ -631,166 +646,29 @@
       "work": false
     },
     {
+      "center": {
+        "x": -0.31989396081121685,
+        "y": -0.14231347411608478
+      },
       "color": "#0d6efd",
+      "end": {
+        "x": -0.2553686516318656,
+        "y": -0.04705179144429199
+      },
       "hidden": false,
       "id": 150,
       "layer": "路径",
       "layer_id": 1,
       "line_type": "continuous",
       "order": 30,
+      "radius": 0.006,
       "selected": true,
+      "start": {
+        "x": -0.2553686516318656,
+        "y": -0.23757515678787755
+      },
       "thickness": 1.0,
-      "type": "polyline",
-      "vertices": [
-        {
-          "x": -0.2553686516318656,
-          "y": -0.23757515678787755
-        },
-        {
-          "x": -0.26474472664253323,
-          "y": -0.13258917616673616
-        },
-        {
-          "x": -0.267271174047206,
-          "y": -0.12316034608984726
-        },
-        {
-          "x": -0.271396538199288,
-          "y": -0.11431347411608521
-        },
-        {
-          "x": -0.27699547199655433,
-          "y": -0.10631736797363825
-        },
-        {
-          "x": -0.28389785466877077,
-          "y": -0.09941498530142193
-        },
-        {
-          "x": -0.29189396081121693,
-          "y": -0.09381605150415614
-        },
-        {
-          "x": -0.3007408327849797,
-          "y": -0.0896906873520738
-        },
-        {
-          "x": -0.3101696628618688,
-          "y": -0.0871642399474011
-        },
-        {
-          "x": -0.31989396081121685,
-          "y": -0.08631347411608477
-        },
-        {
-          "x": -0.3296182587605649,
-          "y": -0.0871642399474011
-        },
-        {
-          "x": -0.339047088837454,
-          "y": -0.0896906873520738
-        },
-        {
-          "x": -0.34789396081121676,
-          "y": -0.09381605150415614
-        },
-        {
-          "x": -0.35589006695366293,
-          "y": -0.09941498530142193
-        },
-        {
-          "x": -0.36279244962587937,
-          "y": -0.10631736797363825
-        },
-        {
-          "x": -0.3683913834231457,
-          "y": -0.11431347411608521
-        },
-        {
-          "x": -0.3725167475752277,
-          "y": -0.12316034608984726
-        },
-        {
-          "x": -0.37504319497990046,
-          "y": -0.13258917616673618
-        },
-        {
-          "x": -0.37589396081121684,
-          "y": -0.14231347411608478
-        },
-        {
-          "x": -0.37504319497990046,
-          "y": -0.15203777206543337
-        },
-        {
-          "x": -0.3725167475752277,
-          "y": -0.16146660214232228
-        },
-        {
-          "x": -0.3683913834231457,
-          "y": -0.17031347411608433
-        },
-        {
-          "x": -0.36279244962587937,
-          "y": -0.1783095802585313
-        },
-        {
-          "x": -0.35589006695366293,
-          "y": -0.18521196293074763
-        },
-        {
-          "x": -0.3478939608112172,
-          "y": -0.19081089672801313
-        },
-        {
-          "x": -0.33904708883745427,
-          "y": -0.1949362608800957
-        },
-        {
-          "x": -0.32961825876056455,
-          "y": -0.1974627082847685
-        },
-        {
-          "x": -0.31989396081121685,
-          "y": -0.1983134741160848
-        },
-        {
-          "x": -0.3101696628618688,
-          "y": -0.19746270828476845
-        },
-        {
-          "x": -0.3007408327849797,
-          "y": -0.19493626088009575
-        },
-        {
-          "x": -0.29189396081121693,
-          "y": -0.1908108967280134
-        },
-        {
-          "x": -0.28389785466877077,
-          "y": -0.18521196293074763
-        },
-        {
-          "x": -0.27699547199655433,
-          "y": -0.1783095802585313
-        },
-        {
-          "x": -0.271396538199288,
-          "y": -0.17031347411608433
-        },
-        {
-          "x": -0.267271174047206,
-          "y": -0.16146660214232228
-        },
-        {
-          "x": -0.26474472664253323,
-          "y": -0.1520377720654334
-        },
-        {
-          "x": -0.2553686516318656,
-          "y": -0.04705179144429199
-        }
-      ],
+      "type": "circle",
       "work": true
     },
     {
@@ -804,6 +682,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 31,
       "selected": false,
       "start": {
@@ -846,6 +725,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 33,
       "selected": false,
       "start": {
@@ -888,6 +768,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 35,
       "selected": false,
       "start": {
@@ -930,6 +811,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 37,
       "selected": false,
       "start": {
@@ -972,6 +854,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 39,
       "selected": false,
       "start": {
@@ -1014,6 +897,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 41,
       "selected": false,
       "start": {
@@ -1056,6 +940,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 43,
       "selected": false,
       "start": {
@@ -1098,6 +983,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 45,
       "selected": false,
       "start": {
@@ -1140,6 +1026,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 47,
       "selected": false,
       "start": {
@@ -1182,6 +1069,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 49,
       "selected": false,
       "start": {
@@ -1224,6 +1112,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 51,
       "selected": false,
       "start": {
@@ -1266,6 +1155,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 53,
       "selected": false,
       "start": {
@@ -1308,6 +1198,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 55,
       "selected": false,
       "start": {
@@ -1350,6 +1241,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 57,
       "selected": false,
       "start": {
@@ -1392,6 +1284,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 59,
       "selected": false,
       "start": {
@@ -1434,6 +1327,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 61,
       "selected": false,
       "start": {
@@ -1476,6 +1370,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 63,
       "selected": false,
       "start": {
@@ -1518,6 +1413,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 65,
       "selected": false,
       "start": {
@@ -1560,6 +1456,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 67,
       "selected": false,
       "start": {
@@ -1602,6 +1499,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 69,
       "selected": false,
       "start": {
@@ -1644,6 +1542,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 71,
       "selected": false,
       "start": {
@@ -1686,6 +1585,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 73,
       "selected": false,
       "start": {
@@ -1728,6 +1628,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 75,
       "selected": false,
       "start": {
@@ -1770,6 +1671,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 77,
       "selected": false,
       "start": {
@@ -1812,6 +1714,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 79,
       "selected": false,
       "start": {
@@ -1854,6 +1757,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 81,
       "selected": false,
       "start": {
@@ -1896,6 +1800,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 83,
       "selected": false,
       "start": {
@@ -1907,62 +1812,31 @@
       "work": false
     },
     {
+      "center": {
+        "x": -0.31989396081121685,
+        "y": -0.14231347411608478
+      },
       "color": "#0d6efd",
+      "end": {
+        "x": -1.0771558280906923,
+        "y": 0.4950928541473548
+      },
+      "end_angle": 134.35719584049573,
       "hidden": false,
       "id": 151,
       "layer": "路径",
       "layer_id": 1,
       "line_type": "continuous",
       "order": 84,
+      "radius": 0.9275416725787868,
       "selected": true,
+      "start": {
+        "x": 0.44272952304244206,
+        "y": 0.48866813006963605
+      },
+      "start_angle": 45.158415805579466,
       "thickness": 1.0,
-      "type": "polyline",
-      "vertices": [
-        {
-          "x": 0.44272952304244206,
-          "y": 0.48866813006963605
-        },
-        {
-          "x": 0.2536094002176894,
-          "y": 0.6493187741638095
-        },
-        {
-          "x": 0.12392846305805755,
-          "y": 0.7286683728238696
-        },
-        {
-          "x": -0.016487534062156882,
-          "y": 0.7869508918398576
-        },
-        {
-          "x": -0.16424224596649994,
-          "y": 0.8227566089835994
-        },
-        {
-          "x": -0.3157618205770989,
-          "y": 0.8352194649940087
-        },
-        {
-          "x": -0.46738134230797185,
-          "y": 0.8240380115905201
-        },
-        {
-          "x": -0.6154334780785009,
-          "y": 0.7894827028247486
-        },
-        {
-          "x": -0.75633718180063,
-          "y": 0.7323893534090802
-        },
-        {
-          "x": -0.886684311778997,
-          "y": 0.654138922250423
-        },
-        {
-          "x": -1.0771558280906923,
-          "y": 0.4950928541473548
-        }
-      ],
+      "type": "arc",
       "work": true
     },
     {
@@ -1976,6 +1850,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 85,
       "selected": false,
       "start": {
@@ -2018,6 +1893,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 87,
       "selected": false,
       "start": {
@@ -2060,6 +1936,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 89,
       "selected": false,
       "start": {
@@ -2102,6 +1979,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 91,
       "selected": false,
       "start": {
@@ -2144,6 +2022,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 93,
       "selected": false,
       "start": {
@@ -2186,6 +2065,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 95,
       "selected": false,
       "start": {
@@ -2228,6 +2108,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 97,
       "selected": false,
       "start": {
@@ -2270,6 +2151,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 99,
       "selected": false,
       "start": {
@@ -2312,6 +2194,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 101,
       "selected": false,
       "start": {
@@ -2354,6 +2237,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 103,
       "selected": false,
       "start": {
@@ -2396,6 +2280,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 105,
       "selected": false,
       "start": {
@@ -2438,6 +2323,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 107,
       "selected": false,
       "start": {
@@ -2480,6 +2366,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 109,
       "selected": false,
       "start": {
@@ -2522,6 +2409,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 111,
       "selected": false,
       "start": {
@@ -2564,6 +2452,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 113,
       "selected": false,
       "start": {
@@ -2606,6 +2495,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 115,
       "selected": false,
       "start": {
@@ -2648,6 +2538,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 117,
       "selected": false,
       "start": {
@@ -2690,6 +2581,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 119,
       "selected": false,
       "start": {
@@ -2732,6 +2624,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 121,
       "selected": false,
       "start": {
@@ -2774,6 +2667,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 123,
       "selected": false,
       "start": {
@@ -2816,6 +2710,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 125,
       "selected": false,
       "start": {
@@ -2858,6 +2753,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 127,
       "selected": false,
       "start": {
@@ -2900,6 +2796,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 129,
       "selected": false,
       "start": {
@@ -2942,6 +2839,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 131,
       "selected": false,
       "start": {
@@ -2984,6 +2882,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 133,
       "selected": false,
       "start": {
@@ -3026,6 +2925,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 135,
       "selected": false,
       "start": {
@@ -3068,6 +2968,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 137,
       "selected": false,
       "start": {
@@ -3110,6 +3011,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 139,
       "selected": false,
       "start": {
@@ -3152,6 +3054,7 @@
       "layer": "TRANSITION",
       "layer_id": 1000000,
       "line_type": "",
+      "opacity": 0.5,
       "order": 141,
       "selected": false,
       "start": {

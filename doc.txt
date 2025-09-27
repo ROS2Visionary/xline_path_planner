@@ -12,4 +12,4 @@ ros2 run xline_path_planner planner_node
 
 xline_path_planner/include/xline_path_planner/output_formatter.hpp将规划好的路径格式化为JSON输出时需要重新参考文档“docs/导出JSON数据结构说明.md”，规划的路径有转场路径，对于转场路径："color"统一为浅灰色，透明度位0.5；"id"统一为1000000；"type"统一为line；"selected"统一为false；"line_type"统一为空字符；"hidden"统一为false；"thickness"统一位1.0； "layer_id"统一为1000000； "line_type"统一为空字符。请详细分析我的需求并实现
 
-
+在导出数据时是不是没有对圆和圆弧进行导出，圆和圆弧也需要包含起点和终点，详细分析

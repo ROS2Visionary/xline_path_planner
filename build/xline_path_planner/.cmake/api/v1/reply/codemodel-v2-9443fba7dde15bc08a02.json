@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-a83218bcf0a21d3cd161.json",
+					"jsonFile" : "directory-.-Release-a83218bcf0a21d3cd161.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.12"
@@ -22,7 +22,7 @@
 					]
 				}
 			],
-			"name" : "",
+			"name" : "Release",
 			"projects" : 
 			[
 				{
@@ -44,21 +44,21 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "planner_node::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-planner_node-a110f73a5850a174a50a.json",
+					"jsonFile" : "target-planner_node-Release-9bbc3c2e2a2095e5a144.json",
 					"name" : "planner_node",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "uninstall::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-uninstall-576083b49e326dbc0e76.json",
+					"jsonFile" : "target-uninstall-Release-576083b49e326dbc0e76.json",
 					"name" : "uninstall",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "xline_path_planner_uninstall::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-xline_path_planner_uninstall-68cc66c904846891e7aa.json",
+					"jsonFile" : "target-xline_path_planner_uninstall-Release-68cc66c904846891e7aa.json",
 					"name" : "xline_path_planner_uninstall",
 					"projectIndex" : 0
 				}
