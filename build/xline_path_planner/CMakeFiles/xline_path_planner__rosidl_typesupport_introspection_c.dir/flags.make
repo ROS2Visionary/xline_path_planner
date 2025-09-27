@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -DRCUTILS_ENABLE_FAULT_INJECTION -DROSIDL_TYPESUPPORT_INTROSPECTION_C_BUILDING_DLL_xline_path_planner -DROS_PACKAGE_NAME=\"xline_path_planner\"
 
-C_INCLUDES = -I/root/xline_path_planner/build/xline_path_planner/rosidl_typesupport_introspection_c -I/root/xline_path_planner/build/xline_path_planner/rosidl_generator_c -isystem /opt/ros/humble/include/builtin_interfaces -isystem /opt/ros/humble/include/rosidl_runtime_c -isystem /opt/ros/humble/include/rcutils -isystem /opt/ros/humble/include/rosidl_typesupport_interface -isystem /opt/ros/humble/include/action_msgs -isystem /opt/ros/humble/include/unique_identifier_msgs -isystem /opt/ros/humble/include/rosidl_typesupport_introspection_c
+C_INCLUDES = -I/root/xline_path_planner/build/xline_path_planner/rosidl_typesupport_introspection_c -I/root/xline_path_planner/build/xline_path_planner/rosidl_generator_c -isystem /opt/ros/humble/include/builtin_interfaces -isystem /opt/ros/humble/include/rosidl_runtime_c -isystem /opt/ros/humble/include/rcutils -isystem /opt/ros/humble/include/rosidl_typesupport_interface -isystem /opt/ros/humble/include/rosidl_typesupport_introspection_c
 
 C_FLAGS = -O3 -DNDEBUG -fPIC -Wall -std=gnu11
 

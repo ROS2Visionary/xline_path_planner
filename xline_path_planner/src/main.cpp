@@ -10,17 +10,24 @@
 #include "ament_index_cpp/get_package_share_directory.hpp"
 
 #include "rclcpp/rclcpp.hpp"
-#include "rclcpp_action/rclcpp_action.hpp"
-#include "xline_path_planner/action/plan_path.hpp"
+#include "xline_path_planner/srv/plan_path.hpp"
 
 #include "xline_path_planner/cad_parser.hpp"
 #include "xline_path_planner/grid_map_generator.hpp"
 #include "xline_path_planner/path_planner.hpp"
 #include "xline_path_planner/trajectory_generator.hpp"
 #include "xline_path_planner/output_formatter.hpp"
-#include "xline_path_planner/planner_engine.hpp"
 
 using namespace daosnrs_planning;
+
+struct PlannerEngineConfig
+{
+  CADParserConfig cad_parser;
+  GridMapConfig grid_map;
+  PathPlannerConfig path_planner;
+  PathOffsetConfig offsets;
+  TrajectoryConfig trajectory;
+};
 
 class PlannerNode : public rclcpp::Node
 {
@@ -29,8 +36,8 @@ public:
   {
     // 加载基础配置（严格 YAML）
     updateParameters();
-    // 启动 Action Server
-    start_action_server();
+    // 启动 Service Server
+    start_service_server();
   }
 
   void updateParameters()
@@ -97,9 +104,11 @@ public:
     require(cad["unit_conversion_factor"], "cad_parser.unit_conversion_factor");
     require(cad["auto_scale_coordinates"], "cad_parser.auto_scale_coordinates");
     require(cad["angle_unit"], "cad_parser.angle_unit");
+    require(cad["cad_file_dir"], "cad_parser.cad_file_dir");
     cad_unit_conversion = cad["unit_conversion_factor"].as<double>();
     bool auto_scale = cad["auto_scale_coordinates"].as<bool>();
     std::string angle_unit_str = cad["angle_unit"].as<std::string>();
+    cad_files_dir_ = cad["cad_file_dir"].as<std::string>();
 
     // 4) 读取 栅格地图 参数
     YAML::Node grid = root["grid_map"];
@@ -207,45 +216,15 @@ public:
     RCLCPP_INFO(this->get_logger(), "配置加载完成: %s", yaml_path.c_str());
   }
 
-  // 启动 Action Server（plan_path）
-  void start_action_server()
+  // 启动 Service Server（plan_path）
+  void start_service_server()
   {
-    using PlanPath = xline_path_planner::action::PlanPath;
     using namespace std::placeholders;
-
-    action_server_ = rclcpp_action::create_server<PlanPath>(
-      this,
+    service_ = this->create_service<xline_path_planner::srv::PlanPath>(
       "plan_path",
-      std::bind(&PlannerNode::handle_goal, this, _1, _2),
-      std::bind(&PlannerNode::handle_cancel, this, _1),
-      std::bind(&PlannerNode::handle_accepted, this, _1)
+      std::bind(&PlannerNode::handle_service, this, _1, _2, _3)
     );
-    RCLCPP_INFO(this->get_logger(), "Action server 'plan_path' is ready");
-  }
-
-  // Action: 接收目标
-  rclcpp_action::GoalResponse handle_goal(const rclcpp_action::GoalUUID&,
-                                          std::shared_ptr<const xline_path_planner::action::PlanPath::Goal> goal)
-  {
-    if (goal->cad_json.empty())
-    {
-      RCLCPP_WARN(this->get_logger(), "拒绝空 cad_json 的请求");
-      return rclcpp_action::GoalResponse::REJECT;
-    }
-    return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
-  }
-
-  // Action: 处理取消
-  rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)
-  {
-    RCLCPP_INFO(this->get_logger(), "收到取消请求");
-    return rclcpp_action::CancelResponse::ACCEPT;
-  }
-
-  // Action: 接受后执行
-  void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)
-  {
-    std::thread([this, goal_handle]() { this->execute(goal_handle); }).detach();
+    RCLCPP_INFO(this->get_logger(), "Service server 'plan_path' is ready");
   }
 
   // 将当前节点配置打包为引擎配置
@@ -260,29 +239,42 @@ public:
     return cfg;
   }
 
-  void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)
+  // Service: 处理请求
+  void handle_service(const std::shared_ptr<rmw_request_id_t>,
+                      const std::shared_ptr<xline_path_planner::srv::PlanPath::Request> req,
+                      std::shared_ptr<xline_path_planner::srv::PlanPath::Response> res)
   {
-    using PlanPath = xline_path_planner::action::PlanPath;
-    auto goal = goal_handle->get_goal();
-    auto feedback = std::make_shared<PlanPath::Feedback>();
-    auto result = std::make_shared<PlanPath::Result>();
-
     try
     {
       // 1) 构造配置
       PlannerEngineConfig cfg = build_engine_cfg_from_node();
 
-      // 2) 解析 CAD JSON
-      feedback->progress = 5; feedback->stage = "parse"; feedback->info = "解析CAD"; goal_handle->publish_feedback(feedback);
-      CADParser cad_parser(cfg.cad_parser);
-      if (!cad_parser.parse_from_string(goal->cad_json))
+      // 2) 解析 CAD 文件：文件名 + 配置目录 拼完整路径
+      if (req->file_name.empty())
       {
-        throw std::runtime_error("CAD JSON 解析失败");
+        throw std::runtime_error("请求中的 file_name 为空");
+      }
+      std::filesystem::path input_path(req->file_name);
+      if (!input_path.is_absolute())
+      {
+        if (cad_files_dir_.empty())
+        {
+          throw std::runtime_error("配置 cad_parser.cad_file_dir 为空，无法构建CAD文件完整路径");
+        }
+        input_path = std::filesystem::path(cad_files_dir_) / input_path;
+      }
+      if (!std::filesystem::exists(input_path))
+      {
+        throw std::runtime_error(std::string("CAD 文件不存在: ") + input_path.string());
+      }
+      CADParser cad_parser(cfg.cad_parser);
+      if (!cad_parser.parse(input_path.string()))
+      {
+        throw std::runtime_error("CAD 文件解析失败: " + input_path.string());
       }
       CADData cad_data = cad_parser.get_cad_data();
 
       // 3) 生成栅格地图
-      feedback->progress = 25; feedback->stage = "grid"; feedback->info = "生成栅格"; goal_handle->publish_feedback(feedback);
       GridMapGenerator grid_map_generator(cfg.grid_map);
       if (!grid_map_generator.generate_from_cad(cad_data))
       {
@@ -291,7 +283,6 @@ public:
       const auto& grid_map = grid_map_generator.get_grid_map();
 
       // 4) 路径规划
-      feedback->progress = 55; feedback->stage = "plan"; feedback->info = "规划路径"; goal_handle->publish_feedback(feedback);
       PathPlanner path_planner(cfg.path_planner);
       path_planner.set_grid_map(grid_map, &grid_map_generator);
       auto path_segments = path_planner.plan_paths(cad_data, cfg.offsets);
@@ -300,27 +291,30 @@ public:
         throw std::runtime_error("路径规划失败，未生成任何路径段");
       }
 
-      // 5) 轨迹生成（可选，当前仅用于校验，不影响最终JSON输出）
-      feedback->progress = 75; feedback->stage = "traj"; feedback->info = "生成轨迹"; goal_handle->publish_feedback(feedback);
+      // 5) 轨迹生成（可选：为了验证路径可行性）
       TrajectoryGenerator trajectory_generator(cfg.trajectory);
       std::vector<ExecutionNode> all_nodes;
       for (const auto& seg : path_segments)
       {
         if (seg.points.size() < 2) continue;
         Line virtual_line(seg.line_id, seg.points.front(), seg.points.back());
-        auto nodes = trajectory_generator.generate_from_path(seg.points, virtual_line, seg.type == RouteType::DRAWING_PATH);
+        auto nodes = trajectory_generator.generate_from_path(
+          seg.points, virtual_line, seg.type == RouteType::DRAWING_PATH);
         if (!nodes.empty())
         {
           all_nodes.insert(all_nodes.end(), nodes.begin(), nodes.end());
         }
       }
 
-      // 6) 格式化输出
-      feedback->progress = 90; feedback->stage = "format"; feedback->info = "格式化输出"; goal_handle->publish_feedback(feedback);
+      // 6) 格式化输出（内存）
       OutputFormatter formatter;
-      std::string out_json = formatter.format_planned_paths_to_cad_json(path_segments, cad_data, "request.json").dump(2);
+      // 使用输入文件名作为来源标签
+      std::string source_name = input_path.filename().string();
+      std::string out_json = formatter
+        .format_planned_paths_to_cad_json(path_segments, cad_data, source_name)
+        .dump(2);
 
-      // 7) 可视化持久化：根据配置将图像与规划JSON保存到目录
+      // 7) 可视化/结果持久化到目录
       if (save_path_visualization)
       {
         try
@@ -337,8 +331,9 @@ public:
           (void)grid_map_generator.save_as_image(grid_img, cad_data, grid_viz_config);
           (void)path_planner.visualize_paths(path_segments, path_img, path_viz_config);
 
-          // 另存规划结果 JSON
-          std::string file_safe_id = goal->request_id.empty() ? std::string("request") : goal->request_id;
+          // 保存规划结果 JSON：基于输入文件名构造
+          std::string file_safe_id = input_path.stem().string();
+          if (file_safe_id.empty()) file_safe_id = "request";
           for (char& ch : file_safe_id)
           {
             unsigned char uch = static_cast<unsigned char>(ch);
@@ -362,36 +357,24 @@ public:
         }
       }
 
-      feedback->progress = 100; feedback->stage = "done"; feedback->info = "完成"; goal_handle->publish_feedback(feedback);
-
-      result->success = true;
-      result->planned_json = std::move(out_json);
-      result->error = "";
-      result->warnings = "";
-      result->metrics_json = "{}";
-      result->planner_version = "xline_path_planner-0.0.0";
-      result->config_hash = "";
-      goal_handle->succeed(result);
+      res->success = true;
+      res->error = "";
+      res->message = std::string("规划完成，结果已保存至目录: ") + visualization_output_dir;
     }
     catch (const std::exception& e)
     {
-      result->success = false;
-      result->planned_json = "";
-      result->error = e.what();
-      result->warnings = "";
-      result->metrics_json = "{}";
-      result->planner_version = "xline_path_planner-0.0.0";
-      result->config_hash = "";
-      goal_handle->abort(result);
+      res->success = false;
+      res->error = e.what();
+      res->message = "";
+      RCLCPP_ERROR(this->get_logger(), "服务处理失败: %s", e.what());
     }
   }
 
-  // 已移除基于文件的直通式运行辅助函数
-
   // 成员变量
-  rclcpp_action::Server<xline_path_planner::action::PlanPath>::SharedPtr action_server_;
+  rclcpp::Service<xline_path_planner::srv::PlanPath>::SharedPtr service_;
 
   std::string image_format, printer_type_str;
+  std::string cad_files_dir_;
   std::string visualization_output_dir;
   int grid_map_scale;
   double grid_resolution, grid_padding, cad_unit_conversion;

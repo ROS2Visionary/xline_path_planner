@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/xline_path_planner__rosidl_typesupport_c.dir/rosidl_typesupport_c/xline_path_planner/action/plan_path__type_support.cpp.o"
-  "CMakeFiles/xline_path_planner__rosidl_typesupport_c.dir/rosidl_typesupport_c/xline_path_planner/action/plan_path__type_support.cpp.o.d"
+  "CMakeFiles/xline_path_planner__rosidl_typesupport_c.dir/rosidl_typesupport_c/xline_path_planner/srv/plan_path__type_support.cpp.o"
+  "CMakeFiles/xline_path_planner__rosidl_typesupport_c.dir/rosidl_typesupport_c/xline_path_planner/srv/plan_path__type_support.cpp.o.d"
   "libxline_path_planner__rosidl_typesupport_c.pdb"
   "libxline_path_planner__rosidl_typesupport_c.so"
-  "rosidl_typesupport_c/xline_path_planner/action/plan_path__type_support.cpp"
+  "rosidl_typesupport_c/xline_path_planner/srv/plan_path__type_support.cpp"
 )
 
 # Per-language clean rules from dependency scanning.

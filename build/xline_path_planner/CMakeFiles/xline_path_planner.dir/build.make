@@ -66,13 +66,11 @@ include CMakeFiles/xline_path_planner.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/xline_path_planner.dir/progress.make
 
-CMakeFiles/xline_path_planner: /root/xline_path_planner/xline_path_planner/action/PlanPath.action
+CMakeFiles/xline_path_planner: /root/xline_path_planner/xline_path_planner/srv/PlanPath.srv
+CMakeFiles/xline_path_planner: rosidl_cmake/srv/PlanPath_Request.msg
+CMakeFiles/xline_path_planner: rosidl_cmake/srv/PlanPath_Response.msg
 CMakeFiles/xline_path_planner: /opt/ros/humble/share/builtin_interfaces/msg/Duration.idl
 CMakeFiles/xline_path_planner: /opt/ros/humble/share/builtin_interfaces/msg/Time.idl
-CMakeFiles/xline_path_planner: /opt/ros/humble/share/action_msgs/msg/GoalInfo.idl
-CMakeFiles/xline_path_planner: /opt/ros/humble/share/action_msgs/msg/GoalStatus.idl
-CMakeFiles/xline_path_planner: /opt/ros/humble/share/action_msgs/msg/GoalStatusArray.idl
-CMakeFiles/xline_path_planner: /opt/ros/humble/share/action_msgs/srv/CancelGoal.idl
 
 xline_path_planner: CMakeFiles/xline_path_planner
 xline_path_planner: CMakeFiles/xline_path_planner.dir/build.make

@@ -380,11 +380,19 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/xline_path_planner/action" TYPE FILE FILES "/root/xline_path_planner/build/xline_path_planner/rosidl_adapter/xline_path_planner/action/PlanPath.idl")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/xline_path_planner/srv" TYPE FILE FILES "/root/xline_path_planner/build/xline_path_planner/rosidl_adapter/xline_path_planner/srv/PlanPath.idl")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/xline_path_planner/action" TYPE FILE FILES "/root/xline_path_planner/xline_path_planner/action/PlanPath.action")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/xline_path_planner/srv" TYPE FILE FILES "/root/xline_path_planner/xline_path_planner/srv/PlanPath.srv")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/xline_path_planner/srv" TYPE FILE FILES "/root/xline_path_planner/build/xline_path_planner/rosidl_cmake/srv/PlanPath_Request.msg")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/xline_path_planner/srv" TYPE FILE FILES "/root/xline_path_planner/build/xline_path_planner/rosidl_cmake/srv/PlanPath_Response.msg")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

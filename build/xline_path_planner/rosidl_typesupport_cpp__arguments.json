@@ -3,16 +3,11 @@
   "output_dir": "/root/xline_path_planner/build/xline_path_planner/rosidl_typesupport_cpp/xline_path_planner",
   "template_dir": "/opt/ros/humble/share/rosidl_typesupport_cpp/resource",
   "idl_tuples": [
-    "/root/xline_path_planner/build/xline_path_planner/rosidl_adapter/xline_path_planner:action/PlanPath.idl"
+    "/root/xline_path_planner/build/xline_path_planner/rosidl_adapter/xline_path_planner:srv/PlanPath.idl"
   ],
   "ros_interface_dependencies": [
     "builtin_interfaces:/opt/ros/humble/share/builtin_interfaces/msg/Duration.idl",
-    "builtin_interfaces:/opt/ros/humble/share/builtin_interfaces/msg/Time.idl",
-    "action_msgs:/opt/ros/humble/share/action_msgs/msg/GoalInfo.idl",
-    "action_msgs:/opt/ros/humble/share/action_msgs/msg/GoalStatus.idl",
-    "action_msgs:/opt/ros/humble/share/action_msgs/msg/GoalStatusArray.idl",
-    "action_msgs:/opt/ros/humble/share/action_msgs/srv/CancelGoal.idl",
-    "unique_identifier_msgs:/opt/ros/humble/share/unique_identifier_msgs/msg/UUID.idl"
+    "builtin_interfaces:/opt/ros/humble/share/builtin_interfaces/msg/Time.idl"
   ],
   "target_dependencies": [
     "/opt/ros/humble/lib/rosidl_typesupport_cpp/rosidl_typesupport_cpp",
@@ -21,13 +16,8 @@
     "/opt/ros/humble/share/rosidl_typesupport_cpp/resource/idl__type_support.cpp.em",
     "/opt/ros/humble/share/rosidl_typesupport_cpp/resource/msg__type_support.cpp.em",
     "/opt/ros/humble/share/rosidl_typesupport_cpp/resource/srv__type_support.cpp.em",
-    "/root/xline_path_planner/build/xline_path_planner/rosidl_adapter/xline_path_planner/action/PlanPath.idl",
+    "/root/xline_path_planner/build/xline_path_planner/rosidl_adapter/xline_path_planner/srv/PlanPath.idl",
     "/opt/ros/humble/share/builtin_interfaces/msg/Duration.idl",
-    "/opt/ros/humble/share/builtin_interfaces/msg/Time.idl",
-    "/opt/ros/humble/share/action_msgs/msg/GoalInfo.idl",
-    "/opt/ros/humble/share/action_msgs/msg/GoalStatus.idl",
-    "/opt/ros/humble/share/action_msgs/msg/GoalStatusArray.idl",
-    "/opt/ros/humble/share/action_msgs/srv/CancelGoal.idl",
-    "/opt/ros/humble/share/unique_identifier_msgs/msg/UUID.idl"
+    "/opt/ros/humble/share/builtin_interfaces/msg/Time.idl"
   ]
 }

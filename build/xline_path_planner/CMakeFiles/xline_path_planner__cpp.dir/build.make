@@ -66,57 +66,52 @@ include CMakeFiles/xline_path_planner__cpp.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/xline_path_planner__cpp.dir/progress.make
 
-CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp
-CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__builder.hpp
-CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__struct.hpp
-CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__traits.hpp
-CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__type_support.hpp
+CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp
+CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__builder.hpp
+CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__struct.hpp
+CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__traits.hpp
+CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__type_support.hpp
 CMakeFiles/xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/msg/rosidl_generator_cpp__visibility_control.hpp
 
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/lib/rosidl_generator_cpp/rosidl_generator_cpp
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_generator_cpp/__init__.py
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/action__builder.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/action__struct.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/action__traits.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/idl.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/idl__builder.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/idl__struct.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/idl__traits.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/msg__builder.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/msg__struct.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/msg__traits.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/srv__builder.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/srv__struct.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/srv__traits.hpp.em
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: rosidl_adapter/xline_path_planner/action/PlanPath.idl
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/builtin_interfaces/msg/Duration.idl
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/builtin_interfaces/msg/Time.idl
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/action_msgs/msg/GoalInfo.idl
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/action_msgs/msg/GoalStatus.idl
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/action_msgs/msg/GoalStatusArray.idl
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/action_msgs/srv/CancelGoal.idl
-rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp: /opt/ros/humble/share/unique_identifier_msgs/msg/UUID.idl
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/lib/rosidl_generator_cpp/rosidl_generator_cpp
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_generator_cpp/__init__.py
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/action__builder.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/action__struct.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/action__traits.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/idl.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/idl__builder.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/idl__struct.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/idl__traits.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/msg__builder.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/msg__struct.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/msg__traits.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/srv__builder.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/srv__struct.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/rosidl_generator_cpp/resource/srv__traits.hpp.em
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: rosidl_adapter/xline_path_planner/srv/PlanPath.idl
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/builtin_interfaces/msg/Duration.idl
+rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp: /opt/ros/humble/share/builtin_interfaces/msg/Time.idl
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/xline_path_planner/build/xline_path_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code for ROS interfaces"
 	/usr/bin/python3 /opt/ros/humble/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /root/xline_path_planner/build/xline_path_planner/rosidl_generator_cpp__arguments.json
 
-rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__builder.hpp: rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp
-	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__builder.hpp
+rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__builder.hpp: rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__builder.hpp
 
-rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__struct.hpp: rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp
-	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__struct.hpp
+rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__struct.hpp: rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__struct.hpp
 
-rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__traits.hpp: rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp
-	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__traits.hpp
+rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__traits.hpp: rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__traits.hpp
 
-rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__type_support.hpp: rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp
-	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__type_support.hpp
+rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__type_support.hpp: rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__type_support.hpp
 
 xline_path_planner__cpp: CMakeFiles/xline_path_planner__cpp
-xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__builder.hpp
-xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__struct.hpp
-xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__traits.hpp
-xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__type_support.hpp
-xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp
+xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__builder.hpp
+xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__struct.hpp
+xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__traits.hpp
+xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/srv/detail/plan_path__type_support.hpp
+xline_path_planner__cpp: rosidl_generator_cpp/xline_path_planner/srv/plan_path.hpp
 xline_path_planner__cpp: CMakeFiles/xline_path_planner__cpp.dir/build.make
 .PHONY : xline_path_planner__cpp
 

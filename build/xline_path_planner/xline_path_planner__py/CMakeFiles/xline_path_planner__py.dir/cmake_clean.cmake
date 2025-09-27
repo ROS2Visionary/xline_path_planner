@@ -2,9 +2,9 @@ file(REMOVE_RECURSE
   "../rosidl_generator_py/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_c.c"
   "../rosidl_generator_py/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_fastrtps_c.c"
   "../rosidl_generator_py/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_introspection_c.c"
-  "../rosidl_generator_py/xline_path_planner/action/__init__.py"
-  "../rosidl_generator_py/xline_path_planner/action/_plan_path.py"
-  "../rosidl_generator_py/xline_path_planner/action/_plan_path_s.c"
+  "../rosidl_generator_py/xline_path_planner/srv/__init__.py"
+  "../rosidl_generator_py/xline_path_planner/srv/_plan_path.py"
+  "../rosidl_generator_py/xline_path_planner/srv/_plan_path_s.c"
   "CMakeFiles/xline_path_planner__py"
 )
 

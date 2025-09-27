@@ -54,7 +54,7 @@ endif()
 add_library(xline_path_planner::xline_path_planner__rosidl_typesupport_cpp SHARED IMPORTED)
 
 set_target_properties(xline_path_planner::xline_path_planner__rosidl_typesupport_cpp PROPERTIES
-  INTERFACE_LINK_LIBRARIES "xline_path_planner::xline_path_planner__rosidl_generator_cpp;builtin_interfaces::builtin_interfaces__rosidl_typesupport_cpp;action_msgs::action_msgs__rosidl_typesupport_cpp;unique_identifier_msgs::unique_identifier_msgs__rosidl_typesupport_cpp"
+  INTERFACE_LINK_LIBRARIES "xline_path_planner::xline_path_planner__rosidl_generator_cpp;builtin_interfaces::builtin_interfaces__rosidl_typesupport_cpp"
 )
 
 if(CMAKE_VERSION VERSION_LESS 2.8.12)

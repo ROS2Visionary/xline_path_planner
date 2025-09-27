@@ -1,0 +1,5 @@
+string file_name        # 文件名称
+---
+bool success            # 成功/失败
+string error            # 错误信息
+string message          # 成功消息

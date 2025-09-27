@@ -1,2 +1,4 @@
-action/PlanPath.action
-action/PlanPath.idl
+srv/PlanPath.idl
+srv/PlanPath.srv
+srv/PlanPath_Request.msg
+srv/PlanPath_Response.msg

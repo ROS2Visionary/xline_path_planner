@@ -1,5 +1,10 @@
 # Prerequisites
 *.d
+build/
+install/
+log/
+path_visualizations/
+
 
 # Compiled Object files
 *.slo

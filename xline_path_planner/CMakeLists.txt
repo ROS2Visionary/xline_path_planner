@@ -8,7 +8,6 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(rclcpp_action REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(yaml-cpp REQUIRED)
 # OpenCV is required by the planner and visualization utilities
@@ -38,7 +37,6 @@ ament_target_dependencies(
   planner_node
   "rclcpp"
   "ament_index_cpp"
-  "rclcpp_action"
 )
 
 install(TARGETS planner_node
@@ -49,9 +47,9 @@ install(DIRECTORY config
   DESTINATION share/${PROJECT_NAME}
 )
 
-# 定义 Action 接口
+# 定义接口（仅 Service）
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "action/PlanPath.action"
+  "srv/PlanPath.srv"
   DEPENDENCIES builtin_interfaces
   SKIP_GROUP_MEMBERSHIP_CHECK
 )
