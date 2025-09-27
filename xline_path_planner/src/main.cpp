@@ -2,16 +2,23 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
+#include <system_error>
+#include <thread>
+#include <cctype>
 
 #include <yaml-cpp/yaml.h>
 #include "ament_index_cpp/get_package_share_directory.hpp"
 
 #include "rclcpp/rclcpp.hpp"
+#include "rclcpp_action/rclcpp_action.hpp"
+#include "xline_path_planner/action/plan_path.hpp"
+
 #include "xline_path_planner/cad_parser.hpp"
 #include "xline_path_planner/grid_map_generator.hpp"
 #include "xline_path_planner/path_planner.hpp"
 #include "xline_path_planner/trajectory_generator.hpp"
 #include "xline_path_planner/output_formatter.hpp"
+#include "xline_path_planner/planner_engine.hpp"
 
 using namespace daosnrs_planning;
 
@@ -20,10 +27,10 @@ class PlannerNode : public rclcpp::Node
 public:
   PlannerNode() : Node("drawing_planner_node")
   {
-    // 更新参数
+    // 加载基础配置（严格 YAML）
     updateParameters();
-    // 执行路径规划
-    plan_trajectory();
+    // 启动 Action Server
+    start_action_server();
   }
 
   void updateParameters()
@@ -68,17 +75,7 @@ public:
       }
     };
 
-    // 2) 读取 文件路径 参数
-    YAML::Node files = root["files"];
-    require(files, "files");
-    require(files["cad_file_path"], "files.cad_file_path");
-    require(files["output_file_path"], "files.output_file_path");
-    require(files["path_visualization_dir"], "files.path_visualization_dir");
-    cad_file_path = files["cad_file_path"].as<std::string>();
-    output_file_path = files["output_file_path"].as<std::string>();
-    path_visualization_dir = files["path_visualization_dir"].as<std::string>();
-
-    // 3) 读取 可视化 参数（用于栅格与路径可视化）
+    // 2) 读取 可视化 参数（用于栅格与路径可视化）
     YAML::Node vis = root["visualization"];
     require(vis, "visualization");
     require(vis["scale"], "visualization.scale");
@@ -86,13 +83,15 @@ public:
     require(vis["use_antialiasing"], "visualization.use_antialiasing");
     require(vis["image_format"], "visualization.image_format");
     require(vis["save_path_visualization"], "visualization.save_path_visualization");
+    require(vis["output_dir"], "visualization.output_dir");
     grid_map_scale = vis["scale"].as<int>();
     show_grid_lines = vis["show_grid_lines"].as<bool>();
     use_antialiasing = vis["use_antialiasing"].as<bool>();
     image_format = vis["image_format"].as<std::string>();
     save_path_visualization = vis["save_path_visualization"].as<bool>();
+    visualization_output_dir = vis["output_dir"].as<std::string>();
 
-    // 4) 读取 CAD 解析 参数
+    // 3) 读取 CAD 解析 参数
     YAML::Node cad = root["cad_parser"];
     require(cad, "cad_parser");
     require(cad["unit_conversion_factor"], "cad_parser.unit_conversion_factor");
@@ -102,7 +101,7 @@ public:
     bool auto_scale = cad["auto_scale_coordinates"].as<bool>();
     std::string angle_unit_str = cad["angle_unit"].as<std::string>();
 
-    // 5) 读取 栅格地图 参数
+    // 4) 读取 栅格地图 参数
     YAML::Node grid = root["grid_map"];
     require(grid, "grid_map");
     require(grid["resolution"], "grid_map.resolution");
@@ -110,7 +109,7 @@ public:
     grid_resolution = grid["resolution"].as<double>();
     grid_padding = grid["padding"].as<double>();
 
-    // 6) 读取 偏移与规划 参数
+    // 5) 读取 偏移与规划 参数
     YAML::Node offsets = root["offsets"];
     require(offsets, "offsets");
     require(offsets["left_offset"], "offsets.left_offset");
@@ -129,7 +128,7 @@ public:
     drawing_speed = planner["drawing_speed"].as<double>();
     path_extension_length = planner["path_extension_length"].as<double>();
 
-    // 7) 读取 轨迹 参数
+    // 6) 读取 轨迹 参数
     YAML::Node traj = root["trajectory"];
     require(traj, "trajectory");
     require(traj["max_velocity"], "trajectory.max_velocity");
@@ -137,22 +136,7 @@ public:
     max_velocity = traj["max_velocity"].as<double>();
     max_acceleration = traj["max_acceleration"].as<double>();
 
-    // 8) 基于读取参数进行配置对象赋值与检查
-    if (cad_file_path.empty())
-    {
-      RCLCPP_FATAL(this->get_logger(), "CAD文件路径未提供或为空");
-      throw std::runtime_error("缺少CAD文件路径");
-    }
-
-    if (save_path_visualization)
-    {
-      std::error_code ec;
-      std::filesystem::create_directories(path_visualization_dir, ec);
-      if (ec)
-      {
-        RCLCPP_ERROR(this->get_logger(), "创建可视化目录失败: %s", ec.message().c_str());
-      }
-    }
+    // 7) 基于读取参数进行配置对象赋值与检查（不涉及任何文件路径）
 
     // 打印机类型
     PrinterType printer_type = PrinterType::LEFT_PRINTER;
@@ -223,271 +207,192 @@ public:
     RCLCPP_INFO(this->get_logger(), "配置加载完成: %s", yaml_path.c_str());
   }
 
-private:
-  // 主函数 - 调用5个子函数完成整个流程
-  void plan_trajectory()
+  // 启动 Action Server（plan_path）
+  void start_action_server()
   {
-    // 创建处理组件
-    CADParser cad_parser(cad_parser_config);
-    GridMapGenerator grid_map_generator(grid_map_config);
-    PathPlanner path_planner(path_planner_config);
-    TrajectoryGenerator trajectory_generator(trajectory_config);
-    OutputFormatter output_formatter;
+    using PlanPath = xline_path_planner::action::PlanPath;
+    using namespace std::placeholders;
 
-    // 1. 解析CAD文件
-    CADData cad_data;
-    if (!parse_cad_file(cad_parser, cad_data))
-    {
-      return;
-    }
-
-    // 2. 生成栅格地图
-    std::vector<std::vector<int>> grid_map;
-    if (!generate_grid_map(grid_map_generator, cad_data, grid_map))
-    {
-      return;
-    }
-
-    // 3. 规划路径
-    std::vector<RouteSegment> path_segments;
-    if (!plan_paths(path_planner, cad_data, grid_map, grid_map_generator, path_segments))
-    {
-      return;
-    }
-
-    // 4. 生成轨迹
-    std::vector<ExecutionNode> all_trajectory_points;
-    if (!generate_trajectory(trajectory_generator, cad_data, path_segments, all_trajectory_points))
-    {
-      return;
-    }
-
-    // 5. 保存规划结果为新版 CAD JSON 结构
-    // 舍弃旧的设备/RoutePts 格式，改为 docs/导出JSON数据结构说明.md 结构
-    {
-      RCLCPP_INFO(this->get_logger(), "Formatting planned paths to CAD-style JSON");
-
-      // 使用 CAD 源文件名作为 metadata.source_file
-      std::string source_name = std::filesystem::path(cad_file_path).filename().string();
-
-      nlohmann::json cad_style_json = output_formatter.format_planned_paths_to_cad_json(path_segments, cad_data, source_name);
-
-      RCLCPP_INFO(this->get_logger(), "Saving CAD-style JSON to: %s", output_file_path.c_str());
-      if (output_formatter.save_to_file(cad_style_json, output_file_path))
-      {
-        RCLCPP_INFO(this->get_logger(), "Successfully saved CAD-style JSON");
-      }
-      else
-      {
-        RCLCPP_ERROR(this->get_logger(), "Failed to save CAD-style JSON");
-      }
-    }
+    action_server_ = rclcpp_action::create_server<PlanPath>(
+      this,
+      "plan_path",
+      std::bind(&PlannerNode::handle_goal, this, _1, _2),
+      std::bind(&PlannerNode::handle_cancel, this, _1),
+      std::bind(&PlannerNode::handle_accepted, this, _1)
+    );
+    RCLCPP_INFO(this->get_logger(), "Action server 'plan_path' is ready");
   }
 
-  // 1: 解析CAD文件
-  bool parse_cad_file(CADParser& cad_parser, CADData& cad_data)
+  // Action: 接收目标
+  rclcpp_action::GoalResponse handle_goal(const rclcpp_action::GoalUUID&,
+                                          std::shared_ptr<const xline_path_planner::action::PlanPath::Goal> goal)
   {
-    RCLCPP_INFO(this->get_logger(), "Parsing CAD file: %s", cad_file_path.c_str());
-
-    if (!cad_parser.parse(cad_file_path))
+    if (goal->cad_json.empty())
     {
-      RCLCPP_ERROR(this->get_logger(), "Failed to parse CAD file");
-      return false;
+      RCLCPP_WARN(this->get_logger(), "拒绝空 cad_json 的请求");
+      return rclcpp_action::GoalResponse::REJECT;
     }
-
-    // 获取CAD数据的副本，以便我们可以修改它
-    cad_data = cad_parser.get_cad_data();
-
-    // 打印路径线信息
-    RCLCPP_INFO(this->get_logger(), "Parsed CAD data with %zu path lines", cad_data.path_lines.size());
-
-    return true;
+    return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
   }
 
-  // 2: 生成栅格地图
-  bool generate_grid_map(GridMapGenerator& grid_map_generator, const CADData& cad_data,
-                         std::vector<std::vector<int>>& grid_map)
+  // Action: 处理取消
+  rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)
   {
-    RCLCPP_INFO(this->get_logger(), "Generating grid map");
-
-    if (!grid_map_generator.generate_from_cad(cad_data))
-    {
-      RCLCPP_ERROR(this->get_logger(), "Failed to generate grid map");
-      return false;
-    }
-
-    // 获取栅格地图数据
-    grid_map = grid_map_generator.get_grid_map();
-
-    if (save_path_visualization)
-    {
-      grid_map_image_path = path_visualization_dir + "/grid_map." + image_format;
-      // 保存栅格地图为图片
-      RCLCPP_INFO(this->get_logger(), "Saving grid map as image: %s", grid_map_image_path.c_str());
-      if (!grid_map_generator.save_as_image(grid_map_image_path, cad_data, grid_viz_config))
-      {
-        RCLCPP_WARN(this->get_logger(), "Failed to save grid map as image, but continuing with path planning");
-      }
-    }
-
-    return true;
+    RCLCPP_INFO(this->get_logger(), "收到取消请求");
+    return rclcpp_action::CancelResponse::ACCEPT;
   }
 
-  // 3: 规划路径
-  bool plan_paths(PathPlanner& path_planner, const CADData& cad_data, const std::vector<std::vector<int>>& grid_map,
-                  GridMapGenerator& grid_map_generator, std::vector<RouteSegment>& path_segments)
+  // Action: 接受后执行
+  void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)
   {
-    // 设置路径规划器的栅格地图
-    path_planner.set_grid_map(grid_map, &grid_map_generator);
-
-    // 使用简化的方法规划路径 - 从CAD数据规划
-    RCLCPP_INFO(this->get_logger(), "Planning paths from CAD data");
-
-    // 使用简化的路径规划器处理CAD数据
-    path_segments = path_planner.plan_paths(cad_data, offset_config);
-
-    if (path_segments.empty())
-    {
-      RCLCPP_ERROR(this->get_logger(), "No path segments generated");
-      return false;
-    }
-
-    RCLCPP_INFO(this->get_logger(), "Generated %zu path segments", path_segments.size());
-
-    // 保存路径可视化
-    if (save_path_visualization)
-    {
-      std::string all_paths_viz_file = path_visualization_dir + "/all_paths." + image_format;
-
-      RCLCPP_INFO(this->get_logger(), "Saving all paths visualization as image: %s", all_paths_viz_file.c_str());
-
-      if (!path_planner.visualize_paths(path_segments, all_paths_viz_file, path_viz_config))
-      {
-        RCLCPP_WARN(this->get_logger(), "Failed to save all paths visualization as image");
-      }
-    }
-
-    return true;
+    std::thread([this, goal_handle]() { this->execute(goal_handle); }).detach();
   }
 
-  // 4: 生成轨迹
-  bool generate_trajectory(TrajectoryGenerator& trajectory_generator, const CADData& cad_data,
-                           const std::vector<RouteSegment>& path_segments, std::vector<ExecutionNode>& all_trajectory_points)
+  // 将当前节点配置打包为引擎配置
+  PlannerEngineConfig build_engine_cfg_from_node() const
   {
-    all_trajectory_points.clear();
+    PlannerEngineConfig cfg;
+    cfg.cad_parser = cad_parser_config;
+    cfg.grid_map = grid_map_config;
+    cfg.path_planner = path_planner_config;
+    cfg.offsets = offset_config;
+    cfg.trajectory = trajectory_config;
+    return cfg;
+  }
 
-    for (const auto& segment : path_segments)
+  void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)
+  {
+    using PlanPath = xline_path_planner::action::PlanPath;
+    auto goal = goal_handle->get_goal();
+    auto feedback = std::make_shared<PlanPath::Feedback>();
+    auto result = std::make_shared<PlanPath::Result>();
+
+    try
     {
-      RCLCPP_INFO(this->get_logger(), "Processing path segment (type: %s, line ID: %d)",
-                  segment.type == RouteType::DRAWING_PATH ? "DRAWING" : "TRANSITION", segment.line_id);
+      // 1) 构造配置
+      PlannerEngineConfig cfg = build_engine_cfg_from_node();
 
-      if (segment.points.empty())
+      // 2) 解析 CAD JSON
+      feedback->progress = 5; feedback->stage = "parse"; feedback->info = "解析CAD"; goal_handle->publish_feedback(feedback);
+      CADParser cad_parser(cfg.cad_parser);
+      if (!cad_parser.parse_from_string(goal->cad_json))
       {
-        RCLCPP_WARN(this->get_logger(), "Empty path segment, skipping");
-        continue;
+        throw std::runtime_error("CAD JSON 解析失败");
+      }
+      CADData cad_data = cad_parser.get_cad_data();
+
+      // 3) 生成栅格地图
+      feedback->progress = 25; feedback->stage = "grid"; feedback->info = "生成栅格"; goal_handle->publish_feedback(feedback);
+      GridMapGenerator grid_map_generator(cfg.grid_map);
+      if (!grid_map_generator.generate_from_cad(cad_data))
+      {
+        throw std::runtime_error("栅格地图生成失败");
+      }
+      const auto& grid_map = grid_map_generator.get_grid_map();
+
+      // 4) 路径规划
+      feedback->progress = 55; feedback->stage = "plan"; feedback->info = "规划路径"; goal_handle->publish_feedback(feedback);
+      PathPlanner path_planner(cfg.path_planner);
+      path_planner.set_grid_map(grid_map, &grid_map_generator);
+      auto path_segments = path_planner.plan_paths(cad_data, cfg.offsets);
+      if (path_segments.empty())
+      {
+        throw std::runtime_error("路径规划失败，未生成任何路径段");
       }
 
-      // 处理绘图路径或转场路径
-      std::vector<ExecutionNode> trajectory_points;
-
-      if (segment.type == RouteType::DRAWING_PATH && segment.line_id >= 0)
+      // 5) 轨迹生成（可选，当前仅用于校验，不影响最终JSON输出）
+      feedback->progress = 75; feedback->stage = "traj"; feedback->info = "生成轨迹"; goal_handle->publish_feedback(feedback);
+      TrajectoryGenerator trajectory_generator(cfg.trajectory);
+      std::vector<ExecutionNode> all_nodes;
+      for (const auto& seg : path_segments)
       {
-        // 绘图路径 - 查找匹配的线
-        std::shared_ptr<Line> line_ptr;
-        for (const auto& line : cad_data.path_lines)
+        if (seg.points.size() < 2) continue;
+        Line virtual_line(seg.line_id, seg.points.front(), seg.points.back());
+        auto nodes = trajectory_generator.generate_from_path(seg.points, virtual_line, seg.type == RouteType::DRAWING_PATH);
+        if (!nodes.empty())
         {
-          if (line->id == segment.line_id)
-          {
-            line_ptr = line;
-            break;
-          }
+          all_nodes.insert(all_nodes.end(), nodes.begin(), nodes.end());
         }
+      }
 
-        if (line_ptr)
+      // 6) 格式化输出
+      feedback->progress = 90; feedback->stage = "format"; feedback->info = "格式化输出"; goal_handle->publish_feedback(feedback);
+      OutputFormatter formatter;
+      std::string out_json = formatter.format_planned_paths_to_cad_json(path_segments, cad_data, "request.json").dump(2);
+
+      // 7) 可视化持久化：根据配置将图像与规划JSON保存到目录
+      if (save_path_visualization)
+      {
+        try
         {
-          if (line_ptr->type == GeometryType::LINE)
+          std::filesystem::path out_dir = visualization_output_dir;
+          std::error_code ec;
+          std::filesystem::create_directories(out_dir, ec);
+          if (ec)
           {
-            // 直线类型使用三个参数，指明这是绘图路径
-            trajectory_points = trajectory_generator.generate_from_path(segment.points, *line_ptr, true);
+            RCLCPP_WARN(this->get_logger(), "创建输出目录失败: %s", ec.message().c_str());
           }
-          else if (line_ptr->type == GeometryType::CIRCLE)
+          auto grid_img = (out_dir / (std::string("grid_map.") + image_format)).string();
+          auto path_img = (out_dir / (std::string("planned_paths.") + image_format)).string();
+          (void)grid_map_generator.save_as_image(grid_img, cad_data, grid_viz_config);
+          (void)path_planner.visualize_paths(path_segments, path_img, path_viz_config);
+
+          // 另存规划结果 JSON
+          std::string file_safe_id = goal->request_id.empty() ? std::string("request") : goal->request_id;
+          for (char& ch : file_safe_id)
           {
-            auto circle_ptr = std::dynamic_pointer_cast<Circle>(line_ptr);
-            if (circle_ptr)
-            {
-              trajectory_points = trajectory_generator.generate_from_circle(*circle_ptr, offset_config);
-            }
+            unsigned char uch = static_cast<unsigned char>(ch);
+            if (!(std::isalnum(uch) || ch == '-' || ch == '_')) ch = '_';
           }
-          else if (line_ptr->type == GeometryType::ARC)
+          auto json_path = (out_dir / (std::string("planned_") + file_safe_id + ".json")).string();
+          std::ofstream jf(json_path);
+          if (jf.is_open())
           {
-            auto arc_ptr = std::dynamic_pointer_cast<Arc>(line_ptr);
-            if (arc_ptr)
-            {
-              trajectory_points = trajectory_generator.generate_from_arc(*arc_ptr, offset_config);
-            }
-          }
-          else if (line_ptr->type == GeometryType::CURVE)
-          {
-            auto curve_ptr = std::dynamic_pointer_cast<Curve>(line_ptr);
-            if (curve_ptr)
-            {
-              trajectory_points = trajectory_generator.generate_from_curve(*curve_ptr, offset_config);
-            }
-            else
-            {
-              // 如果无法转换为曲线，尝试使用离散化的路径点
-              RCLCPP_WARN(this->get_logger(), "Failed to cast to Curve, using path points directly for line ID: %d",
-                          line_ptr->id);
-              trajectory_points = trajectory_generator.generate_from_path(segment.points, *line_ptr, true);
-            }
+            jf << out_json;
+            jf.close();
           }
           else
           {
-            // 对于未知类型，使用通用路径生成
-            RCLCPP_WARN(this->get_logger(), "Unknown line type: %d, using generic path for line ID: %d",
-                        static_cast<int>(line_ptr->type), line_ptr->id);
-            trajectory_points = trajectory_generator.generate_from_path(segment.points, *line_ptr, true);
+            RCLCPP_WARN(this->get_logger(), "保存规划JSON失败: 无法打开文件 %s", json_path.c_str());
           }
         }
-        else
+        catch (const std::exception& e)
         {
-          RCLCPP_WARN(this->get_logger(), "Line with ID %d not found in CAD data", segment.line_id);
-          // 创建虚拟线用于生成轨迹
-          Line virtual_line(segment.line_id, segment.points.front(), segment.points.back());
-          trajectory_points = trajectory_generator.generate_from_path(segment.points, virtual_line, true);
+          RCLCPP_WARN(this->get_logger(), "保存可视化图像失败: %s", e.what());
         }
       }
-      else
-      {
-        // 转场路径 - 创建虚拟线
-        Line virtual_line(-1, segment.points.front(), segment.points.back());
-        // 明确指定这是转场路径，而不是绘图路径
-        trajectory_points = trajectory_generator.generate_from_path(segment.points, virtual_line, false);
-      }
 
-      // 添加到总轨迹
-      if (!trajectory_points.empty())
-      {
-        all_trajectory_points.insert(all_trajectory_points.end(), trajectory_points.begin(), trajectory_points.end());
+      feedback->progress = 100; feedback->stage = "done"; feedback->info = "完成"; goal_handle->publish_feedback(feedback);
 
-        RCLCPP_INFO(this->get_logger(), "Added %zu trajectory points", trajectory_points.size());
-      }
+      result->success = true;
+      result->planned_json = std::move(out_json);
+      result->error = "";
+      result->warnings = "";
+      result->metrics_json = "{}";
+      result->planner_version = "xline_path_planner-0.0.0";
+      result->config_hash = "";
+      goal_handle->succeed(result);
     }
-
-    // 如果没有生成任何轨迹点，则报错并退出
-    if (all_trajectory_points.empty())
+    catch (const std::exception& e)
     {
-      RCLCPP_ERROR(this->get_logger(), "No trajectory points generated");
-      return false;
+      result->success = false;
+      result->planned_json = "";
+      result->error = e.what();
+      result->warnings = "";
+      result->metrics_json = "{}";
+      result->planner_version = "xline_path_planner-0.0.0";
+      result->config_hash = "";
+      goal_handle->abort(result);
     }
-
-    return true;
   }
 
-  // 旧格式保存逻辑已废弃
+  // 已移除基于文件的直通式运行辅助函数
 
-  std::string cad_file_path, output_file_path, grid_map_image_path, image_format, printer_type_str;
-  std::string path_visualization_dir;
+  // 成员变量
+  rclcpp_action::Server<xline_path_planner::action::PlanPath>::SharedPtr action_server_;
+
+  std::string image_format, printer_type_str;
+  std::string visualization_output_dir;
   int grid_map_scale;
   double grid_resolution, grid_padding, cad_unit_conversion;
   bool show_grid_lines, use_antialiasing, save_path_visualization;

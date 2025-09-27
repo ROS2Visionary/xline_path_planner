@@ -1,0 +1,42 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from xline_path_planner/action/PlanPath.action
+// generated code does not contain a copyright notice
+
+
+module xline_path_planner {
+  module action {
+    @verbatim (language="comment", text=
+      "Goal")
+    struct PlanPath_Goal {
+      string request_id;
+
+      string cad_json;
+    };
+    @verbatim (language="comment", text=
+      "Result")
+    struct PlanPath_Result {
+      boolean success;
+
+      string planned_json;
+
+      string error;
+
+      string warnings;
+
+      string metrics_json;
+
+      string planner_version;
+
+      string config_hash;
+    };
+    @verbatim (language="comment", text=
+      "Feedback")
+    struct PlanPath_Feedback {
+      uint8 progress;
+
+      string stage;
+
+      string info;
+    };
+  };
+};

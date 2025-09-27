@@ -1,2 +1,4 @@
 source;share/xline_path_planner/environment/ament_prefix_path.sh
+source;share/xline_path_planner/environment/library_path.sh
 source;share/xline_path_planner/environment/path.sh
+source;share/xline_path_planner/environment/pythonpath.sh

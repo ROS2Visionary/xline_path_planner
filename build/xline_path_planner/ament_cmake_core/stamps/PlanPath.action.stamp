@@ -1,0 +1,17 @@
+# Goal
+string request_id
+string cad_json
+---
+# Result
+bool success
+string planned_json
+string error
+string warnings
+string metrics_json
+string planner_version
+string config_hash
+---
+# Feedback
+uint8 progress
+string stage
+string info

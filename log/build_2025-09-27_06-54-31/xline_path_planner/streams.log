@@ -1,0 +1,205 @@
+[0.027s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /root/xline_path_planner/xline_path_planner -DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner
+[0.045s] -- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.252s] -- Found rclcpp: 16.0.12 (/opt/ros/humble/share/rclcpp/cmake)
+[0.325s] -- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.329s] -- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.339s] -- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.356s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.381s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.453s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.455s] -- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.805s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.982s] -- Found rclcpp_action: 16.0.12 (/opt/ros/humble/share/rclcpp_action/cmake)
+[1.112s] -- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+[1.454s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[1.924s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.100s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.131s] -- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+[2.164s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[2.164s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10
+[2.164s] -- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so
+[2.306s] [0mCMake Deprecation Warning at /opt/ros/humble/share/rosidl_cmake/cmake/rosidl_target_interfaces.cmake:32 (message):
+[2.306s]   Use rosidl_get_typesupport_target() and target_link_libraries() instead of
+[2.306s]   rosidl_target_interfaces()
+[2.306s] Call Stack (most recent call first):
+[2.306s]   CMakeLists.txt:62 (rosidl_target_interfaces)
+[2.306s] 
+[2.306s] [0m
+[2.306s] -- Found ament_lint_auto: 0.12.12 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[2.439s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.440s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/root/xline_path_planner/xline_path_planner/include>
+[2.440s] -- Configured cppcheck exclude dirs and/or files: 
+[2.441s] -- Added test 'lint_cmake' to check CMake code style
+[2.443s] -- Added test 'uncrustify' to check C / C++ code style
+[2.443s] -- Configured uncrustify additional arguments: 
+[2.444s] -- Added test 'xmllint' to check XML markup files
+[2.446s] -- Configuring done
+[2.513s] -- Generating done
+[2.539s] -- Build files have been written to: /root/xline_path_planner/build/xline_path_planner
+[2.554s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /root/xline_path_planner/xline_path_planner -DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner
+[2.559s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
+[2.619s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_generator_c[0m
+[2.638s] [  2%] Built target xline_path_planner__cpp
+[2.640s] [ 10%] Built target xline_path_planner__rosidl_generator_c
+[2.657s] [ 10%] Built target ament_cmake_python_copy_xline_path_planner
+[2.665s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_c[0m
+[2.665s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_cpp[0m
+[2.666s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_cpp[0m
+[2.666s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_cpp[0m
+[2.666s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_c[0m
+[2.679s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_c[0m
+[2.685s] [ 17%] Built target xline_path_planner__rosidl_typesupport_introspection_c
+[2.687s] [ 25%] Built target xline_path_planner__rosidl_typesupport_cpp
+[2.691s] [ 33%] Built target xline_path_planner__rosidl_typesupport_fastrtps_cpp
+[2.692s] [ 41%] Built target xline_path_planner__rosidl_typesupport_c
+[2.701s] [ 48%] Built target xline_path_planner__rosidl_typesupport_introspection_cpp
+[2.704s] [ 56%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c
+[2.738s] [ 56%] Built target xline_path_planner
+[2.759s] [35m[1mConsolidate compiler generated dependencies of target planner_node[0m
+[2.771s] [ 58%] Built target xline_path_planner__py
+[2.788s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_generator_py[0m
+[2.805s] [ 79%] Built target planner_node
+[2.811s] [ 84%] Built target xline_path_planner__rosidl_generator_py
+[2.826s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_c__pyext[0m
+[2.826s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_c__pyext[0m
+[2.827s] [35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext[0m
+[2.849s] [ 89%] Built target xline_path_planner__rosidl_typesupport_c__pyext
+[2.851s] [ 94%] Built target xline_path_planner__rosidl_typesupport_introspection_c__pyext
+[2.855s] [100%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext
+[3.175s] running egg_info
+[3.177s] writing xline_path_planner.egg-info/PKG-INFO
+[3.178s] writing dependency_links to xline_path_planner.egg-info/dependency_links.txt
+[3.178s] writing top-level names to xline_path_planner.egg-info/top_level.txt
+[3.183s] reading manifest file 'xline_path_planner.egg-info/SOURCES.txt'
+[3.185s] writing manifest file 'xline_path_planner.egg-info/SOURCES.txt'
+[3.229s] [100%] Built target ament_cmake_python_build_xline_path_planner_egg
+[3.246s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
+[3.262s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /root/xline_path_planner/build/xline_path_planner
+[3.274s] -- Install configuration: "Release"
+[3.274s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node
+[3.274s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/config
+[3.275s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/config/planner.yaml
+[3.275s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/rosidl_interfaces/xline_path_planner
+[3.275s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner
+[3.275s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action
+[3.275s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail
+[3.276s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__type_support.h
+[3.276s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__struct.h
+[3.276s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__functions.h
+[3.277s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__functions.c
+[3.277s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/plan_path.h
+[3.278s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg
+[3.278s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg/rosidl_generator_c__visibility_control.h
+[3.278s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/library_path.sh
+[3.279s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/library_path.dsv
+[3.279s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_generator_c.so
+[3.279s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner
+[3.279s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action
+[3.279s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail
+[3.280s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__rosidl_typesupport_fastrtps_c.h
+[3.280s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg
+[3.280s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[3.280s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_fastrtps_c.so
+[3.281s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner
+[3.281s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action
+[3.281s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail
+[3.281s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__traits.hpp
+[3.282s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__struct.hpp
+[3.282s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__builder.hpp
+[3.282s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__type_support.hpp
+[3.282s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/plan_path.hpp
+[3.283s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg
+[3.283s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg/rosidl_generator_cpp__visibility_control.hpp
+[3.283s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner
+[3.283s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action
+[3.284s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail
+[3.284s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__rosidl_typesupport_fastrtps_cpp.hpp
+[3.284s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/dds_fastrtps
+[3.285s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg
+[3.285s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[3.285s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_fastrtps_cpp.so
+[3.285s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner
+[3.286s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action
+[3.286s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail
+[3.286s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__type_support.c
+[3.286s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__rosidl_typesupport_introspection_c.h
+[3.286s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg
+[3.286s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[3.286s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_introspection_c.so
+[3.287s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_c.so
+[3.287s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner
+[3.287s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action
+[3.287s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail
+[3.287s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__type_support.cpp
+[3.287s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__rosidl_typesupport_introspection_cpp.hpp
+[3.287s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_introspection_cpp.so
+[3.287s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_cpp.so
+[3.287s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/pythonpath.sh
+[3.287s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/pythonpath.dsv
+[3.287s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner-0.0.0-py3.10.egg-info
+[3.288s] -- Installing: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner-0.0.0-py3.10.egg-info/SOURCES.txt
+[3.288s] -- Installing: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner-0.0.0-py3.10.egg-info/dependency_links.txt
+[3.288s] -- Installing: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner-0.0.0-py3.10.egg-info/top_level.txt
+[3.288s] -- Installing: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner-0.0.0-py3.10.egg-info/PKG-INFO
+[3.288s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner
+[3.288s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/action
+[3.288s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/action/_plan_path_s.c
+[3.289s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/action/_plan_path.py
+[3.289s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/action/__init__.py
+[3.289s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[3.289s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/libxline_path_planner__rosidl_generator_py.so
+[3.290s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[3.290s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_c.c
+[3.290s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_fastrtps_c.c
+[3.290s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[3.290s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_introspection_c.c
+[3.290s] -- Installing: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/__init__.py
+[3.338s] Listing '/root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner'...
+[3.339s] Compiling '/root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/__init__.py'...
+[3.339s] Listing '/root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/action'...
+[3.346s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[3.347s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[3.348s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[3.348s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_generator_py.so
+[3.349s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/action/PlanPath.idl
+[3.349s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/action/PlanPath.action
+[3.349s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/package_run_dependencies/xline_path_planner
+[3.349s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/parent_prefix_path/xline_path_planner
+[3.349s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.sh
+[3.350s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.dsv
+[3.350s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.sh
+[3.351s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.dsv
+[3.351s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.bash
+[3.352s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.sh
+[3.352s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.zsh
+[3.353s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.dsv
+[3.353s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.dsv
+[3.354s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/packages/xline_path_planner
+[3.354s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_generator_cExport.cmake
+[3.354s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_generator_cExport-release.cmake
+[3.355s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_typesupport_fastrtps_cExport.cmake
+[3.355s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_typesupport_fastrtps_cExport-release.cmake
+[3.356s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_generator_cppExport.cmake
+[3.356s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_typesupport_fastrtps_cppExport.cmake
+[3.356s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_typesupport_fastrtps_cppExport-release.cmake
+[3.356s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_introspection_cExport.cmake
+[3.357s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_introspection_cExport-release.cmake
+[3.357s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_cExport.cmake
+[3.357s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_cExport-release.cmake
+[3.358s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_introspection_cppExport.cmake
+[3.358s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_introspection_cppExport-release.cmake
+[3.358s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_cppExport.cmake
+[3.358s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_cppExport-release.cmake
+[3.359s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_generator_pyExport.cmake
+[3.360s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_generator_pyExport-release.cmake
+[3.360s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/rosidl_cmake-extras.cmake
+[3.361s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/ament_cmake_export_dependencies-extras.cmake
+[3.361s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/ament_cmake_export_include_directories-extras.cmake
+[3.361s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/ament_cmake_export_libraries-extras.cmake
+[3.362s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/ament_cmake_export_targets-extras.cmake
+[3.362s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[3.364s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[3.365s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig.cmake
+[3.365s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig-version.cmake
+[3.365s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.xml
+[3.366s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /root/xline_path_planner/build/xline_path_planner

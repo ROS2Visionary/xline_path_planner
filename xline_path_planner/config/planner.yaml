@@ -1,10 +1,5 @@
 # 路径规划器配置（按类别组织）
 
-files:
-  cad_file_path: "/root/xline_path_planner/cad_data/cad_2_transformed.json"
-  output_file_path: "/root/xline_path_planner/path_visualizations/path_from_cad.json"
-  path_visualization_dir: "/root/xline_path_planner/path_visualizations"
-
 visualization:
   # 同时用于栅格与路径可视化
   scale: 4
@@ -12,6 +7,7 @@ visualization:
   use_antialiasing: true
   image_format: "png"
   save_path_visualization: true
+  output_dir: "/root/xline_path_planner/path_visualizations"   # 栅格/路径可视化输出目录
 
 cad_parser:
   unit_conversion_factor: 1000.0   # 毫米->米
@@ -35,4 +31,3 @@ path_planner:
 trajectory:
   max_velocity: 0.5         # m/s
   max_acceleration: 0.5     # m/s^2
-

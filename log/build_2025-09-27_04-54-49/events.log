@@ -1,0 +1,702 @@
+[0.000000] (-) TimerEvent: {}
+[0.000135] (xline_path_planner) JobQueued: {'identifier': 'xline_path_planner', 'dependencies': OrderedDict()}
+[0.001010] (xline_path_planner) JobStarted: {'identifier': 'xline_path_planner'}
+[0.038772] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'cmake'}
+[0.041664] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '/root/xline_path_planner/xline_path_planner', '-DCMAKE_BUILD_TYPE=Release', '-DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('VSCODE_CWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/out/nls.messages.json","languagePack":{"translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","messagesFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92/nls.messages.json","corruptMarkerFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"2dc48f4001610433dd6143a56de10ea9.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92","_corruptedFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"}'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('HOSTNAME', 'ee14746cbf7f'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('BROWSER', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-2cd339da-68cb-4d38-afb0-d48bf632e348.sock'), ('ROS_PYTHON_VERSION', '3'), ('REMOTE_CONTAINERS', 'true'), ('DEBUGINFOD_URLS', ''), ('COLCON_PREFIX_PATH', '/opt/ros/humble'), ('ROS_DISTRO', 'humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('LOGNAME', 'root'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('ROS_LOCALHOST_ONLY', '0'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/tmp/.tmpWE5ftf:/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/extensions/openai.chatgpt-0.4.15-linux-x64/bin/linux-x86_64'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock"]'), ('DISPLAY', 'host.docker.internal:0'), ('LANG', 'en_US.UTF-8'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('DEBIAN_FRONTEND', ''), ('SHELL', '/usr/bin/zsh'), ('ELECTRON_RUN_AS_NODE', '1'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.075060] (xline_path_planner) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.100158] (-) TimerEvent: {}
+[0.201161] (-) TimerEvent: {}
+[0.302422] (-) TimerEvent: {}
+[0.348354] (xline_path_planner) StdoutLine: {'line': b'-- Found rclcpp: 16.0.12 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.402623] (-) TimerEvent: {}
+[0.421457] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.427975] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.443629] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.467761] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.498103] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.503329] (-) TimerEvent: {}
+[0.565685] (xline_path_planner) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.567493] (xline_path_planner) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.604297] (-) TimerEvent: {}
+[0.705314] (-) TimerEvent: {}
+[0.759483] (xline_path_planner) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.806080] (-) TimerEvent: {}
+[0.877436] (xline_path_planner) StdoutLine: {'line': b'-- Found rclcpp_action: 16.0.12 (/opt/ros/humble/share/rclcpp_action/cmake)\n'}
+[0.907120] (-) TimerEvent: {}
+[0.961051] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)\n'}
+[1.008138] (-) TimerEvent: {}
+[1.109109] (-) TimerEvent: {}
+[1.210173] (-) TimerEvent: {}
+[1.311146] (-) TimerEvent: {}
+[1.358174] (xline_path_planner) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)\n'}
+[1.411300] (-) TimerEvent: {}
+[1.512314] (-) TimerEvent: {}
+[1.613227] (-) TimerEvent: {}
+[1.714072] (-) TimerEvent: {}
+[1.815099] (-) TimerEvent: {}
+[1.916132] (-) TimerEvent: {}
+[1.988452] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[2.017166] (-) TimerEvent: {}
+[2.118209] (-) TimerEvent: {}
+[2.219305] (-) TimerEvent: {}
+[2.228106] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[2.275541] (xline_path_planner) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.12", minimum required is "3.6") \n'}
+[2.280087] (xline_path_planner) StdoutLine: {'line': b'-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)\n'}
+[2.320234] (-) TimerEvent: {}
+[2.325777] (xline_path_planner) StdoutLine: {'line': b'-- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.10.so (found suitable version "3.10.12", minimum required is "3.5") \n'}
+[2.326098] (xline_path_planner) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[2.326227] (xline_path_planner) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10\n'}
+[2.326395] (xline_path_planner) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so\n'}
+[2.356228] (xline_path_planner) StdoutLine: {'line': b'-- Found PythonExtra: .so  \n'}
+[2.421129] (-) TimerEvent: {}
+[2.522164] (-) TimerEvent: {}
+[2.596668] (xline_path_planner) StderrLine: {'line': b'CMake Deprecation Warning at /opt/ros/humble/share/rosidl_cmake/cmake/rosidl_target_interfaces.cmake:32 (message):\n'}
+[2.597001] (xline_path_planner) StderrLine: {'line': b'  Use rosidl_get_typesupport_target() and target_link_libraries() instead of\n'}
+[2.597276] (xline_path_planner) StderrLine: {'line': b'  rosidl_target_interfaces()\n'}
+[2.597437] (xline_path_planner) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[2.597523] (xline_path_planner) StderrLine: {'line': b'  CMakeLists.txt:62 (rosidl_target_interfaces)\n'}
+[2.597603] (xline_path_planner) StderrLine: {'line': b'\n'}
+[2.597766] (xline_path_planner) StderrLine: {'line': b'\n'}
+[2.597881] (xline_path_planner) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.12 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[2.623155] (-) TimerEvent: {}
+[2.724283] (-) TimerEvent: {}
+[2.844643] (-) TimerEvent: {}
+[2.896911] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[2.898227] (xline_path_planner) StdoutLine: {'line': b'-- Configured cppcheck include dirs: $<BUILD_INTERFACE:/root/xline_path_planner/xline_path_planner/include>\n'}
+[2.898495] (xline_path_planner) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[2.899630] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[2.906185] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[2.906491] (xline_path_planner) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[2.906894] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[2.912150] (xline_path_planner) StdoutLine: {'line': b'-- Configuring done\n'}
+[2.945085] (-) TimerEvent: {}
+[3.034972] (xline_path_planner) StdoutLine: {'line': b'-- Generating done\n'}
+[3.046331] (-) TimerEvent: {}
+[3.070031] (xline_path_planner) StdoutLine: {'line': b'-- Build files have been written to: /root/xline_path_planner/build/xline_path_planner\n'}
+[3.091226] (xline_path_planner) CommandEnded: {'returncode': 0}
+[3.092208] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'build'}
+[3.094796] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '--build', '/root/xline_path_planner/build/xline_path_planner', '--', '-j8', '-l8'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('VSCODE_CWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/out/nls.messages.json","languagePack":{"translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","messagesFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92/nls.messages.json","corruptMarkerFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"2dc48f4001610433dd6143a56de10ea9.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92","_corruptedFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"}'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('HOSTNAME', 'ee14746cbf7f'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('BROWSER', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-2cd339da-68cb-4d38-afb0-d48bf632e348.sock'), ('ROS_PYTHON_VERSION', '3'), ('REMOTE_CONTAINERS', 'true'), ('DEBUGINFOD_URLS', ''), ('COLCON_PREFIX_PATH', '/opt/ros/humble'), ('ROS_DISTRO', 'humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('LOGNAME', 'root'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('ROS_LOCALHOST_ONLY', '0'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/tmp/.tmpWE5ftf:/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/extensions/openai.chatgpt-0.4.15-linux-x64/bin/linux-x86_64'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock"]'), ('DISPLAY', 'host.docker.internal:0'), ('LANG', 'en_US.UTF-8'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('DEBIAN_FRONTEND', ''), ('SHELL', '/usr/bin/zsh'), ('ELECTRON_RUN_AS_NODE', '1'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[3.147542] (-) TimerEvent: {}
+[3.176137] (xline_path_planner) StdoutLine: {'line': b'[  2%] Generating C code for ROS interfaces\n'}
+[3.194009] (xline_path_planner) StdoutLine: {'line': b'[  5%] Generating C++ code for ROS interfaces\n'}
+[3.213687] (xline_path_planner) StdoutLine: {'line': b'[  5%] Built target ament_cmake_python_copy_xline_path_planner\n'}
+[3.248272] (-) TimerEvent: {}
+[3.349247] (-) TimerEvent: {}
+[3.450380] (-) TimerEvent: {}
+[3.551238] (-) TimerEvent: {}
+[3.652603] (-) TimerEvent: {}
+[3.753372] (-) TimerEvent: {}
+[3.854364] (-) TimerEvent: {}
+[3.861711] (xline_path_planner) StdoutLine: {'line': b'running egg_info\n'}
+[3.862740] (xline_path_planner) StdoutLine: {'line': b'creating xline_path_planner.egg-info\n'}
+[3.863667] (xline_path_planner) StdoutLine: {'line': b'writing xline_path_planner.egg-info/PKG-INFO\n'}
+[3.864176] (xline_path_planner) StdoutLine: {'line': b'writing dependency_links to xline_path_planner.egg-info/dependency_links.txt\n'}
+[3.864355] (xline_path_planner) StdoutLine: {'line': b'writing top-level names to xline_path_planner.egg-info/top_level.txt\n'}
+[3.864700] (xline_path_planner) StdoutLine: {'line': b"writing manifest file 'xline_path_planner.egg-info/SOURCES.txt'\n"}
+[3.872331] (xline_path_planner) StdoutLine: {'line': b"reading manifest file 'xline_path_planner.egg-info/SOURCES.txt'\n"}
+[3.873639] (xline_path_planner) StdoutLine: {'line': b"writing manifest file 'xline_path_planner.egg-info/SOURCES.txt'\n"}
+[3.945402] (xline_path_planner) StdoutLine: {'line': b'[  5%] Built target ament_cmake_python_build_xline_path_planner_egg\n'}
+[3.955088] (-) TimerEvent: {}
+[4.056338] (-) TimerEvent: {}
+[4.157203] (-) TimerEvent: {}
+[4.258041] (-) TimerEvent: {}
+[4.359313] (-) TimerEvent: {}
+[4.436348] (xline_path_planner) StdoutLine: {'line': b'[  7%] Building C object CMakeFiles/xline_path_planner__rosidl_generator_c.dir/rosidl_generator_c/xline_path_planner/action/detail/plan_path__functions.c.o\n'}
+[4.447249] (xline_path_planner) StdoutLine: {'line': b'[  7%] Built target xline_path_planner__cpp\n'}
+[4.460353] (-) TimerEvent: {}
+[4.464422] (xline_path_planner) StdoutLine: {'line': b'[ 12%] Generating C++ type support for eProsima Fast-RTPS\n'}
+[4.465158] (xline_path_planner) StdoutLine: {'line': b'[ 12%] Generating C++ type support dispatch for ROS interfaces\n'}
+[4.465339] (xline_path_planner) StdoutLine: {'line': b'[ 15%] Generating C++ introspection for ROS interfaces\n'}
+[4.561172] (-) TimerEvent: {}
+[4.661662] (-) TimerEvent: {}
+[4.764232] (-) TimerEvent: {}
+[4.865310] (-) TimerEvent: {}
+[4.966188] (-) TimerEvent: {}
+[5.067275] (-) TimerEvent: {}
+[5.171235] (-) TimerEvent: {}
+[5.272951] (-) TimerEvent: {}
+[5.374130] (-) TimerEvent: {}
+[5.475278] (-) TimerEvent: {}
+[5.511586] (xline_path_planner) StdoutLine: {'line': b'[ 17%] Building CXX object CMakeFiles/xline_path_planner__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/xline_path_planner/action/plan_path__type_support.cpp.o\n'}
+[5.576231] (-) TimerEvent: {}
+[5.612879] (xline_path_planner) StdoutLine: {'line': b'[ 20%] Linking C shared library libxline_path_planner__rosidl_generator_c.so\n'}
+[5.641560] (xline_path_planner) StdoutLine: {'line': b'[ 23%] Building CXX object CMakeFiles/xline_path_planner__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/xline_path_planner/action/detail/plan_path__type_support.cpp.o\n'}
+[5.677320] (-) TimerEvent: {}
+[5.699360] (xline_path_planner) StdoutLine: {'line': b'[ 23%] Built target xline_path_planner__rosidl_generator_c\n'}
+[5.724105] (xline_path_planner) StdoutLine: {'line': b'[ 25%] Generating C type support for eProsima Fast-RTPS\n'}
+[5.724457] (xline_path_planner) StdoutLine: {'line': b'[ 28%] Generating C introspection for ROS interfaces\n'}
+[5.728297] (xline_path_planner) StdoutLine: {'line': b'[ 30%] Generating C type support dispatch for ROS interfaces\n'}
+[5.778743] (-) TimerEvent: {}
+[5.879260] (-) TimerEvent: {}
+[5.904222] (xline_path_planner) StdoutLine: {'line': b'[ 33%] Building CXX object CMakeFiles/xline_path_planner__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/xline_path_planner/action/detail/dds_fastrtps/plan_path__type_support.cpp.o\n'}
+[5.980222] (-) TimerEvent: {}
+[6.081345] (-) TimerEvent: {}
+[6.182502] (-) TimerEvent: {}
+[6.288710] (-) TimerEvent: {}
+[6.392209] (-) TimerEvent: {}
+[6.493414] (-) TimerEvent: {}
+[6.594193] (-) TimerEvent: {}
+[6.695241] (-) TimerEvent: {}
+[6.796365] (-) TimerEvent: {}
+[6.898169] (-) TimerEvent: {}
+[6.999417] (-) TimerEvent: {}
+[7.078991] (xline_path_planner) StdoutLine: {'line': b'[ 35%] Building CXX object CMakeFiles/xline_path_planner__rosidl_typesupport_c.dir/rosidl_typesupport_c/xline_path_planner/action/plan_path__type_support.cpp.o\n'}
+[7.091779] (xline_path_planner) StdoutLine: {'line': b'[ 38%] Linking CXX shared library libxline_path_planner__rosidl_typesupport_cpp.so\n'}
+[7.100395] (-) TimerEvent: {}
+[7.232383] (-) TimerEvent: {}
+[7.289401] (xline_path_planner) StdoutLine: {'line': b'[ 38%] Built target xline_path_planner__rosidl_typesupport_cpp\n'}
+[7.323380] (xline_path_planner) StdoutLine: {'line': b'[ 41%] Linking CXX shared library libxline_path_planner__rosidl_typesupport_c.so\n'}
+[7.332902] (-) TimerEvent: {}
+[7.434033] (-) TimerEvent: {}
+[7.463494] (xline_path_planner) StdoutLine: {'line': b'[ 41%] Built target xline_path_planner__rosidl_typesupport_c\n'}
+[7.469929] (xline_path_planner) StdoutLine: {'line': b'[ 43%] Building C object CMakeFiles/xline_path_planner__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/xline_path_planner/action/detail/plan_path__type_support.c.o\n'}
+[7.534390] (-) TimerEvent: {}
+[7.565524] (xline_path_planner) StdoutLine: {'line': b'[ 46%] Building CXX object CMakeFiles/xline_path_planner__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/xline_path_planner/action/detail/plan_path__type_support_c.cpp.o\n'}
+[7.636113] (-) TimerEvent: {}
+[7.683037] (xline_path_planner) StdoutLine: {'line': b'[ 48%] Linking C shared library libxline_path_planner__rosidl_typesupport_introspection_c.so\n'}
+[7.737230] (-) TimerEvent: {}
+[7.754787] (xline_path_planner) StdoutLine: {'line': b'[ 48%] Built target xline_path_planner__rosidl_typesupport_introspection_c\n'}
+[7.838157] (-) TimerEvent: {}
+[7.886796] (xline_path_planner) StdoutLine: {'line': b'[ 51%] Linking CXX shared library libxline_path_planner__rosidl_typesupport_introspection_cpp.so\n'}
+[7.938526] (-) TimerEvent: {}
+[8.039264] (-) TimerEvent: {}
+[8.089825] (xline_path_planner) StdoutLine: {'line': b'[ 51%] Built target xline_path_planner__rosidl_typesupport_introspection_cpp\n'}
+[8.140229] (-) TimerEvent: {}
+[8.241141] (-) TimerEvent: {}
+[8.249258] (xline_path_planner) StdoutLine: {'line': b'[ 53%] Linking CXX shared library libxline_path_planner__rosidl_typesupport_fastrtps_cpp.so\n'}
+[8.342144] (-) TimerEvent: {}
+[8.429674] (xline_path_planner) StdoutLine: {'line': b'[ 53%] Built target xline_path_planner__rosidl_typesupport_fastrtps_cpp\n'}
+[8.443130] (-) TimerEvent: {}
+[8.544345] (-) TimerEvent: {}
+[8.645164] (-) TimerEvent: {}
+[8.746368] (-) TimerEvent: {}
+[8.847323] (-) TimerEvent: {}
+[8.865576] (xline_path_planner) StdoutLine: {'line': b'[ 56%] Linking CXX shared library libxline_path_planner__rosidl_typesupport_fastrtps_c.so\n'}
+[8.948113] (-) TimerEvent: {}
+[9.033769] (xline_path_planner) StdoutLine: {'line': b'[ 56%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c\n'}
+[9.049156] (-) TimerEvent: {}
+[9.069703] (xline_path_planner) StdoutLine: {'line': b'[ 56%] Built target xline_path_planner\n'}
+[9.105572] (xline_path_planner) StdoutLine: {'line': b'[ 58%] Generating Python code for ROS interfaces\n'}
+[9.111926] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target planner_node\n'}
+[9.148516] (xline_path_planner) StdoutLine: {'line': b'[ 61%] Building CXX object CMakeFiles/planner_node.dir/src/main.cpp.o\n'}
+[9.148778] (xline_path_planner) StdoutLine: {'line': b'[ 64%] Building CXX object CMakeFiles/planner_node.dir/src/cad_parser.cpp.o\n'}
+[9.149048] (xline_path_planner) StdoutLine: {'line': b'[ 66%] Building CXX object CMakeFiles/planner_node.dir/src/planner_engine.cpp.o\n'}
+[9.149331] (-) TimerEvent: {}
+[9.153501] (xline_path_planner) StdoutLine: {'line': b'[ 71%] Building CXX object CMakeFiles/planner_node.dir/src/grid_map_generator.cpp.o\n'}
+[9.153950] (xline_path_planner) StdoutLine: {'line': b'[ 71%] Building CXX object CMakeFiles/planner_node.dir/src/path_planner.cpp.o\n'}
+[9.154301] (xline_path_planner) StdoutLine: {'line': b'[ 74%] Building CXX object CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o\n'}
+[9.162792] (xline_path_planner) StdoutLine: {'line': b'[ 76%] Building CXX object CMakeFiles/planner_node.dir/src/output_formatter.cpp.o\n'}
+[9.250381] (-) TimerEvent: {}
+[9.351422] (-) TimerEvent: {}
+[9.460232] (-) TimerEvent: {}
+[9.562322] (-) TimerEvent: {}
+[9.667499] (-) TimerEvent: {}
+[9.773091] (-) TimerEvent: {}
+[9.878199] (-) TimerEvent: {}
+[9.979293] (-) TimerEvent: {}
+[10.080284] (-) TimerEvent: {}
+[10.181171] (-) TimerEvent: {}
+[10.289258] (-) TimerEvent: {}
+[10.390223] (-) TimerEvent: {}
+[10.494182] (-) TimerEvent: {}
+[10.596337] (-) TimerEvent: {}
+[10.700564] (-) TimerEvent: {}
+[10.801217] (-) TimerEvent: {}
+[10.902370] (-) TimerEvent: {}
+[11.007636] (-) TimerEvent: {}
+[11.108391] (-) TimerEvent: {}
+[11.210158] (-) TimerEvent: {}
+[11.314497] (-) TimerEvent: {}
+[11.416281] (-) TimerEvent: {}
+[11.525339] (-) TimerEvent: {}
+[11.628450] (-) TimerEvent: {}
+[11.739000] (-) TimerEvent: {}
+[11.840344] (-) TimerEvent: {}
+[11.940707] (-) TimerEvent: {}
+[12.042977] (-) TimerEvent: {}
+[12.144852] (-) TimerEvent: {}
+[12.249339] (-) TimerEvent: {}
+[12.354365] (-) TimerEvent: {}
+[12.464548] (-) TimerEvent: {}
+[12.565367] (-) TimerEvent: {}
+[12.666152] (-) TimerEvent: {}
+[12.770965] (-) TimerEvent: {}
+[12.872598] (-) TimerEvent: {}
+[12.974192] (-) TimerEvent: {}
+[13.075457] (-) TimerEvent: {}
+[13.178134] (-) TimerEvent: {}
+[13.280969] (-) TimerEvent: {}
+[13.382311] (-) TimerEvent: {}
+[13.490280] (-) TimerEvent: {}
+[13.590727] (-) TimerEvent: {}
+[13.691653] (-) TimerEvent: {}
+[13.793948] (-) TimerEvent: {}
+[13.898380] (-) TimerEvent: {}
+[14.001240] (-) TimerEvent: {}
+[14.102257] (-) TimerEvent: {}
+[14.107750] (xline_path_planner) StdoutLine: {'line': b'[ 76%] Built target xline_path_planner__py\n'}
+[14.195957] (xline_path_planner) StdoutLine: {'line': b'[ 79%] Building C object CMakeFiles/xline_path_planner__rosidl_generator_py.dir/rosidl_generator_py/xline_path_planner/action/_plan_path_s.c.o\n'}
+[14.207507] (-) TimerEvent: {}
+[14.309244] (-) TimerEvent: {}
+[14.410901] (-) TimerEvent: {}
+[14.514243] (-) TimerEvent: {}
+[14.616259] (-) TimerEvent: {}
+[14.717298] (-) TimerEvent: {}
+[14.824491] (-) TimerEvent: {}
+[14.925424] (-) TimerEvent: {}
+[15.026237] (-) TimerEvent: {}
+[15.121522] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp: In member function \xe2\x80\x98bool daosnrs_planning::GridMapGenerator::save_as_image(const string&, const daosnrs_planning::CADData&, const daosnrs_planning::GridMapVisualizationConfig&) const\xe2\x80\x99:\n'}
+[15.124233] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:140:83: warning: unused parameter \xe2\x80\x98cad_data\xe2\x80\x99 [-Wunused-parameter]\n'}
+[15.124652] (xline_path_planner) StderrLine: {'line': b'  140 | bool GridMapGenerator::save_as_image(const std::string& file_path, const CADData& cad_data,\n'}
+[15.125092] (xline_path_planner) StderrLine: {'line': b'      |                                                                    ~~~~~~~~~~~~~~~^~~~~~~~\n'}
+[15.128720] (-) TimerEvent: {}
+[15.165131] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp: In member function \xe2\x80\x98void daosnrs_planning::GridMapGenerator::store_axis_line_points(const std::shared_ptr<daosnrs_planning::Line>&)\xe2\x80\x99:\n'}
+[15.165585] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:739:64: warning: comparison of integer expressions of different signedness: \xe2\x80\x98std::vector<daosnrs_planning::Point3D>::size_type\xe2\x80\x99 {aka \xe2\x80\x98long unsigned int\xe2\x80\x99} and \xe2\x80\x98int\xe2\x80\x99 [-Wsign-compare]\n'}
+[15.165828] (xline_path_planner) StderrLine: {'line': b'  739 |         if (curve->degree <= 3 && curve->control_points.size() >= curve->degree + 1)\n'}
+[15.166446] (xline_path_planner) StderrLine: {'line': b'      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\n'}
+[15.230566] (-) TimerEvent: {}
+[15.245791] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/path_planner.cpp: In member function \xe2\x80\x98std::vector<daosnrs_planning::RouteSegment> daosnrs_planning::PathPlanner::plan_paths(const daosnrs_planning::CADData&, const daosnrs_planning::PathOffsetConfig&)\xe2\x80\x99:\n'}
+[15.246348] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:84:47: warning: comparison of integer expressions of different signedness: \xe2\x80\x98int\xe2\x80\x99 and \xe2\x80\x98std::vector<std::shared_ptr<daosnrs_planning::Line> >::size_type\xe2\x80\x99 {aka \xe2\x80\x98long unsigned int\xe2\x80\x99} [-Wsign-compare]\n'}
+[15.246588] (xline_path_planner) StderrLine: {'line': b'   84 |   if (!lines_to_draw.empty() && printed_count == cad_data.path_lines.size())\n'}
+[15.246782] (xline_path_planner) StderrLine: {'line': b'      |                                 ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n'}
+[15.338372] (-) TimerEvent: {}
+[15.407877] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/path_planner.cpp: In member function \xe2\x80\x98cv::Mat daosnrs_planning::PathPlanner::create_path_image(const daosnrs_planning::PathVisualizationConfig&)\xe2\x80\x99:\n'}
+[15.408357] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:959:10: warning: unused variable \xe2\x80\x98resolution\xe2\x80\x99 [-Wunused-variable]\n'}
+[15.408637] (xline_path_planner) StderrLine: {'line': b'  959 |   double resolution = grid_map_generator_->get_resolution();\n'}
+[15.408858] (xline_path_planner) StderrLine: {'line': b'      |          ^~~~~~~~~~\n'}
+[15.439281] (-) TimerEvent: {}
+[15.541665] (-) TimerEvent: {}
+[15.643737] (-) TimerEvent: {}
+[15.649551] (xline_path_planner) StdoutLine: {'line': b'[ 82%] Linking C shared library rosidl_generator_py/xline_path_planner/libxline_path_planner__rosidl_generator_py.so\n'}
+[15.744819] (-) TimerEvent: {}
+[15.816705] (xline_path_planner) StdoutLine: {'line': b'[ 82%] Built target xline_path_planner__rosidl_generator_py\n'}
+[15.846438] (-) TimerEvent: {}
+[15.894238] (xline_path_planner) StdoutLine: {'line': b'[ 84%] Building C object CMakeFiles/xline_path_planner__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_introspection_c.c.o\n'}
+[15.899260] (xline_path_planner) StdoutLine: {'line': b'[ 87%] Building C object CMakeFiles/xline_path_planner__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_fastrtps_c.c.o\n'}
+[15.948255] (-) TimerEvent: {}
+[16.052307] (-) TimerEvent: {}
+[16.155323] (-) TimerEvent: {}
+[16.256264] (-) TimerEvent: {}
+[16.357279] (-) TimerEvent: {}
+[16.458381] (-) TimerEvent: {}
+[16.563395] (-) TimerEvent: {}
+[16.664400] (-) TimerEvent: {}
+[16.728449] (xline_path_planner) StdoutLine: {'line': b'[ 89%] Linking C shared library rosidl_generator_py/xline_path_planner/xline_path_planner_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[16.765310] (-) TimerEvent: {}
+[16.866598] (-) TimerEvent: {}
+[16.957235] (xline_path_planner) StdoutLine: {'line': b'[ 92%] Linking C shared library rosidl_generator_py/xline_path_planner/xline_path_planner_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[16.969596] (-) TimerEvent: {}
+[16.977704] (xline_path_planner) StdoutLine: {'line': b'[ 92%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext\n'}
+[17.070240] (-) TimerEvent: {}
+[17.116403] (xline_path_planner) StdoutLine: {'line': b'[ 94%] Building C object CMakeFiles/xline_path_planner__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_c.c.o\n'}
+[17.177284] (-) TimerEvent: {}
+[17.189972] (xline_path_planner) StdoutLine: {'line': b'[ 94%] Built target xline_path_planner__rosidl_typesupport_introspection_c__pyext\n'}
+[17.279221] (-) TimerEvent: {}
+[17.380497] (-) TimerEvent: {}
+[17.483612] (-) TimerEvent: {}
+[17.584573] (-) TimerEvent: {}
+[17.685600] (-) TimerEvent: {}
+[17.787409] (-) TimerEvent: {}
+[17.891405] (-) TimerEvent: {}
+[17.979389] (xline_path_planner) StdoutLine: {'line': b'[ 97%] Linking C shared library rosidl_generator_py/xline_path_planner/xline_path_planner_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[17.993373] (-) TimerEvent: {}
+[18.094204] (-) TimerEvent: {}
+[18.155904] (xline_path_planner) StdoutLine: {'line': b'[ 97%] Built target xline_path_planner__rosidl_typesupport_c__pyext\n'}
+[18.196226] (-) TimerEvent: {}
+[18.301947] (-) TimerEvent: {}
+[18.405184] (-) TimerEvent: {}
+[18.506904] (-) TimerEvent: {}
+[18.608493] (-) TimerEvent: {}
+[18.711519] (-) TimerEvent: {}
+[18.812697] (-) TimerEvent: {}
+[18.914368] (-) TimerEvent: {}
+[19.015148] (-) TimerEvent: {}
+[19.116455] (-) TimerEvent: {}
+[19.223156] (-) TimerEvent: {}
+[19.324456] (-) TimerEvent: {}
+[19.426612] (-) TimerEvent: {}
+[19.530530] (-) TimerEvent: {}
+[19.631314] (-) TimerEvent: {}
+[19.733889] (-) TimerEvent: {}
+[19.835307] (-) TimerEvent: {}
+[19.937303] (-) TimerEvent: {}
+[20.040653] (-) TimerEvent: {}
+[20.142355] (-) TimerEvent: {}
+[20.243346] (-) TimerEvent: {}
+[20.344263] (-) TimerEvent: {}
+[20.445356] (-) TimerEvent: {}
+[20.546292] (-) TimerEvent: {}
+[20.647259] (-) TimerEvent: {}
+[20.748360] (-) TimerEvent: {}
+[20.849204] (-) TimerEvent: {}
+[20.950639] (-) TimerEvent: {}
+[21.054661] (-) TimerEvent: {}
+[21.156360] (-) TimerEvent: {}
+[21.257187] (-) TimerEvent: {}
+[21.358295] (-) TimerEvent: {}
+[21.459372] (-) TimerEvent: {}
+[21.560196] (-) TimerEvent: {}
+[21.661326] (-) TimerEvent: {}
+[21.762337] (-) TimerEvent: {}
+[21.863325] (-) TimerEvent: {}
+[21.964211] (-) TimerEvent: {}
+[22.065312] (-) TimerEvent: {}
+[22.166216] (-) TimerEvent: {}
+[22.267210] (-) TimerEvent: {}
+[22.372742] (-) TimerEvent: {}
+[22.474840] (-) TimerEvent: {}
+[22.576240] (-) TimerEvent: {}
+[22.677268] (-) TimerEvent: {}
+[22.778302] (-) TimerEvent: {}
+[22.879211] (-) TimerEvent: {}
+[22.981455] (-) TimerEvent: {}
+[23.137311] (-) TimerEvent: {}
+[23.238336] (-) TimerEvent: {}
+[23.339199] (-) TimerEvent: {}
+[23.440358] (-) TimerEvent: {}
+[23.541362] (-) TimerEvent: {}
+[23.642367] (-) TimerEvent: {}
+[23.743136] (-) TimerEvent: {}
+[23.844380] (-) TimerEvent: {}
+[23.945250] (-) TimerEvent: {}
+[24.046128] (-) TimerEvent: {}
+[24.147169] (-) TimerEvent: {}
+[24.248306] (-) TimerEvent: {}
+[24.349239] (-) TimerEvent: {}
+[24.450177] (-) TimerEvent: {}
+[24.551775] (-) TimerEvent: {}
+[24.653262] (-) TimerEvent: {}
+[24.754252] (-) TimerEvent: {}
+[24.855212] (-) TimerEvent: {}
+[24.881798] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:245:43: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 has not been declared\n'}
+[24.882057] (xline_path_planner) StderrLine: {'line': b'  245 |                                           xline_path_planner::action::PlanPath::Goal::ConstSharedPtr goal)\n'}
+[24.882258] (xline_path_planner) StderrLine: {'line': b'      |                                           ^~~~~~~~~~~~~~~~~~\n'}
+[24.882358] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:245:102: error: expected \xe2\x80\x98,\xe2\x80\x99 or \xe2\x80\x98...\xe2\x80\x99 before \xe2\x80\x98goal\xe2\x80\x99\n'}
+[24.882447] (xline_path_planner) StderrLine: {'line': b'  245 |                                           xline_path_planner::action::PlanPath::Goal::ConstSharedPtr goal)\n'}
+[24.882544] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                      ^~~~\n'}
+[24.907253] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:101: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[24.907491] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.907581] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                     ^~~~~~~~~~~~~~~~~~\n'}
+[24.907662] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:137: error: template argument 1 is invalid\n'}
+[24.907740] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.907820] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                                                         ^~\n'}
+[24.927883] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:101: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[24.928263] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.928436] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                     ^~~~~~~~~~~~~~~~~~\n'}
+[24.928579] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:137: error: template argument 1 is invalid\n'}
+[24.928716] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.928850] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                                                         ^~\n'}
+[24.950035] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:101: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[24.950402] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.950563] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                     ^~~~~~~~~~~~~~~~~~\n'}
+[24.950700] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:137: error: template argument 1 is invalid\n'}
+[24.950826] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.950954] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                                                         ^~\n'}
+[24.951076] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:69: error: invalid template-id\n'}
+[24.951335] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.951497] (xline_path_planner) StderrLine: {'line': b'      |                                                                     ^~~~~~~~~~~~~\n'}
+[24.956130] (-) TimerEvent: {}
+[24.970640] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:101: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[24.970878] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.970966] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                     ^~~~~~~~~~~~~~~~~~\n'}
+[24.971045] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:84: error: template argument 1 is invalid\n'}
+[24.971126] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.971264] (xline_path_planner) StderrLine: {'line': b'      |                                                                                    ^~~~~~~~~~~~~~~~\n'}
+[24.971351] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:84: error: template argument 1 is invalid\n'}
+[24.971427] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:84: error: template argument 1 is invalid\n'}
+[24.971502] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:53: error: invalid template-id\n'}
+[24.971578] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.971654] (xline_path_planner) StderrLine: {'line': b'      |                                                     ^~~\n'}
+[24.971729] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:139: error: missing template arguments before \xe2\x80\x98)\xe2\x80\x99 token\n'}
+[24.971805] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.971879] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                                                           ^\n'}
+[24.971964] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:139: error: expected \xe2\x80\x98>\xe2\x80\x99 before \xe2\x80\x98)\xe2\x80\x99 token\n'}
+[24.972041] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:256:47: error: class template placeholder \xe2\x80\x98std::shared_ptr\xe2\x80\x99 not permitted in this context\n'}
+[24.972168] (xline_path_planner) StderrLine: {'line': b'  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)\n'}
+[24.972274] (xline_path_planner) StderrLine: {'line': b'      |                                               ^~~~~\n'}
+[24.991403] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:78: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[24.991642] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[24.991730] (xline_path_planner) StderrLine: {'line': b'      |                                                                              ^~~~~~~~~~~~~~~~~~\n'}
+[24.991809] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:114: error: template argument 1 is invalid\n'}
+[24.991887] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[24.991963] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                                  ^~\n'}
+[25.012353] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:78: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[25.012643] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.012773] (xline_path_planner) StderrLine: {'line': b'      |                                                                              ^~~~~~~~~~~~~~~~~~\n'}
+[25.012907] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:114: error: template argument 1 is invalid\n'}
+[25.013144] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.013278] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                                  ^~\n'}
+[25.032835] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:78: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[25.033080] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.033215] (xline_path_planner) StderrLine: {'line': b'      |                                                                              ^~~~~~~~~~~~~~~~~~\n'}
+[25.033299] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:114: error: template argument 1 is invalid\n'}
+[25.033375] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.033450] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                                  ^~\n'}
+[25.033534] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:46: error: invalid template-id\n'}
+[25.033609] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.033684] (xline_path_planner) StderrLine: {'line': b'      |                                              ^~~~~~~~~~~~~\n'}
+[25.054140] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:78: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[25.054430] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.054558] (xline_path_planner) StderrLine: {'line': b'      |                                                                              ^~~~~~~~~~~~~~~~~~\n'}
+[25.054675] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:117: error: template argument 1 is invalid\n'}
+[25.054808] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.054921] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                                     ^~~~~~~~~~~\n'}
+[25.055135] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:117: error: template argument 1 is invalid\n'}
+[25.055245] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:117: error: template argument 1 is invalid\n'}
+[25.055327] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:30: error: invalid template-id\n'}
+[25.055406] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.055483] (xline_path_planner) StderrLine: {'line': b'      |                              ^~~\n'}
+[25.055560] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:117: error: missing template arguments before \xe2\x80\x98goal_handle\xe2\x80\x99\n'}
+[25.055636] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.055711] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                                     ^~~~~~~~~~~\n'}
+[25.055801] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:117: error: expected \xe2\x80\x98>\xe2\x80\x99 before \xe2\x80\x98goal_handle\xe2\x80\x99\n'}
+[25.055876] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:263:24: error: class template placeholder \xe2\x80\x98std::shared_ptr\xe2\x80\x99 not permitted in this context\n'}
+[25.056023] (xline_path_planner) StderrLine: {'line': b'  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.056109] (xline_path_planner) StderrLine: {'line': b'      |                        ^~~~~\n'}
+[25.056183] (-) TimerEvent: {}
+[25.062059] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:269:3: error: \xe2\x80\x98PlannerEngineConfig\xe2\x80\x99 does not name a type\n'}
+[25.062361] (xline_path_planner) StderrLine: {'line': b'  269 |   PlannerEngineConfig build_engine_cfg_from_node() const\n'}
+[25.062512] (xline_path_planner) StderrLine: {'line': b'      |   ^~~~~~~~~~~~~~~~~~~\n'}
+[25.069466] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:281:3: error: \xe2\x80\x98PlannerEngineConfig\xe2\x80\x99 does not name a type\n'}
+[25.069705] (xline_path_planner) StderrLine: {'line': b'  281 |   PlannerEngineConfig load_engine_cfg_from_yaml_text(const std::string& yaml_text)\n'}
+[25.069790] (xline_path_planner) StderrLine: {'line': b'      |   ^~~~~~~~~~~~~~~~~~~\n'}
+[25.090152] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:70: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[25.090443] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.090572] (xline_path_planner) StderrLine: {'line': b'      |                                                                      ^~~~~~~~~~~~~~~~~~\n'}
+[25.090701] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:106: error: template argument 1 is invalid\n'}
+[25.090816] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.090928] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                          ^~\n'}
+[25.111485] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:70: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[25.111720] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.111812] (xline_path_planner) StderrLine: {'line': b'      |                                                                      ^~~~~~~~~~~~~~~~~~\n'}
+[25.111892] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:106: error: template argument 1 is invalid\n'}
+[25.111970] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.112146] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                          ^~\n'}
+[25.132601] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:70: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[25.132841] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.132931] (xline_path_planner) StderrLine: {'line': b'      |                                                                      ^~~~~~~~~~~~~~~~~~\n'}
+[25.133009] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:106: error: template argument 1 is invalid\n'}
+[25.133196] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.133370] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                          ^~\n'}
+[25.133491] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:38: error: invalid template-id\n'}
+[25.133604] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.133731] (xline_path_planner) StderrLine: {'line': b'      |                                      ^~~~~~~~~~~~~\n'}
+[25.157203] (-) TimerEvent: {}
+[25.158531] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:70: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 was not declared in this scope\n'}
+[25.158843] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.159089] (xline_path_planner) StderrLine: {'line': b'      |                                                                      ^~~~~~~~~~~~~~~~~~\n'}
+[25.159228] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:109: error: template argument 1 is invalid\n'}
+[25.159352] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.159472] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                             ^~~~~~~~~~~\n'}
+[25.159590] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:109: error: template argument 1 is invalid\n'}
+[25.159745] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:109: error: template argument 1 is invalid\n'}
+[25.159867] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:22: error: invalid template-id\n'}
+[25.159989] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.160112] (xline_path_planner) StderrLine: {'line': b'      |                      ^~~\n'}
+[25.160317] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:109: error: missing template arguments before \xe2\x80\x98goal_handle\xe2\x80\x99\n'}
+[25.160465] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.160591] (xline_path_planner) StderrLine: {'line': b'      |                                                                                                             ^~~~~~~~~~~\n'}
+[25.160713] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:109: error: expected \xe2\x80\x98>\xe2\x80\x99 before \xe2\x80\x98goal_handle\xe2\x80\x99\n'}
+[25.160836] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:349:16: error: class template placeholder \xe2\x80\x98std::shared_ptr\xe2\x80\x99 not permitted in this context\n'}
+[25.160970] (xline_path_planner) StderrLine: {'line': b'  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)\n'}
+[25.161093] (xline_path_planner) StderrLine: {'line': b'      |                ^~~~~\n'}
+[25.167615] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:393:20: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 does not name a type\n'}
+[25.167881] (xline_path_planner) StderrLine: {'line': b'  393 |   using PlanPath = xline_path_planner::action::PlanPath;\n'}
+[25.167979] (xline_path_planner) StderrLine: {'line': b'      |                    ^~~~~~~~~~~~~~~~~~\n'}
+[25.179786] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:394:25: error: \xe2\x80\x98PlanPath\xe2\x80\x99 was not declared in this scope\n'}
+[25.180137] (xline_path_planner) StderrLine: {'line': b'  394 |   rclcpp_action::Server<PlanPath>::SharedPtr action_server_;\n'}
+[25.180313] (xline_path_planner) StderrLine: {'line': b'      |                         ^~~~~~~~\n'}
+[25.180473] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:394:33: error: template argument 1 is invalid\n'}
+[25.180621] (xline_path_planner) StderrLine: {'line': b'  394 |   rclcpp_action::Server<PlanPath>::SharedPtr action_server_;\n'}
+[25.180767] (xline_path_planner) StderrLine: {'line': b'      |                                 ^\n'}
+[25.180909] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:394:36: error: expected \xe2\x80\x98;\xe2\x80\x99 at end of member declaration\n'}
+[25.181047] (xline_path_planner) StderrLine: {'line': b'  394 |   rclcpp_action::Server<PlanPath>::SharedPtr action_server_;\n'}
+[25.181328] (xline_path_planner) StderrLine: {'line': b'      |                                    ^~~~~~~~~\n'}
+[25.181465] (xline_path_planner) StderrLine: {'line': b'      |                                             ;\n'}
+[25.185035] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:394:46: error: \xe2\x80\x98action_server_\xe2\x80\x99 does not name a type; did you mean \xe2\x80\x98rcl_action_server_t\xe2\x80\x99?\n'}
+[25.185283] (xline_path_planner) StderrLine: {'line': b'  394 |   rclcpp_action::Server<PlanPath>::SharedPtr action_server_;\n'}
+[25.185384] (xline_path_planner) StderrLine: {'line': b'      |                                              ^~~~~~~~~~~~~~\n'}
+[25.185466] (xline_path_planner) StderrLine: {'line': b'      |                                              rcl_action_server_t\n'}
+[25.206401] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp: In member function \xe2\x80\x98void PlannerNode::start_action_server()\xe2\x80\x99:\n'}
+[25.206695] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:230:22: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 does not name a type\n'}
+[25.206820] (xline_path_planner) StderrLine: {'line': b'  230 |     using PlanPath = xline_path_planner::action::PlanPath;\n'}
+[25.206936] (xline_path_planner) StderrLine: {'line': b'      |                      ^~~~~~~~~~~~~~~~~~\n'}
+[25.221573] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:233:5: error: \xe2\x80\x98action_server_\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98rcl_action_server_t\xe2\x80\x99?\n'}
+[25.221858] (xline_path_planner) StderrLine: {'line': b'  233 |     action_server_ = rclcpp_action::create_server<PlanPath>(\n'}
+[25.221986] (xline_path_planner) StderrLine: {'line': b'      |     ^~~~~~~~~~~~~~\n'}
+[25.222208] (xline_path_planner) StderrLine: {'line': b'      |     rcl_action_server_t\n'}
+[25.239435] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:233:51: error: \xe2\x80\x98PlanPath\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98plan_paths\xe2\x80\x99?\n'}
+[25.240130] (xline_path_planner) StderrLine: {'line': b'  233 |     action_server_ = rclcpp_action::create_server<PlanPath>(\n'}
+[25.240404] (xline_path_planner) StderrLine: {'line': b'      |                                                   ^~~~~~~~\n'}
+[25.240592] (xline_path_planner) StderrLine: {'line': b'      |                                                   plan_paths\n'}
+[25.258217] (-) TimerEvent: {}
+[25.262757] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:233:60: error: no matching function for call to \xe2\x80\x98create_server<<expression error> >(std::shared_ptr<rclcpp::Node>, const char [10], std::_Bind_helper<false, rclcpp_action::GoalResponse (PlannerNode::*)(const std::array<unsigned char, 16>&, int), PlannerNode*, const std::_Placeholder<1>&, const std::_Placeholder<2>&>::type, std::_Bind_helper<false, rclcpp_action::CancelResponse (PlannerNode::*)(...), PlannerNode*, const std::_Placeholder<1>&>::type, std::_Bind_helper<false, void (PlannerNode::*)(...), PlannerNode*, const std::_Placeholder<1>&>::type)\xe2\x80\x99\n'}
+[25.263235] (xline_path_planner) StderrLine: {'line': b'  233 |     action_server_ = rclcpp_action::create_server<PlanPath>(\n'}
+[25.263406] (xline_path_planner) StderrLine: {'line': b'      |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n'}
+[25.263545] (xline_path_planner) StderrLine: {'line': b'  234 |       shared_from_this(),\n'}
+[25.263678] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~                                   \n'}
+[25.263809] (xline_path_planner) StderrLine: {'line': b'  235 |       "plan_path",\n'}
+[25.263944] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~                                          \n'}
+[25.264385] (xline_path_planner) StderrLine: {'line': b'  236 |       std::bind(&PlannerNode::handle_goal, this, _1, _2),\n'}
+[25.264505] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   \n'}
+[25.264610] (xline_path_planner) StderrLine: {'line': b'  237 |       std::bind(&PlannerNode::handle_cancel, this, _1),\n'}
+[25.264714] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~     \n'}
+[25.264799] (xline_path_planner) StderrLine: {'line': b'  238 |       std::bind(&PlannerNode::handle_accepted, this, _1)\n'}
+[25.264884] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    \n'}
+[25.264969] (xline_path_planner) StderrLine: {'line': b'  239 |     );\n'}
+[25.265207] (xline_path_planner) StderrLine: {'line': b'      |     ~                                                       \n'}
+[25.265377] (xline_path_planner) StderrLine: {'line': b'In file included from /opt/ros/humble/include/rclcpp_action/rclcpp_action/rclcpp_action.hpp:39,\n'}
+[25.265515] (xline_path_planner) StderrLine: {'line': b'                 from /root/xline_path_planner/xline_path_planner/src/main.cpp:8:\n'}
+[25.265646] (xline_path_planner) StderrLine: {'line': b'/opt/ros/humble/include/rclcpp_action/rclcpp_action/create_server.hpp:58:1: note: candidate: \xe2\x80\x98template<class ActionT> typename rclcpp_action::Server<ActionT>::SharedPtr rclcpp_action::create_server(rclcpp::node_interfaces::NodeBaseInterface::SharedPtr, rclcpp::node_interfaces::NodeClockInterface::SharedPtr, rclcpp::node_interfaces::NodeLoggingInterface::SharedPtr, rclcpp::node_interfaces::NodeWaitablesInterface::SharedPtr, const string&, typename rclcpp_action::Server<ActionT>::GoalCallback, typename rclcpp_action::Server<ActionT>::CancelCallback, typename rclcpp_action::Server<ActionT>::AcceptedCallback, const rcl_action_server_options_t&, rclcpp::CallbackGroup::SharedPtr)\xe2\x80\x99\n'}
+[25.265806] (xline_path_planner) StderrLine: {'line': b'   58 | create_server(\n'}
+[25.265937] (xline_path_planner) StderrLine: {'line': b'      | ^~~~~~~~~~~~~\n'}
+[25.266203] (xline_path_planner) StderrLine: {'line': b'/opt/ros/humble/include/rclcpp_action/rclcpp_action/create_server.hpp:58:1: note:   template argument deduction/substitution failed:\n'}
+[25.266349] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:233:60: error: template argument 1 is invalid\n'}
+[25.266483] (xline_path_planner) StderrLine: {'line': b'  233 |     action_server_ = rclcpp_action::create_server<PlanPath>(\n'}
+[25.266612] (xline_path_planner) StderrLine: {'line': b'      |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n'}
+[25.266754] (xline_path_planner) StderrLine: {'line': b'  234 |       shared_from_this(),\n'}
+[25.266878] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~                                   \n'}
+[25.267002] (xline_path_planner) StderrLine: {'line': b'  235 |       "plan_path",\n'}
+[25.267125] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~                                          \n'}
+[25.267437] (xline_path_planner) StderrLine: {'line': b'  236 |       std::bind(&PlannerNode::handle_goal, this, _1, _2),\n'}
+[25.267724] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   \n'}
+[25.267871] (xline_path_planner) StderrLine: {'line': b'  237 |       std::bind(&PlannerNode::handle_cancel, this, _1),\n'}
+[25.268006] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~     \n'}
+[25.268136] (xline_path_planner) StderrLine: {'line': b'  238 |       std::bind(&PlannerNode::handle_accepted, this, _1)\n'}
+[25.268455] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    \n'}
+[25.268619] (xline_path_planner) StderrLine: {'line': b'  239 |     );\n'}
+[25.268775] (xline_path_planner) StderrLine: {'line': b'      |     ~                                                       \n'}
+[25.268925] (xline_path_planner) StderrLine: {'line': b'In file included from /opt/ros/humble/include/rclcpp_action/rclcpp_action/rclcpp_action.hpp:39,\n'}
+[25.269078] (xline_path_planner) StderrLine: {'line': b'                 from /root/xline_path_planner/xline_path_planner/src/main.cpp:8:\n'}
+[25.269308] (xline_path_planner) StderrLine: {'line': b'/opt/ros/humble/include/rclcpp_action/rclcpp_action/create_server.hpp:132:1: note: candidate: \xe2\x80\x98template<class ActionT, class NodeT> typename rclcpp_action::Server<ActionT>::SharedPtr rclcpp_action::create_server(NodeT, const string&, typename rclcpp_action::Server<ActionT>::GoalCallback, typename rclcpp_action::Server<ActionT>::CancelCallback, typename rclcpp_action::Server<ActionT>::AcceptedCallback, const rcl_action_server_options_t&, rclcpp::CallbackGroup::SharedPtr)\xe2\x80\x99\n'}
+[25.269459] (xline_path_planner) StderrLine: {'line': b'  132 | create_server(\n'}
+[25.269586] (xline_path_planner) StderrLine: {'line': b'      | ^~~~~~~~~~~~~\n'}
+[25.269712] (xline_path_planner) StderrLine: {'line': b'/opt/ros/humble/include/rclcpp_action/rclcpp_action/create_server.hpp:132:1: note:   template argument deduction/substitution failed:\n'}
+[25.269840] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:233:60: error: template argument 1 is invalid\n'}
+[25.269968] (xline_path_planner) StderrLine: {'line': b'  233 |     action_server_ = rclcpp_action::create_server<PlanPath>(\n'}
+[25.270093] (xline_path_planner) StderrLine: {'line': b'      |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n'}
+[25.270318] (xline_path_planner) StderrLine: {'line': b'  234 |       shared_from_this(),\n'}
+[25.270458] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~                                   \n'}
+[25.270585] (xline_path_planner) StderrLine: {'line': b'  235 |       "plan_path",\n'}
+[25.270741] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~                                          \n'}
+[25.270863] (xline_path_planner) StderrLine: {'line': b'  236 |       std::bind(&PlannerNode::handle_goal, this, _1, _2),\n'}
+[25.270992] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   \n'}
+[25.271114] (xline_path_planner) StderrLine: {'line': b'  237 |       std::bind(&PlannerNode::handle_cancel, this, _1),\n'}
+[25.271335] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~     \n'}
+[25.271458] (xline_path_planner) StderrLine: {'line': b'  238 |       std::bind(&PlannerNode::handle_accepted, this, _1)\n'}
+[25.271580] (xline_path_planner) StderrLine: {'line': b'      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    \n'}
+[25.271702] (xline_path_planner) StderrLine: {'line': b'  239 |     );\n'}
+[25.271821] (xline_path_planner) StderrLine: {'line': b'      |     ~                                                       \n'}
+[25.274340] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp: In member function \xe2\x80\x98rclcpp_action::GoalResponse PlannerNode::handle_goal(const GoalUUID&, int)\xe2\x80\x99:\n'}
+[25.274567] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:247:9: error: \xe2\x80\x98goal\xe2\x80\x99 was not declared in this scope\n'}
+[25.274670] (xline_path_planner) StderrLine: {'line': b'  247 |     if (goal->cad_json.empty())\n'}
+[25.274997] (xline_path_planner) StderrLine: {'line': b'      |         ^~~~\n'}
+[25.275699] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:245:87: warning: unused parameter \xe2\x80\x98ConstSharedPtr\xe2\x80\x99 [-Wunused-parameter]\n'}
+[25.275809] (xline_path_planner) StderrLine: {'line': b'  245 |                                           xline_path_planner::action::PlanPath::Goal::ConstSharedPtr goal)\n'}
+[25.275914] (xline_path_planner) StderrLine: {'line': b'      |                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~\n'}
+[25.293160] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp: In member function \xe2\x80\x98void PlannerNode::handle_accepted(...)\xe2\x80\x99:\n'}
+[25.293424] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:265:24: error: \xe2\x80\x98goal_handle\xe2\x80\x99 was not declared in this scope\n'}
+[25.293524] (xline_path_planner) StderrLine: {'line': b'  265 |     std::thread([this, goal_handle]() { this->execute(goal_handle); }).detach();\n'}
+[25.293614] (xline_path_planner) StderrLine: {'line': b'      |                        ^~~~~~~~~~~\n'}
+[25.293699] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp: In lambda function:\n'}
+[25.293783] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:265:55: error: \xe2\x80\x98goal_handle\xe2\x80\x99 is not captured\n'}
+[25.293867] (xline_path_planner) StderrLine: {'line': b'  265 |     std::thread([this, goal_handle]() { this->execute(goal_handle); }).detach();\n'}
+[25.293950] (xline_path_planner) StderrLine: {'line': b'      |                                                       ^~~~~~~~~~~\n'}
+[25.294032] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:265:35: note: the lambda has no capture-default\n'}
+[25.294115] (xline_path_planner) StderrLine: {'line': b'  265 |     std::thread([this, goal_handle]() { this->execute(goal_handle); }).detach();\n'}
+[25.294334] (xline_path_planner) StderrLine: {'line': b'      |                                   ^\n'}
+[25.294431] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:265:24: note: \xe2\x80\x98<typeprefixerror>goal_handle\xe2\x80\x99 declared here\n'}
+[25.294517] (xline_path_planner) StderrLine: {'line': b'  265 |     std::thread([this, goal_handle]() { this->execute(goal_handle); }).detach();\n'}
+[25.294599] (xline_path_planner) StderrLine: {'line': b'      |                        ^~~~~~~~~~~\n'}
+[25.301716] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp: In member function \xe2\x80\x98void PlannerNode::execute(...)\xe2\x80\x99:\n'}
+[25.301972] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:351:22: error: \xe2\x80\x98xline_path_planner\xe2\x80\x99 does not name a type\n'}
+[25.302064] (xline_path_planner) StderrLine: {'line': b'  351 |     using PlanPath = xline_path_planner::action::PlanPath;\n'}
+[25.302217] (xline_path_planner) StderrLine: {'line': b'      |                      ^~~~~~~~~~~~~~~~~~\n'}
+[25.315790] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:352:17: error: \xe2\x80\x98goal_handle\xe2\x80\x99 was not declared in this scope\n'}
+[25.316122] (xline_path_planner) StderrLine: {'line': b'  352 |     auto goal = goal_handle->get_goal();\n'}
+[25.316242] (xline_path_planner) StderrLine: {'line': b'      |                 ^~~~~~~~~~~\n'}
+[25.331660] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:353:38: error: \xe2\x80\x98PlanPath\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98plan_paths\xe2\x80\x99?\n'}
+[25.333710] (xline_path_planner) StderrLine: {'line': b'  353 |     auto feedback = std::make_shared<PlanPath::Feedback>();\n'}
+[25.334279] (xline_path_planner) StderrLine: {'line': b'      |                                      ^~~~~~~~\n'}
+[25.334518] (xline_path_planner) StderrLine: {'line': b'      |                                      plan_paths\n'}
+[25.335245] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:353:26: error: parse error in template argument list\n'}
+[25.335688] (xline_path_planner) StderrLine: {'line': b'  353 |     auto feedback = std::make_shared<PlanPath::Feedback>();\n'}
+[25.336406] (xline_path_planner) StderrLine: {'line': b'      |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n'}
+[25.336653] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:353:57: error: no matching function for call to \xe2\x80\x98make_shared<<expression error> >()\xe2\x80\x99\n'}
+[25.336903] (xline_path_planner) StderrLine: {'line': b'  353 |     auto feedback = std::make_shared<PlanPath::Feedback>();\n'}
+[25.337438] (xline_path_planner) StderrLine: {'line': b'      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~\n'}
+[25.337850] (xline_path_planner) StderrLine: {'line': b'In file included from /usr/include/c++/11/memory:77,\n'}
+[25.338488] (xline_path_planner) StderrLine: {'line': b'                 from /root/xline_path_planner/xline_path_planner/src/main.cpp:1:\n'}
+[25.338683] (xline_path_planner) StderrLine: {'line': b'/usr/include/c++/11/bits/shared_ptr.h:875:5: note: candidate: \xe2\x80\x98template<class _Tp, class ... _Args> std::shared_ptr<_Tp> std::make_shared(_Args&& ...)\xe2\x80\x99\n'}
+[25.338813] (xline_path_planner) StderrLine: {'line': b'  875 |     make_shared(_Args&&... __args)\n'}
+[25.338914] (xline_path_planner) StderrLine: {'line': b'      |     ^~~~~~~~~~~\n'}
+[25.339010] (xline_path_planner) StderrLine: {'line': b'/usr/include/c++/11/bits/shared_ptr.h:875:5: note:   template argument deduction/substitution failed:\n'}
+[25.339265] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:353:57: error: template argument 1 is invalid\n'}
+[25.339383] (xline_path_planner) StderrLine: {'line': b'  353 |     auto feedback = std::make_shared<PlanPath::Feedback>();\n'}
+[25.339481] (xline_path_planner) StderrLine: {'line': b'      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~\n'}
+[25.339575] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:354:24: error: parse error in template argument list\n'}
+[25.339671] (xline_path_planner) StderrLine: {'line': b'  354 |     auto result = std::make_shared<PlanPath::Result>();\n'}
+[25.339766] (xline_path_planner) StderrLine: {'line': b'      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n'}
+[25.339859] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:354:53: error: no matching function for call to \xe2\x80\x98make_shared<PlanPath>()\xe2\x80\x99\n'}
+[25.339955] (xline_path_planner) StderrLine: {'line': b'  354 |     auto result = std::make_shared<PlanPath::Result>();\n'}
+[25.340048] (xline_path_planner) StderrLine: {'line': b'      |                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~\n'}
+[25.340302] (xline_path_planner) StderrLine: {'line': b'In file included from /usr/include/c++/11/memory:77,\n'}
+[25.340510] (xline_path_planner) StderrLine: {'line': b'                 from /root/xline_path_planner/xline_path_planner/src/main.cpp:1:\n'}
+[25.340677] (xline_path_planner) StderrLine: {'line': b'/usr/include/c++/11/bits/shared_ptr.h:875:5: note: candidate: \xe2\x80\x98template<class _Tp, class ... _Args> std::shared_ptr<_Tp> std::make_shared(_Args&& ...)\xe2\x80\x99\n'}
+[25.340882] (xline_path_planner) StderrLine: {'line': b'  875 |     make_shared(_Args&&... __args)\n'}
+[25.341135] (xline_path_planner) StderrLine: {'line': b'      |     ^~~~~~~~~~~\n'}
+[25.341314] (xline_path_planner) StderrLine: {'line': b'/usr/include/c++/11/bits/shared_ptr.h:875:5: note:   template argument deduction/substitution failed:\n'}
+[25.359146] (-) TimerEvent: {}
+[25.364311] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:358:7: error: \xe2\x80\x98PlannerEngineConfig\xe2\x80\x99 was not declared in this scope\n'}
+[25.364582] (xline_path_planner) StderrLine: {'line': b'  358 |       PlannerEngineConfig cfg = build_engine_cfg_from_node();\n'}
+[25.364680] (xline_path_planner) StderrLine: {'line': b'      |       ^~~~~~~~~~~~~~~~~~~\n'}
+[25.374196] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:361:9: error: \xe2\x80\x98cfg\xe2\x80\x99 was not declared in this scope\n'}
+[25.374530] (xline_path_planner) StderrLine: {'line': b'  361 |         cfg = load_engine_cfg_from_yaml_text(goal->config_yaml);\n'}
+[25.374674] (xline_path_planner) StderrLine: {'line': b'      |         ^~~\n'}
+[25.411504] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:361:15: error: \xe2\x80\x98load_engine_cfg_from_yaml_text\xe2\x80\x99 was not declared in this scope\n'}
+[25.412292] (xline_path_planner) StderrLine: {'line': b'  361 |         cfg = load_engine_cfg_from_yaml_text(goal->config_yaml);\n'}
+[25.412506] (xline_path_planner) StderrLine: {'line': b'      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n'}
+[25.432047] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:364:7: error: \xe2\x80\x98PlannerEngine\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98PlannerNode\xe2\x80\x99?\n'}
+[25.432423] (xline_path_planner) StderrLine: {'line': b'  364 |       PlannerEngine engine(cfg);\n'}
+[25.432605] (xline_path_planner) StderrLine: {'line': b'      |       ^~~~~~~~~~~~~\n'}
+[25.432779] (xline_path_planner) StderrLine: {'line': b'      |       PlannerNode\n'}
+[25.448114] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:367:30: error: \xe2\x80\x98engine\xe2\x80\x99 was not declared in this scope\n'}
+[25.448423] (xline_path_planner) StderrLine: {'line': b'  367 |       std::string out_json = engine.plan_from_cad_json(goal->cad_json, "request.json");\n'}
+[25.448537] (xline_path_planner) StderrLine: {'line': b'      |                              ^~~~~~\n'}
+[25.460281] (-) TimerEvent: {}
+[25.561440] (-) TimerEvent: {}
+[25.662224] (-) TimerEvent: {}
+[25.763445] (-) TimerEvent: {}
+[25.864241] (-) TimerEvent: {}
+[25.965318] (-) TimerEvent: {}
+[26.066243] (-) TimerEvent: {}
+[26.167288] (-) TimerEvent: {}
+[26.268411] (-) TimerEvent: {}
+[26.369223] (-) TimerEvent: {}
+[26.470443] (-) TimerEvent: {}
+[26.571683] (-) TimerEvent: {}
+[26.672320] (-) TimerEvent: {}
+[26.773152] (-) TimerEvent: {}
+[26.874165] (-) TimerEvent: {}
+[26.975428] (-) TimerEvent: {}
+[27.076249] (-) TimerEvent: {}
+[27.177377] (-) TimerEvent: {}
+[27.278270] (-) TimerEvent: {}
+[27.379339] (-) TimerEvent: {}
+[27.480368] (-) TimerEvent: {}
+[27.581160] (-) TimerEvent: {}
+[27.682243] (-) TimerEvent: {}
+[27.783072] (-) TimerEvent: {}
+[27.884196] (-) TimerEvent: {}
+[27.985323] (-) TimerEvent: {}
+[28.086312] (-) TimerEvent: {}
+[28.187208] (-) TimerEvent: {}
+[28.288162] (-) TimerEvent: {}
+[28.390704] (-) TimerEvent: {}
+[28.478363] (xline_path_planner) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/planner_node.dir/build.make:76: CMakeFiles/planner_node.dir/src/main.cpp.o] Error 1\n'}
+[28.479041] (xline_path_planner) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:184: CMakeFiles/planner_node.dir/all] Error 2\n'}
+[28.479294] (xline_path_planner) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[28.481637] (xline_path_planner) CommandEnded: {'returncode': 2}
+[28.491394] (-) TimerEvent: {}
+[28.517877] (xline_path_planner) JobEnded: {'identifier': 'xline_path_planner', 'rc': 2}
+[28.528848] (-) EventReactorShutdown: {}

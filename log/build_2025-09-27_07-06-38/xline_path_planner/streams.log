@@ -1,0 +1,87 @@
+[0.034s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /root/xline_path_planner/xline_path_planner -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner
+[0.137s] -- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.551s] -- Found rclcpp: 16.0.12 (/opt/ros/humble/share/rclcpp/cmake)
+[0.612s] -- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.618s] -- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.628s] -- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.650s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.676s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.769s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.773s] -- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.004s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.248s] -- Found rclcpp_action: 16.0.12 (/opt/ros/humble/share/rclcpp_action/cmake)
+[1.490s] -- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+[1.841s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[2.307s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.483s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.514s] -- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+[2.547s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[2.547s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10
+[2.547s] -- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so
+[2.706s] CMake Deprecation Warning at /opt/ros/humble/share/rosidl_cmake/cmake/rosidl_target_interfaces.cmake:32 (message):
+[2.706s]   Use rosidl_get_typesupport_target() and target_link_libraries() instead of
+[2.706s]   rosidl_target_interfaces()
+[2.706s] Call Stack (most recent call first):
+[2.707s]   CMakeLists.txt:62 (rosidl_target_interfaces)
+[2.707s] 
+[2.707s] 
+[2.707s] -- Found ament_lint_auto: 0.12.12 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[2.862s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.863s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/root/xline_path_planner/xline_path_planner/include>
+[2.863s] -- Configured cppcheck exclude dirs and/or files: 
+[2.864s] -- Added test 'lint_cmake' to check CMake code style
+[2.866s] -- Added test 'uncrustify' to check C / C++ code style
+[2.867s] -- Configured uncrustify additional arguments: 
+[2.867s] -- Added test 'xmllint' to check XML markup files
+[2.871s] -- Configuring done
+[2.953s] -- Generating done
+[2.981s] -- Build files have been written to: /root/xline_path_planner/build/xline_path_planner
+[2.998s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /root/xline_path_planner/xline_path_planner -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner
+[3.000s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
+[3.066s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_generator_c
+[3.080s] [  2%] Built target xline_path_planner__cpp
+[3.083s] [ 10%] Built target xline_path_planner__rosidl_generator_c
+[3.097s] [ 10%] Built target ament_cmake_python_copy_xline_path_planner
+[3.103s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_cpp
+[3.103s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_cpp
+[3.109s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_cpp
+[3.121s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_c
+[3.122s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_c
+[3.124s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_c
+[3.127s] [ 17%] Built target xline_path_planner__rosidl_typesupport_cpp
+[3.132s] [ 25%] Built target xline_path_planner__rosidl_typesupport_fastrtps_cpp
+[3.135s] [ 33%] Built target xline_path_planner__rosidl_typesupport_introspection_cpp
+[3.149s] [ 41%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c
+[3.149s] [ 48%] Built target xline_path_planner__rosidl_typesupport_introspection_c
+[3.158s] [ 56%] Built target xline_path_planner__rosidl_typesupport_c
+[3.188s] [ 56%] Built target xline_path_planner
+[3.221s] [ 58%] Built target xline_path_planner__py
+[3.226s] Consolidate compiler generated dependencies of target planner_node
+[3.244s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_generator_py
+[3.264s] [ 61%] Building CXX object CMakeFiles/planner_node.dir/src/main.cpp.o
+[3.265s] [ 66%] Built target xline_path_planner__rosidl_generator_py
+[3.291s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext
+[3.296s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_c__pyext
+[3.299s] Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_c__pyext
+[3.316s] [ 71%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext
+[3.334s] [ 82%] Built target xline_path_planner__rosidl_typesupport_introspection_c__pyext
+[3.334s] [ 82%] Built target xline_path_planner__rosidl_typesupport_c__pyext
+[3.733s] running egg_info
+[3.735s] writing xline_path_planner.egg-info/PKG-INFO
+[3.736s] writing dependency_links to xline_path_planner.egg-info/dependency_links.txt
+[3.738s] writing top-level names to xline_path_planner.egg-info/top_level.txt
+[3.743s] reading manifest file 'xline_path_planner.egg-info/SOURCES.txt'
+[3.744s] writing manifest file 'xline_path_planner.egg-info/SOURCES.txt'
+[3.806s] [ 82%] Built target ament_cmake_python_build_xline_path_planner_egg
+[10.578s] /root/xline_path_planner/xline_path_planner/src/main.cpp: In member function ‘void PlannerNode::plan_trajectory()’:
+[10.578s] /root/xline_path_planner/xline_path_planner/src/main.cpp:383:10: error: ‘parse_cad_file’ was not declared in this scope; did you mean ‘rcl_parse_yaml_file’?
+[10.578s]   383 |     if (!parse_cad_file(cad_parser, cad_data))
+[10.578s]       |          ^~~~~~~~~~~~~~
+[10.579s]       |          rcl_parse_yaml_file
+[10.589s] /root/xline_path_planner/xline_path_planner/src/main.cpp:379:21: warning: unused variable ‘output_formatter’ [-Wunused-variable]
+[10.589s]   379 |     OutputFormatter output_formatter;
+[10.589s]       |                     ^~~~~~~~~~~~~~~~
+[13.646s] gmake[2]: *** [CMakeFiles/planner_node.dir/build.make:76: CMakeFiles/planner_node.dir/src/main.cpp.o] Error 1
+[13.646s] gmake[1]: *** [CMakeFiles/Makefile2:184: CMakeFiles/planner_node.dir/all] Error 2
+[13.646s] gmake: *** [Makefile:146: all] Error 2
+[13.648s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8

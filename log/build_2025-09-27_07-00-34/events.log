@@ -1,0 +1,243 @@
+[0.000000] (-) TimerEvent: {}
+[0.000804] (xline_path_planner) JobQueued: {'identifier': 'xline_path_planner', 'dependencies': OrderedDict()}
+[0.000949] (xline_path_planner) JobStarted: {'identifier': 'xline_path_planner'}
+[0.014858] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'cmake'}
+[0.016487] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '/root/xline_path_planner/xline_path_planner', '-DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('PYTHON_BASIC_REPL', '1'), ('HOSTNAME', 'ee14746cbf7f'), ('GIT_ASKPASS', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/extensions/git/dist/askpass.sh'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('SHLVL', '2'), ('BROWSER', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/xline_path_planner'), ('TERM_PROGRAM_VERSION', '1.104.2'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-c807d99c-0233-4f65-b07c-6538553c2ec3.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/node'), ('VSCODE_PYTHON_AUTOACTIVATE_GUARD', '1'), ('REMOTE_CONTAINERS', 'true'), ('COLORTERM', 'truecolor'), ('ROS_DISTRO', 'humble'), ('COLCON_PREFIX_PATH', '/root/xline_path_planner/install:/root/xline_path_planner/install:/opt/ros/humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('LOGNAME', 'root'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('CLAUDE_CODE_SSE_PORT', '17309'), ('USER_ZDOTDIR', '/root'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand'), ('DISPLAY', 'host.docker.internal:0'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock"]'), ('LANG', 'en_US.UTF-8'), ('PYTHONSTARTUP', '/root/.vscode-server/data/User/workspaceStorage/5dbce636098c18612159c0b5b4229411/ms-python.python/pythonrc.py'), ('VSCODE_INJECTION', '1'), ('TERM_PROGRAM', 'vscode'), ('VSCODE_GIT_IPC_HANDLE', '/tmp/vscode-git-c92802ca56.sock'), ('DEBIAN_FRONTEND', ''), ('AMENT_PREFIX_PATH', '/root/xline_path_planner/install/xline_path_planner:/opt/ros/humble'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('SHELL', '/usr/bin/zsh'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('ENABLE_IDE_INTEGRATION', 'true'), ('ZDOTDIR', '/root'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/root/xline_path_planner/install/xline_path_planner:/opt/ros/humble')]), 'shell': False}
+[0.045465] (xline_path_planner) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.097233] (-) TimerEvent: {}
+[0.198173] (-) TimerEvent: {}
+[0.262735] (xline_path_planner) StdoutLine: {'line': b'-- Found rclcpp: 16.0.12 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.299187] (-) TimerEvent: {}
+[0.323283] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.328669] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.339263] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.355827] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.382096] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.400469] (-) TimerEvent: {}
+[0.453612] (xline_path_planner) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.455575] (xline_path_planner) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.501236] (-) TimerEvent: {}
+[0.602238] (-) TimerEvent: {}
+[0.627630] (xline_path_planner) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.703208] (-) TimerEvent: {}
+[0.744968] (xline_path_planner) StdoutLine: {'line': b'-- Found rclcpp_action: 16.0.12 (/opt/ros/humble/share/rclcpp_action/cmake)\n'}
+[0.804262] (-) TimerEvent: {}
+[0.831919] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)\n'}
+[0.905243] (-) TimerEvent: {}
+[1.006171] (-) TimerEvent: {}
+[1.107311] (-) TimerEvent: {}
+[1.155229] (xline_path_planner) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)\n'}
+[1.208442] (-) TimerEvent: {}
+[1.309157] (-) TimerEvent: {}
+[1.410118] (-) TimerEvent: {}
+[1.511159] (-) TimerEvent: {}
+[1.612222] (-) TimerEvent: {}
+[1.654232] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[1.713468] (-) TimerEvent: {}
+[1.814192] (-) TimerEvent: {}
+[1.825570] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[1.856288] (xline_path_planner) StdoutLine: {'line': b'-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)\n'}
+[1.889813] (xline_path_planner) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[1.890060] (xline_path_planner) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10\n'}
+[1.890204] (xline_path_planner) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so\n'}
+[1.915409] (-) TimerEvent: {}
+[2.016186] (-) TimerEvent: {}
+[2.030340] (xline_path_planner) StderrLine: {'line': b'\x1b[0mCMake Deprecation Warning at /opt/ros/humble/share/rosidl_cmake/cmake/rosidl_target_interfaces.cmake:32 (message):\n'}
+[2.030598] (xline_path_planner) StderrLine: {'line': b'  Use rosidl_get_typesupport_target() and target_link_libraries() instead of\n'}
+[2.030731] (xline_path_planner) StderrLine: {'line': b'  rosidl_target_interfaces()\n'}
+[2.030857] (xline_path_planner) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[2.031167] (xline_path_planner) StderrLine: {'line': b'  CMakeLists.txt:62 (rosidl_target_interfaces)\n'}
+[2.031262] (xline_path_planner) StderrLine: {'line': b'\n'}
+[2.031345] (xline_path_planner) StderrLine: {'line': b'\x1b[0m\n'}
+[2.031425] (xline_path_planner) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.12 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[2.117459] (-) TimerEvent: {}
+[2.166413] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[2.167618] (xline_path_planner) StdoutLine: {'line': b'-- Configured cppcheck include dirs: $<BUILD_INTERFACE:/root/xline_path_planner/xline_path_planner/include>\n'}
+[2.167824] (xline_path_planner) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[2.168788] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[2.170712] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[2.171214] (xline_path_planner) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[2.171903] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[2.174277] (xline_path_planner) StdoutLine: {'line': b'-- Configuring done\n'}
+[2.218191] (-) TimerEvent: {}
+[2.250680] (xline_path_planner) StdoutLine: {'line': b'-- Generating done\n'}
+[2.274642] (xline_path_planner) StdoutLine: {'line': b'-- Build files have been written to: /root/xline_path_planner/build/xline_path_planner\n'}
+[2.291513] (xline_path_planner) CommandEnded: {'returncode': 0}
+[2.292489] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'build'}
+[2.292553] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '--build', '/root/xline_path_planner/build/xline_path_planner', '--', '-j8', '-l8'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('PYTHON_BASIC_REPL', '1'), ('HOSTNAME', 'ee14746cbf7f'), ('GIT_ASKPASS', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/extensions/git/dist/askpass.sh'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('SHLVL', '2'), ('BROWSER', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/xline_path_planner'), ('TERM_PROGRAM_VERSION', '1.104.2'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-c807d99c-0233-4f65-b07c-6538553c2ec3.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/node'), ('VSCODE_PYTHON_AUTOACTIVATE_GUARD', '1'), ('REMOTE_CONTAINERS', 'true'), ('COLORTERM', 'truecolor'), ('ROS_DISTRO', 'humble'), ('COLCON_PREFIX_PATH', '/root/xline_path_planner/install:/root/xline_path_planner/install:/opt/ros/humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('LOGNAME', 'root'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('CLAUDE_CODE_SSE_PORT', '17309'), ('USER_ZDOTDIR', '/root'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand'), ('DISPLAY', 'host.docker.internal:0'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock"]'), ('LANG', 'en_US.UTF-8'), ('PYTHONSTARTUP', '/root/.vscode-server/data/User/workspaceStorage/5dbce636098c18612159c0b5b4229411/ms-python.python/pythonrc.py'), ('VSCODE_INJECTION', '1'), ('TERM_PROGRAM', 'vscode'), ('VSCODE_GIT_IPC_HANDLE', '/tmp/vscode-git-c92802ca56.sock'), ('DEBIAN_FRONTEND', ''), ('AMENT_PREFIX_PATH', '/root/xline_path_planner/install/xline_path_planner:/opt/ros/humble'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('SHELL', '/usr/bin/zsh'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('ENABLE_IDE_INTEGRATION', 'true'), ('ZDOTDIR', '/root'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/root/xline_path_planner/install/xline_path_planner:/opt/ros/humble')]), 'shell': False}
+[2.319129] (-) TimerEvent: {}
+[2.354963] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_generator_c\x1b[0m\n'}
+[2.371473] (xline_path_planner) StdoutLine: {'line': b'[  2%] Built target xline_path_planner__cpp\n'}
+[2.376285] (xline_path_planner) StdoutLine: {'line': b'[ 10%] Built target xline_path_planner__rosidl_generator_c\n'}
+[2.389447] (xline_path_planner) StdoutLine: {'line': b'[ 10%] Built target ament_cmake_python_copy_xline_path_planner\n'}
+[2.391248] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_cpp\x1b[0m\n'}
+[2.391644] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_cpp\x1b[0m\n'}
+[2.391812] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_cpp\x1b[0m\n'}
+[2.395860] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_c\x1b[0m\n'}
+[2.396375] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_c\x1b[0m\n'}
+[2.405497] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_c\x1b[0m\n'}
+[2.419772] (-) TimerEvent: {}
+[2.420705] (xline_path_planner) StdoutLine: {'line': b'[ 25%] Built target xline_path_planner__rosidl_typesupport_cpp\n'}
+[2.421063] (xline_path_planner) StdoutLine: {'line': b'[ 28%] Built target xline_path_planner__rosidl_typesupport_fastrtps_cpp\n'}
+[2.421235] (xline_path_planner) StdoutLine: {'line': b'[ 38%] Built target xline_path_planner__rosidl_typesupport_introspection_cpp\n'}
+[2.422148] (xline_path_planner) StdoutLine: {'line': b'[ 41%] Built target xline_path_planner__rosidl_typesupport_c\n'}
+[2.422533] (xline_path_planner) StdoutLine: {'line': b'[ 48%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c\n'}
+[2.427093] (xline_path_planner) StdoutLine: {'line': b'[ 56%] Built target xline_path_planner__rosidl_typesupport_introspection_c\n'}
+[2.458423] (xline_path_planner) StdoutLine: {'line': b'[ 56%] Built target xline_path_planner\n'}
+[2.478822] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target planner_node\x1b[0m\n'}
+[2.491277] (xline_path_planner) StdoutLine: {'line': b'[ 58%] Built target xline_path_planner__py\n'}
+[2.507979] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_generator_py\x1b[0m\n'}
+[2.522457] (-) TimerEvent: {}
+[2.527518] (xline_path_planner) StdoutLine: {'line': b'[ 79%] Built target planner_node\n'}
+[2.531666] (xline_path_planner) StdoutLine: {'line': b'[ 84%] Built target xline_path_planner__rosidl_generator_py\n'}
+[2.554518] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext\x1b[0m\n'}
+[2.558518] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_c__pyext\x1b[0m\n'}
+[2.558965] (xline_path_planner) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_c__pyext\x1b[0m\n'}
+[2.586781] (xline_path_planner) StdoutLine: {'line': b'[ 89%] Built target xline_path_planner__rosidl_typesupport_c__pyext\n'}
+[2.587301] (xline_path_planner) StdoutLine: {'line': b'[ 94%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext\n'}
+[2.587494] (xline_path_planner) StdoutLine: {'line': b'[100%] Built target xline_path_planner__rosidl_typesupport_introspection_c__pyext\n'}
+[2.623166] (-) TimerEvent: {}
+[2.724325] (-) TimerEvent: {}
+[2.825350] (-) TimerEvent: {}
+[2.878470] (xline_path_planner) StdoutLine: {'line': b'running egg_info\n'}
+[2.881334] (xline_path_planner) StdoutLine: {'line': b'writing xline_path_planner.egg-info/PKG-INFO\n'}
+[2.882279] (xline_path_planner) StdoutLine: {'line': b'writing dependency_links to xline_path_planner.egg-info/dependency_links.txt\n'}
+[2.882454] (xline_path_planner) StdoutLine: {'line': b'writing top-level names to xline_path_planner.egg-info/top_level.txt\n'}
+[2.885407] (xline_path_planner) StdoutLine: {'line': b"reading manifest file 'xline_path_planner.egg-info/SOURCES.txt'\n"}
+[2.886997] (xline_path_planner) StdoutLine: {'line': b"writing manifest file 'xline_path_planner.egg-info/SOURCES.txt'\n"}
+[2.926188] (-) TimerEvent: {}
+[2.926457] (xline_path_planner) StdoutLine: {'line': b'[100%] Built target ament_cmake_python_build_xline_path_planner_egg\n'}
+[2.944727] (xline_path_planner) CommandEnded: {'returncode': 0}
+[2.947040] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'install'}
+[2.960237] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '--install', '/root/xline_path_planner/build/xline_path_planner'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('PYTHON_BASIC_REPL', '1'), ('HOSTNAME', 'ee14746cbf7f'), ('GIT_ASKPASS', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/extensions/git/dist/askpass.sh'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('SHLVL', '2'), ('BROWSER', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/xline_path_planner'), ('TERM_PROGRAM_VERSION', '1.104.2'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-c807d99c-0233-4f65-b07c-6538553c2ec3.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/node'), ('VSCODE_PYTHON_AUTOACTIVATE_GUARD', '1'), ('REMOTE_CONTAINERS', 'true'), ('COLORTERM', 'truecolor'), ('ROS_DISTRO', 'humble'), ('COLCON_PREFIX_PATH', '/root/xline_path_planner/install:/root/xline_path_planner/install:/opt/ros/humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('LOGNAME', 'root'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('CLAUDE_CODE_SSE_PORT', '17309'), ('USER_ZDOTDIR', '/root'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand'), ('DISPLAY', 'host.docker.internal:0'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock"]'), ('LANG', 'en_US.UTF-8'), ('PYTHONSTARTUP', '/root/.vscode-server/data/User/workspaceStorage/5dbce636098c18612159c0b5b4229411/ms-python.python/pythonrc.py'), ('VSCODE_INJECTION', '1'), ('TERM_PROGRAM', 'vscode'), ('VSCODE_GIT_IPC_HANDLE', '/tmp/vscode-git-c92802ca56.sock'), ('DEBIAN_FRONTEND', ''), ('AMENT_PREFIX_PATH', '/root/xline_path_planner/install/xline_path_planner:/opt/ros/humble'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('SHELL', '/usr/bin/zsh'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('ENABLE_IDE_INTEGRATION', 'true'), ('ZDOTDIR', '/root'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/root/xline_path_planner/install/xline_path_planner:/opt/ros/humble')]), 'shell': False}
+[2.971457] (xline_path_planner) StdoutLine: {'line': b'-- Install configuration: "Release"\n'}
+[2.972151] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node\n'}
+[2.972864] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/config\n'}
+[2.973248] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/config/planner.yaml\n'}
+[2.973523] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/rosidl_interfaces/xline_path_planner\n'}
+[2.973657] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner\n'}
+[2.973822] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action\n'}
+[2.974021] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail\n'}
+[2.974568] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__type_support.h\n'}
+[2.974755] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__struct.h\n'}
+[2.974892] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__functions.h\n'}
+[2.975147] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__functions.c\n'}
+[2.975327] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/plan_path.h\n'}
+[2.975551] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg\n'}
+[2.975759] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg/rosidl_generator_c__visibility_control.h\n'}
+[2.976118] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/library_path.sh\n'}
+[2.976559] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/library_path.dsv\n'}
+[2.976856] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_generator_c.so\n'}
+[2.977665] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner\n'}
+[2.977858] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action\n'}
+[2.978206] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail\n'}
+[2.978423] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__rosidl_typesupport_fastrtps_c.h\n'}
+[2.978645] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg\n'}
+[2.979153] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[2.979370] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_fastrtps_c.so\n'}
+[2.979631] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner\n'}
+[2.979775] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action\n'}
+[2.980202] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail\n'}
+[2.980686] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__traits.hpp\n'}
+[2.981028] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__struct.hpp\n'}
+[2.981414] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__builder.hpp\n'}
+[2.981575] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__type_support.hpp\n'}
+[2.981875] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/plan_path.hpp\n'}
+[2.982234] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg\n'}
+[2.982476] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg/rosidl_generator_cpp__visibility_control.hpp\n'}
+[2.982765] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner\n'}
+[2.983078] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action\n'}
+[2.983512] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail\n'}
+[2.983730] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[2.984123] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/dds_fastrtps\n'}
+[2.984360] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg\n'}
+[2.984613] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[2.985166] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_fastrtps_cpp.so\n'}
+[2.985424] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner\n'}
+[2.985539] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action\n'}
+[2.985657] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail\n'}
+[2.985742] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__type_support.c\n'}
+[2.985824] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__rosidl_typesupport_introspection_c.h\n'}
+[2.985905] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg\n'}
+[2.986107] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[2.986348] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_introspection_c.so\n'}
+[2.986454] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_c.so\n'}
+[2.986541] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner\n'}
+[2.986646] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action\n'}
+[2.986763] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail\n'}
+[2.986848] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__type_support.cpp\n'}
+[2.986935] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/include/xline_path_planner/xline_path_planner/action/detail/plan_path__rosidl_typesupport_introspection_cpp.hpp\n'}
+[2.987017] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_introspection_cpp.so\n'}
+[2.987199] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_typesupport_cpp.so\n'}
+[2.987347] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/pythonpath.sh\n'}
+[2.987656] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/pythonpath.dsv\n'}
+[2.987928] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner-0.0.0-py3.10.egg-info\n'}
+[2.988061] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner-0.0.0-py3.10.egg-info/SOURCES.txt\n'}
+[2.988166] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner-0.0.0-py3.10.egg-info/dependency_links.txt\n'}
+[2.988535] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner-0.0.0-py3.10.egg-info/top_level.txt\n'}
+[2.988725] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner-0.0.0-py3.10.egg-info/PKG-INFO\n'}
+[2.988893] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner\n'}
+[2.989065] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/action\n'}
+[2.989296] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/action/_plan_path_s.c\n'}
+[2.989397] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/action/_plan_path.py\n'}
+[2.989612] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/action/__init__.py\n'}
+[2.989799] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[2.989895] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/libxline_path_planner__rosidl_generator_py.so\n'}
+[2.989981] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[2.990225] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_c.c\n'}
+[2.990405] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_fastrtps_c.c\n'}
+[2.990501] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[2.990584] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/_xline_path_planner_s.ep.rosidl_typesupport_introspection_c.c\n'}
+[2.990666] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/__init__.py\n'}
+[3.027231] (-) TimerEvent: {}
+[3.033142] (xline_path_planner) StdoutLine: {'line': b"Listing '/root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner'...\n"}
+[3.033474] (xline_path_planner) StdoutLine: {'line': b"Compiling '/root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/__init__.py'...\n"}
+[3.033646] (xline_path_planner) StdoutLine: {'line': b"Listing '/root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/action'...\n"}
+[3.045258] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.045691] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.046320] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/local/lib/python3.10/dist-packages/xline_path_planner/xline_path_planner_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.047041] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/libxline_path_planner__rosidl_generator_py.so\n'}
+[3.047580] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/action/PlanPath.idl\n'}
+[3.047796] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/action/PlanPath.action\n'}
+[3.048258] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/package_run_dependencies/xline_path_planner\n'}
+[3.048482] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/parent_prefix_path/xline_path_planner\n'}
+[3.048890] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.sh\n'}
+[3.049505] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.dsv\n'}
+[3.050015] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.sh\n'}
+[3.050589] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.dsv\n'}
+[3.050775] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.bash\n'}
+[3.051125] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.sh\n'}
+[3.051421] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.zsh\n'}
+[3.051791] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.dsv\n'}
+[3.052180] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.dsv\n'}
+[3.052527] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/packages/xline_path_planner\n'}
+[3.052818] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_generator_cExport.cmake\n'}
+[3.053166] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_generator_cExport-release.cmake\n'}
+[3.053319] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_typesupport_fastrtps_cExport.cmake\n'}
+[3.053415] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_typesupport_fastrtps_cExport-release.cmake\n'}
+[3.053516] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_generator_cppExport.cmake\n'}
+[3.053840] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_typesupport_fastrtps_cppExport.cmake\n'}
+[3.053965] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_typesupport_fastrtps_cppExport-release.cmake\n'}
+[3.054397] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_introspection_cExport.cmake\n'}
+[3.054655] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_introspection_cExport-release.cmake\n'}
+[3.054903] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_cExport.cmake\n'}
+[3.055280] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_cExport-release.cmake\n'}
+[3.055926] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[3.056282] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_introspection_cppExport-release.cmake\n'}
+[3.056615] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_cppExport.cmake\n'}
+[3.056820] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_planner__rosidl_typesupport_cppExport-release.cmake\n'}
+[3.056974] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_generator_pyExport.cmake\n'}
+[3.057129] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/export_xline_path_planner__rosidl_generator_pyExport-release.cmake\n'}
+[3.057254] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/rosidl_cmake-extras.cmake\n'}
+[3.057345] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[3.057434] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[3.057522] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[3.057610] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[3.057697] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[3.057784] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[3.057877] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig.cmake\n'}
+[3.057964] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig-version.cmake\n'}
+[3.058234] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.xml\n'}
+[3.060026] (xline_path_planner) CommandEnded: {'returncode': 0}
+[3.099895] (xline_path_planner) JobEnded: {'identifier': 'xline_path_planner', 'rc': 0}
+[3.101785] (-) EventReactorShutdown: {}

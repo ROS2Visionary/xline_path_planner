@@ -1,0 +1,152 @@
+[0.000000] (-) TimerEvent: {}
+[0.000126] (xline_path_planner) JobQueued: {'identifier': 'xline_path_planner', 'dependencies': OrderedDict()}
+[0.000200] (xline_path_planner) JobStarted: {'identifier': 'xline_path_planner'}
+[0.039686] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'cmake'}
+[0.044081] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'build'}
+[0.044360] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '--build', '/root/xline_path_planner/build/xline_path_planner', '--', '-j8', '-l8'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('VSCODE_CWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/out/nls.messages.json","languagePack":{"translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","messagesFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92/nls.messages.json","corruptMarkerFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"2dc48f4001610433dd6143a56de10ea9.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92","_corruptedFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"}'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('HOSTNAME', 'ee14746cbf7f'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('BROWSER', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-2cd339da-68cb-4d38-afb0-d48bf632e348.sock'), ('ROS_PYTHON_VERSION', '3'), ('REMOTE_CONTAINERS', 'true'), ('DEBUGINFOD_URLS', ''), ('COLCON_PREFIX_PATH', '/opt/ros/humble'), ('ROS_DISTRO', 'humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('LOGNAME', 'root'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('ROS_LOCALHOST_ONLY', '0'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/tmp/.tmpWE5ftf:/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/extensions/openai.chatgpt-0.4.15-linux-x64/bin/linux-x86_64'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock"]'), ('DISPLAY', 'host.docker.internal:0'), ('LANG', 'en_US.UTF-8'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('DEBIAN_FRONTEND', ''), ('SHELL', '/usr/bin/zsh'), ('ELECTRON_RUN_AS_NODE', '1'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.098947] (-) TimerEvent: {}
+[0.138554] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_plan_cli\n'}
+[0.153767] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target planner_node\n'}
+[0.164316] (xline_path_planner) StdoutLine: {'line': b'[  6%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/xline_plan_cli.cpp.o\n'}
+[0.164978] (xline_path_planner) StdoutLine: {'line': b'[ 12%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/planner_engine.cpp.o\n'}
+[0.191005] (xline_path_planner) StdoutLine: {'line': b'[ 18%] Building CXX object CMakeFiles/planner_node.dir/src/planner_engine.cpp.o\n'}
+[0.199854] (-) TimerEvent: {}
+[0.301157] (-) TimerEvent: {}
+[0.402105] (-) TimerEvent: {}
+[0.502987] (-) TimerEvent: {}
+[0.603962] (-) TimerEvent: {}
+[0.704989] (-) TimerEvent: {}
+[0.805853] (-) TimerEvent: {}
+[0.981501] (-) TimerEvent: {}
+[1.082974] (-) TimerEvent: {}
+[1.184154] (-) TimerEvent: {}
+[1.285293] (-) TimerEvent: {}
+[1.386141] (-) TimerEvent: {}
+[1.487108] (-) TimerEvent: {}
+[1.588089] (-) TimerEvent: {}
+[1.688899] (-) TimerEvent: {}
+[1.790095] (-) TimerEvent: {}
+[1.890924] (-) TimerEvent: {}
+[1.991928] (-) TimerEvent: {}
+[2.092812] (-) TimerEvent: {}
+[2.193925] (-) TimerEvent: {}
+[2.294807] (-) TimerEvent: {}
+[2.395989] (-) TimerEvent: {}
+[2.496971] (-) TimerEvent: {}
+[2.597956] (-) TimerEvent: {}
+[2.698804] (-) TimerEvent: {}
+[2.800037] (-) TimerEvent: {}
+[2.901469] (-) TimerEvent: {}
+[3.002957] (-) TimerEvent: {}
+[3.103943] (-) TimerEvent: {}
+[3.205020] (-) TimerEvent: {}
+[3.305899] (-) TimerEvent: {}
+[3.407355] (-) TimerEvent: {}
+[3.508957] (-) TimerEvent: {}
+[3.609822] (-) TimerEvent: {}
+[3.711066] (-) TimerEvent: {}
+[3.811894] (-) TimerEvent: {}
+[3.912902] (-) TimerEvent: {}
+[4.014041] (-) TimerEvent: {}
+[4.114837] (-) TimerEvent: {}
+[4.216234] (-) TimerEvent: {}
+[4.316987] (-) TimerEvent: {}
+[4.418205] (-) TimerEvent: {}
+[4.519994] (-) TimerEvent: {}
+[4.620878] (-) TimerEvent: {}
+[4.721881] (-) TimerEvent: {}
+[4.823793] (-) TimerEvent: {}
+[4.925478] (-) TimerEvent: {}
+[5.027033] (-) TimerEvent: {}
+[5.131011] (-) TimerEvent: {}
+[5.237554] (-) TimerEvent: {}
+[5.340422] (-) TimerEvent: {}
+[5.447442] (-) TimerEvent: {}
+[5.569947] (-) TimerEvent: {}
+[5.681008] (-) TimerEvent: {}
+[5.792078] (-) TimerEvent: {}
+[5.921451] (-) TimerEvent: {}
+[6.022950] (-) TimerEvent: {}
+[6.125326] (-) TimerEvent: {}
+[6.226963] (-) TimerEvent: {}
+[6.328170] (-) TimerEvent: {}
+[6.429311] (-) TimerEvent: {}
+[6.532398] (-) TimerEvent: {}
+[6.632836] (-) TimerEvent: {}
+[6.733991] (-) TimerEvent: {}
+[6.835995] (-) TimerEvent: {}
+[6.936840] (-) TimerEvent: {}
+[7.037926] (-) TimerEvent: {}
+[7.139049] (-) TimerEvent: {}
+[7.239976] (-) TimerEvent: {}
+[7.340936] (-) TimerEvent: {}
+[7.441813] (-) TimerEvent: {}
+[7.542965] (-) TimerEvent: {}
+[7.643903] (-) TimerEvent: {}
+[7.744804] (-) TimerEvent: {}
+[7.846007] (-) TimerEvent: {}
+[7.946901] (-) TimerEvent: {}
+[8.047942] (-) TimerEvent: {}
+[8.148889] (-) TimerEvent: {}
+[8.249978] (-) TimerEvent: {}
+[8.351352] (-) TimerEvent: {}
+[8.451909] (-) TimerEvent: {}
+[8.552866] (-) TimerEvent: {}
+[8.653875] (-) TimerEvent: {}
+[8.754826] (-) TimerEvent: {}
+[8.856060] (-) TimerEvent: {}
+[8.956926] (-) TimerEvent: {}
+[9.057794] (-) TimerEvent: {}
+[9.159108] (-) TimerEvent: {}
+[9.259962] (-) TimerEvent: {}
+[9.360799] (-) TimerEvent: {}
+[9.461964] (-) TimerEvent: {}
+[9.562962] (-) TimerEvent: {}
+[9.664096] (-) TimerEvent: {}
+[9.764902] (-) TimerEvent: {}
+[9.866052] (-) TimerEvent: {}
+[9.966879] (-) TimerEvent: {}
+[10.028128] (xline_path_planner) StdoutLine: {'line': b'[ 25%] Linking CXX executable xline_plan_cli\n'}
+[10.068090] (-) TimerEvent: {}
+[10.128558] (xline_path_planner) StdoutLine: {'line': b'[ 31%] Linking CXX executable planner_node\n'}
+[10.168867] (-) TimerEvent: {}
+[10.269899] (-) TimerEvent: {}
+[10.370791] (-) TimerEvent: {}
+[10.473289] (-) TimerEvent: {}
+[10.574081] (-) TimerEvent: {}
+[10.674899] (-) TimerEvent: {}
+[10.776003] (-) TimerEvent: {}
+[10.877258] (-) TimerEvent: {}
+[10.998261] (-) TimerEvent: {}
+[11.098818] (-) TimerEvent: {}
+[11.157564] (xline_path_planner) StdoutLine: {'line': b'[ 62%] Built target xline_plan_cli\n'}
+[11.199958] (-) TimerEvent: {}
+[11.209605] (xline_path_planner) StdoutLine: {'line': b'[100%] Built target planner_node\n'}
+[11.229543] (xline_path_planner) CommandEnded: {'returncode': 0}
+[11.231509] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'install'}
+[11.246876] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '--install', '/root/xline_path_planner/build/xline_path_planner'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('VSCODE_CWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/out/nls.messages.json","languagePack":{"translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","messagesFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92/nls.messages.json","corruptMarkerFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"2dc48f4001610433dd6143a56de10ea9.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92","_corruptedFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"}'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('HOSTNAME', 'ee14746cbf7f'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('BROWSER', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-2cd339da-68cb-4d38-afb0-d48bf632e348.sock'), ('ROS_PYTHON_VERSION', '3'), ('REMOTE_CONTAINERS', 'true'), ('DEBUGINFOD_URLS', ''), ('COLCON_PREFIX_PATH', '/opt/ros/humble'), ('ROS_DISTRO', 'humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('LOGNAME', 'root'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('ROS_LOCALHOST_ONLY', '0'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/tmp/.tmpWE5ftf:/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/extensions/openai.chatgpt-0.4.15-linux-x64/bin/linux-x86_64'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock"]'), ('DISPLAY', 'host.docker.internal:0'), ('LANG', 'en_US.UTF-8'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('DEBIAN_FRONTEND', ''), ('SHELL', '/usr/bin/zsh'), ('ELECTRON_RUN_AS_NODE', '1'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[11.257961] (xline_path_planner) StdoutLine: {'line': b'-- Install configuration: "Release"\n'}
+[11.258520] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node\n'}
+[11.260142] (xline_path_planner) StdoutLine: {'line': b'-- Set runtime path of "/root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node" to ""\n'}
+[11.260586] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/config\n'}
+[11.261490] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/config/planner.yaml\n'}
+[11.261618] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/package_run_dependencies/xline_path_planner\n'}
+[11.261858] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/parent_prefix_path/xline_path_planner\n'}
+[11.262213] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.sh\n'}
+[11.262317] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.dsv\n'}
+[11.262404] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.sh\n'}
+[11.262490] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.dsv\n'}
+[11.262574] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.bash\n'}
+[11.262658] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.sh\n'}
+[11.262806] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.zsh\n'}
+[11.262907] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.dsv\n'}
+[11.262990] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.dsv\n'}
+[11.263073] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/packages/xline_path_planner\n'}
+[11.263155] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig.cmake\n'}
+[11.263237] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig-version.cmake\n'}
+[11.263319] (xline_path_planner) StdoutLine: {'line': b'-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.xml\n'}
+[11.263400] (xline_path_planner) StdoutLine: {'line': b'-- Installing: /root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/xline_plan_cli\n'}
+[11.264889] (xline_path_planner) CommandEnded: {'returncode': 0}
+[11.300203] (xline_path_planner) JobEnded: {'identifier': 'xline_path_planner', 'rc': 0}
+[11.302998] (-) TimerEvent: {}
+[11.303112] (-) EventReactorShutdown: {}

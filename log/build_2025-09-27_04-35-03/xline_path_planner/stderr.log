@@ -1,0 +1,64 @@
+In file included from /root/xline_path_planner/xline_path_planner/src/planner_engine.cpp:1:
+/root/xline_path_planner/xline_path_planner/include/xline_path_planner/planner_engine.hpp:14:3: error: ‘CADParserConfig’ does not name a type
+   14 |   CADParserConfig cad_parser;
+      |   ^~~~~~~~~~~~~~~
+In file included from /root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:9:
+/root/xline_path_planner/xline_path_planner/include/xline_path_planner/planner_engine.hpp:14:3: error: ‘CADParserConfig’ does not name a type
+   14 |   CADParserConfig cad_parser;
+      |   ^~~~~~~~~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp: In function ‘daosnrs_planning::PlannerEngineConfig {anonymous}::load_engine_cfg_from_yaml(const string&)’:
+/root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:40:7: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+   40 |   cfg.cad_parser.unit_conversion_factor = cad["unit_conversion_factor"].as<double>();
+      |       ^~~~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:41:7: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+   41 |   cfg.cad_parser.auto_scale_coordinates = cad["auto_scale_coordinates"].as<bool>();
+      |       ^~~~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:44:64: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+   44 |     if (au == "DEGREES" || au == "degrees" || au == "deg") cfg.cad_parser.angle_unit = AngleUnit::DEGREES;
+      |                                                                ^~~~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:44:88: error: ‘AngleUnit’ has not been declared
+   44 |     if (au == "DEGREES" || au == "degrees" || au == "deg") cfg.cad_parser.angle_unit = AngleUnit::DEGREES;
+      |                                                                                        ^~~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:45:69: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+   45 |     else if (au == "RADIANS" || au == "radians" || au == "rad") cfg.cad_parser.angle_unit = AngleUnit::RADIANS;
+      |                                                                     ^~~~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:45:93: error: ‘AngleUnit’ has not been declared
+   45 |     else if (au == "RADIANS" || au == "radians" || au == "rad") cfg.cad_parser.angle_unit = AngleUnit::RADIANS;
+      |                                                                                             ^~~~~~~~~
+gmake[2]: *** [CMakeFiles/xline_plan_cli.dir/build.make:76: CMakeFiles/xline_plan_cli.dir/src/xline_plan_cli.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp: In member function ‘bool daosnrs_planning::GridMapGenerator::save_as_image(const string&, const daosnrs_planning::CADData&, const daosnrs_planning::GridMapVisualizationConfig&) const’:
+/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:140:83: warning: unused parameter ‘cad_data’ [-Wunused-parameter]
+  140 | bool GridMapGenerator::save_as_image(const std::string& file_path, const CADData& cad_data,
+      |                                                                    ~~~~~~~~~~~~~~~^~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/path_planner.cpp: In member function ‘std::vector<daosnrs_planning::RouteSegment> daosnrs_planning::PathPlanner::plan_paths(const daosnrs_planning::CADData&, const daosnrs_planning::PathOffsetConfig&)’:
+/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:84:47: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::shared_ptr<daosnrs_planning::Line> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+   84 |   if (!lines_to_draw.empty() && printed_count == cad_data.path_lines.size())
+      |                                 ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp: In member function ‘void daosnrs_planning::GridMapGenerator::store_axis_line_points(const std::shared_ptr<daosnrs_planning::Line>&)’:
+/root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:739:64: warning: comparison of integer expressions of different signedness: ‘std::vector<daosnrs_planning::Point3D>::size_type’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+  739 |         if (curve->degree <= 3 && curve->control_points.size() >= curve->degree + 1)
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+In file included from /root/xline_path_planner/xline_path_planner/src/planner_engine.cpp:1:
+/root/xline_path_planner/xline_path_planner/include/xline_path_planner/planner_engine.hpp:14:3: error: ‘CADParserConfig’ does not name a type
+   14 |   CADParserConfig cad_parser;
+      |   ^~~~~~~~~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/path_planner.cpp: In member function ‘cv::Mat daosnrs_planning::PathPlanner::create_path_image(const daosnrs_planning::PathVisualizationConfig&)’:
+/root/xline_path_planner/xline_path_planner/src/path_planner.cpp:959:10: warning: unused variable ‘resolution’ [-Wunused-variable]
+  959 |   double resolution = grid_map_generator_->get_resolution();
+      |          ^~~~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/planner_engine.cpp: In member function ‘std::string daosnrs_planning::PlannerEngine::plan_from_cad_json(const string&, const string&)’:
+/root/xline_path_planner/xline_path_planner/src/planner_engine.cpp:19:29: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+   19 |   CADParser cad_parser(cfg_.cad_parser);
+      |                             ^~~~~~~~~~
+/root/xline_path_planner/xline_path_planner/src/planner_engine.cpp: In member function ‘std::string daosnrs_planning::PlannerEngine::plan_from_cad_json(const string&, const string&)’:
+/root/xline_path_planner/xline_path_planner/src/planner_engine.cpp:19:29: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+   19 |   CADParser cad_parser(cfg_.cad_parser);
+      |                             ^~~~~~~~~~
+gmake[2]: *** [CMakeFiles/xline_plan_cli.dir/build.make:90: CMakeFiles/xline_plan_cli.dir/src/planner_engine.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/planner_node.dir/build.make:90: CMakeFiles/planner_node.dir/src/planner_engine.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/xline_plan_cli.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:139: CMakeFiles/planner_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

@@ -1,0 +1,365 @@
+-- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found rclcpp: 16.0.12 (/opt/ros/humble/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+-- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found rclcpp_action: 16.0.12 (/opt/ros/humble/share/rclcpp_action/cmake)
+-- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10
+-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so
+[0mCMake Deprecation Warning at /opt/ros/humble/share/rosidl_cmake/cmake/rosidl_target_interfaces.cmake:32 (message):
+  Use rosidl_get_typesupport_target() and target_link_libraries() instead of
+  rosidl_target_interfaces()
+Call Stack (most recent call first):
+  CMakeLists.txt:62 (rosidl_target_interfaces)
+
+[0m
+-- Found ament_lint_auto: 0.12.12 (/opt/ros/humble/share/ament_lint_auto/cmake)
+-- Added test 'cppcheck' to perform static code analysis on C / C++ code
+-- Configured cppcheck include dirs: $<BUILD_INTERFACE:/root/xline_path_planner/xline_path_planner/include>
+-- Configured cppcheck exclude dirs and/or files: 
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'uncrustify' to check C / C++ code style
+-- Configured uncrustify additional arguments: 
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /root/xline_path_planner/build/xline_path_planner
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_generator_c[0m
+[  2%] Built target xline_path_planner__cpp
+[ 10%] Built target xline_path_planner__rosidl_generator_c
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_cpp[0m
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_cpp[0m
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_cpp[0m
+[ 10%] Built target ament_cmake_python_copy_xline_path_planner
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_c[0m
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_c[0m
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_c[0m
+[ 17%] Built target xline_path_planner__rosidl_typesupport_cpp
+[ 25%] Built target xline_path_planner__rosidl_typesupport_introspection_c
+[ 33%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c
+[ 41%] Built target xline_path_planner__rosidl_typesupport_fastrtps_cpp
+[ 48%] Built target xline_path_planner__rosidl_typesupport_introspection_cpp
+[ 56%] Built target xline_path_planner__rosidl_typesupport_c
+[ 56%] Built target xline_path_planner
+[35m[1mConsolidate compiler generated dependencies of target planner_node[0m
+[ 58%] Built target xline_path_planner__py
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_generator_py[0m
+[ 61%] [32mBuilding CXX object CMakeFiles/planner_node.dir/src/main.cpp.o[0m
+[ 66%] Built target xline_path_planner__rosidl_generator_py
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_c__pyext[0m
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_c__pyext[0m
+[35m[1mConsolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext[0m
+[ 82%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext
+[ 82%] Built target xline_path_planner__rosidl_typesupport_c__pyext
+[ 82%] Built target xline_path_planner__rosidl_typesupport_introspection_c__pyext
+running egg_info
+writing xline_path_planner.egg-info/PKG-INFO
+writing dependency_links to xline_path_planner.egg-info/dependency_links.txt
+writing top-level names to xline_path_planner.egg-info/top_level.txt
+reading manifest file 'xline_path_planner.egg-info/SOURCES.txt'
+writing manifest file 'xline_path_planner.egg-info/SOURCES.txt'
+[ 82%] Built target ament_cmake_python_build_xline_path_planner_egg
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:245:43:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ has not been declared
+  245 |                                           [01;31m[Kxline_path_planner[m[K::action::PlanPath::Goal::ConstSharedPtr goal)
+      |                                           [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:245:102:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K,[m[K’ or ‘[01m[K...[m[K’ before ‘[01m[Kgoal[m[K’
+  245 |                                           xline_path_planner::action::PlanPath::Goal::ConstSharedPtr [01;31m[Kgoal[m[K)
+      |                                                                                                      [01;31m[K^~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:101:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>>)
+      |                                                                                                     [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:137:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath[01;31m[K>>[m[K)
+      |                                                                                                                                         [01;31m[K^~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:101:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>>)
+      |                                                                                                     [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:137:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath[01;31m[K>>[m[K)
+      |                                                                                                                                         [01;31m[K^~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:101:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>>)
+      |                                                                                                     [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:137:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath[01;31m[K>>[m[K)
+      |                                                                                                                                         [01;31m[K^~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:69:[m[K [01;31m[Kerror: [m[Kinvalid template-id
+  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<[01;31m[Krclcpp_action[m[K::ServerGoalHandle<xline_path_planner::action::PlanPath>>)
+      |                                                                     [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:101:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>>)
+      |                                                                                                     [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:84:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::[01;31m[KServerGoalHandle[m[K<xline_path_planner::action::PlanPath>>)
+      |                                                                                    [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:84:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:84:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:53:[m[K [01;31m[Kerror: [m[Kinvalid template-id
+  256 |   rclcpp_action::CancelResponse handle_cancel(const [01;31m[Kstd[m[K::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)
+      |                                                     [01;31m[K^~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:139:[m[K [01;31m[Kerror: [m[Kmissing template arguments before ‘[01m[K)[m[K’ token
+  256 |   rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>[01;31m[K)[m[K
+      |                                                                                                                                           [01;31m[K^[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:139:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K>[m[K’ before ‘[01m[K)[m[K’ token
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:256:47:[m[K [01;31m[Kerror: [m[Kclass template placeholder ‘[01m[Kstd::shared_ptr[m[K’ not permitted in this context
+  256 |   rclcpp_action::CancelResponse handle_cancel([01;31m[Kconst[m[K std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>>)
+      |                                               [01;31m[K^~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:78:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>> goal_handle)
+      |                                                                              [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:114:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath[01;31m[K>>[m[K goal_handle)
+      |                                                                                                                  [01;31m[K^~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:78:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>> goal_handle)
+      |                                                                              [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:114:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath[01;31m[K>>[m[K goal_handle)
+      |                                                                                                                  [01;31m[K^~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:78:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>> goal_handle)
+      |                                                                              [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:114:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath[01;31m[K>>[m[K goal_handle)
+      |                                                                                                                  [01;31m[K^~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:46:[m[K [01;31m[Kerror: [m[Kinvalid template-id
+  263 |   void handle_accepted(const std::shared_ptr<[01;31m[Krclcpp_action[m[K::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)
+      |                                              [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:78:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>> goal_handle)
+      |                                                                              [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:117:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> [01;31m[Kgoal_handle[m[K)
+      |                                                                                                                     [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:117:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:117:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:30:[m[K [01;31m[Kerror: [m[Kinvalid template-id
+  263 |   void handle_accepted(const [01;31m[Kstd[m[K::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)
+      |                              [01;31m[K^~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:117:[m[K [01;31m[Kerror: [m[Kmissing template arguments before ‘[01m[Kgoal_handle[m[K’
+  263 |   void handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> [01;31m[Kgoal_handle[m[K)
+      |                                                                                                                     [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:117:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K>[m[K’ before ‘[01m[Kgoal_handle[m[K’
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:263:24:[m[K [01;31m[Kerror: [m[Kclass template placeholder ‘[01m[Kstd::shared_ptr[m[K’ not permitted in this context
+  263 |   void handle_accepted([01;31m[Kconst[m[K std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)
+      |                        [01;31m[K^~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:269:3:[m[K [01;31m[Kerror: [m[K‘[01m[KPlannerEngineConfig[m[K’ does not name a type
+  269 |   [01;31m[KPlannerEngineConfig[m[K build_engine_cfg_from_node() const
+      |   [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:281:3:[m[K [01;31m[Kerror: [m[K‘[01m[KPlannerEngineConfig[m[K’ does not name a type
+  281 |   [01;31m[KPlannerEngineConfig[m[K load_engine_cfg_from_yaml_text(const std::string& yaml_text)
+      |   [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:70:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>> goal_handle)
+      |                                                                      [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:106:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath[01;31m[K>>[m[K goal_handle)
+      |                                                                                                          [01;31m[K^~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:70:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>> goal_handle)
+      |                                                                      [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:106:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath[01;31m[K>>[m[K goal_handle)
+      |                                                                                                          [01;31m[K^~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:70:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>> goal_handle)
+      |                                                                      [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:106:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath[01;31m[K>>[m[K goal_handle)
+      |                                                                                                          [01;31m[K^~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:38:[m[K [01;31m[Kerror: [m[Kinvalid template-id
+  349 |   void execute(const std::shared_ptr<[01;31m[Krclcpp_action[m[K::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)
+      |                                      [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:70:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ was not declared in this scope
+  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<[01;31m[Kxline_path_planner[m[K::action::PlanPath>> goal_handle)
+      |                                                                      [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:109:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> [01;31m[Kgoal_handle[m[K)
+      |                                                                                                             [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:109:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:109:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:22:[m[K [01;31m[Kerror: [m[Kinvalid template-id
+  349 |   void execute(const [01;31m[Kstd[m[K::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)
+      |                      [01;31m[K^~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:109:[m[K [01;31m[Kerror: [m[Kmissing template arguments before ‘[01m[Kgoal_handle[m[K’
+  349 |   void execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> [01;31m[Kgoal_handle[m[K)
+      |                                                                                                             [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:109:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K>[m[K’ before ‘[01m[Kgoal_handle[m[K’
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:349:16:[m[K [01;31m[Kerror: [m[Kclass template placeholder ‘[01m[Kstd::shared_ptr[m[K’ not permitted in this context
+  349 |   void execute([01;31m[Kconst[m[K std::shared_ptr<rclcpp_action::ServerGoalHandle<xline_path_planner::action::PlanPath>> goal_handle)
+      |                [01;31m[K^~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:393:20:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ does not name a type
+  393 |   using PlanPath = [01;31m[Kxline_path_planner[m[K::action::PlanPath;
+      |                    [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:394:25:[m[K [01;31m[Kerror: [m[K‘[01m[KPlanPath[m[K’ was not declared in this scope
+  394 |   rclcpp_action::Server<[01;31m[KPlanPath[m[K>::SharedPtr action_server_;
+      |                         [01;31m[K^~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:394:33:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  394 |   rclcpp_action::Server<PlanPath[01;31m[K>[m[K::SharedPtr action_server_;
+      |                                 [01;31m[K^[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:394:36:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ at end of member declaration
+  394 |   rclcpp_action::Server<PlanPath>::[01;31m[KSharedPtr[m[K action_server_;
+      |                                    [01;31m[K^~~~~~~~~[m[K
+      |                                             [32m[K;[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:394:46:[m[K [01;31m[Kerror: [m[K‘[01m[Kaction_server_[m[K’ does not name a type; did you mean ‘[01m[Krcl_action_server_t[m[K’?
+  394 |   rclcpp_action::Server<PlanPath>::SharedPtr [01;31m[Kaction_server_[m[K;
+      |                                              [01;31m[K^~~~~~~~~~~~~~[m[K
+      |                                              [32m[Krcl_action_server_t[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:[m[K In member function ‘[01m[Kvoid PlannerNode::start_action_server()[m[K’:
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:230:22:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ does not name a type
+  230 |     using PlanPath = [01;31m[Kxline_path_planner[m[K::action::PlanPath;
+      |                      [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:233:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kaction_server_[m[K’ was not declared in this scope; did you mean ‘[01m[Krcl_action_server_t[m[K’?
+  233 |     [01;31m[Kaction_server_[m[K = rclcpp_action::create_server<PlanPath>(
+      |     [01;31m[K^~~~~~~~~~~~~~[m[K
+      |     [32m[Krcl_action_server_t[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:233:51:[m[K [01;31m[Kerror: [m[K‘[01m[KPlanPath[m[K’ was not declared in this scope; did you mean ‘[01m[Kplan_paths[m[K’?
+  233 |     action_server_ = rclcpp_action::create_server<[01;31m[KPlanPath[m[K>(
+      |                                                   [01;31m[K^~~~~~~~[m[K
+      |                                                   [32m[Kplan_paths[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:233:60:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kcreate_server<<expression error> >(std::shared_ptr<rclcpp::Node>, const char [10], std::_Bind_helper<false, rclcpp_action::GoalResponse (PlannerNode::*)(const std::array<unsigned char, 16>&, int), PlannerNode*, const std::_Placeholder<1>&, const std::_Placeholder<2>&>::type, std::_Bind_helper<false, rclcpp_action::CancelResponse (PlannerNode::*)(...), PlannerNode*, const std::_Placeholder<1>&>::type, std::_Bind_helper<false, void (PlannerNode::*)(...), PlannerNode*, const std::_Placeholder<1>&>::type)[m[K’
+  233 |     action_server_ = [01;31m[Krclcpp_action::create_server<PlanPath>([m[K
+      |                      [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[m[K
+  234 | [01;31m[K      shared_from_this(),[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~[m[K                                   
+  235 | [01;31m[K      "plan_path",[m[K
+      |       [01;31m[K~~~~~~~~~~~~[m[K                                          
+  236 | [01;31m[K      std::bind(&PlannerNode::handle_goal, this, _1, _2),[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K   
+  237 | [01;31m[K      std::bind(&PlannerNode::handle_cancel, this, _1),[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K     
+  238 | [01;31m[K      std::bind(&PlannerNode::handle_accepted, this, _1)[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K    
+  239 | [01;31m[K    )[m[K;
+      |     [01;31m[K~[m[K                                                       
+In file included from [01m[K/opt/ros/humble/include/rclcpp_action/rclcpp_action/rclcpp_action.hpp:39[m[K,
+                 from [01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:8[m[K:
+[01m[K/opt/ros/humble/include/rclcpp_action/rclcpp_action/create_server.hpp:58:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class ActionT> typename rclcpp_action::Server<ActionT>::SharedPtr rclcpp_action::create_server(rclcpp::node_interfaces::NodeBaseInterface::SharedPtr, rclcpp::node_interfaces::NodeClockInterface::SharedPtr, rclcpp::node_interfaces::NodeLoggingInterface::SharedPtr, rclcpp::node_interfaces::NodeWaitablesInterface::SharedPtr, const string&, typename rclcpp_action::Server<ActionT>::GoalCallback, typename rclcpp_action::Server<ActionT>::CancelCallback, typename rclcpp_action::Server<ActionT>::AcceptedCallback, const rcl_action_server_options_t&, rclcpp::CallbackGroup::SharedPtr)[m[K’
+   58 | [01;36m[Kcreate_server[m[K(
+      | [01;36m[K^~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/humble/include/rclcpp_action/rclcpp_action/create_server.hpp:58:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:233:60:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  233 |     action_server_ = [01;31m[Krclcpp_action::create_server<PlanPath>([m[K
+      |                      [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[m[K
+  234 | [01;31m[K      shared_from_this(),[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~[m[K                                   
+  235 | [01;31m[K      "plan_path",[m[K
+      |       [01;31m[K~~~~~~~~~~~~[m[K                                          
+  236 | [01;31m[K      std::bind(&PlannerNode::handle_goal, this, _1, _2),[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K   
+  237 | [01;31m[K      std::bind(&PlannerNode::handle_cancel, this, _1),[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K     
+  238 | [01;31m[K      std::bind(&PlannerNode::handle_accepted, this, _1)[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K    
+  239 | [01;31m[K    )[m[K;
+      |     [01;31m[K~[m[K                                                       
+In file included from [01m[K/opt/ros/humble/include/rclcpp_action/rclcpp_action/rclcpp_action.hpp:39[m[K,
+                 from [01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:8[m[K:
+[01m[K/opt/ros/humble/include/rclcpp_action/rclcpp_action/create_server.hpp:132:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class ActionT, class NodeT> typename rclcpp_action::Server<ActionT>::SharedPtr rclcpp_action::create_server(NodeT, const string&, typename rclcpp_action::Server<ActionT>::GoalCallback, typename rclcpp_action::Server<ActionT>::CancelCallback, typename rclcpp_action::Server<ActionT>::AcceptedCallback, const rcl_action_server_options_t&, rclcpp::CallbackGroup::SharedPtr)[m[K’
+  132 | [01;36m[Kcreate_server[m[K(
+      | [01;36m[K^~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/humble/include/rclcpp_action/rclcpp_action/create_server.hpp:132:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:233:60:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  233 |     action_server_ = [01;31m[Krclcpp_action::create_server<PlanPath>([m[K
+      |                      [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[m[K
+  234 | [01;31m[K      shared_from_this(),[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~[m[K                                   
+  235 | [01;31m[K      "plan_path",[m[K
+      |       [01;31m[K~~~~~~~~~~~~[m[K                                          
+  236 | [01;31m[K      std::bind(&PlannerNode::handle_goal, this, _1, _2),[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K   
+  237 | [01;31m[K      std::bind(&PlannerNode::handle_cancel, this, _1),[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K     
+  238 | [01;31m[K      std::bind(&PlannerNode::handle_accepted, this, _1)[m[K
+      |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K    
+  239 | [01;31m[K    )[m[K;
+      |     [01;31m[K~[m[K                                                       
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:[m[K In member function ‘[01m[Krclcpp_action::GoalResponse PlannerNode::handle_goal(const GoalUUID&, int)[m[K’:
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:247:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kgoal[m[K’ was not declared in this scope
+  247 |     if ([01;31m[Kgoal[m[K->cad_json.empty())
+      |         [01;31m[K^~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:245:87:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KConstSharedPtr[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  245 |                                           [01;35m[Kxline_path_planner::action::PlanPath::Goal::ConstSharedPtr[m[K goal)
+      |                                           [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:[m[K In member function ‘[01m[Kvoid PlannerNode::handle_accepted(...)[m[K’:
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:265:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kgoal_handle[m[K’ was not declared in this scope
+  265 |     std::thread([this, [01;31m[Kgoal_handle[m[K]() { this->execute(goal_handle); }).detach();
+      |                        [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:[m[K In lambda function:
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:265:55:[m[K [01;31m[Kerror: [m[K‘[01m[Kgoal_handle[m[K’ is not captured
+  265 |     std::thread([this, goal_handle]() { this->execute([01;31m[Kgoal_handle[m[K); }).detach();
+      |                                                       [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:265:35:[m[K [01;36m[Knote: [m[Kthe lambda has no capture-default
+  265 |     std::thread([this, goal_handle[01;36m[K][m[K() { this->execute(goal_handle); }).detach();
+      |                                   [01;36m[K^[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:265:24:[m[K [01;36m[Knote: [m[K‘[01m[K<typeprefixerror>goal_handle[m[K’ declared here
+  265 |     std::thread([this, [01;36m[Kgoal_handle[m[K]() { this->execute(goal_handle); }).detach();
+      |                        [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:[m[K In member function ‘[01m[Kvoid PlannerNode::execute(...)[m[K’:
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:351:22:[m[K [01;31m[Kerror: [m[K‘[01m[Kxline_path_planner[m[K’ does not name a type
+  351 |     using PlanPath = [01;31m[Kxline_path_planner[m[K::action::PlanPath;
+      |                      [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:352:17:[m[K [01;31m[Kerror: [m[K‘[01m[Kgoal_handle[m[K’ was not declared in this scope
+  352 |     auto goal = [01;31m[Kgoal_handle[m[K->get_goal();
+      |                 [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:353:38:[m[K [01;31m[Kerror: [m[K‘[01m[KPlanPath[m[K’ was not declared in this scope; did you mean ‘[01m[Kplan_paths[m[K’?
+  353 |     auto feedback = std::make_shared<[01;31m[KPlanPath[m[K::Feedback>();
+      |                                      [01;31m[K^~~~~~~~[m[K
+      |                                      [32m[Kplan_paths[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:353:26:[m[K [01;31m[Kerror: [m[Kparse error in template argument list
+  353 |     auto feedback = std::[01;31m[Kmake_shared<PlanPath::Feedback>[m[K();
+      |                          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:353:57:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kmake_shared<<expression error> >()[m[K’
+  353 |     auto feedback = [01;31m[Kstd::make_shared<PlanPath::Feedback>()[m[K;
+      |                     [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+In file included from [01m[K/usr/include/c++/11/memory:77[m[K,
+                 from [01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:1[m[K:
+[01m[K/usr/include/c++/11/bits/shared_ptr.h:875:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class ... _Args> std::shared_ptr<_Tp> std::make_shared(_Args&& ...)[m[K’
+  875 |     [01;36m[Kmake_shared[m[K(_Args&&... __args)
+      |     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/usr/include/c++/11/bits/shared_ptr.h:875:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:353:57:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+  353 |     auto feedback = [01;31m[Kstd::make_shared<PlanPath::Feedback>()[m[K;
+      |                     [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:354:24:[m[K [01;31m[Kerror: [m[Kparse error in template argument list
+  354 |     auto result = std::[01;31m[Kmake_shared<PlanPath::Result>[m[K();
+      |                        [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:354:53:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kmake_shared<PlanPath>()[m[K’
+  354 |     auto result = [01;31m[Kstd::make_shared<PlanPath::Result>()[m[K;
+      |                   [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~[m[K
+In file included from [01m[K/usr/include/c++/11/memory:77[m[K,
+                 from [01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:1[m[K:
+[01m[K/usr/include/c++/11/bits/shared_ptr.h:875:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class ... _Args> std::shared_ptr<_Tp> std::make_shared(_Args&& ...)[m[K’
+  875 |     [01;36m[Kmake_shared[m[K(_Args&&... __args)
+      |     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/usr/include/c++/11/bits/shared_ptr.h:875:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:358:7:[m[K [01;31m[Kerror: [m[K‘[01m[KPlannerEngineConfig[m[K’ was not declared in this scope
+  358 |       [01;31m[KPlannerEngineConfig[m[K cfg = build_engine_cfg_from_node();
+      |       [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:361:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kcfg[m[K’ was not declared in this scope
+  361 |         [01;31m[Kcfg[m[K = load_engine_cfg_from_yaml_text(goal->config_yaml);
+      |         [01;31m[K^~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:361:15:[m[K [01;31m[Kerror: [m[K‘[01m[Kload_engine_cfg_from_yaml_text[m[K’ was not declared in this scope
+  361 |         cfg = [01;31m[Kload_engine_cfg_from_yaml_text[m[K(goal->config_yaml);
+      |               [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:364:7:[m[K [01;31m[Kerror: [m[K‘[01m[KPlannerEngine[m[K’ was not declared in this scope; did you mean ‘[01m[KPlannerNode[m[K’?
+  364 |       [01;31m[KPlannerEngine[m[K engine(cfg);
+      |       [01;31m[K^~~~~~~~~~~~~[m[K
+      |       [32m[KPlannerNode[m[K
+[01m[K/root/xline_path_planner/xline_path_planner/src/main.cpp:367:30:[m[K [01;31m[Kerror: [m[K‘[01m[Kengine[m[K’ was not declared in this scope
+  367 |       std::string out_json = [01;31m[Kengine[m[K.plan_from_cad_json(goal->cad_json, "request.json");
+      |                              [01;31m[K^~~~~~[m[K
+gmake[2]: *** [CMakeFiles/planner_node.dir/build.make:76: CMakeFiles/planner_node.dir/src/main.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:184: CMakeFiles/planner_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

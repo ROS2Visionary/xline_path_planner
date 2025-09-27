@@ -1,0 +1,49 @@
+[0.036s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
+[0.102s] -- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.342s] -- Found rclcpp: 16.0.12 (/opt/ros/humble/share/rclcpp/cmake)
+[0.408s] -- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.414s] -- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.426s] -- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.449s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.479s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.549s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.552s] -- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.751s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.884s] -- Found ament_lint_auto: 0.12.12 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.095s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.096s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/root/xline_path_planner/xline_path_planner/include>
+[1.096s] -- Configured cppcheck exclude dirs and/or files: 
+[1.098s] -- Added test 'lint_cmake' to check CMake code style
+[1.101s] -- Added test 'uncrustify' to check C / C++ code style
+[1.101s] -- Configured uncrustify additional arguments: 
+[1.102s] -- Added test 'xmllint' to check XML markup files
+[1.105s] -- Configuring done
+[1.143s] -- Generating done
+[1.158s] -- Build files have been written to: /root/xline_path_planner/build/xline_path_planner
+[1.224s] Consolidate compiler generated dependencies of target xline_plan_cli
+[1.232s] Consolidate compiler generated dependencies of target planner_node
+[1.248s] [ 50%] Built target xline_plan_cli
+[1.259s] [100%] Built target planner_node
+[1.276s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
+[1.290s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /root/xline_path_planner/build/xline_path_planner
+[1.302s] -- Install configuration: "Release"
+[1.302s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node
+[1.303s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/config
+[1.303s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/config/planner.yaml
+[1.304s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/package_run_dependencies/xline_path_planner
+[1.304s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/parent_prefix_path/xline_path_planner
+[1.304s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.sh
+[1.305s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.dsv
+[1.305s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.sh
+[1.305s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.dsv
+[1.306s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.bash
+[1.306s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.sh
+[1.307s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.zsh
+[1.307s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.dsv
+[1.307s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.dsv
+[1.307s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/packages/xline_path_planner
+[1.307s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig.cmake
+[1.308s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig-version.cmake
+[1.308s] -- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.xml
+[1.309s] -- Up-to-date: /root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/xline_plan_cli
+[1.309s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /root/xline_path_planner/build/xline_path_planner

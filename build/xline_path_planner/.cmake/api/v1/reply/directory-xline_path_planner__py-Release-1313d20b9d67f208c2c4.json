@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "xline_path_planner__py",
+		"source" : "/root/xline_path_planner/build/xline_path_planner/xline_path_planner__py"
+	}
+}

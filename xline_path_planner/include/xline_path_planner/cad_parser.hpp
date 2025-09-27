@@ -131,6 +131,13 @@ public:
   bool parse(const std::string& file_path);
 
   /**
+   * @brief 从JSON字符串解析CAD数据（无文件I/O）
+   * @param json_text 输入的CAD JSON文本
+   * @return 解析成功返回true，否则返回false
+   */
+  bool parse_from_string(const std::string& json_text);
+
+  /**
    * @brief 获取解析后的CAD数据
    * 内容：path_lines / obstacle_lines / hole_lines 三类集合与可扩展的 origin_points。
    * 注意：返回常量引用；若需外部修改，请先复制。
@@ -157,6 +164,12 @@ public:
   const CADParserConfig& get_config() const;
 
 private:
+  /**
+   * @brief 从已解析的JSON对象填充CADData
+   * @param cad_json 已解析的JSON对象
+   * @return 解析成功返回true，否则返回false
+   */
+  bool parse_from_json_obj(const nlohmann::json& cad_json);
   /**
    * @brief 根据 JSON 根节点构建 layer_id → layer_name 映射
    * 要求：layers 为数组，元素具备 layer_id(int) 与 name(string)。

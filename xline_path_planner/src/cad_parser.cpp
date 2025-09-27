@@ -62,19 +62,42 @@ bool CADParser::parse(const std::string& file_path)
 {
   try
   {
-    // 打开并读取JSON文件
     std::ifstream file(file_path);
     if (!file.is_open())
     {
       std::cerr << "Failed to open CAD file: " << file_path << std::endl;
       return false;
     }
-
-    // 解析JSON
     nlohmann::json cad_json;
     file >> cad_json;
     file.close();
+    return parse_from_json_obj(cad_json);
+  }
+  catch (const std::exception& e)
+  {
+    std::cerr << "Error parsing CAD file: " << e.what() << std::endl;
+    return false;
+  }
+}
 
+bool CADParser::parse_from_string(const std::string& json_text)
+{
+  try
+  {
+    nlohmann::json cad_json = nlohmann::json::parse(json_text);
+    return parse_from_json_obj(cad_json);
+  }
+  catch (const std::exception& e)
+  {
+    std::cerr << "Error parsing CAD JSON text: " << e.what() << std::endl;
+    return false;
+  }
+}
+
+bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
+{
+  try
+  {
     // 清除之前的数据
     clear();
     // 预先构建 layer_id -> layer_name 映射，供分类用
@@ -176,7 +199,7 @@ bool CADParser::parse(const std::string& file_path)
   }
   catch (const std::exception& e)
   {
-    std::cerr << "Error parsing CAD file: " << e.what() << std::endl;
+    std::cerr << "Error parsing CAD JSON object: " << e.what() << std::endl;
     return false;
   }
 }

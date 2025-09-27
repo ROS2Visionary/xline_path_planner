@@ -1016,6 +1016,9 @@ CMakeFiles/planner_node.dir/src/main.cpp.o: /root/xline_path_planner/xline_path_
   /usr/include/c++/11/codecvt \
   /usr/include/c++/11/bits/fs_dir.h \
   /usr/include/c++/11/bits/fs_ops.h \
+  /usr/include/c++/11/thread \
+  /usr/include/c++/11/bits/std_thread.h \
+  /usr/include/c++/11/bits/this_thread_sleep.h \
   /usr/include/yaml-cpp/yaml.h \
   /usr/include/yaml-cpp/parser.h \
   /usr/include/yaml-cpp/dll.h \
@@ -1146,10 +1149,7 @@ CMakeFiles/planner_node.dir/src/main.cpp.o: /root/xline_path_planner/xline_path_
   /usr/include/c++/11/bits/unique_lock.h \
   /usr/include/c++/11/condition_variable \
   /usr/include/c++/11/bits/atomic_futex.h \
-  /usr/include/c++/11/bits/std_thread.h \
   /opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp \
-  /usr/include/c++/11/thread \
-  /usr/include/c++/11/bits/this_thread_sleep.h \
   /opt/ros/humble/include/rclcpp/rclcpp/executor.hpp \
   /usr/include/c++/11/cassert \
   /usr/include/assert.h \
@@ -1514,6 +1514,83 @@ CMakeFiles/planner_node.dir/src/main.cpp.o: /root/xline_path_planner/xline_path_
   /opt/ros/humble/include/rclcpp/rclcpp/wait_set_policies/thread_safe_synchronization.hpp \
   /opt/ros/humble/include/rclcpp/rclcpp/wait_set_policies/detail/write_preferring_read_write_lock.hpp \
   /opt/ros/humble/include/rclcpp/rclcpp/wait_set_template.hpp \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/rclcpp_action.hpp \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/client.hpp \
+  /opt/ros/humble/include/rosidl_runtime_c/rosidl_runtime_c/action_type_support_struct.h \
+  /opt/ros/humble/include/rosidl_runtime_cpp/rosidl_typesupport_cpp/action_type_support.hpp \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/client_goal_handle.hpp \
+  /opt/ros/humble/include/rcl_action/rcl_action/action_client.h \
+  /opt/ros/humble/include/rcl_action/rcl_action/types.h \
+  /opt/ros/humble/include/rcl_action/rcl_action/visibility_control.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/goal_info.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__struct.h \
+  /opt/ros/humble/include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/uuid__struct.h \
+  /opt/ros/humble/include/builtin_interfaces/builtin_interfaces/msg/detail/time__struct.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__functions.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/rosidl_generator_c__visibility_control.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__type_support.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/goal_status.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__struct.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__functions.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__type_support.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/goal_status_array.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__struct.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__functions.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__type_support.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/srv/cancel_goal.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__struct.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__functions.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__type_support.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/goal_status.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__struct.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__struct.hpp \
+  /opt/ros/humble/include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/uuid__struct.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__builder.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__traits.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__traits.hpp \
+  /opt/ros/humble/include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/uuid__traits.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__type_support.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/rosidl_generator_cpp__visibility_control.hpp \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/exceptions.hpp \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/types.hpp \
+  /usr/include/c++/11/climits \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/limits.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h \
+  /usr/include/limits.h \
+  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
+  /usr/include/linux/limits.h \
+  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/goal_info.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__builder.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__type_support.hpp \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/visibility_control.hpp \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/client_goal_handle_impl.hpp \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/create_client.hpp \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/create_server.hpp \
+  /opt/ros/humble/include/rcl_action/rcl_action/action_server.h \
+  /opt/ros/humble/include/rcl_action/rcl_action/goal_handle.h \
+  /opt/ros/humble/include/rcl_action/rcl_action/goal_state_machine.h \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/server.hpp \
+  /opt/ros/humble/include/rclcpp_action/rclcpp_action/server_goal_handle.hpp \
+  rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp \
+  rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__struct.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/srv/cancel_goal.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__struct.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__builder.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__traits.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__type_support.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/goal_status_array.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__struct.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__builder.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__traits.hpp \
+  /opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__type_support.hpp \
+  rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__builder.hpp \
+  rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__traits.hpp \
+  rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__type_support.hpp \
+  rosidl_generator_cpp/xline_path_planner/msg/rosidl_generator_cpp__visibility_control.hpp \
   /root/xline_path_planner/xline_path_planner/include/xline_path_planner/cad_parser.hpp \
   /root/xline_path_planner/xline_path_planner/include/xline_path_planner/common_types.hpp \
   /usr/include/nlohmann/json.hpp \
@@ -1583,16 +1660,6 @@ CMakeFiles/planner_node.dir/src/main.cpp.o: /root/xline_path_planner/xline_path_
   /usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h \
   /usr/include/opencv4/opencv2/core/base.hpp \
-  /usr/include/c++/11/climits \
-  /usr/lib/gcc/x86_64-linux-gnu/11/include/limits.h \
-  /usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h \
-  /usr/include/limits.h \
-  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
-  /usr/include/linux/limits.h \
-  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
   /usr/include/opencv4/opencv2/core/cvstd.hpp \
   /usr/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
   /usr/include/opencv4/opencv2/core/neon_utils.hpp \
@@ -1701,7 +1768,8 @@ CMakeFiles/planner_node.dir/src/main.cpp.o: /root/xline_path_planner/xline_path_
   /usr/include/opencv4/opencv2/video/background_segm.hpp \
   /root/xline_path_planner/xline_path_planner/include/xline_path_planner/path_planner.hpp \
   /root/xline_path_planner/xline_path_planner/include/xline_path_planner/trajectory_generator.hpp \
-  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/output_formatter.hpp
+  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/output_formatter.hpp \
+  /root/xline_path_planner/xline_path_planner/include/xline_path_planner/planner_engine.hpp
 
 CMakeFiles/planner_node.dir/src/output_formatter.cpp.o: /root/xline_path_planner/xline_path_planner/src/output_formatter.cpp \
   /usr/include/stdc-predef.h \
@@ -2741,6 +2809,56 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
   /usr/include/c++/11/bits/istream.tcc
 
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__type_support.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__builder.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__struct.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__type_support.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__struct.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/srv/cancel_goal.hpp:
+
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/server.hpp:
+
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/create_server.hpp:
+
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/create_client.hpp:
+
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/client_goal_handle_impl.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__type_support.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__builder.hpp:
+
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/types.hpp:
+
+/opt/ros/humble/include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/uuid__traits.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__builder.hpp:
+
+/opt/ros/humble/include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/uuid__struct.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__functions.h:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__type_support.h:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__struct.h:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__functions.h:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/goal_status.h:
+
+/opt/ros/humble/include/builtin_interfaces/builtin_interfaces/msg/detail/time__struct.h:
+
+/opt/ros/humble/include/rcl_action/rcl_action/action_client.h:
+
+/opt/ros/humble/include/rosidl_runtime_c/rosidl_runtime_c/action_type_support_struct.h:
+
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/client.hpp:
+
 /opt/ros/humble/include/rclcpp/rclcpp/wait_set_policies/thread_safe_synchronization.hpp:
 
 /opt/ros/humble/include/rclcpp/rclcpp/wait_set_policies/static_storage.hpp:
@@ -2759,6 +2877,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /root/xline_path_planner/xline_path_planner/src/output_formatter.cpp:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/goal_info.hpp:
+
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/srv/detail/set_parameters__struct.hpp:
 
 /root/xline_path_planner/xline_path_planner/src/trajectory_generator.cpp:
@@ -2770,6 +2890,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/srv/detail/list_parameters__struct.hpp:
 
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/srv/list_parameters.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__type_support.hpp:
 
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/srv/detail/get_parameters__type_support.hpp:
 
@@ -2853,7 +2975,11 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/msg/detail/integer_range__struct.hpp:
 
+/opt/ros/humble/include/action_msgs/action_msgs/srv/cancel_goal.h:
+
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/msg/parameter_descriptor.hpp:
+
+rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__struct.hpp:
 
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/msg/detail/list_parameters_result__struct.hpp:
 
@@ -2902,6 +3028,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /opt/ros/humble/include/rclcpp/rclcpp/subscription_traits.hpp:
 
 /opt/ros/humble/include/rclcpp/rclcpp/topic_statistics_state.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/goal_info.h:
 
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/msg/detail/set_parameters_result__traits.hpp:
 
@@ -3023,6 +3151,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /opt/ros/humble/include/rclcpp/rclcpp/utilities.hpp:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__type_support.h:
+
 /opt/ros/humble/include/rcutils/rcutils/logging_macros.h:
 
 /opt/ros/humble/include/rclcpp/rclcpp/node_interfaces/get_node_base_interface.hpp:
@@ -3039,7 +3169,11 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /opt/ros/humble/include/rclcpp/rclcpp/function_traits.hpp:
 
+rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__traits.hpp:
+
 /opt/ros/humble/include/rclcpp/rclcpp/expand_topic_or_service_name.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__struct.h:
 
 /opt/ros/humble/include/rcpputils/rcpputils/join.hpp:
 
@@ -3068,6 +3202,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/msg/detail/parameter_descriptor__builder.hpp:
 
 /opt/ros/humble/include/rclcpp/rclcpp/macros.hpp:
+
+/opt/ros/humble/include/rosidl_runtime_cpp/rosidl_typesupport_cpp/action_type_support.hpp:
 
 /opt/ros/humble/include/rclcpp/rclcpp/visibility_control.hpp:
 
@@ -3121,6 +3257,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /opt/ros/humble/include/rcl/rcl/wait.h:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__traits.hpp:
+
 /opt/ros/humble/include/rcl/rcl/init_options.h:
 
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/srv/set_parameters.hpp:
@@ -3150,6 +3288,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /opt/ros/humble/include/rmw/rmw/events_statuses/incompatible_qos.h:
 
 /opt/ros/humble/include/rcutils/rcutils/qsort.h:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/goal_status_array.hpp:
 
 /opt/ros/humble/include/rcutils/rcutils/types/string_array.h:
 
@@ -3215,6 +3355,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__functions.h:
+
 /opt/ros/humble/include/rclcpp/rclcpp/node_interfaces/node_topics_interface_traits.hpp:
 
 /opt/ros/humble/include/rcl/rcl/guard_condition.h:
@@ -3224,18 +3366,6 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /opt/ros/humble/include/rcutils/rcutils/macros.h:
 
 /opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:
-
-/usr/include/c++/11/bits/this_thread_sleep.h:
-
-/opt/ros/humble/include/rclcpp/rclcpp/generic_publisher.hpp:
-
-/opt/ros/humble/include/rclcpp/rclcpp/message_memory_strategy.hpp:
-
-/usr/include/c++/11/thread:
-
-/opt/ros/humble/include/rcl_interfaces/rcl_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp:
-
-/usr/include/c++/11/bits/std_thread.h:
 
 /usr/include/c++/11/future:
 
@@ -3253,6 +3383,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/x86_64-linux-gnu/bits/posix_opt.h:
 
+/opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__traits.hpp:
+
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/msg/detail/floating_point_range__struct.hpp:
 
 /usr/include/unistd.h:
@@ -3262,6 +3394,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /usr/include/c++/11/condition_variable:
 
 /usr/include/x86_64-linux-gnu/bits/sigstksz.h:
+
+/usr/include/x86_64-linux-gnu/sys/ucontext.h:
 
 /usr/include/c++/11/pstl/execution_defs.h:
 
@@ -3282,6 +3416,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /usr/include/nlohmann/json_fwd.hpp:
 
 /usr/include/c++/11/limits:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__struct.hpp:
 
 /usr/include/opencv4/opencv2/flann/saving.h:
 
@@ -3407,7 +3543,11 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /root/xline_path_planner/xline_path_planner/src/path_planner.cpp:
 
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/exceptions.hpp:
+
 /usr/include/c++/11/bits/refwrap.h:
+
+/opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__struct.h:
 
 /usr/include/c++/11/typeinfo:
 
@@ -3489,6 +3629,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
 
+rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__type_support.hpp:
+
 /opt/ros/humble/include/rmw/rmw/topic_endpoint_info.h:
 
 /usr/include/wctype.h:
@@ -3508,6 +3650,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
+
+/usr/include/c++/11/bits/this_thread_sleep.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio2.h:
 
@@ -3601,7 +3745,11 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/c++/11/clocale:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__struct.h:
+
 /usr/include/c++/11/new:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status_array__traits.hpp:
 
 /usr/include/opencv4/opencv2/core/cvdef.h:
 
@@ -3643,11 +3791,17 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/c++/11/bits/cpp_type_traits.h:
 
+/opt/ros/humble/include/rcl_interfaces/rcl_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp:
+
+/usr/include/c++/11/bits/std_thread.h:
+
 /usr/include/ctype.h:
 
 /usr/include/c++/11/locale:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/goal_status.hpp:
 
 /usr/include/x86_64-linux-gnu/asm/errno.h:
 
@@ -3674,6 +3828,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /opt/ros/humble/include/rcl_yaml_param_parser/rcl_yaml_param_parser/parser.h:
 
 /usr/include/c++/11/bits/invoke.h:
+
+/opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__builder.hpp:
 
 /usr/include/opencv4/opencv2/stitching/detail/util.hpp:
 
@@ -3730,6 +3886,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /usr/include/features.h:
 
 /usr/include/opencv4/opencv2/videoio.hpp:
+
+/opt/ros/humble/include/rcl_action/rcl_action/types.h:
 
 /usr/include/yaml-cpp/node/type.h:
 
@@ -3847,6 +4005,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/c++/11/streambuf:
 
+rosidl_generator_cpp/xline_path_planner/action/detail/plan_path__builder.hpp:
+
 /opt/ros/humble/include/rcutils/rcutils/allocator.h:
 
 /usr/include/x86_64-linux-gnu/bits/getopt_core.h:
@@ -3859,6 +4019,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/c++/11/tr1/special_function_util.h:
 
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/visibility_control.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
 
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/srv/detail/describe_parameters__type_support.hpp:
@@ -3867,9 +4029,13 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/nlohmann/detail/input/position_t.hpp:
 
+/opt/ros/humble/include/rcl_action/rcl_action/goal_state_machine.h:
+
 /usr/include/c++/11/bits/move.h:
 
 /usr/include/c++/11/bits/hash_bytes.h:
+
+/opt/ros/humble/include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/uuid__struct.h:
 
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/srv/detail/set_parameters_atomically__traits.hpp:
 
@@ -3955,6 +4121,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/c++/11/ext/new_allocator.h:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__traits.hpp:
+
 /usr/include/opencv4/opencv2/core/affine.hpp:
 
 /opt/ros/humble/include/rclcpp/rclcpp/node_interfaces/get_node_parameters_interface.hpp:
@@ -3984,6 +4152,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
 /usr/include/c++/11/fstream:
+
+rosidl_generator_cpp/xline_path_planner/action/plan_path.hpp:
 
 /usr/include/nlohmann/detail/output/output_adapters.hpp:
 
@@ -4051,6 +4221,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/c++/11/bits/gslice_array.h:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/rosidl_generator_c__visibility_control.h:
+
 /opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:
 
 /usr/include/c++/11/bits/stl_set.h:
@@ -4068,6 +4240,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /usr/include/wchar.h:
 
 /usr/include/nlohmann/detail/exceptions.hpp:
+
+/opt/ros/humble/include/action_msgs/action_msgs/msg/rosidl_generator_cpp__visibility_control.hpp:
 
 /usr/include/c++/11/bits/locale_conv.h:
 
@@ -4139,6 +4313,12 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/c++/11/ratio:
 
+/opt/ros/humble/include/rclcpp/rclcpp/generic_publisher.hpp:
+
+/opt/ros/humble/include/rclcpp/rclcpp/message_memory_strategy.hpp:
+
+/usr/include/c++/11/thread:
+
 /usr/include/c++/11/ctime:
 
 /usr/include/c++/11/bits/locale_facets_nonio.h:
@@ -4191,6 +4371,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/nlohmann/detail/hash.hpp:
 
+rosidl_generator_cpp/xline_path_planner/msg/rosidl_generator_cpp__visibility_control.hpp:
+
 /usr/include/strings.h:
 
 /usr/include/c++/11/bits/atomic_base.h:
@@ -4213,9 +4395,17 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/nlohmann/detail/meta/is_sax.hpp:
 
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/server_goal_handle.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
+
+/usr/include/nlohmann/detail/input/parser.hpp:
+
 /usr/include/nlohmann/detail/iterators/internal_iterator.hpp:
 
 /usr/include/yaml-cpp/traits.h:
+
+/root/xline_path_planner/xline_path_planner/include/xline_path_planner/planner_engine.hpp:
 
 /root/xline_path_planner/xline_path_planner/include/xline_path_planner/path_planner.hpp:
 
@@ -4271,6 +4461,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__struct.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/sigaction.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h:
@@ -4302,6 +4494,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /usr/include/opencv4/opencv2/core/cvstd.hpp:
 
 /usr/include/opencv4/opencv2/core/cvstd_wrapper.hpp:
+
+/opt/ros/humble/include/rcl_action/rcl_action/visibility_control.h:
 
 /usr/include/opencv4/opencv2/core/neon_utils.hpp:
 
@@ -4339,6 +4533,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/opencv4/opencv2/core/operations.hpp:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/goal_status_array.h:
+
 /usr/include/opencv4/opencv2/video/tracking.hpp:
 
 /usr/include/c++/11/mutex:
@@ -4362,6 +4558,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /usr/include/opencv4/opencv2/dnn/dnn.hpp:
 
 /usr/include/opencv4/opencv2/core/async.hpp:
+
+/opt/ros/humble/include/rcl_action/rcl_action/action_server.h:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h:
 
@@ -4390,6 +4588,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /usr/include/opencv4/opencv2/flann/params.h:
 
 /usr/include/opencv4/opencv2/flann/any.h:
+
+/opt/ros/humble/include/rcl_action/rcl_action/goal_handle.h:
 
 /usr/include/c++/11/bits/basic_string.tcc:
 
@@ -4431,6 +4631,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/opencv4/opencv2/flann/allocator.h:
 
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/rclcpp_action.hpp:
+
 /usr/include/c++/11/array:
 
 /usr/include/opencv4/opencv2/flann/autotuned_index.h:
@@ -4447,6 +4649,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/opencv4/opencv2/flann/lsh_table.h:
 
+/opt/ros/humble/include/action_msgs/action_msgs/srv/detail/cancel_goal__type_support.h:
+
 /opt/ros/humble/include/libstatistics_collector/libstatistics_collector/visibility_control.hpp:
 
 /opt/ros/humble/include/rclcpp/rclcpp/network_flow_endpoint.hpp:
@@ -4460,8 +4664,6 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /usr/include/opencv4/opencv2/highgui.hpp:
 
 /usr/include/opencv4/opencv2/imgcodecs.hpp:
-
-/usr/include/x86_64-linux-gnu/sys/ucontext.h:
 
 /usr/include/opencv4/opencv2/imgproc/segmentation.hpp:
 
@@ -4517,6 +4719,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/yaml-cpp/yaml.h:
 
+/opt/ros/humble/include/rclcpp_action/rclcpp_action/client_goal_handle.hpp:
+
 /usr/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp:
 
 /usr/include/yaml-cpp/binary.h:
@@ -4539,6 +4743,14 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/yaml-cpp/node/detail/node.h:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_status__type_support.h:
+
+/opt/ros/humble/include/rmw/rmw/qos_string_conversions.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
+
+/usr/include/yaml-cpp/node/detail/memory.h:
+
 /usr/include/yaml-cpp/node/detail/node_data.h:
 
 /usr/include/yaml-cpp/node/iterator.h:
@@ -4559,6 +4771,8 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 
 /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h:
 
+/opt/ros/humble/include/action_msgs/action_msgs/msg/detail/goal_info__functions.h:
+
 /opt/ros/humble/include/rclcpp/rclcpp/detail/rmw_implementation_specific_publisher_payload.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h:
@@ -4570,13 +4784,3 @@ CMakeFiles/planner_node.dir/src/trajectory_generator.cpp.o: /root/xline_path_pla
 /opt/ros/humble/include/rcl_interfaces/rcl_interfaces/srv/detail/list_parameters__builder.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h:
-
-/opt/ros/humble/include/rmw/rmw/qos_string_conversions.h:
-
-/usr/include/yaml-cpp/node/detail/memory.h:
-
-/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
-
-/usr/include/nlohmann/detail/input/parser.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/stack_t.h:

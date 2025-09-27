@@ -1,0 +1,30 @@
+Consolidate compiler generated dependencies of target xline_plan_cli
+Consolidate compiler generated dependencies of target planner_node
+[  6%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/xline_plan_cli.cpp.o
+[ 12%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/planner_engine.cpp.o
+[ 18%] Building CXX object CMakeFiles/planner_node.dir/src/planner_engine.cpp.o
+[ 25%] Linking CXX executable xline_plan_cli
+[ 31%] Linking CXX executable planner_node
+[ 62%] Built target xline_plan_cli
+[100%] Built target planner_node
+-- Install configuration: "Release"
+-- Installing: /root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node
+-- Set runtime path of "/root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/planner_node" to ""
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/config
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/config/planner.yaml
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/package_run_dependencies/xline_path_planner
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/parent_prefix_path/xline_path_planner
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.sh
+-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/ament_prefix_path.dsv
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.sh
+-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/environment/path.dsv
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.bash
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.sh
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.zsh
+-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/local_setup.dsv
+-- Installing: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.dsv
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/ament_index/resource_index/packages/xline_path_planner
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig.cmake
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/cmake/xline_path_plannerConfig-version.cmake
+-- Up-to-date: /root/xline_path_planner/install/xline_path_planner/share/xline_path_planner/package.xml
+-- Installing: /root/xline_path_planner/install/xline_path_planner/lib/xline_path_planner/xline_plan_cli

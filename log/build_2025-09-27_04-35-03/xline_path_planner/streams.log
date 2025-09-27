@@ -1,0 +1,100 @@
+[0.125s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /root/xline_path_planner/xline_path_planner -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner
+[0.164s] -- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.434s] -- Found rclcpp: 16.0.12 (/opt/ros/humble/share/rclcpp/cmake)
+[0.502s] -- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.512s] -- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.529s] -- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.552s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.581s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.649s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.651s] -- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.866s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.000s] -- Found ament_lint_auto: 0.12.12 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.171s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.171s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/root/xline_path_planner/xline_path_planner/include>
+[1.171s] -- Configured cppcheck exclude dirs and/or files: 
+[1.173s] -- Added test 'lint_cmake' to check CMake code style
+[1.177s] -- Added test 'uncrustify' to check C / C++ code style
+[1.177s] -- Configured uncrustify additional arguments: 
+[1.178s] -- Added test 'xmllint' to check XML markup files
+[1.181s] -- Configuring done
+[1.220s] -- Generating done
+[1.232s] -- Build files have been written to: /root/xline_path_planner/build/xline_path_planner
+[1.247s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /root/xline_path_planner/xline_path_planner -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner
+[1.248s] Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
+[1.338s] [ 12%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/trajectory_generator.cpp.o
+[1.338s] [ 12%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/output_formatter.cpp.o
+[1.339s] [ 18%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/grid_map_generator.cpp.o
+[1.339s] [ 25%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/cad_parser.cpp.o
+[1.340s] [ 31%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/xline_plan_cli.cpp.o
+[1.342s] [ 37%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/path_planner.cpp.o
+[1.343s] [ 43%] Building CXX object CMakeFiles/xline_plan_cli.dir/src/planner_engine.cpp.o
+[1.354s] Consolidate compiler generated dependencies of target planner_node
+[1.416s] [ 50%] Building CXX object CMakeFiles/planner_node.dir/src/main.cpp.o
+[3.582s] In file included from /root/xline_path_planner/xline_path_planner/src/planner_engine.cpp:1:
+[3.582s] /root/xline_path_planner/xline_path_planner/include/xline_path_planner/planner_engine.hpp:14:3: error: ‘CADParserConfig’ does not name a type
+[3.583s]    14 |   CADParserConfig cad_parser;
+[3.583s]       |   ^~~~~~~~~~~~~~~
+[5.025s] In file included from /root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:9:
+[5.027s] /root/xline_path_planner/xline_path_planner/include/xline_path_planner/planner_engine.hpp:14:3: error: ‘CADParserConfig’ does not name a type
+[5.027s]    14 |   CADParserConfig cad_parser;
+[5.106s]       |   ^~~~~~~~~~~~~~~
+[5.116s] /root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp: In function ‘daosnrs_planning::PlannerEngineConfig {anonymous}::load_engine_cfg_from_yaml(const string&)’:
+[5.117s] /root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:40:7: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+[5.117s]    40 |   cfg.cad_parser.unit_conversion_factor = cad["unit_conversion_factor"].as<double>();
+[5.117s]       |       ^~~~~~~~~~
+[5.117s] /root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:41:7: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+[5.118s]    41 |   cfg.cad_parser.auto_scale_coordinates = cad["auto_scale_coordinates"].as<bool>();
+[5.118s]       |       ^~~~~~~~~~
+[5.152s] /root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:44:64: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+[5.152s]    44 |     if (au == "DEGREES" || au == "degrees" || au == "deg") cfg.cad_parser.angle_unit = AngleUnit::DEGREES;
+[5.152s]       |                                                                ^~~~~~~~~~
+[5.153s] /root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:44:88: error: ‘AngleUnit’ has not been declared
+[5.165s]    44 |     if (au == "DEGREES" || au == "degrees" || au == "deg") cfg.cad_parser.angle_unit = AngleUnit::DEGREES;
+[5.166s]       |                                                                                        ^~~~~~~~~
+[5.166s] /root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:45:69: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+[5.166s]    45 |     else if (au == "RADIANS" || au == "radians" || au == "rad") cfg.cad_parser.angle_unit = AngleUnit::RADIANS;
+[5.166s]       |                                                                     ^~~~~~~~~~
+[5.166s] /root/xline_path_planner/xline_path_planner/src/xline_plan_cli.cpp:45:93: error: ‘AngleUnit’ has not been declared
+[5.167s]    45 |     else if (au == "RADIANS" || au == "radians" || au == "rad") cfg.cad_parser.angle_unit = AngleUnit::RADIANS;
+[5.167s]       |                                                                                             ^~~~~~~~~
+[6.500s] gmake[2]: *** [CMakeFiles/xline_plan_cli.dir/build.make:76: CMakeFiles/xline_plan_cli.dir/src/xline_plan_cli.cpp.o] Error 1
+[6.506s] gmake[2]: *** Waiting for unfinished jobs....
+[6.536s] [ 56%] Building CXX object CMakeFiles/planner_node.dir/src/planner_engine.cpp.o
+[8.532s] [ 62%] Building CXX object CMakeFiles/planner_node.dir/src/cad_parser.cpp.o
+[9.976s] /root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp: In member function ‘bool daosnrs_planning::GridMapGenerator::save_as_image(const string&, const daosnrs_planning::CADData&, const daosnrs_planning::GridMapVisualizationConfig&) const’:
+[9.977s] /root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:140:83: warning: unused parameter ‘cad_data’ [-Wunused-parameter]
+[9.977s]   140 | bool GridMapGenerator::save_as_image(const std::string& file_path, const CADData& cad_data,
+[9.978s]       |                                                                    ~~~~~~~~~~~~~~~^~~~~~~~
+[9.987s] /root/xline_path_planner/xline_path_planner/src/path_planner.cpp: In member function ‘std::vector<daosnrs_planning::RouteSegment> daosnrs_planning::PathPlanner::plan_paths(const daosnrs_planning::CADData&, const daosnrs_planning::PathOffsetConfig&)’:
+[9.988s] /root/xline_path_planner/xline_path_planner/src/path_planner.cpp:84:47: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::shared_ptr<daosnrs_planning::Line> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+[9.988s]    84 |   if (!lines_to_draw.empty() && printed_count == cad_data.path_lines.size())
+[9.989s]       |                                 ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[10.024s] /root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp: In member function ‘void daosnrs_planning::GridMapGenerator::store_axis_line_points(const std::shared_ptr<daosnrs_planning::Line>&)’:
+[10.024s] /root/xline_path_planner/xline_path_planner/src/grid_map_generator.cpp:739:64: warning: comparison of integer expressions of different signedness: ‘std::vector<daosnrs_planning::Point3D>::size_type’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+[10.025s]   739 |         if (curve->degree <= 3 && curve->control_points.size() >= curve->degree + 1)
+[10.025s]       |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+[10.126s] In file included from /root/xline_path_planner/xline_path_planner/src/planner_engine.cpp:1:
+[10.126s] /root/xline_path_planner/xline_path_planner/include/xline_path_planner/planner_engine.hpp:14:3: error: ‘CADParserConfig’ does not name a type
+[10.126s]    14 |   CADParserConfig cad_parser;
+[10.126s]       |   ^~~~~~~~~~~~~~~
+[10.261s] /root/xline_path_planner/xline_path_planner/src/path_planner.cpp: In member function ‘cv::Mat daosnrs_planning::PathPlanner::create_path_image(const daosnrs_planning::PathVisualizationConfig&)’:
+[10.262s] /root/xline_path_planner/xline_path_planner/src/path_planner.cpp:959:10: warning: unused variable ‘resolution’ [-Wunused-variable]
+[10.262s]   959 |   double resolution = grid_map_generator_->get_resolution();
+[10.262s]       |          ^~~~~~~~~~
+[11.980s] /root/xline_path_planner/xline_path_planner/src/planner_engine.cpp: In member function ‘std::string daosnrs_planning::PlannerEngine::plan_from_cad_json(const string&, const string&)’:
+[11.981s] /root/xline_path_planner/xline_path_planner/src/planner_engine.cpp:19:29: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+[11.981s]    19 |   CADParser cad_parser(cfg_.cad_parser);
+[11.982s]       |                             ^~~~~~~~~~
+[18.862s] /root/xline_path_planner/xline_path_planner/src/planner_engine.cpp: In member function ‘std::string daosnrs_planning::PlannerEngine::plan_from_cad_json(const string&, const string&)’:
+[18.863s] /root/xline_path_planner/xline_path_planner/src/planner_engine.cpp:19:29: error: ‘struct daosnrs_planning::PlannerEngineConfig’ has no member named ‘cad_parser’
+[18.863s]    19 |   CADParser cad_parser(cfg_.cad_parser);
+[18.864s]       |                             ^~~~~~~~~~
+[19.019s] gmake[2]: *** [CMakeFiles/xline_plan_cli.dir/build.make:90: CMakeFiles/xline_plan_cli.dir/src/planner_engine.cpp.o] Error 1
+[25.978s] gmake[2]: *** [CMakeFiles/planner_node.dir/build.make:90: CMakeFiles/planner_node.dir/src/planner_engine.cpp.o] Error 1
+[25.978s] gmake[2]: *** Waiting for unfinished jobs....
+[32.756s] gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/xline_plan_cli.dir/all] Error 2
+[32.756s] gmake[1]: *** Waiting for unfinished jobs....
+[40.730s] gmake[1]: *** [CMakeFiles/Makefile2:139: CMakeFiles/planner_node.dir/all] Error 2
+[40.731s] gmake: *** [Makefile:146: all] Error 2
+[40.734s] Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8

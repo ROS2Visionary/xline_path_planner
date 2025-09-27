@@ -10,7 +10,8 @@
                 "/usr/include/**",
                 "/usr/include/opencv4",
                 "/usr/include/jsoncpp",
-                "${workspaceFolder}/xline_path_planner/include/**"
+                "${workspaceFolder}/xline_path_planner/include/**",
+                "${workspaceFolder}/install/xline_path_planner/include/xline_path_planner"
             ],
             "name": "ros2",
             "intelliSenseMode": "gcc-x64",

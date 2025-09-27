@@ -1,0 +1,228 @@
+[0.000000] (-) TimerEvent: {}
+[0.000198] (xline_path_planner) JobQueued: {'identifier': 'xline_path_planner', 'dependencies': OrderedDict()}
+[0.000277] (xline_path_planner) JobStarted: {'identifier': 'xline_path_planner'}
+[0.026459] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'cmake'}
+[0.029256] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '/root/xline_path_planner/xline_path_planner', '-DCMAKE_BUILD_TYPE=Release', '-DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('VSCODE_CWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/out/nls.messages.json","languagePack":{"translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","messagesFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92/nls.messages.json","corruptMarkerFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"2dc48f4001610433dd6143a56de10ea9.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92","_corruptedFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"}'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('HOSTNAME', 'ee14746cbf7f'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('BROWSER', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-2cd339da-68cb-4d38-afb0-d48bf632e348.sock'), ('ROS_PYTHON_VERSION', '3'), ('REMOTE_CONTAINERS', 'true'), ('DEBUGINFOD_URLS', ''), ('COLCON_PREFIX_PATH', '/opt/ros/humble'), ('ROS_DISTRO', 'humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('LOGNAME', 'root'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('ROS_LOCALHOST_ONLY', '0'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/tmp/.tmpWE5ftf:/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/extensions/openai.chatgpt-0.4.15-linux-x64/bin/linux-x86_64'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock"]'), ('DISPLAY', 'host.docker.internal:0'), ('LANG', 'en_US.UTF-8'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('DEBIAN_FRONTEND', ''), ('SHELL', '/usr/bin/zsh'), ('ELECTRON_RUN_AS_NODE', '1'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.096594] (-) TimerEvent: {}
+[0.136614] (xline_path_planner) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.241798] (-) TimerEvent: {}
+[0.342856] (-) TimerEvent: {}
+[0.443960] (-) TimerEvent: {}
+[0.544904] (-) TimerEvent: {}
+[0.551151] (xline_path_planner) StdoutLine: {'line': b'-- Found rclcpp: 16.0.12 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.612312] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.617444] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.627953] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.645781] (-) TimerEvent: {}
+[0.650319] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.675363] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.746802] (-) TimerEvent: {}
+[0.768892] (xline_path_planner) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.773032] (xline_path_planner) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.847873] (-) TimerEvent: {}
+[0.948959] (-) TimerEvent: {}
+[1.004069] (xline_path_planner) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[1.049825] (-) TimerEvent: {}
+[1.150989] (-) TimerEvent: {}
+[1.247699] (xline_path_planner) StdoutLine: {'line': b'-- Found rclcpp_action: 16.0.12 (/opt/ros/humble/share/rclcpp_action/cmake)\n'}
+[1.251775] (-) TimerEvent: {}
+[1.363818] (-) TimerEvent: {}
+[1.466351] (-) TimerEvent: {}
+[1.490305] (xline_path_planner) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)\n'}
+[1.566954] (-) TimerEvent: {}
+[1.667777] (-) TimerEvent: {}
+[1.768935] (-) TimerEvent: {}
+[1.841225] (xline_path_planner) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)\n'}
+[1.869823] (-) TimerEvent: {}
+[1.971039] (-) TimerEvent: {}
+[2.072070] (-) TimerEvent: {}
+[2.172842] (-) TimerEvent: {}
+[2.273922] (-) TimerEvent: {}
+[2.307280] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[2.374924] (-) TimerEvent: {}
+[2.475898] (-) TimerEvent: {}
+[2.483236] (xline_path_planner) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[2.514278] (xline_path_planner) StdoutLine: {'line': b'-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)\n'}
+[2.547123] (xline_path_planner) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[2.547359] (xline_path_planner) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10\n'}
+[2.547445] (xline_path_planner) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so\n'}
+[2.576881] (-) TimerEvent: {}
+[2.677967] (-) TimerEvent: {}
+[2.706125] (xline_path_planner) StderrLine: {'line': b'CMake Deprecation Warning at /opt/ros/humble/share/rosidl_cmake/cmake/rosidl_target_interfaces.cmake:32 (message):\n'}
+[2.706409] (xline_path_planner) StderrLine: {'line': b'  Use rosidl_get_typesupport_target() and target_link_libraries() instead of\n'}
+[2.706509] (xline_path_planner) StderrLine: {'line': b'  rosidl_target_interfaces()\n'}
+[2.706611] (xline_path_planner) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[2.706754] (xline_path_planner) StderrLine: {'line': b'  CMakeLists.txt:62 (rosidl_target_interfaces)\n'}
+[2.706847] (xline_path_planner) StderrLine: {'line': b'\n'}
+[2.706935] (xline_path_planner) StderrLine: {'line': b'\n'}
+[2.707021] (xline_path_planner) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.12 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[2.778798] (-) TimerEvent: {}
+[2.861529] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[2.863140] (xline_path_planner) StdoutLine: {'line': b'-- Configured cppcheck include dirs: $<BUILD_INTERFACE:/root/xline_path_planner/xline_path_planner/include>\n'}
+[2.863401] (xline_path_planner) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[2.864332] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[2.866481] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[2.866795] (xline_path_planner) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[2.867110] (xline_path_planner) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[2.871172] (xline_path_planner) StdoutLine: {'line': b'-- Configuring done\n'}
+[2.880750] (-) TimerEvent: {}
+[2.953111] (xline_path_planner) StdoutLine: {'line': b'-- Generating done\n'}
+[2.981285] (xline_path_planner) StdoutLine: {'line': b'-- Build files have been written to: /root/xline_path_planner/build/xline_path_planner\n'}
+[2.981532] (-) TimerEvent: {}
+[2.997518] (xline_path_planner) CommandEnded: {'returncode': 0}
+[2.998335] (xline_path_planner) JobProgress: {'identifier': 'xline_path_planner', 'progress': 'build'}
+[2.999663] (xline_path_planner) Command: {'cmd': ['/usr/bin/cmake', '--build', '/root/xline_path_planner/build/xline_path_planner', '--', '-j8', '-l8'], 'cwd': '/root/xline_path_planner/build/xline_path_planner', 'env': OrderedDict([('VSCODE_CWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/out/nls.messages.json","languagePack":{"translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","messagesFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92/nls.messages.json","corruptMarkerFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"2dc48f4001610433dd6143a56de10ea9.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/e3a5acfb517a443235981655413d566533107e92","_corruptedFile":"/root/.vscode-server/data/clp/2dc48f4001610433dd6143a56de10ea9.zh-cn/corrupted.info"}'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('HOSTNAME', 'ee14746cbf7f'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('BROWSER', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/helpers/browser.sh'), ('AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS', '1'), ('HOME', '/root'), ('OLDPWD', '/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-2cd339da-68cb-4d38-afb0-d48bf632e348.sock'), ('ROS_PYTHON_VERSION', '3'), ('REMOTE_CONTAINERS', 'true'), ('DEBUGINFOD_URLS', ''), ('COLCON_PREFIX_PATH', '/opt/ros/humble'), ('ROS_DISTRO', 'humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('LOGNAME', 'root'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('ROS_LOCALHOST_ONLY', '0'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/tmp/.tmpWE5ftf:/root/.vscode-server/bin/e3a5acfb517a443235981655413d566533107e92/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/extensions/openai.chatgpt-0.4.15-linux-x64/bin/linux-x86_64'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock"]'), ('DISPLAY', 'host.docker.internal:0'), ('LANG', 'en_US.UTF-8'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-a58a17b5-d805-4db9-b4c8-31484fa8fc12.sock'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('DEBIAN_FRONTEND', ''), ('SHELL', '/usr/bin/zsh'), ('ELECTRON_RUN_AS_NODE', '1'), ('ROS_AUTOMATIC_DISCOVERY_RANGE', 'SUBNET'), ('PWD', '/root/xline_path_planner/build/xline_path_planner'), ('PYTHONPATH', '/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[3.066158] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_generator_c\n'}
+[3.080340] (xline_path_planner) StdoutLine: {'line': b'[  2%] Built target xline_path_planner__cpp\n'}
+[3.082737] (-) TimerEvent: {}
+[3.083316] (xline_path_planner) StdoutLine: {'line': b'[ 10%] Built target xline_path_planner__rosidl_generator_c\n'}
+[3.096951] (xline_path_planner) StdoutLine: {'line': b'[ 10%] Built target ament_cmake_python_copy_xline_path_planner\n'}
+[3.102552] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_cpp\n'}
+[3.103228] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_cpp\n'}
+[3.108935] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_cpp\n'}
+[3.120982] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_c\n'}
+[3.121757] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_c\n'}
+[3.124447] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_c\n'}
+[3.127182] (xline_path_planner) StdoutLine: {'line': b'[ 17%] Built target xline_path_planner__rosidl_typesupport_cpp\n'}
+[3.131867] (xline_path_planner) StdoutLine: {'line': b'[ 25%] Built target xline_path_planner__rosidl_typesupport_fastrtps_cpp\n'}
+[3.134606] (xline_path_planner) StdoutLine: {'line': b'[ 33%] Built target xline_path_planner__rosidl_typesupport_introspection_cpp\n'}
+[3.148667] (xline_path_planner) StdoutLine: {'line': b'[ 41%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c\n'}
+[3.149023] (xline_path_planner) StdoutLine: {'line': b'[ 48%] Built target xline_path_planner__rosidl_typesupport_introspection_c\n'}
+[3.157568] (xline_path_planner) StdoutLine: {'line': b'[ 56%] Built target xline_path_planner__rosidl_typesupport_c\n'}
+[3.182973] (-) TimerEvent: {}
+[3.188089] (xline_path_planner) StdoutLine: {'line': b'[ 56%] Built target xline_path_planner\n'}
+[3.220846] (xline_path_planner) StdoutLine: {'line': b'[ 58%] Built target xline_path_planner__py\n'}
+[3.225593] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target planner_node\n'}
+[3.244090] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_generator_py\n'}
+[3.264291] (xline_path_planner) StdoutLine: {'line': b'[ 61%] Building CXX object CMakeFiles/planner_node.dir/src/main.cpp.o\n'}
+[3.264900] (xline_path_planner) StdoutLine: {'line': b'[ 66%] Built target xline_path_planner__rosidl_generator_py\n'}
+[3.288556] (-) TimerEvent: {}
+[3.290943] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext\n'}
+[3.296277] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_introspection_c__pyext\n'}
+[3.298682] (xline_path_planner) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target xline_path_planner__rosidl_typesupport_c__pyext\n'}
+[3.316398] (xline_path_planner) StdoutLine: {'line': b'[ 71%] Built target xline_path_planner__rosidl_typesupport_fastrtps_c__pyext\n'}
+[3.333873] (xline_path_planner) StdoutLine: {'line': b'[ 82%] Built target xline_path_planner__rosidl_typesupport_introspection_c__pyext\n'}
+[3.334190] (xline_path_planner) StdoutLine: {'line': b'[ 82%] Built target xline_path_planner__rosidl_typesupport_c__pyext\n'}
+[3.389715] (-) TimerEvent: {}
+[3.490841] (-) TimerEvent: {}
+[3.591780] (-) TimerEvent: {}
+[3.692802] (-) TimerEvent: {}
+[3.733069] (xline_path_planner) StdoutLine: {'line': b'running egg_info\n'}
+[3.734577] (xline_path_planner) StdoutLine: {'line': b'writing xline_path_planner.egg-info/PKG-INFO\n'}
+[3.735492] (xline_path_planner) StdoutLine: {'line': b'writing dependency_links to xline_path_planner.egg-info/dependency_links.txt\n'}
+[3.738044] (xline_path_planner) StdoutLine: {'line': b'writing top-level names to xline_path_planner.egg-info/top_level.txt\n'}
+[3.742784] (xline_path_planner) StdoutLine: {'line': b"reading manifest file 'xline_path_planner.egg-info/SOURCES.txt'\n"}
+[3.743939] (xline_path_planner) StdoutLine: {'line': b"writing manifest file 'xline_path_planner.egg-info/SOURCES.txt'\n"}
+[3.793820] (-) TimerEvent: {}
+[3.805642] (xline_path_planner) StdoutLine: {'line': b'[ 82%] Built target ament_cmake_python_build_xline_path_planner_egg\n'}
+[3.894994] (-) TimerEvent: {}
+[3.995815] (-) TimerEvent: {}
+[4.096928] (-) TimerEvent: {}
+[4.197872] (-) TimerEvent: {}
+[4.298767] (-) TimerEvent: {}
+[4.399791] (-) TimerEvent: {}
+[4.500830] (-) TimerEvent: {}
+[4.601828] (-) TimerEvent: {}
+[4.750713] (-) TimerEvent: {}
+[4.853569] (-) TimerEvent: {}
+[4.955230] (-) TimerEvent: {}
+[5.056107] (-) TimerEvent: {}
+[5.156868] (-) TimerEvent: {}
+[5.258000] (-) TimerEvent: {}
+[5.358917] (-) TimerEvent: {}
+[5.459923] (-) TimerEvent: {}
+[5.560771] (-) TimerEvent: {}
+[5.661999] (-) TimerEvent: {}
+[5.762793] (-) TimerEvent: {}
+[5.863973] (-) TimerEvent: {}
+[5.965057] (-) TimerEvent: {}
+[6.065920] (-) TimerEvent: {}
+[6.166897] (-) TimerEvent: {}
+[6.267904] (-) TimerEvent: {}
+[6.368955] (-) TimerEvent: {}
+[6.470051] (-) TimerEvent: {}
+[6.571052] (-) TimerEvent: {}
+[6.671769] (-) TimerEvent: {}
+[6.772862] (-) TimerEvent: {}
+[6.873775] (-) TimerEvent: {}
+[6.974812] (-) TimerEvent: {}
+[7.075939] (-) TimerEvent: {}
+[7.176785] (-) TimerEvent: {}
+[7.277880] (-) TimerEvent: {}
+[7.378827] (-) TimerEvent: {}
+[7.479975] (-) TimerEvent: {}
+[7.580964] (-) TimerEvent: {}
+[7.682016] (-) TimerEvent: {}
+[7.782835] (-) TimerEvent: {}
+[7.883752] (-) TimerEvent: {}
+[7.984953] (-) TimerEvent: {}
+[8.085760] (-) TimerEvent: {}
+[8.187023] (-) TimerEvent: {}
+[8.288108] (-) TimerEvent: {}
+[8.388921] (-) TimerEvent: {}
+[8.489954] (-) TimerEvent: {}
+[8.590946] (-) TimerEvent: {}
+[8.691743] (-) TimerEvent: {}
+[8.792925] (-) TimerEvent: {}
+[8.893925] (-) TimerEvent: {}
+[8.994804] (-) TimerEvent: {}
+[9.095902] (-) TimerEvent: {}
+[9.196955] (-) TimerEvent: {}
+[9.297970] (-) TimerEvent: {}
+[9.398882] (-) TimerEvent: {}
+[9.499908] (-) TimerEvent: {}
+[9.600808] (-) TimerEvent: {}
+[9.701973] (-) TimerEvent: {}
+[9.802977] (-) TimerEvent: {}
+[9.903809] (-) TimerEvent: {}
+[10.004927] (-) TimerEvent: {}
+[10.105981] (-) TimerEvent: {}
+[10.207059] (-) TimerEvent: {}
+[10.307900] (-) TimerEvent: {}
+[10.408904] (-) TimerEvent: {}
+[10.509950] (-) TimerEvent: {}
+[10.577982] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp: In member function \xe2\x80\x98void PlannerNode::plan_trajectory()\xe2\x80\x99:\n'}
+[10.578246] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:383:10: error: \xe2\x80\x98parse_cad_file\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98rcl_parse_yaml_file\xe2\x80\x99?\n'}
+[10.578386] (xline_path_planner) StderrLine: {'line': b'  383 |     if (!parse_cad_file(cad_parser, cad_data))\n'}
+[10.578486] (xline_path_planner) StderrLine: {'line': b'      |          ^~~~~~~~~~~~~~\n'}
+[10.578609] (xline_path_planner) StderrLine: {'line': b'      |          rcl_parse_yaml_file\n'}
+[10.588936] (xline_path_planner) StderrLine: {'line': b'/root/xline_path_planner/xline_path_planner/src/main.cpp:379:21: warning: unused variable \xe2\x80\x98output_formatter\xe2\x80\x99 [-Wunused-variable]\n'}
+[10.589205] (xline_path_planner) StderrLine: {'line': b'  379 |     OutputFormatter output_formatter;\n'}
+[10.589302] (xline_path_planner) StderrLine: {'line': b'      |                     ^~~~~~~~~~~~~~~~\n'}
+[10.610886] (-) TimerEvent: {}
+[10.712007] (-) TimerEvent: {}
+[10.812887] (-) TimerEvent: {}
+[10.913963] (-) TimerEvent: {}
+[11.014838] (-) TimerEvent: {}
+[11.116002] (-) TimerEvent: {}
+[11.216943] (-) TimerEvent: {}
+[11.318013] (-) TimerEvent: {}
+[11.418908] (-) TimerEvent: {}
+[11.519873] (-) TimerEvent: {}
+[11.620793] (-) TimerEvent: {}
+[11.721990] (-) TimerEvent: {}
+[11.822913] (-) TimerEvent: {}
+[11.923754] (-) TimerEvent: {}
+[12.024798] (-) TimerEvent: {}
+[12.125732] (-) TimerEvent: {}
+[12.226933] (-) TimerEvent: {}
+[12.327969] (-) TimerEvent: {}
+[12.428917] (-) TimerEvent: {}
+[12.529990] (-) TimerEvent: {}
+[12.630824] (-) TimerEvent: {}
+[12.731801] (-) TimerEvent: {}
+[12.833010] (-) TimerEvent: {}
+[12.937232] (-) TimerEvent: {}
+[13.038986] (-) TimerEvent: {}
+[13.139927] (-) TimerEvent: {}
+[13.240800] (-) TimerEvent: {}
+[13.341931] (-) TimerEvent: {}
+[13.442727] (-) TimerEvent: {}
+[13.543805] (-) TimerEvent: {}
+[13.644767] (xline_path_planner) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/planner_node.dir/build.make:76: CMakeFiles/planner_node.dir/src/main.cpp.o] Error 1\n'}
+[13.645943] (-) TimerEvent: {}
+[13.645996] (xline_path_planner) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:184: CMakeFiles/planner_node.dir/all] Error 2\n'}
+[13.646127] (xline_path_planner) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[13.648207] (xline_path_planner) CommandEnded: {'returncode': 2}
+[13.676265] (xline_path_planner) JobEnded: {'identifier': 'xline_path_planner', 'rc': 2}
+[13.688236] (-) EventReactorShutdown: {}

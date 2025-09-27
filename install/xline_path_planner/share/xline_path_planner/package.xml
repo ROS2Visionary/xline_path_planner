@@ -10,6 +10,12 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>rclcpp</depend>
+  <depend>action_msgs</depend>
+  <depend>rclcpp_action</depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <build_export_depend>rosidl_default_runtime</build_export_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  
   <depend>ament_index_cpp</depend>
   <depend>yaml-cpp</depend>
 
@@ -18,5 +24,6 @@
 
   <export>
     <build_type>ament_cmake</build_type>
+    <member_of_group>rosidl_interface_packages</member_of_group>
   </export>
 </package>
