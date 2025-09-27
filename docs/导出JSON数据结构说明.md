@@ -19,7 +19,7 @@
 二、坐标与单位
 ---------------
 
-- 坐标单位：米（m）。解析 CAD 时已按配置进行单位换算，导出时统一为米。
+- 坐标单位：毫米（mm）。系统内部计算使用米（m），在导出阶段统一将所有坐标与半径从 m 转换为 mm（×1000）。
 - 角度单位：度（degree）。弧线/椭圆等角度字段导出为度。
 - 颜色：字符串，十六进制 `#RRGGBB`。
 - 不透明度：`opacity`，0.0～1.0 的浮点数（可选字段）。
@@ -92,7 +92,7 @@
 ```
 
 3) 圆（`type: "circle"`）
-- 必选：`center: {x,y}`, `radius: float`
+- 必选：`center: {x,y}`, `radius: float`（单位：mm）
 - 额外提供：`start/end`（规划实际的进入/离开点）。
 - 示例：
 ```json
@@ -114,7 +114,7 @@
 ```
 
 4) 圆弧（`type: "arc"`）
-- 必选：`center: {x,y}`, `radius: float`, `start_angle: float`, `end_angle: float`（单位：度）
+- 必选：`center: {x,y}`, `radius: float`（单位：mm）, `start_angle: float`, `end_angle: float`（单位：度）
 - 额外提供：`start/end`（基于角度与半径计算的端点），便于消费端无需三角运算即可获取端点。
 - 示例：
 ```json
@@ -195,4 +195,3 @@
 ----
 
 - 本说明与实现同步于：`xline_path_planner/src/output_formatter.cpp` 当前版本。
-

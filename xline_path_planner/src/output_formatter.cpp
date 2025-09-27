@@ -2,6 +2,14 @@
 #include <iostream>
 #include <unordered_map>
 
+namespace {
+inline double to_mm(double meters) { return meters * 1000.0; }
+inline nlohmann::json point_mm(const daosnrs_planning::Point3D& p)
+{
+  return nlohmann::json{ {"x", to_mm(p.x)}, {"y", to_mm(p.y)} };
+}
+} // anonymous namespace
+
 namespace daosnrs_planning
 {
 
@@ -101,14 +109,14 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 
         if (circle)
         {
-          j["center"] = { {"x", circle->center.x}, {"y", circle->center.y} };
-          j["radius"] = circle->radius;
+          j["center"] = { {"x", to_mm(circle->center.x)}, {"y", to_mm(circle->center.y)} };
+          j["radius"] = to_mm(circle->radius);
         }
 
         const auto& p0 = seg.points.front();
         const auto& p1 = seg.points.back();
-        j["start"] = { {"x", p0.x}, {"y", p0.y} };
-        j["end"] = { {"x", p1.x}, {"y", p1.y} };
+        j["start"] = point_mm(p0);
+        j["end"] = point_mm(p1);
 
         root["lines"].push_back(j);
       }
@@ -135,8 +143,8 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 
         if (arc)
         {
-          j["center"] = { {"x", arc->center.x}, {"y", arc->center.y} };
-          j["radius"] = arc->radius;
+          j["center"] = { {"x", to_mm(arc->center.x)}, {"y", to_mm(arc->center.y)} };
+          j["radius"] = to_mm(arc->radius);
           // 角度以度导出（避免依赖 M_PI）
           auto rad2deg = [](double r) { return r * 180.0 / 3.14159265358979323846; };
           j["start_angle"] = rad2deg(arc->start_angle);
@@ -145,8 +153,8 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 
         const auto& p0 = seg.points.front();
         const auto& p1 = seg.points.back();
-        j["start"] = { {"x", p0.x}, {"y", p0.y} };
-        j["end"] = { {"x", p1.x}, {"y", p1.y} };
+        j["start"] = point_mm(p0);
+        j["end"] = point_mm(p1);
 
         root["lines"].push_back(j);
       }
@@ -175,8 +183,8 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
             line["layer_id"] = src->layer_id;
           }
 
-          line["start"] = { {"x", p0.x}, {"y", p0.y} };
-          line["end"] = { {"x", p1.x}, {"y", p1.y} };
+          line["start"] = point_mm(p0);
+          line["end"] = point_mm(p1);
 
           root["lines"].push_back(line);
         }
@@ -202,14 +210,14 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
           nlohmann::json vertices = nlohmann::json::array();
           for (const auto& p : seg.points)
           {
-            vertices.push_back({ {"x", p.x}, {"y", p.y} });
+            vertices.push_back(point_mm(p));
           }
           poly["vertices"] = vertices;
           // 同步给出起点/终点，避免消费端仅解析 start/end 的场景
           const auto& p0 = seg.points.front();
           const auto& p1 = seg.points.back();
-          poly["start"] = { {"x", p0.x}, {"y", p0.y} };
-          poly["end"] = { {"x", p1.x}, {"y", p1.y} };
+          poly["start"] = point_mm(p0);
+          poly["end"] = point_mm(p1);
 
           root["lines"].push_back(poly);
         }
@@ -240,9 +248,8 @@ nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start
   j["opacity"] = 0.5;
   j["order"] = order;
   j["work"] = false;
-
-  j["start"] = { {"x", start.x}, {"y", start.y} };
-  j["end"] = { {"x", end.x}, {"y", end.y} };
+  j["start"] = point_mm(start);
+  j["end"] = point_mm(end);
 
   return j;
 }
