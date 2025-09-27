@@ -19,30 +19,8 @@ namespace daosnrs_planning
 class OutputFormatter
 {
 public:
-  /**
-   * @brief 默认构造函数
-   */
   OutputFormatter() = default;
-
-  /**
-   * @brief 析构函数
-   */
   ~OutputFormatter() = default;
-
-  /**
-   * @brief 将绘图工作点序列转换为JSON格式
-   * @param trajectory 绘图工作点序列
-   * @param device_code 设备代码
-   * @param device_ip 设备IP
-   * @param map_id 地图ID
-   * @param msg_id 消息ID
-   * @param task_id 任务ID
-   * @return JSON格式的轨迹数据
-   */
-  nlohmann::json format_trajectory(const std::vector<ExecutionNode>& trajectory,
-                                   const std::string& device_code = "Dev001",
-                                   const std::string& device_ip = "192.168.0.1", const std::string& map_id = "1",
-                                   const std::string& msg_id = "Msg001", const std::string& task_id = "100");
 
   /**
    * @brief 将JSON数据保存到文件
@@ -53,43 +31,40 @@ public:
   bool save_to_file(const nlohmann::json& json_data, const std::string& file_path);
 
   /**
-   * @brief 将工作数据转换为JSON字符串
-   * @param work_data 工作数据
-   * @param printer_type 打印机类型
-   * @return JSON字符串
+   * @brief 将规划好的路径段导出为新版 JSON 的 lines 数组
+   * @details 仅返回 { "lines": [...] }，不包含其他顶层字段。
+   *          其中对于转场路径（RouteType::TRANSITION_PATH）生成的实体：
+   *            - color 统一为浅灰色（#D3D3D3），并附加 opacity=0.5 字段；
+   *            - id 统一为 1000000；
+   *            - type 统一为 "line"；
+   *            - selected 统一为 false；
+   *            - line_type 统一为空字符串；
+   *            - hidden 统一为 false；
+   *            - thickness 统一为 1.0；
+   *            - layer_id 统一为 1000000；
+   *            - layer 统一为 "TRANSITION"。
+   * @param segments 路径段序列（包含绘图与转场）
+   * @param source_file 保留参数（不再使用）
+   * @return 仅包含 lines 数组的 JSON 对象
    */
-  std::string convertDrawingDataToJSONString(const LineDrawingData& work_data, PrinterType printer_type);
+  nlohmann::json format_planned_paths_to_cad_json(const std::vector<RouteSegment>& segments,
+                                                  const std::string& source_file = "planned_paths");
+
+  /**
+   * @brief 同上，但可传入 CADData 以便为绘图路径补充原始元数据
+   * @details 仅返回 { "lines": [...] }，lines 顺序与 segments 一致，且包含字段 order=段索引。
+   */
+  nlohmann::json format_planned_paths_to_cad_json(const std::vector<RouteSegment>& segments, const CADData& cad_data,
+                                                  const std::string& source_file = "planned_paths");
 
 private:
   /**
-   * @brief 构建轨迹点JSON对象
-   * @param point 绘图工作点
-   * @param order 序号
-   * @return JSON对象
+   * @brief 构建一个转场路径的线段 JSON（按照新版导出结构的 lines[*] 条目）
+   * @param start 起点
+   * @param end 终点
+   * @return JSON 对象
    */
-  nlohmann::json constructExecutionPointJSON(const ExecutionNode& point, int order);
-
-  /**
-   * @brief 构建工作数据JSON对象
-   * @param work_data 工作数据
-   * @param printer_type 打印机类型
-   * @return JSON对象
-   */
-  nlohmann::json constructDrawingDataJSON(const LineDrawingData& work_data, PrinterType printer_type);
-
-  /**
-   * @brief 获取打印机类型字符串
-   * @param printer_type 打印机类型
-   * @return 打印机类型字符串
-   */
-  std::string getPrinterTypeString(PrinterType printer_type);
-
-  /**
-   * @brief 获取线型字符串
-   * @param drawing_type 线型
-   * @return 线型字符串
-   */
-  std::string getLineStyleString(LineStyle drawing_type);
+  nlohmann::json constructTransitionLineJSON(const Point3D& start, const Point3D& end, int order);
 };
 
 }  // namespace daosnrs_planning

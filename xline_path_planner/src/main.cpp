@@ -26,7 +26,7 @@ public:
   void updateParameters()
   {
     // 设置文件路径参数
-    cad_file_path = "/root/xline_path_planner/cad_data/cad_transformed.json";
+    cad_file_path = "/root/xline_path_planner/cad_data/cad_2_transformed.json";
     output_file_path = "/root/xline_path_planner/path_visualizations/path_from_cad.json";
     path_visualization_dir = "/root/xline_path_planner/path_visualizations";
 
@@ -156,9 +156,26 @@ private:
       return;
     }
 
-    // 5. 保存轨迹
-    // 无map_id，使用默认值或由上层决定；此处传固定1
-    save_trajectory(output_formatter, all_trajectory_points, 1);
+    // 5. 保存规划结果为新版 CAD JSON 结构
+    // 舍弃旧的设备/RoutePts 格式，改为 docs/导出JSON数据结构说明.md 结构
+    {
+      RCLCPP_INFO(this->get_logger(), "Formatting planned paths to CAD-style JSON");
+
+      // 使用 CAD 源文件名作为 metadata.source_file
+      std::string source_name = std::filesystem::path(cad_file_path).filename().string();
+
+      nlohmann::json cad_style_json = output_formatter.format_planned_paths_to_cad_json(path_segments, cad_data, source_name);
+
+      RCLCPP_INFO(this->get_logger(), "Saving CAD-style JSON to: %s", output_file_path.c_str());
+      if (output_formatter.save_to_file(cad_style_json, output_file_path))
+      {
+        RCLCPP_INFO(this->get_logger(), "Successfully saved CAD-style JSON");
+      }
+      else
+      {
+        RCLCPP_ERROR(this->get_logger(), "Failed to save CAD-style JSON");
+      }
+    }
   }
 
   // 1: 解析CAD文件
@@ -361,31 +378,7 @@ private:
     return true;
   }
 
-  // 5: 保存轨迹
-  void save_trajectory(OutputFormatter& output_formatter, const std::vector<ExecutionNode>& all_trajectory_points,
-                       int map_id)
-  {
-    // 格式化输出
-    RCLCPP_INFO(this->get_logger(), "Formatting trajectory data");
-
-    // 获取地图ID
-    std::string map_id_str = std::to_string(map_id);
-
-    nlohmann::json trajectory_json =
-        output_formatter.format_trajectory(all_trajectory_points, "Dev001", "192.168.0.1", map_id_str, "Msg001", "100");
-
-    // 保存到文件
-    RCLCPP_INFO(this->get_logger(), "Saving trajectory to file: %s", output_file_path.c_str());
-
-    if (output_formatter.save_to_file(trajectory_json, output_file_path))
-    {
-      RCLCPP_INFO(this->get_logger(), "Successfully saved trajectory to file");
-    }
-    else
-    {
-      RCLCPP_ERROR(this->get_logger(), "Failed to save trajectory to file");
-    }
-  }
+  // 旧格式保存逻辑已废弃
 
   std::string cad_file_path, output_file_path, grid_map_image_path, image_format, printer_type_str;
   std::string path_visualization_dir;

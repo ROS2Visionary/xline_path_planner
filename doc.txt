@@ -1,6 +1,15 @@
+
+
+colcon build
 source install/setup.sh
 ros2 run xline_path_planner planner_node
 
 
 
 无需保留对旧格式的兼容，为了有更好的扩展性，xline_path_planner/include/xline_path_planner/cad_parser.hpp中的类别由字段"layers"决定，也就是说需要动态确定类别。请深度分析我的需求并实现
+
+
+
+xline_path_planner/include/xline_path_planner/output_formatter.hpp将规划好的路径格式化为JSON输出时需要重新参考文档“docs/导出JSON数据结构说明.md”，规划的路径有转场路径，对于转场路径："color"统一为浅灰色，透明度位0.5；"id"统一为1000000；"type"统一为line；"selected"统一为false；"line_type"统一为空字符；"hidden"统一为false；"thickness"统一位1.0； "layer_id"统一为1000000； "line_type"统一为空字符。请详细分析我的需求并实现
+
+
