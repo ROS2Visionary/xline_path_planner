@@ -35,7 +35,7 @@ CAD 解析实现（超详细中文注释）
 #include <algorithm>
 #include <cctype>
 
-namespace daosnrs_planning
+namespace path_planner
 {
 
 CADParser::CADParser(const CADParserConfig& config) : config_(config)
@@ -646,4 +646,4 @@ void CADParser::store_by_layer(const std::shared_ptr<Line>& geom, const std::str
   }
 }
 
-}  // namespace daosnrs_planning
+}  // namespace path_planner

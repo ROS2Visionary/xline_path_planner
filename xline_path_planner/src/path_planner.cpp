@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace daosnrs_planning
+namespace path_planner
 {
 
 PathPlanner::PathPlanner(const PathPlannerConfig& config) : planner_config_(config), grid_map_generator_(nullptr)
@@ -1543,4 +1543,4 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
     return false;
   }
 }
-}  // namespace daosnrs_planning
+}  // namespace path_planner

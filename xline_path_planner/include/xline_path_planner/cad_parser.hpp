@@ -54,7 +54,7 @@
 #include "xline_path_planner/common_types.hpp"
 #include <nlohmann/json.hpp>
 
-namespace daosnrs_planning
+namespace path_planner
 {
 
 /**
@@ -245,4 +245,4 @@ private:
   std::unordered_map<int, std::string> layer_id_to_name_;  ///< 图层ID到名称的映射（分类用）
 };
 
-}  // namespace daosnrs_planning
+}  // namespace path_planner

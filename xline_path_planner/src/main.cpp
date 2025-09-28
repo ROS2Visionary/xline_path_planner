@@ -29,7 +29,7 @@
 #include "xline_path_planner/trajectory_generator.hpp"
 #include "xline_path_planner/output_formatter.hpp"
 
-using namespace daosnrs_planning;
+using namespace path_planner;
 
 struct PlannerEngineConfig
 {

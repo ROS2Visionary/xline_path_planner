@@ -9,7 +9,7 @@
 #include "xline_path_planner/common_types.hpp"
 #include <nlohmann/json.hpp>
 
-namespace daosnrs_planning
+namespace path_planner
 {
 
 /**
@@ -67,4 +67,4 @@ private:
   nlohmann::json constructTransitionLineJSON(const Point3D& start, const Point3D& end, int order);
 };
 
-}  // namespace daosnrs_planning
+}  // namespace path_planner

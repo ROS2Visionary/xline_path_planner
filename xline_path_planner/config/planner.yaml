@@ -7,14 +7,14 @@ visualization:
   use_antialiasing: true
   image_format: "png"
   save_path_visualization: true
-  output_dir: "/root/xline_path_planner/path_visualizations"   # 栅格/路径可视化输出目录
-  planned_output_dir: "/root/xline_path_planner/planned_results"  # 规划JSON输出目录
+  output_dir: "/home/xline/xline_ws/other/path_visualizations"   # 栅格/路径可视化输出目录
+  planned_output_dir: "/home/xline/xline_ws/other/planned_results"  # 规划JSON输出目录
 
 cad_parser:
   unit_conversion_factor: 1000.0   # 毫米->米
   auto_scale_coordinates: true
   angle_unit: "DEGREES"            # 可选: DEGREES | RADIANS
-  cad_file_dir: "/root/xline_path_planner/cad_data"   # CAD文件所在目录（服务端）
+  cad_file_dir: "/home/xline/xline_ws/xline_server/uploads"   # CAD文件所在目录（服务端）
 
 grid_map:
   resolution: 0.005   # 米/格

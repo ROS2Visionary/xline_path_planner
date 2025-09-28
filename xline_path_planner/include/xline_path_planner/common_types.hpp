@@ -7,7 +7,7 @@
 #include <cstdint>
 #include <stdexcept>
 
-namespace daosnrs_planning
+namespace path_planner
 {
 
 /**
@@ -683,4 +683,4 @@ struct TrajectoryConfig
   double angle_velocity = 0.5;    ///< 角速度(rad/s)
 };
 
-}  // namespace daosnrs_planning
+}  // namespace path_planner

@@ -14,7 +14,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 
-namespace daosnrs_planning
+namespace path_planner
 {
 
 /**
@@ -254,4 +254,4 @@ private:
   double boundaryMinX, boundaryMinY, boundaryMaxX, boundaryMaxY;  ///< 地图世界坐标边界
 };
 
-}  // namespace daosnrs_planning
+}  // namespace path_planner

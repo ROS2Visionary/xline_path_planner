@@ -1,7 +1,7 @@
 #include "xline_path_planner/trajectory_generator.hpp"
 #include <iostream>
 
-namespace daosnrs_planning
+namespace path_planner
 {
 
 TrajectoryGenerator::TrajectoryGenerator(const TrajectoryConfig& config)
@@ -644,4 +644,4 @@ Point3D TrajectoryGenerator::computeNURBSPoint(const Curve& curve, double t)
   }
 }
 
-} // namespace daosnrs_planning
+} // namespace path_planner

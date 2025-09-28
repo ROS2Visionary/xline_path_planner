@@ -9,7 +9,7 @@
 
 #include "xline_path_planner/common_types.hpp"
 
-namespace daosnrs_planning
+namespace path_planner
 {
 
 /**
@@ -117,4 +117,4 @@ private:
   TrajectoryConfig trajectory_config_;  ///< 轨迹生成配置
 };
 
-}  // namespace daosnrs_planning
+}  // namespace path_planner

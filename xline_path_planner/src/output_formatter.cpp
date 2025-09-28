@@ -4,13 +4,13 @@
 
 namespace {
 inline double to_mm(double meters) { return meters * 1000.0; }
-inline nlohmann::json point_mm(const daosnrs_planning::Point3D& p)
+inline nlohmann::json point_mm(const path_planner::Point3D& p)
 {
   return nlohmann::json{ {"x", to_mm(p.x)}, {"y", to_mm(p.y)} };
 }
 } // anonymous namespace
 
-namespace daosnrs_planning
+namespace path_planner
 {
 
 // ---------------- 导出 planned paths 为 CAD JSON（仅返回 lines） ----------------
@@ -95,6 +95,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         j["type"] = "circle";
         j["order"] = static_cast<int>(seg_idx);
         j["work"] = true;
+        j["printed"] = false;
 
         j["line_type"] = (src ? src->line_type : std::string("continuous"));
         j["thickness"] = (src ? src->thickness : 1.0);
@@ -129,6 +130,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         j["type"] = "arc";
         j["order"] = static_cast<int>(seg_idx);
         j["work"] = true;
+        j["printed"] = false;
 
         j["line_type"] = (src ? src->line_type : std::string("continuous"));
         j["thickness"] = (src ? src->thickness : 1.0);
@@ -171,6 +173,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
           line["type"] = "line";
           line["order"] = static_cast<int>(seg_idx);
           line["work"] = true; // 绘图段：工作
+          line["printed"] = false;
 
           line["line_type"] = (src ? src->line_type : std::string("continuous"));
           line["thickness"] = (src ? src->thickness : 1.0);
@@ -195,6 +198,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
           poly["type"] = "polyline";
           poly["order"] = static_cast<int>(seg_idx);
           poly["work"] = true; // 绘图段：工作
+          poly["printed"] = false;
 
           poly["line_type"] = (src ? src->line_type : std::string("continuous"));
           poly["thickness"] = (src ? src->thickness : 1.0);
@@ -248,6 +252,7 @@ nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start
   j["opacity"] = 0.5;
   j["order"] = order;
   j["work"] = false;
+  j["printed"] = false;
   j["start"] = point_mm(start);
   j["end"] = point_mm(end);
 
@@ -278,4 +283,4 @@ bool OutputFormatter::save_to_file(const nlohmann::json& json_data, const std::s
   }
 }
 
-}  // namespace daosnrs_planning
+}  // namespace path_planner

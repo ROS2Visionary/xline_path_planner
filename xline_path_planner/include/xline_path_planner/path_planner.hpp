@@ -15,7 +15,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 
-namespace daosnrs_planning
+namespace path_planner
 {
 
 /**
@@ -254,4 +254,4 @@ private:
   const GridMapGenerator* grid_map_generator_;  ///< 栅格地图生成器指针
 };
 
-}  // namespace daosnrs_planning
+}  // namespace path_planner
