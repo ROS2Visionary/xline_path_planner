@@ -1,4 +1,0 @@
-[35m[1mConsolidate compiler generated dependencies of target planner_node[0m
-gmake[2]: *** [CMakeFiles/planner_node.dir/build.make:296: CMakeFiles/planner_node.dir/depend] Interrupt
-gmake[1]: *** [CMakeFiles/Makefile2:136: CMakeFiles/planner_node.dir/all] Interrupt
-gmake: *** [Makefile:146: all] Interrupt

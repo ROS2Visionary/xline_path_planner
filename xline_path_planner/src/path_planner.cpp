@@ -124,7 +124,6 @@ std::shared_ptr<Line> PathPlanner::findNearestUnprocessedLine(const Point3D& cur
 RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, const PathOffsetConfig& offset_config)
 {
   RouteSegment segment(RouteType::DRAWING_PATH, line->id);
-  segment.speed = planner_config_.drawing_speed;
 
   // 新增路径延长长度的配置参数
   double path_extension_length = planner_config_.path_extension_length;
@@ -374,7 +373,6 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
 RouteSegment PathPlanner::planConnectionPath(const Point3D& start, const Point3D& goal)
 {
   RouteSegment segment(RouteType::TRANSITION_PATH);
-  segment.speed = planner_config_.transition_speed;
 
   std::cout << "Planning transition path from (" << start.x << ", " << start.y << ") to (" << goal.x << ", " << goal.y
             << ")" << std::endl;

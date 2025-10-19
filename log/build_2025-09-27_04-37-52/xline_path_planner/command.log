@@ -1,2 +1,0 @@
-Invoking command in '/root/xline_path_planner/build/xline_path_planner': /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8
-Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '2': /usr/bin/cmake --build /root/xline_path_planner/build/xline_path_planner -- -j8 -l8

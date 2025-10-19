@@ -1,6 +1,0 @@
-{
-  "package_name": "xline_path_planner",
-  "non_idl_tuples": [
-    "/root/xline_path_planner/xline_path_planner:srv/PlanPath.srv"
-  ]
-}

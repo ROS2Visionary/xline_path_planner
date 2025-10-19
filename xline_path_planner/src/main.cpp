@@ -37,7 +37,6 @@ struct PlannerEngineConfig
   GridMapConfig grid_map;
   PathPlannerConfig path_planner;
   PathOffsetConfig offsets;
-  TrajectoryConfig trajectory;
 };
 
 class PlannerNode : public rclcpp::Node
@@ -154,22 +153,10 @@ public:
 
     YAML::Node planner = root["path_planner"];
     require(planner, "path_planner");
-    require(planner["transition_speed"], "path_planner.transition_speed");
-    require(planner["drawing_speed"], "path_planner.drawing_speed");
     require(planner["path_extension_length"], "path_planner.path_extension_length");
-    transition_speed = planner["transition_speed"].as<double>();
-    drawing_speed = planner["drawing_speed"].as<double>();
     path_extension_length = planner["path_extension_length"].as<double>();
 
-    // 6) 读取 轨迹 参数
-    YAML::Node traj = root["trajectory"];
-    require(traj, "trajectory");
-    require(traj["max_velocity"], "trajectory.max_velocity");
-    require(traj["max_acceleration"], "trajectory.max_acceleration");
-    max_velocity = traj["max_velocity"].as<double>();
-    max_acceleration = traj["max_acceleration"].as<double>();
-
-    // 7) 基于读取参数进行配置对象赋值与检查（不涉及任何文件路径）
+    // 6) 基于读取参数进行配置对象赋值与检查（不涉及任何文件路径）
 
     // 打印机类型
     PrinterType printer_type = PrinterType::LEFT_PRINTER;
@@ -213,18 +200,12 @@ public:
     grid_map_config.padding = grid_padding;
 
     // 路径规划参数
-    path_planner_config.transition_speed = transition_speed;
-    path_planner_config.drawing_speed = drawing_speed;
     path_planner_config.path_extension_length = path_extension_length;
 
     // 偏移参数
     offset_config.left_offset = left_offset;
     offset_config.right_offset = right_offset;
     offset_config.printer_type = printer_type;
-
-    // 轨迹参数
-    trajectory_config.max_velocity = max_velocity;
-    trajectory_config.max_acceleration = max_acceleration;
 
     // 可视化参数（同时用于栅格与路径）
     grid_viz_config.scale = grid_map_scale;
@@ -259,7 +240,6 @@ public:
     cfg.grid_map = grid_map_config;
     cfg.path_planner = path_planner_config;
     cfg.offsets = offset_config;
-    cfg.trajectory = trajectory_config;
     return cfg;
   }
 
@@ -297,7 +277,7 @@ public:
       }
 
       // 轨迹生成（可选）
-      TrajectoryGenerator trajectory_generator(cfg.trajectory);
+      TrajectoryGenerator trajectory_generator;
       std::vector<ExecutionNode> all_nodes;
       for (const auto& seg : path_segments)
       {
@@ -579,8 +559,8 @@ public:
   int grid_map_scale;
   double grid_resolution, grid_padding, cad_unit_conversion;
   bool show_grid_lines, use_antialiasing, save_path_visualization;
-  double left_offset, right_offset, max_velocity, max_acceleration;
-  double transition_speed, drawing_speed, path_extension_length;
+  double left_offset, right_offset;
+  double path_extension_length;
 
   // 规划互斥，防止并发执行
   std::mutex plan_mutex_;
@@ -601,8 +581,6 @@ public:
   PathPlannerConfig path_planner_config;
   // 设置路径偏移配置
   PathOffsetConfig offset_config;
-  // 设置轨迹生成配置
-  TrajectoryConfig trajectory_config;
   // 设置栅格地图可视化配置
   GridMapVisualizationConfig grid_viz_config;
   // 设置路径可视化配置

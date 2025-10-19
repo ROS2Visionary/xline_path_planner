@@ -7,14 +7,14 @@ visualization:
   use_antialiasing: true
   image_format: "png"
   save_path_visualization: true
-  output_dir: "/home/xline/xline_ws/other/path_visualizations"   # 栅格/路径可视化输出目录
-  planned_output_dir: "/home/xline/xline_ws/other/planned_results"  # 规划JSON输出目录
+  output_dir: "/root/xline_ws/xline_path_planner/path_visualizations"   # 栅格/路径可视化输出目录
+  planned_output_dir: "/root/xline_ws/xline_path_planner/planned_results"  # 规划JSON输出目录
 
 cad_parser:
   unit_conversion_factor: 1000.0   # 毫米->米
   auto_scale_coordinates: true
   angle_unit: "DEGREES"            # 可选: DEGREES | RADIANS
-  cad_file_dir: "/home/xline/xline_ws/xline_server/uploads"   # CAD文件所在目录（服务端）
+  cad_file_dir: "/root/xline_ws/xline_path_planner/cad_data"   # CAD文件所在目录（服务端）
 
 grid_map:
   resolution: 0.005   # 米/格
@@ -26,13 +26,7 @@ offsets:
   printer_type: "LEFT_PRINTER"   # 可选: LEFT_PRINTER | RIGHT_PRINTER | BOTH_PRINTERS
 
 path_planner:
-  transition_speed: 0.5     # m/s
-  drawing_speed: 0.3        # m/s
   path_extension_length: 0.1
-
-trajectory:
-  max_velocity: 0.5         # m/s
-  max_acceleration: 0.5     # m/s^2
 
 # 可选：TCP服务器配置（用于非ROS客户端调用）
 tcp_server:

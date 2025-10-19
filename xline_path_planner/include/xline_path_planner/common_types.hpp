@@ -531,14 +531,13 @@ struct RouteSegment
   std::vector<Point3D> points;  ///< 路径点
   RouteType type;               ///< 路径类型
   int32_t line_id;              ///< 相关联的线ID
-  double speed;                 ///< 建议速度
 
   /**
    * @brief 构造函数
    * @param type 路径类型
    * @param id 线ID
    */
-  RouteSegment(RouteType type = RouteType::DRAWING_PATH, int32_t id = -1) : type(type), line_id(id), speed(0.3)
+  RouteSegment(RouteType type = RouteType::DRAWING_PATH, int32_t id = -1) : type(type), line_id(id)
   {
   }
 };
@@ -646,18 +645,6 @@ struct GridMapConfig
  */
 struct PathPlannerConfig
 {
-  bool allow_diagonal = true;              ///< 是否允许对角线移动
-  double heuristic_weight = 1.0;           ///< 启发式函数权重
-  int max_iterations = 10000;              ///< 最大迭代次数
-  double path_simplify_tolerance = 0.1;    ///< 路径简化容差
-  double angle_tolerance = 15.0;           ///< 角度容差（度）
-  double line_of_sight_resolution = 0.05;  ///< 视线算法分辨率
-  bool use_theta_star = true;              ///< 是否使用Theta*算法
-  double transition_speed = 0.5;           ///< 转场速度(m/s)
-  double drawing_speed = 0.3;              ///< 绘图速度(m/s)
-  bool smooth_paths = true;                ///< 是否平滑路径
-  int smoothing_iterations = 5;            ///< 平滑迭代次数
-  double smoothing_weight = 0.5;           ///< 平滑权重
   double path_extension_length = 0.1;      ///< 路径延长长度(m)，默认延长0.1米
 };
 
@@ -670,17 +657,6 @@ struct PathOffsetConfig
   double left_offset = -0.2;                             ///< 左偏移距离(m)
   double right_offset = 0.2;                             ///< 右偏移距离(m)
   PrinterType printer_type = PrinterType::LEFT_PRINTER;  ///< 使用的打印机类型
-};
-
-/**
- * @brief 轨迹生成配置结构体
- * 包含轨迹生成的参数
- */
-struct TrajectoryConfig
-{
-  double max_velocity = 0.5;      ///< 最大速度(m/s)
-  double max_acceleration = 0.5;  ///< 最大加速度(m/s^2)
-  double angle_velocity = 0.5;    ///< 角速度(rad/s)
 };
 
 }  // namespace path_planner

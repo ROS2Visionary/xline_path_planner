@@ -1,2 +1,0 @@
-Invoking command in '/root/xline_path_planner/build/xline_path_planner': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /root/xline_path_planner/xline_path_planner -DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner
-Invoked command in '/root/xline_path_planner/build/xline_path_planner' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /root/xline_path_planner/xline_path_planner -DCMAKE_INSTALL_PREFIX=/root/xline_path_planner/install/xline_path_planner

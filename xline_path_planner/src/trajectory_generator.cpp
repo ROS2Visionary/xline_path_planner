@@ -4,11 +4,6 @@
 namespace path_planner
 {
 
-TrajectoryGenerator::TrajectoryGenerator(const TrajectoryConfig& config)
-  : trajectory_config_(config)
-{
-}
-
 std::vector<ExecutionNode> TrajectoryGenerator::generate_from_path(
     const std::vector<Point3D>& path, const Line& line, bool is_drawing_path)
 {
@@ -441,11 +436,6 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_arc(
   }
   
   return trajectory;
-}
-
-void TrajectoryGenerator::set_config(const TrajectoryConfig& config)
-{
-  trajectory_config_ = config;
 }
 
 double TrajectoryGenerator::computeAngleBetweenPoints(const Point3D& p1, const Point3D& p2)

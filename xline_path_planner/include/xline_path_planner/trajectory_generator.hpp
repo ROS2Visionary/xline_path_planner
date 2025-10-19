@@ -21,9 +21,8 @@ class TrajectoryGenerator
 public:
   /**
    * @brief 构造函数
-   * @param config 轨迹生成配置
    */
-  explicit TrajectoryGenerator(const TrajectoryConfig& config = TrajectoryConfig());
+  TrajectoryGenerator() = default;
 
   /**
    * @brief 析构函数
@@ -63,12 +62,6 @@ public:
    * @return 绘图工作点序列
    */
   std::vector<ExecutionNode> generate_from_arc(const Arc& arc, const PathOffsetConfig& offset_config);
-
-  /**
-   * @brief 设置轨迹生成配置
-   * @param config 轨迹生成配置
-   */
-  void set_config(const TrajectoryConfig& config);
 
 private:
   /**
@@ -113,8 +106,6 @@ private:
    * @return 曲线上的点
    */
   Point3D computeNURBSPoint(const Curve& curve, double t);
-
-  TrajectoryConfig trajectory_config_;  ///< 轨迹生成配置
 };
 
 }  // namespace path_planner
