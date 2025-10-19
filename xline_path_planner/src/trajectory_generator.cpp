@@ -5,21 +5,21 @@ namespace path_planner
 {
 
 std::vector<ExecutionNode> TrajectoryGenerator::generate_from_path(
-    const std::vector<Point3D>& path, const Line& line, bool is_drawing_path)
+    const std::vector<Point3D>& path, const Line& line, bool is_drawing_path, PrinterType printer_type)
 {
   if (path.size() < 2) {
     std::cerr << "Path must contain at least two points!" << std::endl;
     return {};
   }
-  
+
   std::vector<ExecutionNode> trajectory;
   trajectory.reserve(path.size() * 2);  // 每个路径点可能生成接近和绘图两个轨迹点
-  
+
   // 生成接近起点的轨迹点（不绘图）
   const Point3D& start = path.front();
   const Point3D& second = path[1];
   double approach_angle = computeAngleBetweenPoints(start, second);
-  
+
   // 添加接近点
   ExecutionNode approach_point;
   approach_point.position = start;
@@ -27,25 +27,37 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_path(
   approach_point.move_state = 1;  // 移动状态
   approach_point.work_state = 0;  // 不工作
   approach_point.order = 0;
-  
+
   trajectory.push_back(approach_point);
-  
+
   // 如果是绘图路径，添加开始绘图的点
   if (is_drawing_path) {
     ExecutionNode start_drawing = approach_point;
     start_drawing.work_state = 1;  // 开始工作
-    start_drawing.left_work_type = LineStyle::SOLID;  // 默认使用实线
     start_drawing.order = 1;
-    
+
+    // 根据打印机类型设置线型
+    switch (printer_type) {
+      case PrinterType::LEFT_PRINTER:
+        start_drawing.left_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::RIGHT_PRINTER:
+        start_drawing.right_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::CENTER_PRINTER:
+        start_drawing.center_work_type = LineStyle::SOLID;
+        break;
+    }
+
     // 添加工作数据
     LineDrawingData work_data;
     work_data.start = line.start;
     work_data.end = line.end;
     work_data.line_id = line.id;
-    work_data.is_left_printer = true;  // 默认使用左侧打印机
-    
+    work_data.printer_type = printer_type;
+
     start_drawing.work_data.push_back(work_data);
-    
+
     trajectory.push_back(start_drawing);
   }
   
@@ -71,21 +83,32 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_path(
     // 根据路径类型设置工作状态
     if (is_drawing_path) {
       point.work_state = 1;  // 绘图路径工作
-      point.left_work_type = LineStyle::SOLID;  // 默认使用实线
+      // 根据打印机类型设置线型
+      switch (printer_type) {
+        case PrinterType::LEFT_PRINTER:
+          point.left_work_type = LineStyle::SOLID;
+          break;
+        case PrinterType::RIGHT_PRINTER:
+          point.right_work_type = LineStyle::SOLID;
+          break;
+        case PrinterType::CENTER_PRINTER:
+          point.center_work_type = LineStyle::SOLID;
+          break;
+      }
       point.order = i + 1;  // 绘图路径从1开始
     } else {
       point.work_state = 0;  // 转场路径不工作
       point.order = i;       // 转场路径从0开始
     }
-    
+
     // 只在最后一个点添加工作数据，并且只针对绘图路径
     if (is_drawing_path && i == path.size() - 1) {
       LineDrawingData work_data;
       work_data.start = line.start;
       work_data.end = line.end;
       work_data.line_id = line.id;
-      work_data.is_left_printer = true;  // 默认使用左侧打印机
-      
+      work_data.printer_type = printer_type;
+
       point.work_data.push_back(work_data);
     }
     
@@ -116,16 +139,9 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_curve(
   std::vector<Point3D> curve_points = convertCurveToPoints(curve, 100);  // 使用100个点离散曲线
 
   // 应用偏移
-  bool is_left_printer;
-
-  if (offset_config.printer_type == PrinterType::LEFT_PRINTER) {
-    is_left_printer = true;
-  } else if (offset_config.printer_type == PrinterType::RIGHT_PRINTER) {
-    is_left_printer = false;
-  } else {
-    // 默认使用左侧打印机
-    is_left_printer = true;
-  }
+  // 注意：由于接口限制，这里无法获取segment.printer_type
+  // 该模块实际上已不再使用，保留代码仅为编译兼容
+  PrinterType printer_type = PrinterType::CENTER_PRINTER;  // 默认使用中心打印机
 
   // 创建一个虚拟线段用于轨迹生成
   Line virtual_line(curve.id, curve.start, curve.end, GeometryType::CURVE);
@@ -166,10 +182,16 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_curve(
     curve_point.work_state = 1;  // 工作
     
     // 设置绘图类型
-    if (is_left_printer) {
-      curve_point.left_work_type = LineStyle::SOLID;
-    } else {
-      curve_point.right_work_type = LineStyle::SOLID;
+    switch (printer_type) {
+      case PrinterType::LEFT_PRINTER:
+        curve_point.left_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::RIGHT_PRINTER:
+        curve_point.right_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::CENTER_PRINTER:
+        curve_point.center_work_type = LineStyle::SOLID;
+        break;
     }
     
     curve_point.order = i + 1;
@@ -180,7 +202,7 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_curve(
       work_data.start = curve.start;
       work_data.end = curve.end;
       work_data.line_id = curve.id;
-      work_data.is_left_printer = is_left_printer;
+      work_data.printer_type = printer_type;
       
       curve_point.work_data.push_back(work_data);
     }
@@ -225,18 +247,12 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_circle(
     
     circle_points.push_back(point);
   }
-  
+
   // 应用偏移
-  bool is_left_printer;
-  if (offset_config.printer_type == PrinterType::LEFT_PRINTER) {
-    is_left_printer = true;
-  } else if (offset_config.printer_type == PrinterType::RIGHT_PRINTER) {
-    is_left_printer = false;
-  } else {
-    // 默认使用左侧打印机
-    is_left_printer = true;
-  }
-  
+  // 注意：由于接口限制，这里无法获取segment.printer_type
+  // 该模块实际上已不再使用，保留代码仅为编译兼容
+  PrinterType printer_type = PrinterType::CENTER_PRINTER;  // 默认使用中心打印机
+
   // 创建一个虚拟线段用于轨迹生成
   Line virtual_line(circle.id, circle_points.front(), circle_points.back(), GeometryType::CIRCLE);
   
@@ -276,10 +292,16 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_circle(
     circle_point.work_state = 1;  // 工作
     
     // 设置绘图类型
-    if (is_left_printer) {
-      circle_point.left_work_type = LineStyle::SOLID;
-    } else {
-      circle_point.right_work_type = LineStyle::SOLID;
+    switch (printer_type) {
+      case PrinterType::LEFT_PRINTER:
+        circle_point.left_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::RIGHT_PRINTER:
+        circle_point.right_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::CENTER_PRINTER:
+        circle_point.center_work_type = LineStyle::SOLID;
+        break;
     }
     
     circle_point.order = i + 1;
@@ -290,7 +312,7 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_circle(
       work_data.start = circle.start;
       work_data.end = circle.end;
       work_data.line_id = circle.id;
-      work_data.is_left_printer = is_left_printer;
+      work_data.printer_type = printer_type;
       
       circle_point.work_data.push_back(work_data);
     }
@@ -347,18 +369,13 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_arc(
     
     arc_points.push_back(point);
   }
-  
+
+
   // 应用偏移
-  bool is_left_printer;
-  if (offset_config.printer_type == PrinterType::LEFT_PRINTER) {
-    is_left_printer = true;
-  } else if (offset_config.printer_type == PrinterType::RIGHT_PRINTER) {
-    is_left_printer = false;
-  } else {
-    // 默认使用左侧打印机
-    is_left_printer = true;
-  }
-  
+  // 注意：由于接口限制，这里无法获取segment.printer_type
+  // 该模块实际上已不再使用，保留代码仅为编译兼容
+  PrinterType printer_type = PrinterType::CENTER_PRINTER;  // 默认使用中心打印机
+
   // 创建一个虚拟线段用于轨迹生成
   Line virtual_line(arc.id, arc_points.front(), arc_points.back(), GeometryType::ARC);
   
@@ -398,10 +415,16 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_arc(
     arc_point.work_state = 1;  // 工作
     
     // 设置绘图类型
-    if (is_left_printer) {
-      arc_point.left_work_type = LineStyle::SOLID;
-    } else {
-      arc_point.right_work_type = LineStyle::SOLID;
+    switch (printer_type) {
+      case PrinterType::LEFT_PRINTER:
+        arc_point.left_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::RIGHT_PRINTER:
+        arc_point.right_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::CENTER_PRINTER:
+        arc_point.center_work_type = LineStyle::SOLID;
+        break;
     }
     
     arc_point.order = i + 1;
@@ -412,7 +435,7 @@ std::vector<ExecutionNode> TrajectoryGenerator::generate_from_arc(
       work_data.start = arc.start;
       work_data.end = arc.end;
       work_data.line_id = arc.id;
-      work_data.is_left_printer = is_left_printer;
+      work_data.printer_type = printer_type;
       
       arc_point.work_data.push_back(work_data);
     }
@@ -462,15 +485,15 @@ std::vector<double> TrajectoryGenerator::angle_to_quaternion(double angle)
 }
 
 std::vector<ExecutionNode> TrajectoryGenerator::generateSegmentTrajectory(
-    const Point3D& start, const Point3D& end, bool drawing, int32_t line_id, bool is_left_printer)
+    const Point3D& start, const Point3D& end, bool drawing, int32_t line_id, PrinterType printer_type)
 {
   // 计算线段方向
   double angle = computeAngleBetweenPoints(start, end);
-  
+
   // 创建轨迹点
   std::vector<ExecutionNode> trajectory;
   trajectory.reserve(2);  // 起点和终点
-  
+
   // 起点
   ExecutionNode start_point;
   start_point.position = start;
@@ -478,27 +501,33 @@ std::vector<ExecutionNode> TrajectoryGenerator::generateSegmentTrajectory(
   start_point.move_state = 1;  // 移动状态
   start_point.work_state = drawing ? 1 : 0;  // 工作状态
   start_point.order = 0;
-  
+
   // 设置绘图类型
   if (drawing) {
-    if (is_left_printer) {
-      start_point.left_work_type = LineStyle::SOLID;
-    } else {
-      start_point.right_work_type = LineStyle::SOLID;
+    switch (printer_type) {
+      case PrinterType::LEFT_PRINTER:
+        start_point.left_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::RIGHT_PRINTER:
+        start_point.right_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::CENTER_PRINTER:
+        start_point.center_work_type = LineStyle::SOLID;
+        break;
     }
-    
+
     // 添加工作数据
     LineDrawingData work_data;
     work_data.start = start;
     work_data.end = end;
     work_data.line_id = line_id;
-    work_data.is_left_printer = is_left_printer;
-    
+    work_data.printer_type = printer_type;
+
     start_point.work_data.push_back(work_data);
   }
-  
+
   trajectory.push_back(start_point);
-  
+
   // 终点
   ExecutionNode end_point;
   end_point.position = end;
@@ -506,13 +535,19 @@ std::vector<ExecutionNode> TrajectoryGenerator::generateSegmentTrajectory(
   end_point.move_state = 1;  // 移动状态
   end_point.work_state = drawing ? 1 : 0;  // 工作状态
   end_point.order = 1;
-  
+
   // 设置绘图类型
   if (drawing) {
-    if (is_left_printer) {
-      end_point.left_work_type = LineStyle::SOLID;
-    } else {
-      end_point.right_work_type = LineStyle::SOLID;
+    switch (printer_type) {
+      case PrinterType::LEFT_PRINTER:
+        end_point.left_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::RIGHT_PRINTER:
+        end_point.right_work_type = LineStyle::SOLID;
+        break;
+      case PrinterType::CENTER_PRINTER:
+        end_point.center_work_type = LineStyle::SOLID;
+        break;
     }
   }
   

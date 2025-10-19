@@ -146,10 +146,10 @@ public:
     require(offsets, "offsets");
     require(offsets["left_offset"], "offsets.left_offset");
     require(offsets["right_offset"], "offsets.right_offset");
-    require(offsets["printer_type"], "offsets.printer_type");
+    require(offsets["center_offset"], "offsets.center_offset");
     left_offset = offsets["left_offset"].as<double>();
     right_offset = offsets["right_offset"].as<double>();
-    printer_type_str = offsets["printer_type"].as<std::string>();
+    center_offset = offsets["center_offset"].as<double>();
 
     YAML::Node planner = root["path_planner"];
     require(planner, "path_planner");
@@ -157,26 +157,6 @@ public:
     path_extension_length = planner["path_extension_length"].as<double>();
 
     // 6) 基于读取参数进行配置对象赋值与检查（不涉及任何文件路径）
-
-    // 打印机类型
-    PrinterType printer_type = PrinterType::LEFT_PRINTER;
-    if (printer_type_str == "RIGHT_PRINTER")
-    {
-      printer_type = PrinterType::RIGHT_PRINTER;
-    }
-    else if (printer_type_str == "BOTH_PRINTERS")
-    {
-      printer_type = PrinterType::BOTH_PRINTERS;
-    }
-    else if (printer_type_str == "LEFT_PRINTER")
-    {
-      printer_type = PrinterType::LEFT_PRINTER;
-    }
-    else
-    {
-      RCLCPP_FATAL(this->get_logger(), "未知的打印机类型: %s", printer_type_str.c_str());
-      throw std::runtime_error("非法的printer_type");
-    }
 
     // CAD 解析配置
     cad_parser_config.unit_conversion_factor = cad_unit_conversion;
@@ -205,7 +185,7 @@ public:
     // 偏移参数
     offset_config.left_offset = left_offset;
     offset_config.right_offset = right_offset;
-    offset_config.printer_type = printer_type;
+    offset_config.center_offset = center_offset;
 
     // 可视化参数（同时用于栅格与路径）
     grid_viz_config.scale = grid_map_scale;
@@ -276,7 +256,7 @@ public:
         throw std::runtime_error("路径规划失败，未生成任何路径段");
       }
 
-      // 轨迹生成（可选）
+      // 轨迹生成
       TrajectoryGenerator trajectory_generator;
       std::vector<ExecutionNode> all_nodes;
       for (const auto& seg : path_segments)
@@ -284,7 +264,7 @@ public:
         if (seg.points.size() < 2) continue;
         Line virtual_line(seg.line_id, seg.points.front(), seg.points.back());
         auto nodes = trajectory_generator.generate_from_path(
-          seg.points, virtual_line, seg.type == RouteType::DRAWING_PATH);
+          seg.points, virtual_line, seg.type == RouteType::DRAWING_PATH, seg.printer_type);
         if (!nodes.empty())
         {
           all_nodes.insert(all_nodes.end(), nodes.begin(), nodes.end());
@@ -552,14 +532,14 @@ public:
   // 成员变量
   rclcpp::Service<xline_path_planner::srv::PlanPath>::SharedPtr service_;
 
-  std::string image_format, printer_type_str;
+  std::string image_format;
   std::string cad_files_dir_;
   std::string planned_output_dir_;
   std::string visualization_output_dir;
   int grid_map_scale;
   double grid_resolution, grid_padding, cad_unit_conversion;
   bool show_grid_lines, use_antialiasing, save_path_visualization;
-  double left_offset, right_offset;
+  double left_offset, right_offset, center_offset;
   double path_extension_length;
 
   // 规划互斥，防止并发执行

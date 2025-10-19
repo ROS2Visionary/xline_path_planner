@@ -34,10 +34,12 @@ public:
    * @param path 路径点序列
    * @param line 要绘制的线段
    * @param is_drawing_path 是否为绘图路径（否则为转场路径）
+   * @param printer_type 打印机类型
    * @return 绘图工作点序列
    */
   std::vector<ExecutionNode> generate_from_path(const std::vector<Point3D>& path, const Line& line,
-                                                bool is_drawing_path = true);
+                                                bool is_drawing_path = true,
+                                                PrinterType printer_type = PrinterType::CENTER_PRINTER);
 
   /**
    * @brief 生成曲线的绘图轨迹
@@ -85,11 +87,11 @@ private:
    * @param end 终点
    * @param drawing 是否在绘图
    * @param line_id 线段ID
-   * @param is_left_printer 是否使用左侧打印机
+   * @param printer_type 打印机类型
    * @return 轨迹点序列
    */
   std::vector<ExecutionNode> generateSegmentTrajectory(const Point3D& start, const Point3D& end, bool drawing,
-                                                       int32_t line_id, bool is_left_printer);
+                                                       int32_t line_id, PrinterType printer_type = PrinterType::CENTER_PRINTER);
 
   /**
    * @brief 离散化曲线为多个点

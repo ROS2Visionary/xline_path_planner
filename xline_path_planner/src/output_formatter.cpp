@@ -8,6 +8,21 @@ inline nlohmann::json point_mm(const path_planner::Point3D& p)
 {
   return nlohmann::json{ {"x", to_mm(p.x)}, {"y", to_mm(p.y)} };
 }
+
+// 将 PrinterType 转换为字符串
+inline std::string printerTypeToString(path_planner::PrinterType type)
+{
+  switch (type) {
+    case path_planner::PrinterType::LEFT_PRINTER:
+      return "LEFT_PRINTER";
+    case path_planner::PrinterType::RIGHT_PRINTER:
+      return "RIGHT_PRINTER";
+    case path_planner::PrinterType::CENTER_PRINTER:
+      return "CENTER_PRINTER";
+    default:
+      return "CENTER_PRINTER";
+  }
+}
 } // anonymous namespace
 
 namespace path_planner
@@ -96,6 +111,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         j["order"] = static_cast<int>(seg_idx);
         j["work"] = true;
         j["printed"] = false;
+        j["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
 
         j["line_type"] = (src ? src->line_type : std::string("continuous"));
         j["thickness"] = (src ? src->thickness : 1.0);
@@ -131,6 +147,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         j["order"] = static_cast<int>(seg_idx);
         j["work"] = true;
         j["printed"] = false;
+        j["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
 
         j["line_type"] = (src ? src->line_type : std::string("continuous"));
         j["thickness"] = (src ? src->thickness : 1.0);
@@ -174,6 +191,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
           line["order"] = static_cast<int>(seg_idx);
           line["work"] = true; // 绘图段：工作
           line["printed"] = false;
+          line["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
 
           line["line_type"] = (src ? src->line_type : std::string("continuous"));
           line["thickness"] = (src ? src->thickness : 1.0);
@@ -199,6 +217,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
           poly["order"] = static_cast<int>(seg_idx);
           poly["work"] = true; // 绘图段：工作
           poly["printed"] = false;
+          poly["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
 
           poly["line_type"] = (src ? src->line_type : std::string("continuous"));
           poly["thickness"] = (src ? src->thickness : 1.0);

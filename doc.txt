@@ -20,3 +20,13 @@ ros2 launch rosbridge_server rosbridge_websocket_launch.xml
 xline_path_planner/include/xline_path_planner/output_formatter.hpp将规划好的路径格式化为JSON输出时需要重新参考文档“docs/导出JSON数据结构说明.md”，规划的路径有转场路径，对于转场路径："color"统一为浅灰色，透明度位0.5；"id"统一为1000000；"type"统一为line；"selected"统一为false；"line_type"统一为空字符；"hidden"统一为false；"thickness"统一位1.0； "layer_id"统一为1000000； "line_type"统一为空字符。请详细分析我的需求并实现
 
 在导出数据时是不是没有对圆和圆弧进行导出，圆和圆弧也需要包含起点和终点，详细分析
+
+现在有个新的需求是：
+1、现在的打印机有三个分别是LEFT_PRINTER、RIGHT_PRINTER、CENTER_PRINTERS
+2、喷码机的选择不再统一由xline_path_planner/config/planner.yaml来配置，而是在路径规划期间根据具体情况由算法选择（暂未实现），默认使用CENTER_PRINTERS喷码机
+3、即使使用CENTER_PRINTERS喷码机也可以设置偏移
+4、由于不再需要由xline_path_planner/config/planner.yaml来配置喷码机的旋转，offsets是否可以移除
+
+综合代码详细分析我的需求，给出最佳的实践方案
+
+无需保留兼容性代码

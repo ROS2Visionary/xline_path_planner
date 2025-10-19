@@ -243,6 +243,17 @@ enum class RouteType
 };
 
 /**
+ * @brief 打印机类型枚举
+ * 定义不同的打印机类型
+ */
+enum class PrinterType
+{
+  LEFT_PRINTER,    ///< 左侧打印机
+  RIGHT_PRINTER,   ///< 右侧打印机
+  CENTER_PRINTER   ///< 中心打印机（默认）
+};
+
+/**
  * @brief 几何实体基类（直线为核心，圆/弧继承）
  * 说明：
  *  - 与新JSON格式对齐，新增若干可选元数据字段（line_type/thickness/hidden/layer/layer_id/color/selected）。
@@ -531,13 +542,18 @@ struct RouteSegment
   std::vector<Point3D> points;  ///< 路径点
   RouteType type;               ///< 路径类型
   int32_t line_id;              ///< 相关联的线ID
+  PrinterType printer_type;     ///< 该路径段使用的打印机类型
 
   /**
    * @brief 构造函数
    * @param type 路径类型
    * @param id 线ID
+   * @param printer 打印机类型（默认使用中心打印机）
    */
-  RouteSegment(RouteType type = RouteType::DRAWING_PATH, int32_t id = -1) : type(type), line_id(id)
+  RouteSegment(RouteType type = RouteType::DRAWING_PATH,
+               int32_t id = -1,
+               PrinterType printer = PrinterType::CENTER_PRINTER)
+    : type(type), line_id(id), printer_type(printer)
   {
   }
 };
@@ -548,10 +564,10 @@ struct RouteSegment
  */
 struct LineDrawingData
 {
-  Point3D start;                ///< 起点
-  Point3D end;                  ///< 终点
-  int32_t line_id = 0;          ///< 线ID
-  bool is_left_printer = true;  ///< 是否使用左侧打印机
+  Point3D start;                                      ///< 起点
+  Point3D end;                                        ///< 终点
+  int32_t line_id = 0;                                ///< 线ID
+  PrinterType printer_type = PrinterType::CENTER_PRINTER;  ///< 打印机类型
 
   /**
    * @brief 默认构造函数
@@ -563,23 +579,13 @@ struct LineDrawingData
    * @param start 起点
    * @param end 终点
    * @param line_id 线ID
-   * @param is_left 是否使用左侧打印机
+   * @param printer 打印机类型（默认使用中心打印机）
    */
-  LineDrawingData(const Point3D& start, const Point3D& end, int32_t line_id, bool is_left = true)
-    : start(start), end(end), line_id(line_id), is_left_printer(is_left)
+  LineDrawingData(const Point3D& start, const Point3D& end, int32_t line_id,
+                  PrinterType printer = PrinterType::CENTER_PRINTER)
+    : start(start), end(end), line_id(line_id), printer_type(printer)
   {
   }
-};
-
-/**
- * @brief 打印机类型枚举
- * 定义不同的打印机类型
- */
-enum class PrinterType
-{
-  LEFT_PRINTER,   ///< 左侧打印机
-  RIGHT_PRINTER,  ///< 右侧打印机
-  BOTH_PRINTERS   ///< 双打印机
 };
 
 /**
@@ -599,14 +605,15 @@ enum class LineStyle
  */
 struct ExecutionNode
 {
-  Point3D position;                             ///< 位置
-  double angle = 0.0;                           ///< 角度
-  uint32_t move_state = 1;                      ///< 移动状态
-  uint32_t work_state = 0;                      ///< 工作状态
-  LineStyle left_work_type = LineStyle::NONE;   ///< 左侧打印机线型
-  LineStyle right_work_type = LineStyle::NONE;  ///< 右侧打印机线型
-  std::vector<LineDrawingData> work_data;       ///< 工作数据
-  int32_t order = 0;                            ///< 执行顺序
+  Point3D position;                              ///< 位置
+  double angle = 0.0;                            ///< 角度
+  uint32_t move_state = 1;                       ///< 移动状态
+  uint32_t work_state = 0;                       ///< 工作状态
+  LineStyle left_work_type = LineStyle::NONE;    ///< 左侧打印机线型
+  LineStyle right_work_type = LineStyle::NONE;   ///< 右侧打印机线型
+  LineStyle center_work_type = LineStyle::NONE;  ///< 中心打印机线型
+  std::vector<LineDrawingData> work_data;        ///< 工作数据
+  int32_t order = 0;                             ///< 执行顺序
 
   /**
    * @brief 默认构造函数
@@ -650,13 +657,13 @@ struct PathPlannerConfig
 
 /**
  * @brief 路径偏移配置结构体
- * 定义路径生成时的偏移参数
+ * 定义各打印机的偏移参数（全局配置）
  */
 struct PathOffsetConfig
 {
-  double left_offset = -0.2;                             ///< 左偏移距离(m)
-  double right_offset = 0.2;                             ///< 右偏移距离(m)
-  PrinterType printer_type = PrinterType::LEFT_PRINTER;  ///< 使用的打印机类型
+  double left_offset = -0.05;    ///< 左侧打印机偏移距离(m)
+  double right_offset = 0.05;    ///< 右侧打印机偏移距离(m)
+  double center_offset = 0.0;    ///< 中心打印机偏移距离(m)，默认无偏移
 };
 
 }  // namespace path_planner

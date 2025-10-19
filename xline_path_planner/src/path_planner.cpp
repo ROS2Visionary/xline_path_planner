@@ -359,12 +359,25 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
     }
   }
 
-  // 应用偏移
-  if (!segment.points.empty() && offset_config.printer_type != PrinterType::BOTH_PRINTERS)
+  // 应用偏移（根据路径段自身的printer_type）
+  if (!segment.points.empty())
   {
-    double offset = (offset_config.printer_type == PrinterType::LEFT_PRINTER) ? offset_config.left_offset :
-                                                                                offset_config.right_offset;
-    segment.points = applyPathOffset(segment.points, offset);
+    double offset = 0.0;
+    switch (segment.printer_type) {
+      case PrinterType::LEFT_PRINTER:
+        offset = offset_config.left_offset;
+        break;
+      case PrinterType::RIGHT_PRINTER:
+        offset = offset_config.right_offset;
+        break;
+      case PrinterType::CENTER_PRINTER:
+        offset = offset_config.center_offset;
+        break;
+    }
+
+    if (std::abs(offset) > 1e-6) {  // 只有偏移不为0时才应用
+      segment.points = applyPathOffset(segment.points, offset);
+    }
   }
 
   return segment;
