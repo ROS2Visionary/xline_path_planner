@@ -254,6 +254,17 @@ enum class PrinterType
 };
 
 /**
+ * @brief 墨水打印模式枚举
+ * 定义不同的打印模式
+ */
+enum class InkMode
+{
+  SOLID,   ///< 实线打印
+  DASHED,  ///< 虚线打印
+  TEXT     ///< 文字打印
+};
+
+/**
  * @brief 几何实体基类（直线为核心，圆/弧继承）
  * 说明：
  *  - 与新JSON格式对齐，新增若干可选元数据字段（line_type/thickness/hidden/layer/layer_id/color/selected）。
@@ -543,17 +554,20 @@ struct RouteSegment
   RouteType type;               ///< 路径类型
   int32_t line_id;              ///< 相关联的线ID
   PrinterType printer_type;     ///< 该路径段使用的打印机类型
+  InkMode ink_mode;             ///< 墨水打印模式（默认实线）
 
   /**
    * @brief 构造函数
    * @param type 路径类型
    * @param id 线ID
    * @param printer 打印机类型（默认使用中心打印机）
+   * @param ink 墨水打印模式（默认实线）
    */
   RouteSegment(RouteType type = RouteType::DRAWING_PATH,
                int32_t id = -1,
-               PrinterType printer = PrinterType::CENTER_PRINTER)
-    : type(type), line_id(id), printer_type(printer)
+               PrinterType printer = PrinterType::CENTER_PRINTER,
+               InkMode ink = InkMode::SOLID)
+    : type(type), line_id(id), printer_type(printer), ink_mode(ink)
   {
   }
 };

@@ -9,7 +9,7 @@ inline nlohmann::json point_mm(const path_planner::Point3D& p)
   return nlohmann::json{ {"x", to_mm(p.x)}, {"y", to_mm(p.y)} };
 }
 
-// 将 PrinterType 转换为字符串
+// 将 PrinterType 转换为字符串（大写形式，用于 printer_type 字段）
 inline std::string printerTypeToString(path_planner::PrinterType type)
 {
   switch (type) {
@@ -23,6 +23,49 @@ inline std::string printerTypeToString(path_planner::PrinterType type)
       return "CENTER_PRINTER";
   }
 }
+
+// 将 PrinterType 转换为小写字符串（用于 ink.printer 字段）
+inline std::string printerTypeToLowerString(path_planner::PrinterType type)
+{
+  switch (type) {
+    case path_planner::PrinterType::LEFT_PRINTER:
+      return "left";
+    case path_planner::PrinterType::RIGHT_PRINTER:
+      return "right";
+    case path_planner::PrinterType::CENTER_PRINTER:
+      return "center";
+    default:
+      return "center";
+  }
+}
+
+// 将 InkMode 转换为字符串
+inline std::string inkModeToString(path_planner::InkMode mode)
+{
+  switch (mode) {
+    case path_planner::InkMode::SOLID:
+      return "solid";
+    case path_planner::InkMode::DASHED:
+      return "dashed";
+    case path_planner::InkMode::TEXT:
+      return "text";
+    default:
+      return "solid";
+  }
+}
+
+// 构造 ink JSON 对象
+inline nlohmann::json constructInkJSON(bool enabled,
+                                       path_planner::InkMode mode,
+                                       path_planner::PrinterType printer)
+{
+  nlohmann::json ink;
+  ink["enabled"] = enabled;
+  ink["mode"] = inkModeToString(mode);
+  ink["printer"] = printerTypeToLowerString(printer);
+  return ink;
+}
+
 } // anonymous namespace
 
 namespace path_planner
@@ -112,6 +155,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         j["work"] = true;
         j["printed"] = false;
         j["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
+        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
 
         j["line_type"] = (src ? src->line_type : std::string("continuous"));
         j["thickness"] = (src ? src->thickness : 1.0);
@@ -148,6 +192,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         j["work"] = true;
         j["printed"] = false;
         j["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
+        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
 
         j["line_type"] = (src ? src->line_type : std::string("continuous"));
         j["thickness"] = (src ? src->thickness : 1.0);
@@ -192,6 +237,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
           line["work"] = true; // 绘图段：工作
           line["printed"] = false;
           line["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
+          line["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
 
           line["line_type"] = (src ? src->line_type : std::string("continuous"));
           line["thickness"] = (src ? src->thickness : 1.0);
@@ -218,6 +264,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
           poly["work"] = true; // 绘图段：工作
           poly["printed"] = false;
           poly["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
+          poly["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
 
           poly["line_type"] = (src ? src->line_type : std::string("continuous"));
           poly["thickness"] = (src ? src->thickness : 1.0);
@@ -272,6 +319,7 @@ nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start
   j["order"] = order;
   j["work"] = false;
   j["printed"] = false;
+  j["ink"] = constructInkJSON(false, InkMode::SOLID, PrinterType::CENTER_PRINTER);
   j["start"] = point_mm(start);
   j["end"] = point_mm(end);
 

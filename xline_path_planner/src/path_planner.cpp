@@ -6,6 +6,21 @@
 namespace path_planner
 {
 
+namespace {
+// 从 line_type 字符串推导 InkMode
+InkMode deduceInkMode(const std::string& line_type)
+{
+  if (line_type == "dashed" || line_type == "dotted") {
+    return InkMode::DASHED;
+  } else if (line_type == "text") {
+    return InkMode::TEXT;
+  } else {
+    // continuous 或其他默认为 solid
+    return InkMode::SOLID;
+  }
+}
+} // anonymous namespace
+
 PathPlanner::PathPlanner(const PathPlannerConfig& config) : planner_config_(config), grid_map_generator_(nullptr)
 {
 }
@@ -124,6 +139,9 @@ std::shared_ptr<Line> PathPlanner::findNearestUnprocessedLine(const Point3D& cur
 RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, const PathOffsetConfig& offset_config)
 {
   RouteSegment segment(RouteType::DRAWING_PATH, line->id);
+
+  // 从 line_type 推导 ink_mode
+  segment.ink_mode = deduceInkMode(line->line_type);
 
   // 新增路径延长长度的配置参数
   double path_extension_length = planner_config_.path_extension_length;
