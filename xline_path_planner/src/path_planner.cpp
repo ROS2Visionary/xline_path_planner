@@ -46,7 +46,8 @@ void PathPlanner::set_config(const PathPlannerConfig& config)
   planner_config_ = config;
 }
 
-std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const PathOffsetConfig& offset_config)
+std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const PathOffsetConfig& offset_config,
+                                                   const std::optional<Point3D>& robot_start_position)
 {
   if (!grid_map_generator_)
   {
@@ -55,6 +56,13 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
   }
 
   std::vector<RouteSegment> path_segments;
+
+  // 如果提供了机器人起始位置，打印信息
+  if (robot_start_position.has_value())
+  {
+    std::cout << "使用机器人起始位置: [" << robot_start_position->x << ", " << robot_start_position->y << ", "
+              << robot_start_position->z << "]" << std::endl;
+  }
 
   // 打印CAD数据中路径线的数量
   std::cout << "Total path lines in CAD data: " << cad_data.path_lines.size() << std::endl;
@@ -108,8 +116,8 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
 
   std::cout << "Planning paths for " << lines_to_draw.size() << " lines" << std::endl;
 
-  // 处理所有线段
-  processGeometryGroup(lines_to_draw, path_segments, offset_config);
+  // 处理所有线段（传递机器人起始位置）
+  processGeometryGroup(lines_to_draw, path_segments, offset_config, robot_start_position);
 
   return path_segments;
 }
@@ -119,6 +127,9 @@ std::shared_ptr<Line> PathPlanner::findNearestUnprocessedLine(const Point3D& cur
 {
   double min_distance = std::numeric_limits<double>::max();
   std::shared_ptr<Line> nearest_line = nullptr;
+
+  std::cout << "\n🔍 从位置 [" << current_pos.x << ", " << current_pos.y << ", " << current_pos.z
+            << "] 查找最近的未处理线段..." << std::endl;
 
   for (const auto& line : lines)
   {
@@ -131,6 +142,15 @@ std::shared_ptr<Line> PathPlanner::findNearestUnprocessedLine(const Point3D& cur
         nearest_line = line;
       }
     }
+  }
+
+  if (nearest_line)
+  {
+    std::cout << "✅ 找到最近线段 ID: " << nearest_line->id << "，距离: " << min_distance << " 米" << std::endl;
+  }
+  else
+  {
+    std::cout << "❌ 未找到未处理的线段" << std::endl;
   }
 
   return nearest_line;
@@ -415,12 +435,32 @@ RouteSegment PathPlanner::planConnectionPath(const Point3D& start, const Point3D
 }
 
 void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>& lines,
-                                     std::vector<RouteSegment>& path_segments, const PathOffsetConfig& offset_config)
+                                     std::vector<RouteSegment>& path_segments, const PathOffsetConfig& offset_config,
+                                     const std::optional<Point3D>& start_position)
 {
   Point3D current_position;
   bool has_current_position = false;
 
-  std::cout << "Processing " << lines.size() << " lines in group" << std::endl;
+  std::cout << "\n" << std::string(80, '=') << std::endl;
+  std::cout << "开始处理几何线段组" << std::endl;
+  std::cout << std::string(80, '=') << std::endl;
+
+  // 如果提供了起始位置，使用它作为当前位置
+  if (start_position.has_value())
+  {
+    current_position = start_position.value();
+    has_current_position = true;
+    std::cout << "\n✅ 使用机器人起始位置:" << std::endl;
+    std::cout << "   位置: [" << current_position.x << ", " << current_position.y << ", "
+              << current_position.z << "]" << std::endl;
+    std::cout << "   将从此位置开始规划第一条转场路径！" << std::endl;
+  }
+  else
+  {
+    std::cout << "\n⚠️  未提供机器人起始位置，将使用默认规划方式" << std::endl;
+  }
+
+  std::cout << "\n处理线段总数: " << lines.size() << std::endl;
 
   // 分类处理不同类型的线段
   std::vector<std::shared_ptr<Line>> straight_lines;
@@ -474,8 +514,12 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
 
     if (nearest_line)
     {
-      std::cout << "Planning path for line ID: " << nearest_line->id
-                << " (type: " << static_cast<int>(nearest_line->type) << ")" << std::endl;
+      std::cout << "\n========== 规划线段 ID: " << nearest_line->id << " ==========" << std::endl;
+      std::cout << "线段类型: " << static_cast<int>(nearest_line->type) << std::endl;
+      std::cout << "线段起点: [" << nearest_line->start.x << ", " << nearest_line->start.y << ", "
+                << nearest_line->start.z << "]" << std::endl;
+      std::cout << "线段终点: [" << nearest_line->end.x << ", " << nearest_line->end.y << ", "
+                << nearest_line->end.z << "]" << std::endl;
 
       // 规划该线的绘图路径
       RouteSegment drawing_segment = planGeometryPath(nearest_line, offset_config);
@@ -489,17 +533,29 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
         // 如果已经有当前位置,则规划一条直线转场路径
         if (has_current_position)
         {
+          double distance = current_position.distance(drawing_segment.points.front());
+          std::cout << "\n>>> 生成转场路径 <<<" << std::endl;
+          std::cout << "  当前位置: [" << current_position.x << ", " << current_position.y << ", "
+                    << current_position.z << "]" << std::endl;
+          std::cout << "  目标位置: [" << drawing_segment.points.front().x << ", "
+                    << drawing_segment.points.front().y << ", " << drawing_segment.points.front().z << "]" << std::endl;
+          std::cout << "  转场距离: " << distance << " 米" << std::endl;
+
           RouteSegment transition_segment = planConnectionPath(current_position, drawing_segment.points.front());
 
           if (!transition_segment.points.empty())
           {
             path_segments.push_back(transition_segment);
-            std::cout << "Added transition path with " << transition_segment.points.size() << " points" << std::endl;
+            std::cout << "✅ 转场路径已添加，包含 " << transition_segment.points.size() << " 个点" << std::endl;
           }
           else
           {
-            std::cerr << "Failed to plan transition path to line ID: " << nearest_line->id << std::endl;
+            std::cerr << "❌ 转场路径生成失败 (line ID: " << nearest_line->id << ")" << std::endl;
           }
+        }
+        else
+        {
+          std::cout << "\n⚠️  这是第一条路径，没有当前位置，不生成转场路径" << std::endl;
         }
 
         // 添加绘图路径
@@ -517,14 +573,18 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
       remaining_lines.erase(std::remove(remaining_lines.begin(), remaining_lines.end(), nearest_line),
                             remaining_lines.end());
 
-      std::cout << "Remaining lines to process: " << remaining_lines.size() << std::endl;
+      std::cout << "\n剩余待处理线段: " << remaining_lines.size() << std::endl;
     }
     else
     {
-      std::cout << "No more undrawn lines found" << std::endl;
+      std::cout << "\n❌ 未找到更多未绘制的线段，规划结束" << std::endl;
       break;
     }
   }
+
+  std::cout << "\n" << std::string(80, '=') << std::endl;
+  std::cout << "线段组处理完成，共生成 " << path_segments.size() << " 个路径段" << std::endl;
+  std::cout << std::string(80, '=') << std::endl;
 }
 
 std::vector<Point3D> PathPlanner::applyPathOffset(const std::vector<Point3D>& original_path, double offset)

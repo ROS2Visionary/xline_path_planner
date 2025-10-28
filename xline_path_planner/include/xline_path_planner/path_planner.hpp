@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include <cmath>
+#include <optional>
 
 #include "xline_path_planner/common_types.hpp"
 #include "xline_path_planner/grid_map_generator.hpp"
@@ -73,18 +74,22 @@ public:
    * @brief 根据CAD数据规划所有路径
    * @param cad_data CAD数据
    * @param offset_config 路径偏移配置
+   * @param robot_start_position 机器人起始位置（可选），如果提供则从该位置开始规划
    * @return 返回路径段序列，包括绘图路径和转场路径
    */
-  std::vector<RouteSegment> plan_paths(const CADData& cad_data, const PathOffsetConfig& offset_config);
+  std::vector<RouteSegment> plan_paths(const CADData& cad_data, const PathOffsetConfig& offset_config,
+                                       const std::optional<Point3D>& robot_start_position = std::nullopt);
 
   /**
    * @brief 处理一组线段，规划路径
    * @param lines 线段组
    * @param path_segments 输出的路径段（输出参数）
    * @param offset_config 偏移配置
+   * @param start_position 起始位置（可选），如果提供则从该位置开始规划
    */
   void processGeometryGroup(const std::vector<std::shared_ptr<Line>>& lines, std::vector<RouteSegment>& path_segments,
-                            const PathOffsetConfig& offset_config);
+                            const PathOffsetConfig& offset_config,
+                            const std::optional<Point3D>& start_position = std::nullopt);
 
   /**
    * @brief 应用偏移量到路径

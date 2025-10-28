@@ -1,0 +1,335 @@
+{
+  "metadata": {
+    "source_file": "unknown",
+    "export_timestamp": "2025-10-06 07:00:55",
+    "total_layers": 1,
+    "total_lines": 16,
+    "total_linetypes": 0,
+    "app_version": "1.0.0",
+    "export_filter": "default_layers_only",
+    "base_point_count": 3
+  },
+  "linetypes": [],
+  "layers": [
+    {
+      "layer_id": 1,
+      "name": "路径",
+      "color": "#0d6efd",
+      "visible": true,
+      "locked": false,
+      "line_count": 16,
+      "description": "机器人绘制路径",
+      "width": 0.0,
+      "height": 0.0
+    }
+  ],
+  "lines": [
+    {
+      "id": 1,
+      "type": "line",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "start": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "end": {
+        "x": 1000.0,
+        "y": 0.0
+      }
+    },
+    {
+      "id": 2,
+      "type": "line",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "start": {
+        "x": 1000.0,
+        "y": 0.0
+      },
+      "end": {
+        "x": 1000.0,
+        "y": 1000.0
+      }
+    },
+    {
+      "id": 3,
+      "type": "line",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "start": {
+        "x": 1000.0,
+        "y": 1000.0
+      },
+      "end": {
+        "x": 0.0,
+        "y": 1000.0
+      }
+    },
+    {
+      "id": 4,
+      "type": "line",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "start": {
+        "x": 0.0,
+        "y": 1000.0
+      },
+      "end": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    {
+      "id": 5,
+      "type": "line",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "start": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "end": {
+        "x": 1000.0,
+        "y": 1000.0
+      }
+    },
+    {
+      "id": 6,
+      "type": "line",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "start": {
+        "x": 1000.0,
+        "y": 0.0
+      },
+      "end": {
+        "x": 0.0,
+        "y": 1000.0
+      }
+    },
+    {
+      "id": 7,
+      "type": "circle",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "center": {
+        "x": 500.0,
+        "y": 500.0
+      },
+      "radius": 500.0
+    },
+    {
+      "id": 8,
+      "type": "circle",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "center": {
+        "x": 500.0,
+        "y": 500.0
+      },
+      "radius": 707.1067811865476
+    },
+    {
+      "id": 9,
+      "type": "text",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "subtype": "text",
+      "position": {
+        "x": 500.0,
+        "y": 500.0
+      },
+      "height": 50.0,
+      "rotation": 0.0,
+      "style": "Standard",
+      "content": "中心点",
+      "width_factor": 1.0,
+      "oblique": 0.0,
+      "align": {
+        "horizontal": "center",
+        "vertical": "middle"
+      }
+    },
+    {
+      "id": 10,
+      "type": "text",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "subtype": "text",
+      "position": {
+        "x": 0.0,
+        "y": -50.0
+      },
+      "height": 40.0,
+      "rotation": 0.0,
+      "style": "Standard",
+      "content": "1m×1m正方形测试图",
+      "width_factor": 1.0,
+      "oblique": 0.0,
+      "align": {
+        "horizontal": "left",
+        "vertical": "baseline"
+      }
+    },
+    {
+      "id": 11,
+      "type": "text",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "subtype": "text",
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "height": 30.0,
+      "rotation": 0.0,
+      "style": "Standard",
+      "content": "起点(0,0)",
+      "width_factor": 1.0,
+      "oblique": 0.0,
+      "align": {
+        "horizontal": "left",
+        "vertical": "bottom"
+      }
+    },
+    {
+      "id": 12,
+      "type": "text",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "subtype": "text",
+      "position": {
+        "x": 1000.0,
+        "y": 1000.0
+      },
+      "height": 30.0,
+      "rotation": 0.0,
+      "style": "Standard",
+      "content": "终点(1000,1000)",
+      "width_factor": 1.0,
+      "oblique": 0.0,
+      "align": {
+        "horizontal": "right",
+        "vertical": "top"
+      }
+    },
+    {
+      "id": 14,
+      "type": "text",
+      "line_type": "continuous",
+      "thickness": 1.0,
+      "hidden": false,
+      "layer_id": 1,
+      "color": "#0d6efd",
+      "subtype": "text",
+      "position": {
+        "x": 500.0,
+        "y": -100.0
+      },
+      "height": 35.0,
+      "rotation": 0.0,
+      "style": "Standard",
+      "content": "边长: 1000mm",
+      "width_factor": 1.2,
+      "oblique": 0.0,
+      "align": {
+        "horizontal": "center",
+        "vertical": "baseline"
+      }
+    }
+  ],
+  "base_points": {
+    "coordinate_system": "original",
+    "transformation_type": null,
+    "transformation_matrix": null,
+    "transformation_parameters": null,
+    "accuracy_tolerance": 0.001,
+    "points": [
+      {
+        "id": "bp_001",
+        "name": "基准点1",
+        "original": {
+          "x": 0.0,
+          "y": 1000.0,
+          "z": null
+        },
+        "actual": null,
+        "is_control_point": true,
+        "is_required": true,
+        "role": "",
+        "priority": 1,
+        "weight": 1.0,
+        "status": "pending"
+      },
+      {
+        "id": "bp_002",
+        "name": "基准点2",
+        "original": {
+          "x": 1000.0,
+          "y": 0.0,
+          "z": null
+        },
+        "actual": null,
+        "is_control_point": true,
+        "is_required": true,
+        "role": "",
+        "priority": 2,
+        "weight": 1.0,
+        "status": "pending"
+      },
+      {
+        "id": "bp_003",
+        "name": "基准点3",
+        "original": {
+          "x": 1000.0,
+          "y": 1000.0,
+          "z": null
+        },
+        "actual": null,
+        "is_control_point": true,
+        "is_required": false,
+        "role": "",
+        "priority": 3,
+        "weight": 1.0,
+        "status": "pending"
+      }
+    ]
+  }
+}

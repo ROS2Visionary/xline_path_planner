@@ -21,6 +21,7 @@
 #include "ament_index_cpp/get_package_share_directory.hpp"
 
 #include "rclcpp/rclcpp.hpp"
+#include "geometry_msgs/msg/pose_stamped.hpp"
 #include "xline_path_planner/srv/plan_path.hpp"
 
 #include "xline_path_planner/cad_parser.hpp"
@@ -46,6 +47,8 @@ public:
   {
     // 加载基础配置（严格 YAML）
     updateParameters();
+    // 订阅机器人位置
+    start_robot_pose_subscriber();
     // 启动 Service Server
     start_service_server();
     // 启动 TCP Server（如启用）
@@ -133,6 +136,17 @@ public:
       if (tcp["port"]) tcp_port_ = tcp["port"].as<int>();
     }
 
+    // 3.2) 读取 Robot Start 参数（可选）
+    YAML::Node robot_start = root["robot_start"];
+    if (robot_start && !robot_start.IsNull())
+    {
+      if (robot_start["enabled"]) robot_start_enabled_ = robot_start["enabled"].as<bool>();
+      if (robot_start["pose_topic"]) robot_pose_topic_ = robot_start["pose_topic"].as<std::string>();
+      if (robot_start["pose_timeout_sec"]) robot_pose_timeout_ = robot_start["pose_timeout_sec"].as<double>();
+      if (robot_start["required"]) robot_pose_required_ = robot_start["required"].as<bool>();
+      if (robot_start["max_initial_distance"]) max_initial_distance_ = robot_start["max_initial_distance"].as<double>();
+    }
+
     // 4) 读取 栅格地图 参数
     YAML::Node grid = root["grid_map"];
     require(grid, "grid_map");
@@ -201,6 +215,31 @@ public:
     RCLCPP_INFO(this->get_logger(), "配置加载完成: %s", yaml_path.c_str());
   }
 
+  // 启动机器人位置订阅器
+  void start_robot_pose_subscriber()
+  {
+    if (!robot_start_enabled_)
+    {
+      RCLCPP_INFO(this->get_logger(), "机器人起始位置功能已禁用");
+      return;
+    }
+    robot_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>(
+      robot_pose_topic_,
+      rclcpp::QoS{10},
+      std::bind(&PlannerNode::robot_pose_callback, this, std::placeholders::_1)
+    );
+    RCLCPP_INFO(this->get_logger(), "订阅机器人位置话题: %s", robot_pose_topic_.c_str());
+  }
+
+  // 机器人位置回调函数
+  void robot_pose_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
+  {
+    std::lock_guard<std::mutex> lock(robot_pose_mutex_);
+    robot_pose_ = *msg;
+    RCLCPP_DEBUG(this->get_logger(), "收到机器人位置: [%.3f, %.3f, %.3f]",
+                 msg->pose.position.x, msg->pose.position.y, msg->pose.position.z);
+  }
+
   // 启动 Service Server（plan_path）
   void start_service_server()
   {
@@ -224,7 +263,8 @@ public:
   }
 
   // 执行实际规划（线程安全），输入为完整文件路径
-  bool plan_from_input_path(const std::filesystem::path& input_path, std::string& out_message, std::string& out_error)
+  bool plan_from_input_path(const std::filesystem::path& input_path, std::string& out_message, std::string& out_error,
+                             const std::optional<Point3D>& robot_start_position = std::nullopt)
   {
     std::lock_guard<std::mutex> lock(plan_mutex_);
     try
@@ -247,10 +287,10 @@ public:
       }
       const auto& grid_map = grid_map_generator.get_grid_map();
 
-      // 路径规划
+      // 路径规划（传递机器人起始位置）
       PathPlanner path_planner(cfg.path_planner);
       path_planner.set_grid_map(grid_map, &grid_map_generator);
-      auto path_segments = path_planner.plan_paths(cad_data, cfg.offsets);
+      auto path_segments = path_planner.plan_paths(cad_data, cfg.offsets, robot_start_position);
       if (path_segments.empty())
       {
         throw std::runtime_error("路径规划失败，未生成任何路径段");
@@ -361,9 +401,78 @@ public:
   {
     try
     {
-      // 1) 构造输入路径并校验（配置在执行函数中使用）
+      // 1) 获取机器人位置（如果启用且可用）
+      std::optional<Point3D> robot_start;
+      if (robot_start_enabled_)
+      {
+        RCLCPP_INFO(this->get_logger(), "机器人起始位置功能已启用，开始检查位置...");
 
-      // 2) 解析 CAD 文件：文件名 + 配置目录 拼完整路径
+        std::lock_guard<std::mutex> lock(robot_pose_mutex_);
+        bool pose_valid = false;
+
+        if (robot_pose_.has_value())
+        {
+          // 检查位置是否过期
+          auto now = this->get_clock()->now();
+          auto pose_time = rclcpp::Time(robot_pose_->header.stamp);
+          auto age = (now - pose_time).seconds();
+
+          RCLCPP_INFO(this->get_logger(), "已收到机器人位置，时间戳年龄: %.2f 秒 (超时限制: %.2f 秒)",
+                      age, robot_pose_timeout_);
+
+          // bool is_timeout_ = age > robot_pose_timeout_;
+          // TODO 暂时不检查是否超时
+          bool is_timeout_ = false;
+          if (is_timeout_)
+          {
+            
+            RCLCPP_WARN(this->get_logger(), "❌ 机器人位置已过期 (%.1f秒前，超时限制: %.1f秒)", age, robot_pose_timeout_);
+          }
+          else
+          {
+            pose_valid = true;
+            const auto& pose = robot_pose_->pose.position;
+            robot_start = Point3D{pose.x, pose.y, pose.z};
+            RCLCPP_INFO(this->get_logger(), "✅ 使用机器人起始位置: [%.3f, %.3f, %.3f]", pose.x, pose.y, pose.z);
+          }
+        }
+        else
+        {
+          RCLCPP_WARN(this->get_logger(), "❌ 未收到任何机器人位置消息");
+          RCLCPP_INFO(this->get_logger(), "   提示：请确保有节点发布位置到话题: %s", robot_pose_topic_.c_str());
+        }
+
+        if (!pose_valid)
+        {
+          if (robot_pose_required_)
+          {
+            std::string error_msg = "机器人位置不可用！\n";
+            error_msg += "  - 配置要求必须有位置 (required: true)\n";
+            error_msg += "  - 位置话题: " + robot_pose_topic_ + "\n";
+            if (!robot_pose_.has_value())
+            {
+              error_msg += "  - 状态: 未收到任何位置消息\n";
+              error_msg += "  - 解决方案: 请先发布机器人位置，或将 planner.yaml 中的 required 设置为 false";
+            }
+            else
+            {
+              error_msg += "  - 状态: 位置已过期\n";
+              error_msg += "  - 解决方案: 请在调用服务前 " + std::to_string(robot_pose_timeout_) + " 秒内发布位置";
+            }
+            RCLCPP_ERROR(this->get_logger(), "%s", error_msg.c_str());
+            throw std::runtime_error(error_msg);
+          }
+          RCLCPP_WARN(this->get_logger(), "⚠️  未收到机器人位置或位置已过期，使用默认起点规划");
+        }
+      }
+      else
+      {
+        RCLCPP_INFO(this->get_logger(), "机器人起始位置功能已禁用，使用默认规划方式");
+      }
+
+      // 2) 构造输入路径并校验（配置在执行函数中使用）
+
+      // 3) 解析 CAD 文件：文件名 + 配置目录 拼完整路径
       if (req->file_name.empty())
       {
         throw std::runtime_error("请求中的 file_name 为空");
@@ -382,7 +491,7 @@ public:
         throw std::runtime_error(std::string("CAD 文件不存在: ") + input_path.string());
       }
       std::string message, error;
-      bool ok = plan_from_input_path(input_path, message, error);
+      bool ok = plan_from_input_path(input_path, message, error, robot_start);
       res->success = ok;
       res->error = ok ? std::string("") : error;
       res->message = ok ? message : std::string("");
@@ -531,6 +640,16 @@ public:
 
   // 成员变量
   rclcpp::Service<xline_path_planner::srv::PlanPath>::SharedPtr service_;
+
+  // 机器人位置订阅器和数据
+  rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr robot_pose_sub_;
+  std::optional<geometry_msgs::msg::PoseStamped> robot_pose_;
+  std::mutex robot_pose_mutex_;
+  std::string robot_pose_topic_ = "/robot_pose";
+  bool robot_start_enabled_ = true;
+  double robot_pose_timeout_ = 5.0;
+  bool robot_pose_required_ = false;
+  double max_initial_distance_ = 2.0;
 
   std::string image_format;
   std::string cad_files_dir_;

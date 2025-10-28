@@ -1,0 +1,462 @@
+{
+  "lines": [
+    {
+      "color": "#D3D3D3",
+      "end": {
+        "x": -100.0,
+        "y": 50.0
+      },
+      "hidden": false,
+      "id": 1000000,
+      "ink": {
+        "enabled": false,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "TRANSITION",
+      "layer_id": 1000000,
+      "line_type": "",
+      "opacity": 0.5,
+      "order": 0,
+      "printed": false,
+      "selected": false,
+      "start": {
+        "x": -500.0,
+        "y": -500.0
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": false
+    },
+    {
+      "color": "#0d6efd",
+      "end": {
+        "x": 1100.0,
+        "y": 50.0
+      },
+      "hidden": false,
+      "id": 1,
+      "ink": {
+        "enabled": true,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "路径",
+      "layer_id": 1,
+      "line_type": "continuous",
+      "order": 1,
+      "printed": false,
+      "printer_type": "CENTER_PRINTER",
+      "selected": false,
+      "start": {
+        "x": -100.0,
+        "y": 50.0
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": true
+    },
+    {
+      "color": "#D3D3D3",
+      "end": {
+        "x": 950.0,
+        "y": -100.0
+      },
+      "hidden": false,
+      "id": 1000000,
+      "ink": {
+        "enabled": false,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "TRANSITION",
+      "layer_id": 1000000,
+      "line_type": "",
+      "opacity": 0.5,
+      "order": 2,
+      "printed": false,
+      "selected": false,
+      "start": {
+        "x": 1100.0,
+        "y": 50.0
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": false
+    },
+    {
+      "color": "#0d6efd",
+      "end": {
+        "x": 950.0,
+        "y": 1100.0
+      },
+      "hidden": false,
+      "id": 2,
+      "ink": {
+        "enabled": true,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "路径",
+      "layer_id": 1,
+      "line_type": "continuous",
+      "order": 3,
+      "printed": false,
+      "printer_type": "CENTER_PRINTER",
+      "selected": false,
+      "start": {
+        "x": 950.0,
+        "y": -100.0
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": true
+    },
+    {
+      "color": "#D3D3D3",
+      "end": {
+        "x": 1100.0,
+        "y": 950.0
+      },
+      "hidden": false,
+      "id": 1000000,
+      "ink": {
+        "enabled": false,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "TRANSITION",
+      "layer_id": 1000000,
+      "line_type": "",
+      "opacity": 0.5,
+      "order": 4,
+      "printed": false,
+      "selected": false,
+      "start": {
+        "x": 950.0,
+        "y": 1100.0
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": false
+    },
+    {
+      "color": "#0d6efd",
+      "end": {
+        "x": -100.0,
+        "y": 950.0
+      },
+      "hidden": false,
+      "id": 3,
+      "ink": {
+        "enabled": true,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "路径",
+      "layer_id": 1,
+      "line_type": "continuous",
+      "order": 5,
+      "printed": false,
+      "printer_type": "CENTER_PRINTER",
+      "selected": false,
+      "start": {
+        "x": 1100.0,
+        "y": 950.0
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": true
+    },
+    {
+      "color": "#D3D3D3",
+      "end": {
+        "x": 50.0,
+        "y": 1100.0
+      },
+      "hidden": false,
+      "id": 1000000,
+      "ink": {
+        "enabled": false,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "TRANSITION",
+      "layer_id": 1000000,
+      "line_type": "",
+      "opacity": 0.5,
+      "order": 6,
+      "printed": false,
+      "selected": false,
+      "start": {
+        "x": -100.0,
+        "y": 950.0
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": false
+    },
+    {
+      "color": "#0d6efd",
+      "end": {
+        "x": 50.0,
+        "y": -100.0
+      },
+      "hidden": false,
+      "id": 4,
+      "ink": {
+        "enabled": true,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "路径",
+      "layer_id": 1,
+      "line_type": "continuous",
+      "order": 7,
+      "printed": false,
+      "printer_type": "CENTER_PRINTER",
+      "selected": false,
+      "start": {
+        "x": 50.0,
+        "y": 1100.0
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": true
+    },
+    {
+      "color": "#D3D3D3",
+      "end": {
+        "x": -106.06601717798213,
+        "y": -35.35533905932738
+      },
+      "hidden": false,
+      "id": 1000000,
+      "ink": {
+        "enabled": false,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "TRANSITION",
+      "layer_id": 1000000,
+      "line_type": "",
+      "opacity": 0.5,
+      "order": 8,
+      "printed": false,
+      "selected": false,
+      "start": {
+        "x": 50.0,
+        "y": -100.0
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": false
+    },
+    {
+      "color": "#0d6efd",
+      "end": {
+        "x": 1035.3553390593274,
+        "y": 1106.066017177982
+      },
+      "hidden": false,
+      "id": 5,
+      "ink": {
+        "enabled": true,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "路径",
+      "layer_id": 1,
+      "line_type": "continuous",
+      "order": 9,
+      "printed": false,
+      "printer_type": "CENTER_PRINTER",
+      "selected": false,
+      "start": {
+        "x": -106.06601717798213,
+        "y": -35.35533905932738
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": true
+    },
+    {
+      "color": "#D3D3D3",
+      "end": {
+        "x": 958.9058393701785,
+        "y": 396.0227430534425
+      },
+      "hidden": false,
+      "id": 1000000,
+      "ink": {
+        "enabled": false,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "TRANSITION",
+      "layer_id": 1000000,
+      "line_type": "",
+      "opacity": 0.5,
+      "order": 10,
+      "printed": false,
+      "selected": false,
+      "start": {
+        "x": 1035.3553390593274,
+        "y": 1106.066017177982
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": false
+    },
+    {
+      "center": {
+        "x": 500.0,
+        "y": 500.0
+      },
+      "color": "#0d6efd",
+      "end": {
+        "x": 958.9058393701785,
+        "y": 603.9772569465573
+      },
+      "hidden": false,
+      "id": 7,
+      "ink": {
+        "enabled": true,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "路径",
+      "layer_id": 1,
+      "line_type": "continuous",
+      "order": 11,
+      "printed": false,
+      "printer_type": "CENTER_PRINTER",
+      "radius": 500.0,
+      "selected": false,
+      "start": {
+        "x": 958.9058393701785,
+        "y": 396.0227430534425
+      },
+      "thickness": 1.0,
+      "type": "circle",
+      "work": true
+    },
+    {
+      "color": "#D3D3D3",
+      "end": {
+        "x": 1166.0126205567258,
+        "y": 396.0227430534425
+      },
+      "hidden": false,
+      "id": 1000000,
+      "ink": {
+        "enabled": false,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "TRANSITION",
+      "layer_id": 1000000,
+      "line_type": "",
+      "opacity": 0.5,
+      "order": 12,
+      "printed": false,
+      "selected": false,
+      "start": {
+        "x": 958.9058393701785,
+        "y": 603.9772569465573
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": false
+    },
+    {
+      "center": {
+        "x": 500.0,
+        "y": 500.0
+      },
+      "color": "#0d6efd",
+      "end": {
+        "x": 1166.0126205567258,
+        "y": 603.9772569465572
+      },
+      "hidden": false,
+      "id": 8,
+      "ink": {
+        "enabled": true,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "路径",
+      "layer_id": 1,
+      "line_type": "continuous",
+      "order": 13,
+      "printed": false,
+      "printer_type": "CENTER_PRINTER",
+      "radius": 707.1067811865476,
+      "selected": false,
+      "start": {
+        "x": 1166.0126205567258,
+        "y": 396.0227430534425
+      },
+      "thickness": 1.0,
+      "type": "circle",
+      "work": true
+    },
+    {
+      "color": "#D3D3D3",
+      "end": {
+        "x": 1035.3553390593274,
+        "y": -106.06601717798213
+      },
+      "hidden": false,
+      "id": 1000000,
+      "ink": {
+        "enabled": false,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "TRANSITION",
+      "layer_id": 1000000,
+      "line_type": "",
+      "opacity": 0.5,
+      "order": 14,
+      "printed": false,
+      "selected": false,
+      "start": {
+        "x": 1166.0126205567258,
+        "y": 603.9772569465572
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": false
+    },
+    {
+      "color": "#0d6efd",
+      "end": {
+        "x": -106.06601717798213,
+        "y": 1035.3553390593274
+      },
+      "hidden": false,
+      "id": 6,
+      "ink": {
+        "enabled": true,
+        "mode": "solid",
+        "printer": "center"
+      },
+      "layer": "路径",
+      "layer_id": 1,
+      "line_type": "continuous",
+      "order": 15,
+      "printed": false,
+      "printer_type": "CENTER_PRINTER",
+      "selected": false,
+      "start": {
+        "x": 1035.3553390593274,
+        "y": -106.06601717798213
+      },
+      "thickness": 1.0,
+      "type": "line",
+      "work": true
+    }
+  ]
+}
