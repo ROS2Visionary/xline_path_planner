@@ -222,47 +222,10 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
         circle_points.push_back(point);
       }
 
-      // 延长圆的起点和终点（按切线方向）
-      if (circle_points.size() >= 3)
-      {
-        // 计算起点的切线方向（使用起点和下一个点的方向近似）
-        Point3D tangent_start = circle_points[1] - circle_points[0];
-        double tangent_length = tangent_start.distance(Point3D(0, 0, 0));
-
-        // 起点沿切线向后延长
-        Point3D extended_start = circle_points.front();
-        if (tangent_length > 1e-6)
-        {
-          extended_start.x -= tangent_start.x * path_extension_length / tangent_length;
-          extended_start.y -= tangent_start.y * path_extension_length / tangent_length;
-          extended_start.z -= tangent_start.z * path_extension_length / tangent_length;
-        }
-
-        // 计算终点的切线方向（使用终点和前一个点的方向近似）
-        Point3D tangent_end = circle_points.back() - circle_points[circle_points.size() - 2];
-        tangent_length = tangent_end.distance(Point3D(0, 0, 0));
-
-        // 终点沿切线向前延长
-        Point3D extended_end = circle_points.back();
-        if (tangent_length > 1e-6)
-        {
-          extended_end.x += tangent_end.x * path_extension_length / tangent_length;
-          extended_end.y += tangent_end.y * path_extension_length / tangent_length;
-          extended_end.z += tangent_end.z * path_extension_length / tangent_length;
-        }
-
-        // 构建新的点序列
-        segment.points.push_back(extended_start);
-        for (size_t i = 1; i < circle_points.size() - 1; ++i)
-        {
-          segment.points.push_back(circle_points[i]);
-        }
-        segment.points.push_back(extended_end);
-      }
-      else
-      {
-        segment.points = circle_points;
-      }
+      // 为圆形路径保持原始几何形状，不对起点和终点进行切线方向的延长，
+      // 这样 segment.points.front()/back() 将严格落在圆上，便于后续导出的
+      // start/end 与 CAD 中的圆几何保持一致。
+      segment.points = circle_points;
     }
   }
   else if (line->type == GeometryType::ARC)
