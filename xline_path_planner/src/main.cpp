@@ -594,7 +594,37 @@ public:
         }
         if (std::filesystem::exists(input_path))
         {
-          ok = plan_from_input_path(input_path, message, error);
+          // 如果启用了机器人起始位置功能，则尝试使用当前机器人位置
+          std::optional<Point3D> robot_start;
+          if (robot_start_enabled_)
+          {
+            RCLCPP_INFO(this->get_logger(),
+                        "TCP 请求：机器人起始位置功能已启用，尝试读取当前位置用于路径规划...");
+
+            {
+              std::lock_guard<std::mutex> lock(robot_pose_mutex_);
+              if (robot_pose_.has_value())
+              {
+                const auto& pose = robot_pose_->pose.position;
+                robot_start = Point3D{pose.x, pose.y, pose.z};
+                RCLCPP_INFO(this->get_logger(),
+                            "TCP 请求：使用机器人起始位置: [%.3f, %.3f, %.3f]",
+                            pose.x, pose.y, pose.z);
+              }
+              else
+              {
+                RCLCPP_WARN(this->get_logger(),
+                            "TCP 请求：尚未收到任何机器人位置，将使用默认起点规划");
+              }
+            }
+          }
+          else
+          {
+            RCLCPP_INFO(this->get_logger(),
+                        "TCP 请求：机器人起始位置功能已禁用，将使用默认起点规划");
+          }
+
+          ok = plan_from_input_path(input_path, message, error, robot_start);
         }
         else
         {

@@ -160,6 +160,10 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
 {
   RouteSegment segment(RouteType::DRAWING_PATH, line->id);
 
+  // 默认使用中间喷码机；后续如需按图层/几何特征动态分配，
+  // 可以在此处根据 line 元数据修改 segment.printer_type
+  segment.printer_type = PrinterType::CENTER_PRINTER;
+
   // 从 line_type 推导 ink_mode
   segment.ink_mode = deduceInkMode(line->line_type);
 
