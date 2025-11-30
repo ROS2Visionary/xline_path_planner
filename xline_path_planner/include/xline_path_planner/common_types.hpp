@@ -230,7 +230,7 @@ enum class GeometryType
   CIRCLE = 4,  ///< 圆
   CURVE = 6,   ///< 曲线
   ARC = 7,     ///< 圆弧
-  TEXT = 8     ///< 文字（新增）
+  TEXT = 8     ///< 文字
 };
 
 /**
