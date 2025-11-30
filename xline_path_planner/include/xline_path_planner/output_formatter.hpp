@@ -62,9 +62,11 @@ private:
    * @brief 构建一个转场路径的线段 JSON（按照新版导出结构的 lines[*] 条目）
    * @param start 起点
    * @param end 终点
+   * @param order 顺序
+   * @param seg 路径段信息（用于获取 ink 信息）
    * @return JSON 对象
    */
-  nlohmann::json constructTransitionLineJSON(const Point3D& start, const Point3D& end, int order);
+  nlohmann::json constructTransitionLineJSON(const Point3D& start, const Point3D& end, int order, const RouteSegment& seg);
 };
 
 }  // namespace path_planner

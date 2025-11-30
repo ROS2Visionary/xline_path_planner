@@ -92,7 +92,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 
     for (std::size_t i = 0; i + 1 < seg.points.size(); ++i)
     {
-      root["lines"].push_back(constructTransitionLineJSON(seg.points[i], seg.points[i + 1], static_cast<int>(seg_idx)));
+      root["lines"].push_back(constructTransitionLineJSON(seg.points[i], seg.points[i + 1], static_cast<int>(seg_idx), seg));
     }
   }
 
@@ -130,7 +130,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
       if (seg.points.size() < 2) continue;
       for (std::size_t i = 0; i + 1 < seg.points.size(); ++i)
       {
-        auto j = constructTransitionLineJSON(seg.points[i], seg.points[i + 1], static_cast<int>(seg_idx));
+        auto j = constructTransitionLineJSON(seg.points[i], seg.points[i + 1], static_cast<int>(seg_idx), seg);
         root["lines"].push_back(j);
 
       }
@@ -337,7 +337,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 }
 
 // 辅助：构造转场路径的线段 JSON
-nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start, const Point3D& end, int order)
+nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start, const Point3D& end, int order, const RouteSegment& seg)
 {
   nlohmann::json j;
 
@@ -354,7 +354,21 @@ nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start
   j["order"] = order;
   j["work"] = false;
   j["printed"] = false;
-  j["ink"] = constructInkJSON(false, InkMode::SOLID, PrinterType::CENTER_PRINTER);
+  j["printer_type"] = printerTypeToString(seg.printer_type);
+  
+  // 使用下一个路径的 ink 信息
+  nlohmann::json ink;
+  ink["enabled"] = false;  // 转场路径不喷墨
+  ink["mode"] = inkModeToString(seg.ink_mode);
+  ink["printer"] = printerTypeToLowerString(seg.printer_type);
+  
+  // 如果下一个路径是 TEXT 类型，包含文字内容
+  if (seg.ink_mode == InkMode::TEXT && !seg.text_content.empty())
+  {
+    ink["content"] = seg.text_content;
+  }
+  
+  j["ink"] = ink;
   j["start"] = point_mm(start);
   j["end"] = point_mm(end);
 

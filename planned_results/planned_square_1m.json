@@ -47,6 +47,7 @@
       "opacity": 0.5,
       "order": 1,
       "printed": false,
+      "printer_type": "CENTER_PRINTER",
       "selected": false,
       "start": {
         "x": 1100.0,
@@ -103,6 +104,7 @@
       "opacity": 0.5,
       "order": 3,
       "printed": false,
+      "printer_type": "CENTER_PRINTER",
       "selected": false,
       "start": {
         "x": 1000.0,
@@ -159,6 +161,7 @@
       "opacity": 0.5,
       "order": 5,
       "printed": false,
+      "printer_type": "CENTER_PRINTER",
       "selected": false,
       "start": {
         "x": -100.0,
@@ -205,9 +208,10 @@
       "hidden": false,
       "id": 1000000,
       "ink": {
+        "content": "1m×1m正方形测试图",
         "enabled": false,
-        "mode": "solid",
-        "printer": "center"
+        "mode": "text",
+        "printer": "right"
       },
       "layer": "TRANSITION",
       "layer_id": 1000000,
@@ -215,6 +219,7 @@
       "opacity": 0.5,
       "order": 7,
       "printed": false,
+      "printer_type": "RIGHT_PRINTER",
       "selected": false,
       "start": {
         "x": 0.0,
@@ -262,9 +267,10 @@
       "hidden": false,
       "id": 1000000,
       "ink": {
+        "content": "边长: 1000mm",
         "enabled": false,
-        "mode": "solid",
-        "printer": "center"
+        "mode": "text",
+        "printer": "left"
       },
       "layer": "TRANSITION",
       "layer_id": 1000000,
@@ -272,6 +278,7 @@
       "opacity": 0.5,
       "order": 9,
       "printed": false,
+      "printer_type": "LEFT_PRINTER",
       "selected": false,
       "start": {
         "x": 576.0,
@@ -329,6 +336,7 @@
       "opacity": 0.5,
       "order": 11,
       "printed": false,
+      "printer_type": "CENTER_PRINTER",
       "selected": false,
       "start": {
         "x": 676.4000000000001,
@@ -375,9 +383,10 @@
       "hidden": false,
       "id": 1000000,
       "ink": {
+        "content": "中心点",
         "enabled": false,
-        "mode": "solid",
-        "printer": "center"
+        "mode": "text",
+        "printer": "right"
       },
       "layer": "TRANSITION",
       "layer_id": 1000000,
@@ -385,6 +394,7 @@
       "opacity": 0.5,
       "order": 13,
       "printed": false,
+      "printer_type": "RIGHT_PRINTER",
       "selected": false,
       "start": {
         "x": -70.71067811865476,
@@ -442,6 +452,7 @@
       "opacity": 0.5,
       "order": 15,
       "printed": false,
+      "printer_type": "CENTER_PRINTER",
       "selected": false,
       "start": {
         "x": 635.0,
@@ -503,6 +514,7 @@
       "opacity": 0.5,
       "order": 17,
       "printed": false,
+      "printer_type": "CENTER_PRINTER",
       "selected": false,
       "start": {
         "x": 1000.0,
@@ -554,9 +566,10 @@
       "hidden": false,
       "id": 1000000,
       "ink": {
+        "content": "终点(1000,1000)",
         "enabled": false,
-        "mode": "solid",
-        "printer": "center"
+        "mode": "text",
+        "printer": "left"
       },
       "layer": "TRANSITION",
       "layer_id": 1000000,
@@ -564,6 +577,7 @@
       "opacity": 0.5,
       "order": 19,
       "printed": false,
+      "printer_type": "LEFT_PRINTER",
       "selected": false,
       "start": {
         "x": 1207.1067811865476,
@@ -621,6 +635,7 @@
       "opacity": 0.5,
       "order": 21,
       "printed": false,
+      "printer_type": "CENTER_PRINTER",
       "selected": false,
       "start": {
         "x": 1000.0,
@@ -667,9 +682,10 @@
       "hidden": false,
       "id": 1000000,
       "ink": {
+        "content": "起点(0,0)",
         "enabled": false,
-        "mode": "solid",
-        "printer": "center"
+        "mode": "text",
+        "printer": "left"
       },
       "layer": "TRANSITION",
       "layer_id": 1000000,
@@ -677,6 +693,7 @@
       "opacity": 0.5,
       "order": 23,
       "printed": false,
+      "printer_type": "LEFT_PRINTER",
       "selected": false,
       "start": {
         "x": 1070.7106781186549,

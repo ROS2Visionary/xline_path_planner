@@ -34,7 +34,7 @@ path_planner:
 # 可选：TCP服务器配置（用于非ROS客户端调用）
 tcp_server:
   enabled: true
-  host: "192.168.1.123"
+  host: "192.168.0.123"
   port: 52088
 
 # 可选：机器人起始位置配置
@@ -42,5 +42,5 @@ robot_start:
   enabled: true                     # 是否启用机器人起始位置
   pose_topic: "/robot_pose"         # 机器人位置话题名
   pose_timeout_sec: 5.0             # 位置超时时间（秒）
-  required: false                   # 是否必须有位置才能规划（false表示没有位置时使用默认起点）
+  required: true                   # 是否必须有位置才能规划（false表示没有位置时使用默认起点）
   max_initial_distance: 100.0       # 机器人到第一条路径的最大距离限制（米）

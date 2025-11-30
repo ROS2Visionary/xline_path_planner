@@ -642,6 +642,16 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
 
           if (!transition_segment.points.empty())
           {
+            // 转场路径的 ink 信息与下一个绘图路径一致
+            transition_segment.printer_type = drawing_segment.printer_type;
+            transition_segment.ink_mode = drawing_segment.ink_mode;
+            
+            // 如果下一个路径是 TEXT 类型，复制文字内容
+            if (drawing_segment.ink_mode == InkMode::TEXT)
+            {
+              transition_segment.text_content = drawing_segment.text_content;
+            }
+
             path_segments.push_back(transition_segment);
             std::cout << "✅ 转场路径已添加，包含 " << transition_segment.points.size() << " 个点" << std::endl;
           }
