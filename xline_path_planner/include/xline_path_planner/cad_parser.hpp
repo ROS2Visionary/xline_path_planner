@@ -1,11 +1,11 @@
-// include/daosnrs_planning/cad_parser.hpp
+// include/xline_path_planner/cad_parser.hpp
 #pragma once
 
 /*
 ================================================================================
 超详细中文说明（CADParser模块）
 --------------------------------------------------------------------------------
-本模块用于解析新格式的 CAD JSON（cad_transformed.json），将几何图元（直线/圆/圆弧）
+本模块用于解析新格式的 CAD JSON（cad_transformed.json），将几何图元（直线/圆/圆弧/文字）
 按图层（layers→layer_id）动态归入 CADData 的三类集合（路径/障碍物/空洞），供后续
 栅格化与路径规划使用。模块具备单位缩放（毫米→米）与角度单位自动识别（度/弧度）能力。
 
@@ -13,24 +13,25 @@
   - 根键 layers：图层列表，每项需包含 layer_id（int）与 name（string）。
   - 根键 lines：几何图元数组，每项至少包含：
       • id（int，可选）
-      • type（string）："line" | "circle" | "arc"
+      • type（string）："line" | "circle" | "arc" | "text"
       • layer_id（int，推荐）或 layer（string，备用）
       • 根据 type 的几何字段：
           - line   ：start{x,y[,z]}, end{x,y[,z]}
           - circle ：center{x,y[,z]}, radius
           - arc    ：center{x,y[,z]}, radius, start_angle, end_angle
+          - text   ：position{x,y[,z]}, content, height, rotation, align{horizontal,vertical}
 
 二、单位与角度
   - 数值单位：通常 CAD 输出为毫米。若 CADParserConfig::auto_scale_coordinates=true，
     所有数值会除以 CADParserConfig::unit_conversion_factor（默认1000），从而换算到米。
-  - 圆弧角度：若 |角度值| > 2π 则视为“度”并自动转换为“弧度”，否则认为原本就是弧度。
+  - 圆弧角度：若 |角度值| > 2π 则视为"度"并自动转换为"弧度"，否则认为原本就是弧度。
 
 三、分类规则（图层→集合）
   - 先通过 layer_id → layers.name 建立映射；找不到时回退读取元素内 layer 字段。
   - 名称包含以下关键词时归类：
-      • path_lines    ：“路径”、“path”、“axis”、“draw”、“drawing”等
-      • obstacle_lines：“障碍”、“barrier”、“obstacle”等
-      • hole_lines    ：“空洞”、“hole”、“hollow”、“void”、“opening”等
+      • path_lines    ："路径"、"path"、"axis"、"draw"、"drawing"等
+      • obstacle_lines："障碍"、"barrier"、"obstacle"等
+      • hole_lines    ："空洞"、"hole"、"hollow"、"void"、"opening"等
   - 无法识别则默认归入 path_lines，保证系统可运行。
 
 四、健壮性与失败策略
@@ -87,7 +88,7 @@ struct CADParserConfig
 
   /**
    * @brief 角度单位（应用于圆弧等角度字段）
-   * 默认按“度”处理；若输入JSON角度已为弧度，请设置为 AngleUnit::RADIANS。
+   * 默认按"度"处理；若输入JSON角度已为弧度，请设置为 AngleUnit::RADIANS。
    */
   AngleUnit angle_unit = AngleUnit::DEGREES;
 };
@@ -98,10 +99,11 @@ struct CADParserConfig
  * - 直线（type: "line"，键：start/end{x,y[,z]}）
  * - 圆（type: "circle"，键：center{x,y[,z]}、radius）
  * - 圆弧（type: "arc"，键：center{x,y[,z]}、radius、start_angle、end_angle）
+ * - 文字（type: "text"，键：position{x,y[,z]}、content、height、rotation、align）
  * 类别归属由根节点中的"layers"动态决定（优先 layer_id 对应 name，失败回退读取元素内 layer 字段）。
  * 我们根据图层名称关键词将图元分配至CADData的不同容器（路径/障碍物/空洞）。
  * 若无法识别图层类别，则默认归入路径集合（path_lines）。
- * 角度单位自动识别（>2π 视为“度”并转换为弧度）。
+ * 角度单位自动识别（>2π 视为"度"并转换为弧度）。
  */
 class CADParser
 {
@@ -121,7 +123,7 @@ public:
   /**
    * @brief 解析CAD文件（新JSON格式）
    * 前置条件：文件为 UTF-8，根键包含数组 "lines"；当存在 "layers" 时用于 layer_id→name 映射。
-   * 解析范围：type 为 "line"/"circle"/"arc" 的元素；其他类型（如 text）会被忽略。
+   * 解析范围：type 为 "line"/"circle"/"arc"/"text" 的元素；其他类型会被忽略。
    * 坐标与尺寸：start/end/center、radius 等数值若启用缩放则统一换算到米。
    * 分类归属：优先使用 layer_id 查表得到图层名称；若失败，回退读取元素内 "layer" 字段。
    * 成功条件：至少解析出一个有效几何图元返回 true；否则返回 false。
@@ -180,11 +182,11 @@ private:
   /**
    * @brief 按图层名称将几何图元写入对应容器
    * 规则：
-   *   - 含“空洞/ hole / hollow / void / opening” → hole_lines
-   *   - 含“障碍/ barrier / obstacle” → obstacle_lines
-   *   - 含“路径/ path / axis / draw / drawing” → path_lines
+   *   - 含"空洞/ hole / hollow / void / opening" → hole_lines
+   *   - 含"障碍/ barrier / obstacle" → obstacle_lines
+   *   - 含"路径/ path / axis / draw / drawing" → path_lines
    *   - 其他未知 → 默认 path_lines
-   * @param geom 几何图元（Line/Circle/Arc 均可）
+   * @param geom 几何图元（Line/Circle/Arc/Text 均可）
    * @param layer_name 图层名称（可为空串）
    */
   void store_by_layer(const std::shared_ptr<Line>& geom, const std::string& layer_name);
@@ -219,9 +221,25 @@ private:
   /**
    * @brief 解析圆弧数据
    * 期望字段：id（可选）、center{x,y[,z]}、radius、start_angle、end_angle。
-   * 处理：按配置缩放 center 与 radius；角度>2π 视为“度”并转弧度；计算起止点与弧长。
+   * 处理：按配置缩放 center 与 radius；角度>2π 视为"度"并转弧度；计算起止点与弧长。
    */
   Arc parse_arc(const nlohmann::json& json_arc);
+
+  /**
+   * @brief 解析文字数据
+   * 期望字段：
+   * - id: 整数（可选）
+   * - type: 字符串，需为"text"
+   * - position: { x: double, y: double[, z: double] }
+   * - content: 字符串（文字内容）
+   * - height: double（文字高度）
+   * - rotation: double（旋转角度，度）
+   * - align: { horizontal: string, vertical: string }（对齐方式）
+   * 处理：按配置缩放 position 与 height；计算文字绘制范围。
+   * @param json_text JSON对象
+   * @return 解析后的文字对象
+   */
+  Text parse_text(const nlohmann::json& json_text);
 
   /**
    * @brief 从JSON对象解析点坐标

@@ -143,8 +143,43 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
       auto it = id2line.find(seg.line_id);
       if (it != id2line.end()) src = it->second;
 
-      // 根据源几何类型进行导出，确保圆/圆弧被正确导出，且包含起点/终点
-      if (src && src->type == GeometryType::CIRCLE)
+      // 根据源几何类型进行导出
+      if (src && src->type == GeometryType::TEXT)
+      {
+        // 文字类型：输出格式与 line 类似
+        const Text* text = dynamic_cast<const Text*>(src);
+        nlohmann::json j;
+        j["id"] = (src ? src->id : seg.line_id);
+        j["type"] = "text";
+        j["order"] = static_cast<int>(seg_idx);
+        j["work"] = true;
+        j["printed"] = false;
+        j["printer_type"] = printerTypeToString(seg.printer_type);
+        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);
+
+        j["line_type"] = "text";
+        j["thickness"] = (src ? src->thickness : 1.0);
+        j["hidden"] = (src ? src->hidden : false);
+        j["layer"] = (src && !src->layer.empty()) ? src->layer : std::string("Default");
+        j["color"] = (src && !src->color.empty()) ? src->color : std::string("#FFFFFF");
+        if (src)
+        {
+          j["selected"] = src->selected;
+          j["layer_id"] = src->layer_id;
+        }
+
+        // 文字内容
+        j["content"] = text ? text->content : seg.text_content;
+
+        // 起点和终点
+        const auto& p0 = seg.points.front();
+        const auto& p1 = seg.points.back();
+        j["start"] = point_mm(p0);
+        j["end"] = point_mm(p1);
+
+        root["lines"].push_back(j);
+      }
+      else if (src && src->type == GeometryType::CIRCLE)
       {
         // 圆：输出 center/radius，并补充 start/end
         const Circle* circle = dynamic_cast<const Circle*>(src);
@@ -224,7 +259,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
       }
       else
       {
-        // 非圆/圆弧：保留之前的 line/polyline 导出策略
+        // 非圆/圆弧/文字：保留之前的 line/polyline 导出策略
         if (seg.points.size() == 2)
         {
           const auto& p0 = seg.points.front();
@@ -301,7 +336,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
   return only_lines;
 }
 
-// 辅助：构造转场线条 JSON
+// 辅助：构造转场路径的线段 JSON
 nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start, const Point3D& end, int order)
 {
   nlohmann::json j;

@@ -3,21 +3,22 @@
 CAD 解析实现（超详细中文注释）
 --------------------------------------------------------------------------------
 目标与能力
-  - 解析新一代 CAD JSON（cad_transformed.json）中的几何数据，仅处理：
+  - 解析新一代 CAD JSON（cad_transformed.json）中的几何数据，处理：
     • 直线（type: "line"）
     • 圆   （type: "circle"）
     • 圆弧（type: "arc"）
+    • 文字（type: "text"）
   - 动态分类：依据 lines[*].layer_id → layers[*].name 将图元归入 CADData 三大集合：
     • path_lines（路径）
     • obstacle_lines（障碍物）
     • hole_lines（空洞）
   - 单位换算：若启用，则将毫米等原始单位转换为米（默认 /1000）。
-  - 角度单位自动识别：|value| > 2π 视为“度”并转换为弧度。
+  - 角度单位自动识别：|value| > 2π 视为"度"并转换为弧度。
 
 整体流程
   1) 读取与解析 JSON（含健壮性检查）
   2) 构建 layer_id → layer_name 映射（若有）
-  3) 遍历 lines：解析三类几何 → 分类入 CADData
+  3) 遍历 lines：解析四类几何 → 分类入 CADData
   4) 输出解析统计并返回成功与否
 
 健壮性与兼容
@@ -51,7 +52,7 @@ CADParser::CADParser(const CADParserConfig& config) : config_(config)
   1) 打开并解析 JSON；
   2) 清空内部数据（clear）；
   3) 构建图层映射（build_layer_map）；
-  4) 遍历 lines：按 type 调用 parse_line/parse_circle/parse_arc 解析；
+  4) 遍历 lines：按 type 调用 parse_line/parse_circle/parse_arc/parse_text 解析；
   5) 根据图层名称（由 layer_id → name 或元素内 layer）分类（store_by_layer）；
   6) 打印解析统计，成功返回 true（至少解析到一个几何），否则返回 false。
 健壮性：
@@ -103,7 +104,7 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
     // 预先构建 layer_id -> layer_name 映射，供分类用
     build_layer_map(cad_json);
 
-    // 新格式：仅解析根节点"lines"，支持 line/circle/arc 三类
+    // 新格式：仅解析根节点"lines"，支持 line/circle/arc/text 四类
     if (!cad_json.contains("lines") || !cad_json["lines"].is_array())
     {
       std::cerr << "Invalid CAD JSON: missing 'lines' array" << std::endl;
@@ -111,7 +112,7 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
     }
 
     const auto& lines = cad_json["lines"];
-    size_t parsed_lines = 0, parsed_arcs = 0, parsed_circles = 0;
+    size_t parsed_lines = 0, parsed_arcs = 0, parsed_circles = 0, parsed_texts = 0;
     for (const auto& item : lines)
     {
       // 若存在 selected 且为 false，则舍弃该元素
@@ -185,17 +186,32 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
         store_by_layer(arc_ptr, layer_name);
         ++parsed_arcs;
       }
+      else if (t == "text")
+      {
+        // 解析文字类型
+        if (!item.contains("position"))
+        {
+          continue;
+        }
+        if (!item["position"].is_object())
+        {
+          continue;
+        }
+        auto text_ptr = std::make_shared<Text>(parse_text(item));
+        store_by_layer(text_ptr, layer_name);
+        ++parsed_texts;
+      }
       else
       {
-        // 其他类型（如text）忽略
+        // 其他类型忽略
         continue;
       }
     }
 
     std::cout << "Parsed from 'lines' (by layers): " << parsed_lines << " line(s), " << parsed_circles << " circle(s), "
-              << parsed_arcs << " arc(s)" << std::endl;
+              << parsed_arcs << " arc(s), " << parsed_texts << " text(s)" << std::endl;
 
-    return (parsed_lines + parsed_arcs + parsed_circles) > 0;
+    return (parsed_lines + parsed_arcs + parsed_circles + parsed_texts) > 0;
   }
   catch (const std::exception& e)
   {
@@ -231,7 +247,7 @@ const CADParserConfig& CADParser::get_config() const
   - 当 auto_scale_coordinates=true 时，将原始数值按 unit_conversion_factor 进行缩放。
     典型配置为 1000.0（毫米→米）。
 注意：
-  - 仅对“数值型”字段调用（坐标分量/半径/长度等）。
+  - 仅对"数值型"字段调用（坐标分量/半径/长度等）。
 */
 double CADParser::convert_units(double value) const
 {
@@ -304,37 +320,28 @@ Line CADParser::parse_line(const nlohmann::json& json_line)
 
 Curve CADParser::parse_curve(const nlohmann::json& json_curve)
 {
-  // 说明：当前新 JSON 未定义曲线（curve）规范，此方法保留用于未来扩展。
   Curve curve;
 
-  if (json_curve.contains("lineId"))
+  // id
+  if (json_curve.contains("Id") && json_curve["Id"].is_number_integer())
   {
-    curve.id = json_curve["lineId"];
+    curve.id = json_curve["Id"].get<int32_t>();
   }
 
-  if (json_curve.contains("type"))
-  {
-    curve.type = static_cast<GeometryType>(json_curve["type"].get<int>());
-  }
-
-  // 默认设置为未绘制
+  // 设置几何类型为曲线
+  curve.type = GeometryType::CURVE;
   curve.is_printed = false;
 
-  // 明确检查hasPrinted字段
-  if (json_curve.contains("hasPrinted") && json_curve["hasPrinted"].is_boolean())
+  // 旧格式兼容
+  if (json_curve.contains("HasPrinted") && json_curve["HasPrinted"].is_boolean())
   {
-    curve.is_printed = json_curve["hasPrinted"].get<bool>();
+    curve.is_printed = json_curve["HasPrinted"].get<bool>();
   }
 
-  if (json_curve.contains("Length"))
+  // 解析曲线次数
+  if (json_curve.contains("Degree") && json_curve["Degree"].is_number())
   {
-    double length_value = json_curve["Length"].get<double>();
-    curve.length = convert_units(length_value);
-  }
-
-  if (json_curve.contains("Degree"))
-  {
-    curve.degree = json_curve["Degree"];
+    curve.degree = json_curve["Degree"].get<int>();
   }
 
   // 解析控制点
@@ -342,7 +349,14 @@ Curve CADParser::parse_curve(const nlohmann::json& json_curve)
   {
     for (const auto& point : json_curve["ControlPoints"])
     {
-      curve.control_points.push_back(parse_point(point));
+      Point3D p;
+      if (point.contains("X"))
+        p.x = convert_units(point["X"].get<double>());
+      if (point.contains("Y"))
+        p.y = convert_units(point["Y"].get<double>());
+      if (point.contains("Z"))
+        p.z = convert_units(point["Z"].get<double>());
+      curve.control_points.push_back(p);
     }
 
     // 设置起点和终点
@@ -556,6 +570,152 @@ Arc CADParser::parse_arc(const nlohmann::json& json_arc)
   return arc;
 }
 
+/*
+解析文字数据（parse_text）
+--------------------------------
+输入：JSON对象，包含文字的各种属性
+输出：解析后的 Text 对象
+
+文字在 CAD JSON 中的典型结构：
+{
+  "id": 9,
+  "type": "text",
+  "position": { "x": 500.0, "y": 500.0 },
+  "height": 50.0,
+  "rotation": 0.0,
+  "style": "Standard",
+  "content": "中心点",
+  "width_factor": 1.0,
+  "oblique": 0.0,
+  "align": { "horizontal": "center", "vertical": "middle" }
+}
+
+处理逻辑：
+1. 解析位置（position）并进行单位转换
+2. 解析文字内容（content）
+3. 解析高度（height）并进行单位转换
+4. 解析旋转角度（rotation），保持度数
+5. 解析对齐方式（align）
+6. 计算文字的绘制边界（起点和终点）
+*/
+Text CADParser::parse_text(const nlohmann::json& json_text)
+{
+  Text text;
+
+  // 解析ID
+  if (json_text.contains("id") && json_text["id"].is_number_integer())
+  {
+    text.id = json_text["id"].get<int32_t>();
+  }
+
+  // 设置几何类型
+  text.type = GeometryType::TEXT;
+  text.is_printed = false;
+  text.line_type = "text";  // 标记为文字类型
+
+  // 解析位置
+  if (json_text.contains("position") && json_text["position"].is_object())
+  {
+    text.position = parse_point(json_text["position"]);
+  }
+
+  // 解析文字内容
+  if (json_text.contains("content") && json_text["content"].is_string())
+  {
+    text.content = json_text["content"].get<std::string>();
+  }
+
+  // 解析高度（单位换算）
+  if (json_text.contains("height") && json_text["height"].is_number())
+  {
+    text.height = convert_units(json_text["height"].get<double>());
+  }
+
+  // 解析旋转角度（保持度数，不转换）
+  if (json_text.contains("rotation") && json_text["rotation"].is_number())
+  {
+    text.rotation = json_text["rotation"].get<double>();
+  }
+
+  // 解析字体样式
+  if (json_text.contains("style") && json_text["style"].is_string())
+  {
+    text.style = json_text["style"].get<std::string>();
+  }
+
+  // 解析宽度因子
+  if (json_text.contains("width_factor") && json_text["width_factor"].is_number())
+  {
+    text.width_factor = json_text["width_factor"].get<double>();
+  }
+
+  // 解析倾斜角度
+  if (json_text.contains("oblique") && json_text["oblique"].is_number())
+  {
+    text.oblique = json_text["oblique"].get<double>();
+  }
+
+  // 解析子类型
+  if (json_text.contains("subtype") && json_text["subtype"].is_string())
+  {
+    text.subtype = json_text["subtype"].get<std::string>();
+  }
+
+  // 解析对齐方式
+  if (json_text.contains("align") && json_text["align"].is_object())
+  {
+    const auto& align_obj = json_text["align"];
+    if (align_obj.contains("horizontal") && align_obj["horizontal"].is_string())
+    {
+      text.align.horizontal = align_obj["horizontal"].get<std::string>();
+    }
+    if (align_obj.contains("vertical") && align_obj["vertical"].is_string())
+    {
+      text.align.vertical = align_obj["vertical"].get<std::string>();
+    }
+  }
+
+  // 可选元数据（继承自Line）
+  if (json_text.contains("layer_id") && json_text["layer_id"].is_number_integer())
+  {
+    text.layer_id = json_text["layer_id"].get<int32_t>();
+  }
+  if (json_text.contains("layer") && json_text["layer"].is_string())
+  {
+    text.layer = json_text["layer"].get<std::string>();
+  }
+  if (json_text.contains("color") && json_text["color"].is_string())
+  {
+    text.color = json_text["color"].get<std::string>();
+  }
+  if (json_text.contains("thickness") && json_text["thickness"].is_number())
+  {
+    text.thickness = json_text["thickness"].get<double>();
+  }
+  if (json_text.contains("hidden") && json_text["hidden"].is_boolean())
+  {
+    text.hidden = json_text["hidden"].get<bool>();
+  }
+  if (json_text.contains("selected") && json_text["selected"].is_boolean())
+  {
+    text.selected = json_text["selected"].get<bool>();
+  }
+
+  // 计算文字的绘制边界（起点和终点）
+  text.calculateDrawingBounds(text.start, text.end);
+
+  // 计算长度（文字宽度）
+  text.length = text.estimateWidth();
+
+  std::cout << "Parsed text with ID: " << text.id << ", content: \"" << text.content << "\""
+            << ", position: [" << text.position.x << ", " << text.position.y << "]"
+            << ", height: " << text.height << " m"
+            << ", rotation: " << text.rotation << " deg"
+            << std::endl;
+
+  return text;
+}
+
 Point3D CADParser::parse_point(const nlohmann::json& json_point)
 {
   Point3D point;
@@ -615,7 +775,7 @@ void CADParser::build_layer_map(const nlohmann::json& cad_json)
 
 void CADParser::store_by_layer(const std::shared_ptr<Line>& geom, const std::string& layer_name)
 {
-  // 基于图层名称关键字进行分类（不区分大小写），默认归入“路径”集合
+  // 基于图层名称关键字进行分类（不区分大小写），默认归入"路径"集合
   std::string lname = layer_name;
   std::transform(lname.begin(), lname.end(), lname.begin(), [](unsigned char c) { return std::tolower(c); });
 

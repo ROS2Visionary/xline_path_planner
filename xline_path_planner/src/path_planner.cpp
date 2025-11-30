@@ -19,6 +19,77 @@ InkMode deduceInkMode(const std::string& line_type)
     return InkMode::SOLID;
   }
 }
+
+/**
+ * @brief 根据运动方向和文字位置决定使用哪个打印机
+ * 
+ * 策略说明：
+ * 文字只能使用左边或右边的喷码机，不能使用中间喷码机。
+ * 决定使用哪边的喷码机基于以下规则：
+ * 
+ * 1. 计算机器人从当前位置到文字位置的运动方向向量
+ * 2. 计算文字的旋转方向（文字书写方向）
+ * 3. 根据运动方向和文字方向的关系，决定使用左侧还是右侧喷码机
+ * 
+ * 基本原则：
+ * - 如果机器人从左向右运动（相对于文字方向），使用右侧喷码机
+ * - 如果机器人从右向左运动（相对于文字方向），使用左侧喷码机
+ * - 这样可以确保喷码机在运动时能正确地打印文字
+ * 
+ * @param current_position 机器人当前位置
+ * @param text_position 文字位置
+ * @param text_rotation 文字旋转角度（度）
+ * @return 应该使用的打印机类型（LEFT_PRINTER 或 RIGHT_PRINTER）
+ */
+PrinterType determineTextPrinter(const Point3D& current_position, const Point3D& text_position, double text_rotation)
+{
+  // 计算从当前位置到文字位置的向量
+  double dx = text_position.x - current_position.x;
+  double dy = text_position.y - current_position.y;
+  
+  // 计算运动方向角度（弧度）
+  double motion_angle = std::atan2(dy, dx);
+  
+  // 将文字旋转角度转换为弧度
+  double text_angle_rad = text_rotation * M_PI / 180.0;
+  
+  // 计算运动方向与文字方向的相对角度
+  double relative_angle = motion_angle - text_angle_rad;
+  
+  // 将角度规范化到 [-π, π] 范围
+  while (relative_angle > M_PI) relative_angle -= 2 * M_PI;
+  while (relative_angle < -M_PI) relative_angle += 2 * M_PI;
+  
+  // 根据相对角度决定使用哪个打印机
+  if (relative_angle >= -M_PI / 2 && relative_angle <= M_PI / 2)
+  {
+    std::cout << "  文字打印机选择: RIGHT_PRINTER (运动方向与文字方向一致)" << std::endl;
+    return PrinterType::RIGHT_PRINTER;
+  }
+  else
+  {
+    std::cout << "  文字打印机选择: LEFT_PRINTER (运动方向与文字方向相反)" << std::endl;
+    return PrinterType::LEFT_PRINTER;
+  }
+}
+
+/**
+ * @brief 根据文字在画布上的位置决定打印机（备用方案）
+ */
+PrinterType determineTextPrinterByPosition(const Point3D& text_position, double canvas_center_x)
+{
+  if (text_position.x < canvas_center_x)
+  {
+    std::cout << "  文字打印机选择: LEFT_PRINTER (文字在画布左侧)" << std::endl;
+    return PrinterType::LEFT_PRINTER;
+  }
+  else
+  {
+    std::cout << "  文字打印机选择: RIGHT_PRINTER (文字在画布右侧)" << std::endl;
+    return PrinterType::RIGHT_PRINTER;
+  }
+}
+
 } // anonymous namespace
 
 PathPlanner::PathPlanner(const PathPlannerConfig& config) : planner_config_(config), grid_map_generator_(nullptr)
@@ -68,7 +139,7 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
   std::cout << "Total path lines in CAD data: " << cad_data.path_lines.size() << std::endl;
 
   // 统计各类型的轴线数量和已绘制状态
-  int line_count = 0, circle_count = 0, arc_count = 0, curve_count = 0, other_count = 0;
+  int line_count = 0, circle_count = 0, arc_count = 0, curve_count = 0, text_count = 0, other_count = 0;
   int printed_count = 0, unprinted_count = 0;
 
   for (const auto& line : cad_data.path_lines)
@@ -81,6 +152,8 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
       arc_count++;
     else if (line->type == GeometryType::CURVE)
       curve_count++;
+    else if (line->type == GeometryType::TEXT)
+      text_count++;
     else
       other_count++;
 
@@ -95,7 +168,7 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
   }
 
   std::cout << "Path line types: " << line_count << " lines, " << circle_count << " circles, " << arc_count << " arcs, "
-            << curve_count << " curves, " << other_count << " other types" << std::endl;
+            << curve_count << " curves, " << text_count << " texts, " << other_count << " other types" << std::endl;
 
   std::cout << "Printed/Unprinted status: " << printed_count << " printed, " << unprinted_count << " unprinted"
             << std::endl;
@@ -175,6 +248,10 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
                          double extension_length) -> std::pair<Point3D, Point3D> {
     // 计算原始线段长度和方向
     double original_length = start.distance(end);
+    if (original_length < 1e-6)
+    {
+      return { start, end };
+    }
     double unit_factor = extension_length / original_length;
 
     Point3D extended_start, extended_end;
@@ -199,6 +276,30 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
     auto [extended_start, extended_end] = extend_line(line->start, line->end, path_extension_length);
 
     segment.points = { extended_start, extended_end };
+  }
+  else if (line->type == GeometryType::TEXT)
+  {
+    // 文字类型处理 - 简化版本，只记录起点、终点和内容
+    auto text = std::dynamic_pointer_cast<Text>(line);
+    if (text)
+    {
+      std::cout << "\n📝 处理文字元素 ID: " << text->id << std::endl;
+      std::cout << "  内容: \"" << text->content << "\"" << std::endl;
+
+      // 设置 ink_mode 为 TEXT
+      segment.ink_mode = InkMode::TEXT;
+      
+      // 保存文字内容
+      segment.text_content = text->content;
+
+      // 使用 Line 基类的 start/end 作为起点和终点（TEXT 不延长）
+      segment.points = { line->start, line->end };
+    }
+    else
+    {
+      std::cerr << "Failed to cast line to Text!" << std::endl;
+      segment.points = { line->start, line->end };
+    }
   }
   else if (line->type == GeometryType::CIRCLE)
   {
@@ -263,47 +364,10 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
         arc_points.push_back(point);
       }
 
-      // 延长圆弧的起点和终点（按切线方向）
-      if (arc_points.size() >= 3)
-      {
-        // 计算起点的切线方向（使用起点和下一个点的方向）
-        Point3D tangent_start = arc_points[1] - arc_points[0];
-        double tangent_length = tangent_start.distance(Point3D(0, 0, 0));
-
-        // 起点沿切线向后延长
-        Point3D extended_start = arc_points.front();
-        if (tangent_length > 1e-6)
-        {
-          extended_start.x -= tangent_start.x * path_extension_length / tangent_length;
-          extended_start.y -= tangent_start.y * path_extension_length / tangent_length;
-          extended_start.z -= tangent_start.z * path_extension_length / tangent_length;
-        }
-
-        // 计算终点的切线方向（使用终点和前一个点的方向）
-        Point3D tangent_end = arc_points.back() - arc_points[arc_points.size() - 2];
-        tangent_length = tangent_end.distance(Point3D(0, 0, 0));
-
-        // 终点沿切线向前延长
-        Point3D extended_end = arc_points.back();
-        if (tangent_length > 1e-6)
-        {
-          extended_end.x += tangent_end.x * path_extension_length / tangent_length;
-          extended_end.y += tangent_end.y * path_extension_length / tangent_length;
-          extended_end.z += tangent_end.z * path_extension_length / tangent_length;
-        }
-
-        // 构建新的点序列
-        segment.points.push_back(extended_start);
-        for (size_t i = 1; i < arc_points.size() - 1; ++i)
-        {
-          segment.points.push_back(arc_points[i]);
-        }
-        segment.points.push_back(extended_end);
-      }
-      else
-      {
-        segment.points = arc_points;
-      }
+      // ARC 类型不进行路径延长，保持原始圆弧几何形状
+      // 这样 segment.points.front()/back() 将严格落在圆弧上，
+      // 便于后续导出的 start/end 与 CAD 中的圆弧几何保持一致。
+      segment.points = arc_points;
     }
   }
   else if (line->type == GeometryType::CURVE)
@@ -365,7 +429,8 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
   }
 
   // 应用偏移（根据路径段自身的printer_type）
-  if (!segment.points.empty())
+  // 注意：TEXT类型的 printer_type 在 processGeometryGroup 中动态确定，偏移也在那里应用
+  if (!segment.points.empty() && line->type != GeometryType::TEXT)
   {
     double offset = 0.0;
     switch (segment.printer_type) {
@@ -434,6 +499,7 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
   std::vector<std::shared_ptr<Circle>> circles;
   std::vector<std::shared_ptr<Arc>> arcs;
   std::vector<std::shared_ptr<Curve>> curves;
+  std::vector<std::shared_ptr<Text>> texts;
 
   for (const auto& line : lines)
   {
@@ -456,11 +522,15 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
       {
         curves.push_back(std::dynamic_pointer_cast<Curve>(line));
       }
+      else if (line->type == GeometryType::TEXT)
+      {
+        texts.push_back(std::dynamic_pointer_cast<Text>(line));
+      }
     }
   }
 
   std::cout << "Classified lines: " << straight_lines.size() << " straight, " << circles.size() << " circles, "
-            << arcs.size() << " arcs, " << curves.size() << " curves" << std::endl;
+            << arcs.size() << " arcs, " << curves.size() << " curves, " << texts.size() << " texts" << std::endl;
 
   // 创建一个包含所有未绘制线段的列表
   std::vector<std::shared_ptr<Line>> remaining_lines;
@@ -474,6 +544,15 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
 
   std::cout << "Total remaining lines to process: " << remaining_lines.size() << std::endl;
 
+  // 计算画布中心（用于备用方案确定文字打印机）
+  double canvas_center_x = 0.0;
+  if (grid_map_generator_)
+  {
+    double min_x, min_y, max_x, max_y;
+    grid_map_generator_->get_map_bounds(min_x, min_y, max_x, max_y);
+    canvas_center_x = (min_x + max_x) / 2.0;
+  }
+
   while (!remaining_lines.empty())
   {
     // 找到最近的未绘制线段
@@ -482,7 +561,20 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
     if (nearest_line)
     {
       std::cout << "\n========== 规划线段 ID: " << nearest_line->id << " ==========" << std::endl;
-      std::cout << "线段类型: " << static_cast<int>(nearest_line->type) << std::endl;
+      std::cout << "线段类型: " << static_cast<int>(nearest_line->type);
+      
+      // 打印类型名称
+      switch (nearest_line->type)
+      {
+        case GeometryType::LINE: std::cout << " (LINE)"; break;
+        case GeometryType::CIRCLE: std::cout << " (CIRCLE)"; break;
+        case GeometryType::ARC: std::cout << " (ARC)"; break;
+        case GeometryType::CURVE: std::cout << " (CURVE)"; break;
+        case GeometryType::TEXT: std::cout << " (TEXT)"; break;
+        default: std::cout << " (UNKNOWN)"; break;
+      }
+      std::cout << std::endl;
+      
       std::cout << "线段起点: [" << nearest_line->start.x << ", " << nearest_line->start.y << ", "
                 << nearest_line->start.z << "]" << std::endl;
       std::cout << "线段终点: [" << nearest_line->end.x << ", " << nearest_line->end.y << ", "
@@ -497,6 +589,44 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
       }
       else
       {
+        // 如果是文字类型，需要根据运动方向确定打印机，然后应用偏移
+        if (nearest_line->type == GeometryType::TEXT)
+        {
+          auto text = std::dynamic_pointer_cast<Text>(nearest_line);
+          if (text)
+          {
+            if (has_current_position)
+            {
+              // 根据运动方向决定使用左侧还是右侧喷码机
+              drawing_segment.printer_type = determineTextPrinter(
+                current_position, text->position, text->rotation);
+            }
+            else
+            {
+              // 没有当前位置时，根据文字在画布上的位置决定
+              drawing_segment.printer_type = determineTextPrinterByPosition(
+                text->position, canvas_center_x);
+            }
+
+            // TEXT 类型在确定 printer_type 后应用偏移
+            double offset = 0.0;
+            switch (drawing_segment.printer_type) {
+              case PrinterType::LEFT_PRINTER:
+                offset = offset_config.left_offset;
+                break;
+              case PrinterType::RIGHT_PRINTER:
+                offset = offset_config.right_offset;
+                break;
+              case PrinterType::CENTER_PRINTER:
+                offset = offset_config.center_offset;
+                break;
+            }
+            if (std::abs(offset) > 1e-6 && !drawing_segment.points.empty()) {
+              drawing_segment.points = applyPathOffset(drawing_segment.points, offset);
+            }
+          }
+        }
+
         // 如果已经有当前位置,则规划一条直线转场路径
         if (has_current_position)
         {
@@ -909,7 +1039,8 @@ Point3D PathPlanner::evaluate_nurbs_point(const Curve& curve, double t)
   // 初始化0次基函数
   for (int i = 0; i <= p; ++i)
   {
-    if (u >= curve.knots[span + i - p] && u < curve.knots[span + i + 1])
+    if (span + i - p >= 0 && span + i + 1 < static_cast<int>(curve.knots.size()) &&
+        u >= curve.knots[span + i - p] && u < curve.knots[span + i + 1])
     {
       N[i] = 1.0;
     }
@@ -920,22 +1051,33 @@ Point3D PathPlanner::evaluate_nurbs_point(const Curve& curve, double t)
   {
     for (int i = p; i >= k; --i)
     {
-      double d1 = curve.knots[span + i + 1 - k] - curve.knots[span + i - p];
-      double d2 = curve.knots[span + i + 1] - curve.knots[span + i - k + 1];
+      int idx1 = span + i + 1 - k;
+      int idx2 = span + i - p;
+      int idx3 = span + i + 1;
+      int idx4 = span + i - k + 1;
+      
+      if (idx1 < 0 || idx2 < 0 || idx3 >= static_cast<int>(curve.knots.size()) || 
+          idx4 < 0 || idx4 >= static_cast<int>(curve.knots.size()))
+      {
+        continue;
+      }
+
+      double d1 = curve.knots[idx1] - curve.knots[idx2];
+      double d2 = curve.knots[idx3] - curve.knots[idx4];
 
       double left = 0.0, right = 0.0;
 
-      if (std::fabs(d1) > 1e-10)
+      if (std::fabs(d1) > 1e-10 && i > 0)
       {
-        left = (u - curve.knots[span + i - p]) / d1;
+        left = (u - curve.knots[idx2]) / d1 * N[i - 1];
       }
 
       if (std::fabs(d2) > 1e-10)
       {
-        right = (curve.knots[span + i + 1] - u) / d2;
+        right = (curve.knots[idx3] - u) / d2 * N[i];
       }
 
-      N[i] = left * N[i - 1] + right * N[i];
+      N[i] = left + right;
     }
   }
 
@@ -976,6 +1118,12 @@ std::vector<Point3D> PathPlanner::generate_straight_path(const Point3D& start, c
 
   // 计算两点之间的距离
   double distance = start.distance(end);
+
+  if (distance < 1e-6)
+  {
+    path.push_back(start);
+    return path;
+  }
 
   // 计算单位方向向量，确保方向精确
   double dx = (end.x - start.x) / distance;

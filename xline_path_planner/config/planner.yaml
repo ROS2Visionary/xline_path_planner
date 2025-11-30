@@ -7,14 +7,17 @@ visualization:
   use_antialiasing: true
   image_format: "png"
   save_path_visualization: true
-  output_dir: "/home/xline/zyq_ws/other/path_visualizations"   # 栅格/路径可视化输出目录
-  planned_output_dir: "/home/xline/zyq_ws/other/planned_results"  # 规划JSON输出目录
+  # output_dir: "/home/xline/zyq_ws/other/path_visualizations"   # 栅格/路径可视化输出目录
+  # planned_output_dir: "/home/xline/zyq_ws/other/planned_results"  # 规划JSON输出目录
+  output_dir: "/root/xline_ws/xline_path_planner/path_visualizations"   # 栅格/路径可视化输出目录
+  planned_output_dir: "/root/xline_ws/xline_path_planner/planned_results"  # 规划JSON输出目录
 
 cad_parser:
   unit_conversion_factor: 1000.0   # 毫米->米
   auto_scale_coordinates: true
   angle_unit: "DEGREES"            # 可选: DEGREES | RADIANS
-  cad_file_dir: "/home/xline/zyq_ws/xline_server/uploads"   # CAD文件所在目录（服务端）
+  # cad_file_dir: "/home/xline/zyq_ws/xline_server/uploads"   # CAD文件所在目录（服务端）
+  cad_file_dir: "/root/xline_ws/xline_path_planner/cad_data"   # CAD文件所在目录（服务端）
 
 grid_map:
   resolution: 0.005   # 米/格
@@ -39,5 +42,5 @@ robot_start:
   enabled: true                     # 是否启用机器人起始位置
   pose_topic: "/robot_pose"         # 机器人位置话题名
   pose_timeout_sec: 5.0             # 位置超时时间（秒）
-  required: true                   # 是否必须有位置才能规划（false表示没有位置时使用默认起点）
+  required: false                   # 是否必须有位置才能规划（false表示没有位置时使用默认起点）
   max_initial_distance: 100.0       # 机器人到第一条路径的最大距离限制（米）

@@ -4,7 +4,8 @@ colcon build
 source install/setup.sh
 ros2 run xline_path_planner planner_node
 
-ros2 service call /plan_path xline_path_planner/srv/PlanPath "{file_name: 'cad_2_transformed.json'}"
+source install/setup.sh
+ros2 service call /plan_path xline_path_planner/srv/PlanPath "{file_name: 'square_1m.json'}"
 
 -------------------------------------------------------------------
 # 安装rosbridge (如果还没安装)

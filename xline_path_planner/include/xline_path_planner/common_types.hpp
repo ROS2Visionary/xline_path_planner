@@ -229,7 +229,8 @@ enum class GeometryType
   LINE = 1,    ///< 直线
   CIRCLE = 4,  ///< 圆
   CURVE = 6,   ///< 曲线
-  ARC = 7      ///< 圆弧
+  ARC = 7,     ///< 圆弧
+  TEXT = 8     ///< 文字（新增）
 };
 
 /**
@@ -265,6 +266,15 @@ enum class InkMode
 };
 
 /**
+ * @brief 文字对齐方式结构体
+ */
+struct TextAlign
+{
+  std::string horizontal = "left";    ///< 水平对齐: left, center, right
+  std::string vertical = "baseline";  ///< 垂直对齐: top, middle, bottom, baseline
+};
+
+/**
  * @brief 几何实体基类（直线为核心，圆/弧继承）
  * 说明：
  *  - 与新JSON格式对齐，新增若干可选元数据字段（line_type/thickness/hidden/layer/layer_id/color/selected）。
@@ -274,7 +284,7 @@ struct Line
 {
   // 基本标识
   int32_t id = 0;                          ///< 实体ID（来自JSON的id）
-  GeometryType type = GeometryType::LINE;  ///< 几何类型（Line/Circle/Curve/Arc）
+  GeometryType type = GeometryType::LINE;  ///< 几何类型（Line/Circle/Curve/Arc/Text）
 
   // 几何参数
   Point3D start;                           ///< 起点（line直接提供；circle/arc为推导点）
@@ -472,6 +482,104 @@ struct Arc : public Circle
 };
 
 /**
+ * @brief 文字结构体，继承自Line
+ * 表示一个文字元素（position+content+height+rotation），用于喷码机打印文字。
+ * 文字只能使用左边或右边的喷码机，具体使用哪边需要根据实际情况（运动方向）来决定。
+ */
+struct Text : public Line
+{
+  Point3D position;              ///< 文字位置（锚点）
+  std::string content;           ///< 文字内容
+  double height = 50.0;          ///< 文字高度（毫米，转换前）
+  double rotation = 0.0;         ///< 旋转角度（度）
+  std::string style = "Standard"; ///< 字体样式
+  double width_factor = 1.0;     ///< 宽度因子
+  double oblique = 0.0;          ///< 倾斜角度
+  TextAlign align;               ///< 对齐方式
+  std::string subtype = "text";  ///< 子类型（text/mtext）
+
+  /**
+   * @brief 默认构造函数
+   */
+  Text() : Line()
+  {
+    type = GeometryType::TEXT;
+    line_type = "text";  // 标记为文字类型
+  }
+
+  /**
+   * @brief 带参数的构造函数
+   * @param id 文字ID
+   * @param position 文字位置
+   * @param content 文字内容
+   * @param height 文字高度
+   * @param rotation 旋转角度（度）
+   */
+  Text(int32_t id, const Point3D& position, const std::string& content, double height = 50.0, double rotation = 0.0)
+    : Line(id, position, position, GeometryType::TEXT), position(position), content(content), height(height), rotation(rotation)
+  {
+    line_type = "text";
+    // 文字的起点和终点都设置为位置点
+    // 实际规划时会根据文字宽度和对齐方式计算实际的绘制范围
+    start = position;
+    end = position;
+    length = 0.0;  // 文字长度在规划时动态计算
+  }
+
+  /**
+   * @brief 虚析构函数
+   */
+  virtual ~Text() override = default;
+
+  /**
+   * @brief 计算文字的估计宽度
+   * @return 文字宽度（米）
+   * 简化估算：假设每个字符宽度约为高度的0.6倍
+   */
+  double estimateWidth() const
+  {
+    // 估算宽度：字符数 * 高度 * 宽度因子 * 0.6
+    return static_cast<double>(content.length()) * height * width_factor * 0.6;
+  }
+
+  /**
+   * @brief 根据对齐方式计算实际绘制的起点和终点
+   * @param out_start 输出起点
+   * @param out_end 输出终点
+   */
+  void calculateDrawingBounds(Point3D& out_start, Point3D& out_end) const
+  {
+    double text_width = estimateWidth();
+    double rotation_rad = rotation * M_PI / 180.0;
+
+    // 计算文字方向向量
+    double dir_x = std::cos(rotation_rad);
+    double dir_y = std::sin(rotation_rad);
+
+    // 根据水平对齐方式计算偏移
+    double offset_x = 0.0;
+    if (align.horizontal == "center")
+    {
+      offset_x = -text_width / 2.0;
+    }
+    else if (align.horizontal == "right")
+    {
+      offset_x = -text_width;
+    }
+    // "left" 默认不偏移
+
+    // 计算起点和终点
+    out_start.x = position.x + offset_x * dir_x;
+    out_start.y = position.y + offset_x * dir_y;
+    out_start.z = position.z;
+
+    out_end.x = out_start.x + text_width * dir_x;
+    out_end.y = out_start.y + text_width * dir_y;
+    out_end.z = position.z;
+  }
+};
+
+/**
  * @brief 栅格坐标结构体
  * 表示栅格地图中的整数坐标
  */
@@ -555,6 +663,7 @@ struct RouteSegment
   int32_t line_id;              ///< 相关联的线ID
   PrinterType printer_type;     ///< 该路径段使用的打印机类型
   InkMode ink_mode;             ///< 墨水打印模式（默认实线）
+  std::string text_content;     ///< 文字内容（仅当 ink_mode == TEXT 时有效）
 
   /**
    * @brief 构造函数
