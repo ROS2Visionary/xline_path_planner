@@ -279,7 +279,7 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
   }
   else if (line->type == GeometryType::TEXT)
   {
-    // 文字类型处理 - 简化版本，只记录起点、终点和内容
+    // 文字类型处理：沿文字基线方向进行路径延长
     auto text = std::dynamic_pointer_cast<Text>(line);
     if (text)
     {
@@ -292,8 +292,9 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
       // 保存文字内容
       segment.text_content = text->content;
 
-      // 使用 Line 基类的 start/end 作为起点和终点（TEXT 不延长）
-      segment.points = { line->start, line->end };
+      // 使用 Line 基类的 start/end 作为文字基线，并按与直线相同的规则前后延长
+      auto [extended_start, extended_end] = extend_line(line->start, line->end, path_extension_length);
+      segment.points = { extended_start, extended_end };
     }
     else
     {

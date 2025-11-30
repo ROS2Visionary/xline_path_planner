@@ -202,8 +202,8 @@
     {
       "color": "#D3D3D3",
       "end": {
-        "x": 0.0,
-        "y": 0.0
+        "x": -100.0,
+        "y": -150.00000000000003
       },
       "hidden": false,
       "id": 1000000,
@@ -233,8 +233,8 @@
       "color": "#0d6efd",
       "content": "1m×1m正方形测试图",
       "end": {
-        "x": 576.0,
-        "y": 0.0
+        "x": 675.9999999999999,
+        "y": -150.00000000000003
       },
       "hidden": false,
       "id": 10,
@@ -251,8 +251,8 @@
       "printer_type": "RIGHT_PRINTER",
       "selected": false,
       "start": {
-        "x": 0.0,
-        "y": 0.0
+        "x": -100.0,
+        "y": -150.00000000000003
       },
       "thickness": 1.0,
       "type": "text",
@@ -261,8 +261,8 @@
     {
       "color": "#D3D3D3",
       "end": {
-        "x": 323.6,
-        "y": -150.00000000000003
+        "x": 223.59999999999997,
+        "y": 0.0
       },
       "hidden": false,
       "id": 1000000,
@@ -281,8 +281,8 @@
       "printer_type": "LEFT_PRINTER",
       "selected": false,
       "start": {
-        "x": 576.0,
-        "y": 0.0
+        "x": 675.9999999999999,
+        "y": -150.00000000000003
       },
       "thickness": 1.0,
       "type": "line",
@@ -292,8 +292,8 @@
       "color": "#0d6efd",
       "content": "边长: 1000mm",
       "end": {
-        "x": 676.4000000000001,
-        "y": -150.00000000000003
+        "x": 776.4000000000001,
+        "y": 0.0
       },
       "hidden": false,
       "id": 14,
@@ -310,8 +310,8 @@
       "printer_type": "LEFT_PRINTER",
       "selected": false,
       "start": {
-        "x": 323.6,
-        "y": -150.00000000000003
+        "x": 223.59999999999997,
+        "y": 0.0
       },
       "thickness": 1.0,
       "type": "text",
@@ -339,8 +339,8 @@
       "printer_type": "CENTER_PRINTER",
       "selected": false,
       "start": {
-        "x": 676.4000000000001,
-        "y": -150.00000000000003
+        "x": 776.4000000000001,
+        "y": 0.0
       },
       "thickness": 1.0,
       "type": "line",
@@ -377,8 +377,8 @@
     {
       "color": "#D3D3D3",
       "end": {
-        "x": 365.0,
-        "y": 550.0
+        "x": 265.0,
+        "y": 400.0
       },
       "hidden": false,
       "id": 1000000,
@@ -408,8 +408,8 @@
       "color": "#0d6efd",
       "content": "中心点",
       "end": {
-        "x": 635.0,
-        "y": 550.0
+        "x": 735.0,
+        "y": 400.0
       },
       "hidden": false,
       "id": 9,
@@ -426,8 +426,8 @@
       "printer_type": "RIGHT_PRINTER",
       "selected": false,
       "start": {
-        "x": 365.0,
-        "y": 550.0
+        "x": 265.0,
+        "y": 400.0
       },
       "thickness": 1.0,
       "type": "text",
@@ -455,8 +455,8 @@
       "printer_type": "CENTER_PRINTER",
       "selected": false,
       "start": {
-        "x": 635.0,
-        "y": 550.0
+        "x": 735.0,
+        "y": 400.0
       },
       "thickness": 1.0,
       "type": "line",
@@ -560,8 +560,8 @@
     {
       "color": "#D3D3D3",
       "end": {
-        "x": 694.0,
-        "y": 950.0
+        "x": 594.0,
+        "y": 1100.0
       },
       "hidden": false,
       "id": 1000000,
@@ -591,8 +591,8 @@
       "color": "#0d6efd",
       "content": "终点(1000,1000)",
       "end": {
-        "x": 1000.0,
-        "y": 950.0
+        "x": 1100.0,
+        "y": 1100.0
       },
       "hidden": false,
       "id": 12,
@@ -609,8 +609,8 @@
       "printer_type": "LEFT_PRINTER",
       "selected": false,
       "start": {
-        "x": 694.0,
-        "y": 950.0
+        "x": 594.0,
+        "y": 1100.0
       },
       "thickness": 1.0,
       "type": "text",
@@ -638,8 +638,8 @@
       "printer_type": "CENTER_PRINTER",
       "selected": false,
       "start": {
-        "x": 1000.0,
-        "y": 950.0
+        "x": 1100.0,
+        "y": 1100.0
       },
       "thickness": 1.0,
       "type": "line",
@@ -676,8 +676,8 @@
     {
       "color": "#D3D3D3",
       "end": {
-        "x": 0.0,
-        "y": -50.0
+        "x": -99.99999999999999,
+        "y": 100.0
       },
       "hidden": false,
       "id": 1000000,
@@ -707,8 +707,8 @@
       "color": "#0d6efd",
       "content": "起点(0,0)",
       "end": {
-        "x": 197.99999999999997,
-        "y": -50.0
+        "x": 298.0,
+        "y": 100.0
       },
       "hidden": false,
       "id": 11,
@@ -725,8 +725,8 @@
       "printer_type": "LEFT_PRINTER",
       "selected": false,
       "start": {
-        "x": 0.0,
-        "y": -50.0
+        "x": -99.99999999999999,
+        "y": 100.0
       },
       "thickness": 1.0,
       "type": "text",
