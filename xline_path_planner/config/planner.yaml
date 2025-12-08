@@ -24,12 +24,12 @@ grid_map:
   padding: 0.1        # 地图边界填充(米)
 
 offsets:
-  left_offset: 0.1      # 左侧打印机偏移(m)
-  right_offset: -0.1      # 右侧打印机偏移(m)
+  left_offset: -0.25      # 左侧打印机偏移(m)
+  right_offset: 0.25      # 右侧打印机偏移(m)
   center_offset: 0.0      # 中心打印机偏移(m)
 
 path_planner:
-  path_extension_length: 0.1
+  path_extension_length: 0.25
 
 # 可选：TCP服务器配置（用于非ROS客户端调用）
 tcp_server:

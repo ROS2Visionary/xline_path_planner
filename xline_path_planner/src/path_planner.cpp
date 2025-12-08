@@ -61,15 +61,17 @@ PrinterType determineTextPrinter(const Point3D& current_position, const Point3D&
   while (relative_angle < -M_PI) relative_angle += 2 * M_PI;
   
   // 根据相对角度决定使用哪个打印机
+  // 需求更新：在保持路径运动方向不变的前提下，左右喷码机的“旋转/使用侧”需要对调，
+  // 因此在逻辑上将原先的左右选择交换。
   if (relative_angle >= -M_PI / 2 && relative_angle <= M_PI / 2)
   {
-    std::cout << "  文字打印机选择: RIGHT_PRINTER (运动方向与文字方向一致)" << std::endl;
-    return PrinterType::RIGHT_PRINTER;
+    std::cout << "  文字打印机选择: LEFT_PRINTER (运动方向与文字方向一致，对调后)" << std::endl;
+    return PrinterType::LEFT_PRINTER;
   }
   else
   {
-    std::cout << "  文字打印机选择: LEFT_PRINTER (运动方向与文字方向相反)" << std::endl;
-    return PrinterType::LEFT_PRINTER;
+    std::cout << "  文字打印机选择: RIGHT_PRINTER (运动方向与文字方向相反，对调后)" << std::endl;
+    return PrinterType::RIGHT_PRINTER;
   }
 }
 
