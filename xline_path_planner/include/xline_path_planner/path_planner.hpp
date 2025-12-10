@@ -1,4 +1,4 @@
-// include/daosnrs_planning/path_planner.hpp
+// 路径规划与可视化接口
 #pragma once
 
 #include <vector>

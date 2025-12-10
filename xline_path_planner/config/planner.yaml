@@ -16,7 +16,7 @@ cad_parser:
   unit_conversion_factor: 1000.0   # 毫米->米
   auto_scale_coordinates: true
   angle_unit: "DEGREES"            # 可选: DEGREES | RADIANS
-  cad_file_dir: "/home/xline/zyq_ws/xline_server/uploads"   # CAD文件所在目录（服务端）
+  cad_file_dir: "/home/xline/zyq_ws/xline_server/uploads/json"   # CAD文件所在目录（服务端）
   # cad_file_dir: "/root/xline_ws/xline_path_planner/cad_data"   # CAD文件所在目录（服务端）
 
 grid_map:

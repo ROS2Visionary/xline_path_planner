@@ -1,36 +1,5 @@
-/*
-================================================================================
-CAD 解析实现（超详细中文注释）
---------------------------------------------------------------------------------
-目标与能力
-  - 解析新一代 CAD JSON（cad_transformed.json）中的几何数据，处理：
-    • 直线（type: "line"）
-    • 圆   （type: "circle"）
-    • 圆弧（type: "arc"）
-    • 文字（type: "text"）
-  - 动态分类：依据 lines[*].layer_id → layers[*].name 将图元归入 CADData 三大集合：
-    • path_lines（路径）
-    • obstacle_lines（障碍物）
-    • hole_lines（空洞）
-  - 单位换算：若启用，则将毫米等原始单位转换为米（默认 /1000）。
-  - 角度单位自动识别：|value| > 2π 视为"度"并转换为弧度。
-
-整体流程
-  1) 读取与解析 JSON（含健壮性检查）
-  2) 构建 layer_id → layer_name 映射（若有）
-  3) 遍历 lines：解析四类几何 → 分类入 CADData
-  4) 输出解析统计并返回成功与否
-
-健壮性与兼容
-  - 缺失关键字段（如 line 缺失 start/end）→ 跳过该元素但不中断流程
-  - 所有异常在 parse() 内部捕获，返回 false，不向外抛出
-  - 坐标键名 x/X, y/Y, z/Z 兼容
-
-扩展位点
-  - store_by_layer 中的关键词可改为配置化（例如注入词表）
-  - 可按需新增其它几何类型的解析与下游处理
-================================================================================
-*/
+// CAD JSON 解析实现，负责把几何数据转成 CADData，
+// 并按图层划分到路径 / 障碍物 / 空洞三个集合。
 #include "xline_path_planner/cad_parser.hpp"
 #include <iostream>
 #include <algorithm>
@@ -43,22 +12,8 @@ CADParser::CADParser(const CADParserConfig& config) : config_(config)
 {
 }
 
-/*
-解析流程总览（parse）
---------------------------------
-输入：
-  - file_path：CAD JSON 文件路径（UTF-8）。
-行为：
-  1) 打开并解析 JSON；
-  2) 清空内部数据（clear）；
-  3) 构建图层映射（build_layer_map）；
-  4) 遍历 lines：按 type 调用 parse_line/parse_circle/parse_arc/parse_text 解析；
-  5) 根据图层名称（由 layer_id → name 或元素内 layer）分类（store_by_layer）；
-  6) 打印解析统计，成功返回 true（至少解析到一个几何），否则返回 false。
-健壮性：
-  - 缺失关键字段的元素跳过处理；
-  - 任何异常均被捕获并返回 false。
-*/
+// parse() 入口：从文件读取 JSON 并填充 CADData。
+// 解析失败或异常时返回 false，不抛到外层。
 bool CADParser::parse(const std::string& file_path)
 {
   try
@@ -240,15 +195,7 @@ const CADParserConfig& CADParser::get_config() const
   return config_;
 }
 
-/*
-单位换算（convert_units）
---------------------------------
-用途：
-  - 当 auto_scale_coordinates=true 时，将原始数值按 unit_conversion_factor 进行缩放。
-    典型配置为 1000.0（毫米→米）。
-注意：
-  - 仅对"数值型"字段调用（坐标分量/半径/长度等）。
-*/
+// 根据配置做单位换算：需要缩放时按 unit_conversion_factor 进行除法。
 double CADParser::convert_units(double value) const
 {
   if (config_.auto_scale_coordinates)

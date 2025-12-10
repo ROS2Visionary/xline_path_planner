@@ -1,4 +1,4 @@
-// include/daosnrs_planning/trajectory_generator.hpp
+// 轨迹生成器接口
 #pragma once
 
 #include <vector>

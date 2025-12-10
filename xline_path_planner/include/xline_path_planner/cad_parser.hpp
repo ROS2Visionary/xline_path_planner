@@ -1,48 +1,12 @@
-// include/xline_path_planner/cad_parser.hpp
+// CAD JSON 解析相关接口
 #pragma once
 
 /*
 ================================================================================
-超详细中文说明（CADParser模块）
---------------------------------------------------------------------------------
-本模块用于解析新格式的 CAD JSON（cad_transformed.json），将几何图元（直线/圆/圆弧/文字）
-按图层（layers→layer_id）动态归入 CADData 的三类集合（路径/障碍物/空洞），供后续
-栅格化与路径规划使用。模块具备单位缩放（毫米→米）与角度单位自动识别（度/弧度）能力。
-
-一、输入 JSON 结构（关键字段）
-  - 根键 layers：图层列表，每项需包含 layer_id（int）与 name（string）。
-  - 根键 lines：几何图元数组，每项至少包含：
-      • id（int，可选）
-      • type（string）："line" | "circle" | "arc" | "text"
-      • layer_id（int，推荐）或 layer（string，备用）
-      • 根据 type 的几何字段：
-          - line   ：start{x,y[,z]}, end{x,y[,z]}
-          - circle ：center{x,y[,z]}, radius
-          - arc    ：center{x,y[,z]}, radius, start_angle, end_angle
-          - text   ：position{x,y[,z]}, content, height, rotation, align{horizontal,vertical}
-
-二、单位与角度
-  - 数值单位：通常 CAD 输出为毫米。若 CADParserConfig::auto_scale_coordinates=true，
-    所有数值会除以 CADParserConfig::unit_conversion_factor（默认1000），从而换算到米。
-  - 圆弧角度：若 |角度值| > 2π 则视为"度"并自动转换为"弧度"，否则认为原本就是弧度。
-
-三、分类规则（图层→集合）
-  - 先通过 layer_id → layers.name 建立映射；找不到时回退读取元素内 layer 字段。
-  - 名称包含以下关键词时归类：
-      • path_lines    ："路径"、"path"、"axis"、"draw"、"drawing"等
-      • obstacle_lines："障碍"、"barrier"、"obstacle"等
-      • hole_lines    ："空洞"、"hole"、"hollow"、"void"、"opening"等
-  - 无法识别则默认归入 path_lines，保证系统可运行。
-
-四、健壮性与失败策略
-  - 缺失关键字段（如 line 缺少 start/end）会跳过该元素并继续处理其他元素。
-  - parse() 内部捕获异常并返回 false，不向外抛出。
-  - 坐标键名大小写兼容（x/X, y/Y, z/Z）。
-
-五、扩展建议
-  - 可将分类关键字抽象为配置（例如加入 CADParserConfig 自定义词表）。
-  - 新增几何类型时在 parse() 中识别并扩展对应解析与下游处理。
-
+CADParser 负责读取新格式的 CAD JSON（cad_transformed.json），
+将几何图元（直线 / 圆 / 圆弧 / 文字）解析为 CADData，供栅格化和路径规划使用。
+支持按图层将图元划分为三类集合（路径 / 障碍物 / 空洞），并在需要时做单位换算
+（毫米→米）和角度单位处理。
 ================================================================================
 */
 
