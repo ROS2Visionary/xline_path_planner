@@ -7,6 +7,7 @@
 #include <cctype>
 #include <mutex>
 #include <atomic>
+#include <cstdlib>
 
 // TCP server includes
 #include <sys/types.h>
@@ -31,6 +32,74 @@
 #include "xline_path_planner/output_formatter.hpp"
 
 using namespace path_planner;
+
+static std::string expand_env(const std::string& path)
+{
+  std::string result;
+  result.reserve(path.size());
+
+  for (size_t i = 0; i < path.size(); ++i)
+  {
+    if (path[i] == '$')
+    {
+      std::string var;
+      size_t j = i + 1;
+
+      if (j < path.size() && path[j] == '{')
+      {
+        ++j;
+        while (j < path.size() && path[j] != '}')
+        {
+          var += path[j++];
+        }
+        i = (j < path.size()) ? j : path.size() - 1;
+      }
+      else
+      {
+        while (j < path.size()
+               && (std::isalnum(static_cast<unsigned char>(path[j])) || path[j] == '_'))
+        {
+          var += path[j++];
+        }
+        i = j - 1;
+      }
+
+      const char* val = std::getenv(var.c_str());
+      if (val)
+      {
+        result += val;
+      }
+    }
+    else
+    {
+      result += path[i];
+    }
+  }
+
+  return result;
+}
+
+static std::string resolve_path(const std::string& raw)
+{
+  std::string p = expand_env(raw);
+
+  if (!p.empty() && p[0] == '/')
+  {
+    return p;
+  }
+
+  const char* ws_root = std::getenv("XLINE_WS_ROOT");
+  if (ws_root && *ws_root)
+  {
+    if (p.empty())
+    {
+      return std::string(ws_root);
+    }
+    return std::string(ws_root) + "/" + p;
+  }
+
+  return p;
+}
 
 struct PlannerEngineConfig
 {
@@ -112,8 +181,8 @@ public:
     use_antialiasing = vis["use_antialiasing"].as<bool>();
     image_format = vis["image_format"].as<std::string>();
     save_path_visualization = vis["save_path_visualization"].as<bool>();
-    visualization_output_dir = vis["output_dir"].as<std::string>();
-    planned_output_dir_ = vis["planned_output_dir"].as<std::string>();
+    visualization_output_dir = resolve_path(vis["output_dir"].as<std::string>());
+    planned_output_dir_ = resolve_path(vis["planned_output_dir"].as<std::string>());
 
     // 3) 读取 CAD 解析 参数
     YAML::Node cad = root["cad_parser"];
@@ -125,7 +194,7 @@ public:
     cad_unit_conversion = cad["unit_conversion_factor"].as<double>();
     bool auto_scale = cad["auto_scale_coordinates"].as<bool>();
     std::string angle_unit_str = cad["angle_unit"].as<std::string>();
-    cad_files_dir_ = cad["cad_file_dir"].as<std::string>();
+    cad_files_dir_ = resolve_path(cad["cad_file_dir"].as<std::string>());
 
     // 3.1) 读取 TCP Server 参数（可选）
     YAML::Node tcp = root["tcp_server"];
