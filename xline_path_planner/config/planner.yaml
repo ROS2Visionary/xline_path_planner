@@ -16,7 +16,7 @@ cad_parser:
   auto_scale_coordinates: true
   angle_unit: "DEGREES"            # 可选: DEGREES | RADIANS
   # 相对路径会挂到 ${XLINE_WS_ROOT} 下
-  cad_file_dir: "xline_server/uploads/json"   # CAD文件所在目录（服务端）
+  cad_file_dir: "xline_server/uploads/json_transformed"   # CAD文件所在目录（服务端，坐标转换后的JSON）
 
 grid_map:
   resolution: 0.005   # 米/格
