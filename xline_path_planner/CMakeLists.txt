@@ -62,6 +62,7 @@ rosidl_target_interfaces(planner_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 
 if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
   # comment the line when a copyright and license is added to all source files
@@ -71,6 +72,15 @@ if(BUILD_TESTING)
   # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
+
+  ament_add_gtest(test_filename_utils
+    test/test_filename_utils.cpp
+  )
+  if(TARGET test_filename_utils)
+    target_include_directories(test_filename_utils PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
+  endif()
 endif()
 
 ament_package()

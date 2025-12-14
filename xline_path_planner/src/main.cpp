@@ -30,6 +30,7 @@
 #include "xline_path_planner/path_planner.hpp"
 #include "xline_path_planner/trajectory_generator.hpp"
 #include "xline_path_planner/output_formatter.hpp"
+#include "xline_path_planner/filename_utils.hpp"
 
 using namespace path_planner;
 
@@ -421,16 +422,9 @@ public:
         {
           RCLCPP_WARN(this->get_logger(), "创建规划结果输出目录失败: %s", ec.message().c_str());
         }
-        std::string file_safe_id = input_path.stem().string();
-        if (file_safe_id.empty()) file_safe_id = "request";
-        for (char& ch : file_safe_id)
-        {
-          unsigned char uch = static_cast<unsigned char>(ch);
-          if (!(std::isalnum(uch) || ch == '-' || ch == '_')) ch = '_';
-        }
-        std::filesystem::path json_path = out_dir / (std::string("planned_") + file_safe_id + ".json");
-        json_path_str = json_path.string();
-        std::ofstream jf(json_path_str);
+        std::filesystem::path json_path = planned_json_output_path(out_dir, input_path);
+        json_path_str = json_path.u8string();
+        std::ofstream jf(json_path);
         if (jf.is_open())
         {
           jf << out_json;
