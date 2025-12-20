@@ -1,9 +1,9 @@
 {
   "metadata": {
     "source_file": "unknown",
-    "export_timestamp": "2025-12-09 00:07:06",
-    "total_layers": 6,
-    "total_lines": 44,
+    "export_timestamp": "2025-12-15 17:29:54",
+    "total_layers": 1,
+    "total_lines": 17,
     "total_linetypes": 1,
     "app_version": "1.0.0",
     "export_filter": "all_layers",
@@ -12,7 +12,7 @@
   "linetypes": [
     {
       "name": "Continuous",
-      "description": "",
+      "description": "Solid line",
       "pattern_length": 0.0,
       "is_complex": false,
       "elements": []
@@ -21,67 +21,12 @@
   "layers": [
     {
       "layer_id": 1,
-      "name": "BORDER",
-      "color": "#dc143c",
+      "name": "交点测试",
+      "color": "#ff8c00",
       "visible": true,
       "locked": false,
-      "line_count": 1,
-      "description": "",
-      "width": 0.0,
-      "height": 0.0
-    },
-    {
-      "layer_id": 2,
-      "name": "CIRCLES",
-      "color": "#ff0000",
-      "visible": true,
-      "locked": false,
-      "line_count": 3,
-      "description": "",
-      "width": 0.0,
-      "height": 0.0
-    },
-    {
-      "layer_id": 3,
-      "name": "ARCS",
-      "color": "#00ff00",
-      "visible": true,
-      "locked": false,
-      "line_count": 2,
-      "description": "",
-      "width": 0.0,
-      "height": 0.0
-    },
-    {
-      "layer_id": 4,
-      "name": "LINES",
-      "color": "#0000ff",
-      "visible": true,
-      "locked": false,
-      "line_count": 14,
-      "description": "",
-      "width": 0.0,
-      "height": 0.0
-    },
-    {
-      "layer_id": 5,
-      "name": "TANGENT",
-      "color": "#ff00ff",
-      "visible": true,
-      "locked": false,
-      "line_count": 3,
-      "description": "",
-      "width": 0.0,
-      "height": 0.0
-    },
-    {
-      "layer_id": 6,
-      "name": "DIMENSIONS",
-      "color": "#ffd700",
-      "visible": true,
-      "locked": false,
-      "line_count": 21,
-      "description": "",
+      "line_count": 17,
+      "description": "交点精度测试",
       "width": 0.0,
       "height": 0.0
     }
@@ -89,115 +34,105 @@
   "lines": [
     {
       "id": 1,
-      "type": "polyline",
+      "type": "line",
       "line_type": "continuous",
       "thickness": 1.0,
       "hidden": false,
       "layer_id": 1,
-      "color": "#dc143c",
-      "vertices": [
-        {
-          "x": 0.0,
-          "y": 0.0
-        },
-        {
-          "x": 1500.0,
-          "y": 0.0
-        },
-        {
-          "x": 1500.0,
-          "y": 1500.0
-        },
-        {
-          "x": 0.0,
-          "y": 1500.0
-        },
-        {
-          "x": 0.0,
-          "y": 0.0
-        }
-      ],
-      "bulges": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
-      ],
-      "is_closed": false
+      "color": "#ff8c00",
+      "start": {
+        "x": 50.0,
+        "y": 1800.0
+      },
+      "end": {
+        "x": 450.0,
+        "y": 1800.0
+      }
     },
     {
       "id": 2,
-      "type": "circle",
+      "type": "line",
       "line_type": "continuous",
       "thickness": 1.0,
       "hidden": false,
-      "layer_id": 2,
-      "color": "#ff0000",
-      "center": {
-        "x": 400.0,
-        "y": 400.0
+      "layer_id": 1,
+      "color": "#ff8c00",
+      "start": {
+        "x": 250.0,
+        "y": 1600.0
       },
-      "radius": 200.0
+      "end": {
+        "x": 250.0,
+        "y": 2000.0
+      }
     },
     {
       "id": 3,
-      "type": "circle",
+      "type": "line",
       "line_type": "continuous",
       "thickness": 1.0,
       "hidden": false,
-      "layer_id": 2,
-      "color": "#ff0000",
-      "center": {
-        "x": 1100.0,
-        "y": 1100.0
+      "layer_id": 1,
+      "color": "#ff8c00",
+      "start": {
+        "x": 500.0,
+        "y": 1800.0
       },
-      "radius": 150.0
+      "end": {
+        "x": 800.0,
+        "y": 1800.0
+      }
     },
     {
       "id": 4,
-      "type": "circle",
+      "type": "line",
       "line_type": "continuous",
       "thickness": 1.0,
       "hidden": false,
-      "layer_id": 2,
-      "color": "#ff0000",
-      "center": {
-        "x": 750.0,
-        "y": 750.0
+      "layer_id": 1,
+      "color": "#ff8c00",
+      "start": {
+        "x": 543.933983,
+        "y": 1693.933983
       },
-      "radius": 100.0
+      "end": {
+        "x": 756.066017,
+        "y": 1906.066017
+      }
     },
     {
       "id": 5,
-      "type": "arc",
+      "type": "line",
       "line_type": "continuous",
       "thickness": 1.0,
       "hidden": false,
-      "layer_id": 3,
-      "color": "#00ff00",
-      "center": {
-        "x": 1100.0,
-        "y": 400.0
+      "layer_id": 1,
+      "color": "#ff8c00",
+      "start": {
+        "x": 650.0,
+        "y": 1650.0
       },
-      "radius": 180.0,
-      "start_angle": 30.0,
-      "end_angle": 150.0
+      "end": {
+        "x": 650.0,
+        "y": 1950.0
+      }
     },
     {
       "id": 6,
-      "type": "arc",
+      "type": "line",
       "line_type": "continuous",
       "thickness": 1.0,
       "hidden": false,
-      "layer_id": 3,
-      "color": "#00ff00",
-      "center": {
-        "x": 400.0,
-        "y": 1100.0
+      "layer_id": 1,
+      "color": "#ff8c00",
+      "start": {
+        "x": 756.066017,
+        "y": 1693.933983
       },
-      "radius": 160.0,
-      "start_angle": 210.0,
-      "end_angle": 330.0
+      "end": {
+        "x": 543.933983,
+        "y": 1906.066017
+      }
     },
     {
       "id": 7,
@@ -205,15 +140,15 @@
       "line_type": "continuous",
       "thickness": 1.0,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 750.0,
-        "y": 750.0
+        "x": 870.0,
+        "y": 1800.0
       },
       "end": {
-        "x": 1300.0,
-        "y": 750.0
+        "x": 1230.0,
+        "y": 1800.0
       }
     },
     {
@@ -222,15 +157,15 @@
       "line_type": "continuous",
       "thickness": 1.0,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 750.0,
-        "y": 750.0
+        "x": 960.0,
+        "y": 1644.115427
       },
       "end": {
-        "x": 1138.908729652601,
-        "y": 1138.908729652601
+        "x": 1140.0,
+        "y": 1955.884573
       }
     },
     {
@@ -239,632 +174,152 @@
       "line_type": "continuous",
       "thickness": 1.0,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 750.0,
-        "y": 750.0
+        "x": 1140.0,
+        "y": 1644.115427
       },
       "end": {
-        "x": 750.0,
-        "y": 1300.0
+        "x": 960.0,
+        "y": 1955.884573
       }
     },
     {
       "id": 10,
       "type": "line",
       "line_type": "continuous",
-      "thickness": 1.0,
+      "thickness": 0.8,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 750.0,
-        "y": 750.0
+        "x": 1200.0,
+        "y": 1800.0
       },
       "end": {
-        "x": 361.0912703473989,
-        "y": 1138.908729652601
+        "x": 1500.0,
+        "y": 1800.0
       }
     },
     {
       "id": 11,
       "type": "line",
       "line_type": "continuous",
-      "thickness": 1.0,
+      "thickness": 0.8,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 750.0,
-        "y": 750.0
+        "x": 1200.0,
+        "y": 1713.39746
       },
       "end": {
-        "x": 200.0,
-        "y": 750.0000000000001
+        "x": 1500.0,
+        "y": 1886.60254
       }
     },
     {
       "id": 12,
       "type": "line",
       "line_type": "continuous",
-      "thickness": 1.0,
+      "thickness": 0.8,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 750.0,
-        "y": 750.0
+        "x": 1500.0,
+        "y": 1800.0
       },
       "end": {
-        "x": 361.0912703473988,
-        "y": 361.0912703473989
+        "x": 1800.0,
+        "y": 1800.0
       }
     },
     {
       "id": 13,
       "type": "line",
       "line_type": "continuous",
-      "thickness": 1.0,
+      "thickness": 0.8,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 750.0,
-        "y": 750.0
+        "x": 1500.0,
+        "y": 1745.404465
       },
       "end": {
-        "x": 749.9999999999999,
-        "y": 200.0
+        "x": 1800.0,
+        "y": 1854.595535
       }
     },
     {
       "id": 14,
       "type": "line",
       "line_type": "continuous",
-      "thickness": 1.0,
+      "thickness": 0.8,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 750.0,
-        "y": 750.0
+        "x": 1800.0,
+        "y": 1800.0
       },
       "end": {
-        "x": 1138.908729652601,
-        "y": 361.0912703473988
+        "x": 2100.0,
+        "y": 1800.0
       }
     },
     {
       "id": 15,
       "type": "line",
       "line_type": "continuous",
-      "thickness": 1.0,
+      "thickness": 0.8,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 100.0,
-        "y": 200.0
+        "x": 1800.0,
+        "y": 1759.807621
       },
       "end": {
-        "x": 1400.0,
-        "y": 200.0
+        "x": 2100.0,
+        "y": 1840.192379
       }
     },
     {
       "id": 16,
       "type": "line",
       "line_type": "continuous",
-      "thickness": 1.0,
+      "thickness": 0.8,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 100.0,
-        "y": 400.0
+        "x": 2100.0,
+        "y": 1800.0
       },
       "end": {
-        "x": 1400.0,
-        "y": 400.0
+        "x": 2400.0,
+        "y": 1800.0
       }
     },
     {
       "id": 17,
       "type": "line",
       "line_type": "continuous",
-      "thickness": 1.0,
+      "thickness": 0.8,
       "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
+      "layer_id": 1,
+      "color": "#ff8c00",
       "start": {
-        "x": 100.0,
-        "y": 600.0
+        "x": 2100.0,
+        "y": 1773.550953
       },
       "end": {
-        "x": 1400.0,
-        "y": 600.0
+        "x": 2400.0,
+        "y": 1826.449047
       }
-    },
-    {
-      "id": 18,
-      "type": "line",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
-      "start": {
-        "x": 100.0,
-        "y": 800.0
-      },
-      "end": {
-        "x": 1400.0,
-        "y": 800.0
-      }
-    },
-    {
-      "id": 19,
-      "type": "line",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
-      "start": {
-        "x": 100.0,
-        "y": 1000.0
-      },
-      "end": {
-        "x": 1400.0,
-        "y": 1000.0
-      }
-    },
-    {
-      "id": 20,
-      "type": "line",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 4,
-      "color": "#0000ff",
-      "start": {
-        "x": 100.0,
-        "y": 1200.0
-      },
-      "end": {
-        "x": 1400.0,
-        "y": 1200.0
-      }
-    },
-    {
-      "id": 21,
-      "type": "line",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 5,
-      "color": "#ff00ff",
-      "start": {
-        "x": 100.0,
-        "y": 600.0
-      },
-      "end": {
-        "x": 700.0,
-        "y": 600.0
-      }
-    },
-    {
-      "id": 22,
-      "type": "line",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 5,
-      "color": "#ff00ff",
-      "start": {
-        "x": 600.0,
-        "y": 100.0
-      },
-      "end": {
-        "x": 600.0,
-        "y": 700.0
-      }
-    },
-    {
-      "id": 23,
-      "type": "line",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 5,
-      "color": "#ff00ff",
-      "start": {
-        "x": 781.8019484660537,
-        "y": 993.9339828220178
-      },
-      "end": {
-        "x": 1206.0660171779823,
-        "y": 1418.1980515339462
-      }
-    },
-    {
-      "id": 24,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 420.0,
-        "y": 300.0
-      },
-      "height": 25.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "R200"
-    },
-    {
-      "id": 25,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1120.0,
-        "y": 1025.0
-      },
-      "height": 25.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "R150"
-    },
-    {
-      "id": 26,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 770.0,
-        "y": 750.0
-      },
-      "height": 25.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "R100"
-    },
-    {
-      "id": 27,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1120.0,
-        "y": 400.0
-      },
-      "height": 25.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "R180"
-    },
-    {
-      "id": 28,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 420.0,
-        "y": 1100.0
-      },
-      "height": 25.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "R160"
-    },
-    {
-      "id": 29,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1420.0,
-        "y": 300.0
-      },
-      "height": 25.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "200"
-    },
-    {
-      "id": 30,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1420.0,
-        "y": 300.0
-      },
-      "height": 20.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "200"
-    },
-    {
-      "id": 31,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1420.0,
-        "y": 500.0
-      },
-      "height": 20.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "200"
-    },
-    {
-      "id": 32,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1420.0,
-        "y": 700.0
-      },
-      "height": 20.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "200"
-    },
-    {
-      "id": 33,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1420.0,
-        "y": 900.0
-      },
-      "height": 20.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "200"
-    },
-    {
-      "id": 34,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1420.0,
-        "y": 1100.0
-      },
-      "height": 20.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "200"
-    },
-    {
-      "id": 35,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 750.0,
-        "y": -40.0
-      },
-      "height": 25.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "1500"
-    },
-    {
-      "id": 36,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": -60.0,
-        "y": 750.0
-      },
-      "height": 25.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "1500"
-    },
-    {
-      "id": 37,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1340.0,
-        "y": 750.0
-      },
-      "height": 18.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "0°"
-    },
-    {
-      "id": 38,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1167.193000900063,
-        "y": 1167.193000900063
-      },
-      "height": 18.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "45°"
-    },
-    {
-      "id": 39,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 750.0,
-        "y": 1340.0
-      },
-      "height": 18.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "90°"
-    },
-    {
-      "id": 40,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 332.806999099937,
-        "y": 1167.193000900063
-      },
-      "height": 18.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "135°"
-    },
-    {
-      "id": 41,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 160.0,
-        "y": 750.0000000000001
-      },
-      "height": 18.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "180°"
-    },
-    {
-      "id": 42,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 332.8069990999369,
-        "y": 332.806999099937
-      },
-      "height": 18.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "225°"
-    },
-    {
-      "id": 43,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 749.9999999999999,
-        "y": 160.0
-      },
-      "height": 18.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "270°"
-    },
-    {
-      "id": 44,
-      "type": "text",
-      "line_type": "continuous",
-      "thickness": 1.0,
-      "hidden": false,
-      "layer_id": 6,
-      "color": "#ffd700",
-      "subtype": "text",
-      "position": {
-        "x": 1167.193000900063,
-        "y": 332.8069990999369
-      },
-      "height": 18.0,
-      "rotation": 0.0,
-      "style": "Standard",
-      "content": "315°"
     }
   ],
   "base_points": {
@@ -878,8 +333,8 @@
         "id": "bp_001",
         "name": "基准点1",
         "original": {
-          "x": 100.0,
-          "y": 200.0,
+          "x": 500.0,
+          "y": 1800.0,
           "z": null
         },
         "actual": null,
@@ -894,8 +349,8 @@
         "id": "bp_002",
         "name": "基准点2",
         "original": {
-          "x": 1400.0,
-          "y": 200.0,
+          "x": 870.0,
+          "y": 1800.0,
           "z": null
         },
         "actual": null,

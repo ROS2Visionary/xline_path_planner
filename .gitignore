@@ -51,3 +51,4 @@ log/
 .vscode/browse.vc.db-shm
 .vscode/browse.vc.db-wal
 other/
+_xline_data_dir/

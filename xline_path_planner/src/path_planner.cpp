@@ -1,7 +1,10 @@
 #include "xline_path_planner/path_planner.hpp"
+#include "xline_path_planner/collinear_merger.hpp"
+#include "xline_path_planner/geometry_preprocessor.hpp"
 #include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <unordered_map>
 
 namespace path_planner
 {
@@ -92,6 +95,74 @@ PrinterType determineTextPrinterByPosition(const Point3D& text_position, double 
   }
 }
 
+std::vector<std::shared_ptr<Line>> merge_collinear_lines_if_enabled(const std::vector<std::shared_ptr<Line>>& lines,
+                                                                    const PathPlannerConfig& cfg)
+{
+  if (!cfg.merge_collinear)
+  {
+    return lines;
+  }
+
+  std::unordered_map<int32_t, std::shared_ptr<Line>> id2line;
+  id2line.reserve(lines.size());
+
+  std::vector<const Line*> straight;
+  straight.reserve(lines.size());
+
+  std::vector<std::shared_ptr<Line>> non_straight;
+  non_straight.reserve(lines.size());
+
+  for (const auto& l : lines)
+  {
+    if (!l) continue;
+    if (l->type == GeometryType::LINE)
+    {
+      id2line[l->id] = l;
+      straight.push_back(l.get());
+    }
+    else
+    {
+      non_straight.push_back(l);
+    }
+  }
+
+  CollinearMerger merger(cfg.distance_tolerance, cfg.angle_tolerance, cfg.min_segment_length);
+  auto groups = merger.merge(straight);
+
+  std::vector<std::shared_ptr<Line>> merged;
+  merged.reserve(groups.size() + non_straight.size());
+
+  for (const auto& g : groups)
+  {
+    if (g.line_ids.empty())
+      continue;
+
+    auto it = id2line.find(g.line_ids.front());
+    if (it == id2line.end() || !it->second)
+      continue;
+
+    if (g.line_ids.size() <= 1)
+    {
+      merged.push_back(it->second);
+      continue;
+    }
+
+    auto base = it->second;
+    auto merged_line = std::make_shared<MergedLine>();
+    static_cast<Line&>(*merged_line) = *base;
+    merged_line->type = GeometryType::LINE;
+    merged_line->start = g.merged_start;
+    merged_line->end = g.merged_end;
+    merged_line->length = merged_line->start.distance(merged_line->end);
+    merged_line->is_printed = false;
+    merged_line->source_line_ids = g.line_ids;
+    merged.push_back(std::move(merged_line));
+  }
+
+  merged.insert(merged.end(), non_straight.begin(), non_straight.end());
+  return merged;
+}
+
 } // anonymous namespace
 
 PathPlanner::PathPlanner(const PathPlannerConfig& config) : planner_config_(config), grid_map_generator_(nullptr)
@@ -130,6 +201,9 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
 
   std::vector<RouteSegment> path_segments;
 
+  // 预处理（REQ-01）：拆分 Polyline 等
+  CADData preprocessed = GeometryPreprocessor::preprocess(cad_data, planner_config_);
+
   // 如果提供了机器人起始位置，打印信息
   if (robot_start_position.has_value())
   {
@@ -138,16 +212,19 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
   }
 
   // 打印CAD数据中路径线的数量
-  std::cout << "Total path lines in CAD data: " << cad_data.path_lines.size() << std::endl;
+  std::cout << "Total path lines in CAD data: " << preprocessed.path_lines.size() << std::endl;
 
   // 统计各类型的轴线数量和已绘制状态
-  int line_count = 0, circle_count = 0, arc_count = 0, curve_count = 0, text_count = 0, other_count = 0;
+  int line_count = 0, polyline_count = 0, circle_count = 0, arc_count = 0, curve_count = 0, text_count = 0,
+      other_count = 0;
   int printed_count = 0, unprinted_count = 0;
 
-  for (const auto& line : cad_data.path_lines)
+  for (const auto& line : preprocessed.path_lines)
   {
     if (line->type == GeometryType::LINE)
       line_count++;
+    else if (line->type == GeometryType::POLYLINE)
+      polyline_count++;
     else if (line->type == GeometryType::CIRCLE)
       circle_count++;
     else if (line->type == GeometryType::ARC)
@@ -169,17 +246,22 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
     }
   }
 
-  std::cout << "Path line types: " << line_count << " lines, " << circle_count << " circles, " << arc_count << " arcs, "
-            << curve_count << " curves, " << text_count << " texts, " << other_count << " other types" << std::endl;
+  std::cout << "Path line types: " << line_count << " lines, " << polyline_count << " polylines, " << circle_count
+            << " circles, " << arc_count << " arcs, " << curve_count << " curves, " << text_count << " texts, "
+            << other_count << " other types" << std::endl;
 
   std::cout << "Printed/Unprinted status: " << printed_count << " printed, " << unprinted_count << " unprinted"
             << std::endl;
 
   // 收集所有轴线，无论其is_printed状态
-  std::vector<std::shared_ptr<Line>> lines_to_draw = cad_data.path_lines;
+  std::vector<std::shared_ptr<Line>> lines_to_draw =
+    merge_collinear_lines_if_enabled(preprocessed.path_lines, planner_config_);
 
   // 如果所有线段都被标记为已打印，但我们仍然需要处理它们
-  if (!lines_to_draw.empty() && printed_count == cad_data.path_lines.size())
+  const bool all_printed = !lines_to_draw.empty() &&
+                           std::all_of(lines_to_draw.begin(), lines_to_draw.end(),
+                                       [](const std::shared_ptr<Line>& l) { return l && l->is_printed; });
+  if (all_printed)
   {
     std::cout << "All lines are marked as printed. Forcing processing of all lines..." << std::endl;
     // 将所有线段标记为未打印，以便处理它们
@@ -234,6 +316,10 @@ std::shared_ptr<Line> PathPlanner::findNearestUnprocessedLine(const Point3D& cur
 RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, const PathOffsetConfig& offset_config)
 {
   RouteSegment segment(RouteType::DRAWING_PATH, line->id);
+  if (auto merged_line = std::dynamic_pointer_cast<MergedLine>(line))
+  {
+    segment.merged_line_ids = merged_line->source_line_ids;
+  }
 
   // 默认使用中间喷码机；后续如需按图层/几何特征动态分配，
   // 可以在此处根据 line 元数据修改 segment.printer_type
@@ -242,31 +328,33 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
   // 从 line_type 推导 ink_mode
   segment.ink_mode = deduceInkMode(line->line_type);
 
-  // 新增路径延长长度的配置参数
-  double path_extension_length = planner_config_.path_extension_length;
+  // 绘图路径延长配置（起点端/终点端可分别配置）
+  const double start_extension_length = std::max(0.0, planner_config_.path_extension_start_length);
+  const double end_extension_length = std::max(0.0, planner_config_.path_extension_end_length);
 
   // 延长路径的方法
   auto extend_line = [&](const Point3D& start, const Point3D& end,
-                         double extension_length) -> std::pair<Point3D, Point3D> {
+                         double start_ext, double end_ext) -> std::pair<Point3D, Point3D> {
     // 计算原始线段长度和方向
     double original_length = start.distance(end);
     if (original_length < 1e-6)
     {
       return { start, end };
     }
-    double unit_factor = extension_length / original_length;
+    const double start_factor = start_ext / original_length;
+    const double end_factor = end_ext / original_length;
 
     Point3D extended_start, extended_end;
 
     // 延长起点
-    extended_start.x = start.x - (end.x - start.x) * unit_factor;
-    extended_start.y = start.y - (end.y - start.y) * unit_factor;
-    extended_start.z = start.z - (end.z - start.z) * unit_factor;
+    extended_start.x = start.x - (end.x - start.x) * start_factor;
+    extended_start.y = start.y - (end.y - start.y) * start_factor;
+    extended_start.z = start.z - (end.z - start.z) * start_factor;
 
     // 延长终点
-    extended_end.x = end.x + (end.x - start.x) * unit_factor;
-    extended_end.y = end.y + (end.y - start.y) * unit_factor;
-    extended_end.z = end.z + (end.z - start.z) * unit_factor;
+    extended_end.x = end.x + (end.x - start.x) * end_factor;
+    extended_end.y = end.y + (end.y - start.y) * end_factor;
+    extended_end.z = end.z + (end.z - start.z) * end_factor;
 
     return { extended_start, extended_end };
   };
@@ -275,9 +363,26 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
   if (line->type == GeometryType::LINE)
   {
     // 仅对直线路径（非转场路径）进行延长
-    auto [extended_start, extended_end] = extend_line(line->start, line->end, path_extension_length);
+    auto [extended_start, extended_end] =
+        extend_line(line->start, line->end, start_extension_length, end_extension_length);
 
     segment.points = { extended_start, extended_end };
+  }
+  else if (line->type == GeometryType::POLYLINE)
+  {
+    auto poly = std::dynamic_pointer_cast<Polyline>(line);
+    if (poly && poly->vertices.size() >= 2)
+    {
+      segment.points = poly->vertices;
+      if (poly->closed && poly->vertices.size() > 2)
+      {
+        segment.points.push_back(poly->vertices.front());
+      }
+    }
+    else
+    {
+      segment.points = { line->start, line->end };
+    }
   }
   else if (line->type == GeometryType::TEXT)
   {
@@ -295,7 +400,8 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
       segment.text_content = text->content;
 
       // 使用 Line 基类的 start/end 作为文字基线，并按与直线相同的规则前后延长
-      auto [extended_start, extended_end] = extend_line(line->start, line->end, path_extension_length);
+      auto [extended_start, extended_end] =
+          extend_line(line->start, line->end, start_extension_length, end_extension_length);
       segment.points = { extended_start, extended_end };
     }
     else
@@ -396,18 +502,18 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
         Point3D tangent_end = curve_points[curve_points.size() - 1] - curve_points[curve_points.size() - 2];
         double tangent_end_length = tangent_end.distance(Point3D(0, 0, 0));
 
-        // 延长起点
+        // 延长起点（起点端/终点端支持不同的延长长度）
         Point3D extended_start = curve_points.front();
         if (tangent_start_length > 1e-6)
         {  // 避免除以零
-          extended_start = extended_start - tangent_start * (path_extension_length / tangent_start_length);
+          extended_start = extended_start - tangent_start * (start_extension_length / tangent_start_length);
         }
 
         // 延长终点
         Point3D extended_end = curve_points.back();
         if (tangent_end_length > 1e-6)
         {  // 避免除以零
-          extended_end = extended_end + tangent_end * (path_extension_length / tangent_end_length);
+          extended_end = extended_end + tangent_end * (end_extension_length / tangent_end_length);
         }
 
         // 构建新的曲线点序列
@@ -570,6 +676,7 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
       switch (nearest_line->type)
       {
         case GeometryType::LINE: std::cout << " (LINE)"; break;
+        case GeometryType::POLYLINE: std::cout << " (POLYLINE)"; break;
         case GeometryType::CIRCLE: std::cout << " (CIRCLE)"; break;
         case GeometryType::ARC: std::cout << " (ARC)"; break;
         case GeometryType::CURVE: std::cout << " (CURVE)"; break;
@@ -1614,37 +1721,12 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
         }
       }
 
-      // 访问CAD数据以获取所有线段并绘制
-      // 这里需要访问原始CAD数据，可以从外部传入或保存一个引用
-      // 简化起见，这里仅使用轴线点
-      const auto& axis_points = grid_map_generator_->get_axis_points();
-      for (const auto& axis_point : axis_points)
-      {
-        double world_x1, world_y1, world_x2, world_y2;
-        grid_map_generator_->convertGridToWorld(axis_point.x1, axis_point.y1, world_x1, world_y1);
-        grid_map_generator_->convertGridToWorld(axis_point.x2, axis_point.y2, world_x2, world_y2);
-
-        // 转换到新的坐标系
-        int new_x1 = static_cast<int>((world_x1 - min_x) / resolution);
-        int new_y1 = static_cast<int>((world_y1 - min_y) / resolution);
-        int new_x2 = static_cast<int>((world_x2 - min_x) / resolution);
-        int new_y2 = static_cast<int>((world_y2 - min_y) / resolution);
-
-        if ((new_x1 >= 0 && new_x1 < new_width && new_y1 >= 0 && new_y1 < new_height) ||
-            (new_x2 >= 0 && new_x2 < new_width && new_y2 >= 0 && new_y2 < new_height))
-        {
-          // 绘制轴线
-          cv::line(image, cv::Point(new_x1 * scale + scale / 2, new_y1 * scale + scale / 2),
-                   cv::Point(new_x2 * scale + scale / 2, new_y2 * scale + scale / 2), config.axis_line_color,
-                   std::max(2, scale / 4), cv::LINE_AA);
-        }
-      }
+      // 轴线绘制放到最后一层（覆盖在规划路径之上），见下方统一处理。
     }
     else
     {
       // 使用原有的绘制方法
       draw_grid_map(image, config);
-      draw_axis_lines(image, config);
     }
 
     int path_label = 1;  // 路径编号,从1开始
@@ -1720,6 +1802,35 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
           }
         }
       }
+    }
+
+    // 为了避免“绘图路径延长”遮挡原始轴线导致误判，将轴线绘制放到最后一层（覆盖在规划路径之上）
+    if (need_resize)
+    {
+      const auto& axis_points = grid_map_generator_->get_axis_points();
+      for (const auto& axis_point : axis_points)
+      {
+        double world_x1, world_y1, world_x2, world_y2;
+        grid_map_generator_->convertGridToWorld(axis_point.x1, axis_point.y1, world_x1, world_y1);
+        grid_map_generator_->convertGridToWorld(axis_point.x2, axis_point.y2, world_x2, world_y2);
+
+        int new_x1 = static_cast<int>((world_x1 - min_x) / resolution);
+        int new_y1 = static_cast<int>((world_y1 - min_y) / resolution);
+        int new_x2 = static_cast<int>((world_x2 - min_x) / resolution);
+        int new_y2 = static_cast<int>((world_y2 - min_y) / resolution);
+
+        if ((new_x1 >= 0 && new_x1 < new_width && new_y1 >= 0 && new_y1 < new_height) ||
+            (new_x2 >= 0 && new_x2 < new_width && new_y2 >= 0 && new_y2 < new_height))
+        {
+          cv::line(image, cv::Point(new_x1 * scale + scale / 2, new_y1 * scale + scale / 2),
+                   cv::Point(new_x2 * scale + scale / 2, new_y2 * scale + scale / 2), config.axis_line_color,
+                   std::max(2, scale / 4), cv::LINE_AA);
+        }
+      }
+    }
+    else
+    {
+      draw_axis_lines(image, config);
     }
 
     // 绘制图例

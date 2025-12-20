@@ -370,6 +370,34 @@ void GridMapGenerator::convertToGridLine(const std::shared_ptr<Line>& line, int 
       drawGridLine(x1, y1, x2, y2, value);
     }
   }
+  else if (line->type == GeometryType::POLYLINE)
+  {
+    auto poly = std::dynamic_pointer_cast<Polyline>(line);
+    if (!poly || poly->vertices.size() < 2)
+    {
+      return;
+    }
+
+    for (size_t i = 0; i + 1 < poly->vertices.size(); ++i)
+    {
+      int x1, y1, x2, y2;
+      if (convertWorldToGrid(poly->vertices[i].x, poly->vertices[i].y, x1, y1) &&
+          convertWorldToGrid(poly->vertices[i + 1].x, poly->vertices[i + 1].y, x2, y2))
+      {
+        drawGridLine(x1, y1, x2, y2, value);
+      }
+    }
+
+    if (poly->closed && poly->vertices.size() > 2)
+    {
+      int x1, y1, x2, y2;
+      if (convertWorldToGrid(poly->vertices.back().x, poly->vertices.back().y, x1, y1) &&
+          convertWorldToGrid(poly->vertices.front().x, poly->vertices.front().y, x2, y2))
+      {
+        drawGridLine(x1, y1, x2, y2, value);
+      }
+    }
+  }
   else if (line->type == GeometryType::CIRCLE)
   {
     // 对于圆，我们转换为Circle类型

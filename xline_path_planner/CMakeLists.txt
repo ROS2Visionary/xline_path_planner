@@ -23,6 +23,8 @@ add_executable(planner_node
   src/path_planner.cpp
   src/trajectory_generator.cpp
   src/output_formatter.cpp
+  src/geometry_preprocessor.cpp
+  src/collinear_merger.cpp
 )
 target_include_directories(planner_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -78,6 +80,17 @@ if(BUILD_TESTING)
   )
   if(TARGET test_filename_utils)
     target_include_directories(test_filename_utils PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
+  endif()
+
+  ament_add_gtest(test_geometry_optimization
+    test/test_geometry_optimization.cpp
+    src/geometry_preprocessor.cpp
+    src/collinear_merger.cpp
+  )
+  if(TARGET test_geometry_optimization)
+    target_include_directories(test_geometry_optimization PRIVATE
       ${CMAKE_CURRENT_SOURCE_DIR}/include
     )
   endif()

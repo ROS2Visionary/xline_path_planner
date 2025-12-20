@@ -28,18 +28,27 @@ offsets:
   center_offset: 0.0      # 中心打印机偏移(m)
 
 path_planner:
-  path_extension_length: 0.25
+  path_extension_start_length: 0.25 # 绘图路径起点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
+  path_extension_end_length: 0.05   # 绘图路径终点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
+
+geometry_preprocessing:
+  split_polyline: true              # 是否将 CAD 的 Polyline 拆分为多条 Line 参与规划
+  preserve_polyline_info: true      # 拆分后是否保留 polyline 来源信息（parent_id/segment_index）
+  merge_collinear: true             # 是否合并“共线且端点相连”的直线段为一条路径
+  distance_tolerance: 0.001         # 距离容差（米），用于端点相连/点到直线距离判定（默认 1mm）
+  angle_tolerance: 0.001            # 角度容差（弧度），用于方向夹角判定（越小越严格）
+  min_segment_length: 0.0005        # 最小线段长度（米），短于该值的线段不参与共线合并
 
 # 可选：TCP服务器配置（用于非ROS客户端调用）
 tcp_server:
-  enabled: true
-  host: "192.168.0.123"
-  port: 52088
+  enabled: true                     # 是否启用 TCP 服务
+  host: "192.168.0.123"             # 监听地址（0.0.0.0 表示监听所有网卡）
+  port: 52088                       # 监听端口
 
 # 可选：机器人起始位置配置
 robot_start:
   enabled: true                     # 是否启用机器人起始位置
   pose_topic: "/robot_pose"         # 机器人位置话题名
   pose_timeout_sec: 5.0             # 位置超时时间（秒）
-  required: true                   # 是否必须有位置才能规划（false表示没有位置时使用默认起点）
+  required: false                   # 是否必须有位置才能规划（false表示没有位置时使用默认起点）
   max_initial_distance: 100.0       # 机器人到第一条路径的最大距离限制（米）

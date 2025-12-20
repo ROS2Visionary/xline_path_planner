@@ -170,6 +170,17 @@ private:
   Line parse_line(const nlohmann::json& json_line);
 
   /**
+   * @brief 解析多段线（polyline）
+   * 期望字段：
+   * - id: 整数（可选）
+   * - type: 字符串，需为"polyline"
+   * - vertices: [ {x,y[,z]}, ... ]（至少2个点）
+   * - closed: bool（可选，默认false）
+   * 其他字段（line_type、thickness、layer_id、color 等）按 Line 元数据填充。
+   */
+  Polyline parse_polyline(const nlohmann::json& json_polyline);
+
+  /**
    * @brief 解析曲线数据（暂未使用，预留扩展）
    * 说明：保留该接口以便未来支持 Bézier/NURBS 等曲线类型。
    */

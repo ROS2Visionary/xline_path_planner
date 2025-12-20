@@ -59,7 +59,7 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
     // 预先构建 layer_id -> layer_name 映射，供分类用
     build_layer_map(cad_json);
 
-    // 新格式：仅解析根节点"lines"，支持 line/circle/arc/text 四类
+    // 新格式：仅解析根节点"lines"，支持 line/polyline/circle/arc/text 五类
     if (!cad_json.contains("lines") || !cad_json["lines"].is_array())
     {
       std::cerr << "Invalid CAD JSON: missing 'lines' array" << std::endl;
@@ -67,7 +67,7 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
     }
 
     const auto& lines = cad_json["lines"];
-    size_t parsed_lines = 0, parsed_arcs = 0, parsed_circles = 0, parsed_texts = 0;
+    size_t parsed_lines = 0, parsed_polylines = 0, parsed_arcs = 0, parsed_circles = 0, parsed_texts = 0;
     for (const auto& item : lines)
     {
       // 若存在 selected 且为 false，则舍弃该元素
@@ -112,6 +112,16 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
         auto line_ptr = std::make_shared<Line>(parse_line(item));
         store_by_layer(line_ptr, layer_name);
         ++parsed_lines;
+      }
+      else if (t == "polyline")
+      {
+        if (!item.contains("vertices") || !item["vertices"].is_array())
+        {
+          continue;
+        }
+        auto poly_ptr = std::make_shared<Polyline>(parse_polyline(item));
+        store_by_layer(poly_ptr, layer_name);
+        ++parsed_polylines;
       }
       else if (t == "circle")
       {
@@ -164,9 +174,10 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
     }
 
     std::cout << "Parsed from 'lines' (by layers): " << parsed_lines << " line(s), " << parsed_circles << " circle(s), "
-              << parsed_arcs << " arc(s), " << parsed_texts << " text(s)" << std::endl;
+              << parsed_polylines << " polyline(s), " << parsed_arcs << " arc(s), " << parsed_texts << " text(s)"
+              << std::endl;
 
-    return (parsed_lines + parsed_arcs + parsed_circles + parsed_texts) > 0;
+    return (parsed_lines + parsed_polylines + parsed_arcs + parsed_circles + parsed_texts) > 0;
   }
   catch (const std::exception& e)
   {
@@ -263,6 +274,66 @@ Line CADParser::parse_line(const nlohmann::json& json_line)
   // 长度由（可能缩放后的）起止点计算
   line.length = line.start.distance(line.end);
   return line;
+}
+
+Polyline CADParser::parse_polyline(const nlohmann::json& json_polyline)
+{
+  Polyline poly;
+
+  if (json_polyline.contains("id") && json_polyline["id"].is_number_integer())
+  {
+    poly.id = json_polyline["id"].get<int32_t>();
+  }
+
+  poly.type = GeometryType::POLYLINE;
+  poly.is_printed = false;
+
+  // 可选元数据
+  if (json_polyline.contains("line_type") && json_polyline["line_type"].is_string())
+  {
+    poly.line_type = json_polyline["line_type"].get<std::string>();
+  }
+  if (json_polyline.contains("thickness") && json_polyline["thickness"].is_number())
+  {
+    poly.thickness = json_polyline["thickness"].get<double>();
+  }
+  if (json_polyline.contains("hidden") && json_polyline["hidden"].is_boolean())
+  {
+    poly.hidden = json_polyline["hidden"].get<bool>();
+  }
+  if (json_polyline.contains("layer_id") && json_polyline["layer_id"].is_number_integer())
+  {
+    poly.layer_id = json_polyline["layer_id"].get<int32_t>();
+  }
+  if (json_polyline.contains("layer") && json_polyline["layer"].is_string())
+  {
+    poly.layer = json_polyline["layer"].get<std::string>();
+  }
+  if (json_polyline.contains("color") && json_polyline["color"].is_string())
+  {
+    poly.color = json_polyline["color"].get<std::string>();
+  }
+  if (json_polyline.contains("selected") && json_polyline["selected"].is_boolean())
+  {
+    poly.selected = json_polyline["selected"].get<bool>();
+  }
+
+  if (json_polyline.contains("closed") && json_polyline["closed"].is_boolean())
+  {
+    poly.closed = json_polyline["closed"].get<bool>();
+  }
+
+  if (json_polyline.contains("vertices") && json_polyline["vertices"].is_array())
+  {
+    for (const auto& v : json_polyline["vertices"])
+    {
+      if (!v.is_object()) continue;
+      poly.vertices.push_back(parse_point(v));
+    }
+  }
+
+  poly.update_geometry();
+  return poly;
 }
 
 Curve CADParser::parse_curve(const nlohmann::json& json_curve)

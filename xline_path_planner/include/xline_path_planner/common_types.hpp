@@ -226,7 +226,8 @@ struct Vector2D
  */
 enum class GeometryType
 {
-  LINE = 1,    ///< 直线
+  LINE = 1,      ///< 直线
+  POLYLINE = 2,  ///< 多段线（顶点序列）
   CIRCLE = 4,  ///< 圆
   CURVE = 6,   ///< 曲线
   ARC = 7,     ///< 圆弧
@@ -342,6 +343,58 @@ struct Line
     }
     return Vector2D(dx / dist, dy / dist);
   }
+};
+
+/**
+ * @brief 多段线（Polyline），由多个顶点构成
+ * 说明：用于兼容 CAD JSON 中的 "polyline" 类型；通常会在预处理阶段拆分为若干 LineSegment。
+ */
+struct Polyline : public Line
+{
+  std::vector<Point3D> vertices;  ///< 顶点序列（至少2个点）
+  bool closed = false;            ///< 是否闭合（闭合时最后点连回第一个点）
+
+  Polyline() { type = GeometryType::POLYLINE; }
+
+  void update_geometry()
+  {
+    type = GeometryType::POLYLINE;
+    if (!vertices.empty())
+    {
+      start = vertices.front();
+      end = vertices.back();
+    }
+    length = 0.0;
+    if (vertices.size() >= 2)
+    {
+      for (size_t i = 0; i + 1 < vertices.size(); ++i)
+      {
+        length += vertices[i].distance(vertices[i + 1]);
+      }
+      if (closed && vertices.size() > 2)
+      {
+        length += vertices.back().distance(vertices.front());
+      }
+    }
+  }
+};
+
+/**
+ * @brief Polyline 拆分后的线段（带来源信息）
+ */
+struct LineSegment : public Line
+{
+  int32_t parent_polyline_id = -1;  ///< 原始 Polyline 的 ID（-1 表示非 Polyline 来源）
+  int32_t segment_index = -1;       ///< 在原始 Polyline 中的线段索引
+  bool is_from_polyline = false;    ///< 是否来自 Polyline 拆分
+};
+
+/**
+ * @brief 共线合并后的“虚拟线段”，记录来源线段 ID
+ */
+struct MergedLine : public Line
+{
+  std::vector<int32_t> source_line_ids;  ///< 合并来源线段 ID（包含主 ID）
 };
 
 /**
@@ -661,6 +714,7 @@ struct RouteSegment
   std::vector<Point3D> points;  ///< 路径点
   RouteType type;               ///< 路径类型
   int32_t line_id;              ///< 相关联的线ID
+  std::vector<int32_t> merged_line_ids;  ///< 若发生共线合并，记录所有来源线段ID（包含主ID）
   PrinterType printer_type;     ///< 该路径段使用的打印机类型
   InkMode ink_mode;             ///< 墨水打印模式（默认实线）
   std::string text_content;     ///< 文字内容（仅当 ink_mode == TEXT 时有效）
@@ -775,7 +829,16 @@ struct GridMapConfig
  */
 struct PathPlannerConfig
 {
-  double path_extension_length = 0.1;      ///< 路径延长长度(m)，默认延长0.1米
+  double path_extension_start_length = 0.1;  ///< 起点端延长长度(m)，默认0.1米
+  double path_extension_end_length = 0.1;    ///< 终点端延长长度(m)，默认0.1米
+
+  // 几何预处理（REQ-01/REQ-02）
+  bool split_polyline = true;           ///< 是否启用 Polyline 拆分
+  bool preserve_polyline_info = true;   ///< 是否保留 Polyline 来源信息（LineSegment）
+  bool merge_collinear = true;          ///< 是否启用共线合并
+  double distance_tolerance = 0.001;    ///< 端点距离容差(米)
+  double angle_tolerance = 0.001;       ///< 方向角容差(弧度)
+  double min_segment_length = 0.0005;   ///< 最小线段长度(米)，过短线段不参与合并
 };
 
 /**

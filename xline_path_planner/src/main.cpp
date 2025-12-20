@@ -28,6 +28,7 @@
 #include "xline_path_planner/cad_parser.hpp"
 #include "xline_path_planner/grid_map_generator.hpp"
 #include "xline_path_planner/path_planner.hpp"
+#include "xline_path_planner/geometry_preprocessor.hpp"
 #include "xline_path_planner/trajectory_generator.hpp"
 #include "xline_path_planner/output_formatter.hpp"
 #include "xline_path_planner/filename_utils.hpp"
@@ -237,8 +238,28 @@ public:
 
     YAML::Node planner = root["path_planner"];
     require(planner, "path_planner");
-    require(planner["path_extension_length"], "path_planner.path_extension_length");
-    path_extension_length = planner["path_extension_length"].as<double>();
+    require(planner["path_extension_start_length"], "path_planner.path_extension_start_length");
+    require(planner["path_extension_end_length"], "path_planner.path_extension_end_length");
+    path_extension_start_length = planner["path_extension_start_length"].as<double>();
+    path_extension_end_length = planner["path_extension_end_length"].as<double>();
+
+    // 5.1) 读取几何预处理参数（可选）
+    YAML::Node geo = root["geometry_preprocessing"];
+    bool split_polyline = path_planner_config.split_polyline;
+    bool preserve_polyline_info = path_planner_config.preserve_polyline_info;
+    bool merge_collinear = path_planner_config.merge_collinear;
+    double distance_tolerance = path_planner_config.distance_tolerance;
+    double angle_tolerance = path_planner_config.angle_tolerance;
+    double min_segment_length = path_planner_config.min_segment_length;
+    if (geo && !geo.IsNull())
+    {
+      if (geo["split_polyline"]) split_polyline = geo["split_polyline"].as<bool>();
+      if (geo["preserve_polyline_info"]) preserve_polyline_info = geo["preserve_polyline_info"].as<bool>();
+      if (geo["merge_collinear"]) merge_collinear = geo["merge_collinear"].as<bool>();
+      if (geo["distance_tolerance"]) distance_tolerance = geo["distance_tolerance"].as<double>();
+      if (geo["angle_tolerance"]) angle_tolerance = geo["angle_tolerance"].as<double>();
+      if (geo["min_segment_length"]) min_segment_length = geo["min_segment_length"].as<double>();
+    }
 
     // 6) 基于读取参数进行配置对象赋值与检查（不涉及任何文件路径）
 
@@ -264,7 +285,14 @@ public:
     grid_map_config.padding = grid_padding;
 
     // 路径规划参数
-    path_planner_config.path_extension_length = path_extension_length;
+    path_planner_config.path_extension_start_length = path_extension_start_length;
+    path_planner_config.path_extension_end_length = path_extension_end_length;
+    path_planner_config.split_polyline = split_polyline;
+    path_planner_config.preserve_polyline_info = preserve_polyline_info;
+    path_planner_config.merge_collinear = merge_collinear;
+    path_planner_config.distance_tolerance = distance_tolerance;
+    path_planner_config.angle_tolerance = angle_tolerance;
+    path_planner_config.min_segment_length = min_segment_length;
 
     // 偏移参数
     offset_config.left_offset = left_offset;
@@ -348,6 +376,7 @@ public:
         throw std::runtime_error("CAD 文件解析失败: " + input_path.string());
       }
       CADData cad_data = cad_parser.get_cad_data();
+      cad_data = GeometryPreprocessor::preprocess(cad_data, cfg.path_planner);
 
       // 生成栅格
       GridMapGenerator grid_map_generator(cfg.grid_map);
@@ -752,7 +781,8 @@ public:
   double grid_resolution, grid_padding, cad_unit_conversion;
   bool show_grid_lines, use_antialiasing, save_path_visualization;
   double left_offset, right_offset, center_offset;
-  double path_extension_length;
+  double path_extension_start_length;
+  double path_extension_end_length;
 
   // 规划互斥，防止并发执行
   std::mutex plan_mutex_;
