@@ -3,6 +3,7 @@
 /home/xline/xline_work_dir/total_file_path_config.yaml
 
 colcon build
+export XLINE_WS_ROOT=/root/xline_ws/xline_path_planner/_xline_data_dir
 source install/setup.sh
 ros2 run xline_path_planner planner_node
 

@@ -236,10 +236,16 @@ private:
    * @brief 找到与当前位置最近的未绘制线段
    * @param current_pos 当前位置
    * @param lines 线段数组
+   * @param offset_config 路径偏移配置（用于估算下一条绘图路径起点）
+   * @param has_current_position 是否已有有效当前位置（影响转场逻辑/文字打印机选择）
+   * @param canvas_center_x 画布中心X（用于无当前位置时的文字打印机选择）
    * @return 最近的未绘制线段，如果没有则返回nullptr
    */
   std::shared_ptr<Line> findNearestUnprocessedLine(const Point3D& current_pos,
-                                                   const std::vector<std::shared_ptr<Line>>& lines);
+                                                   const std::vector<std::shared_ptr<Line>>& lines,
+                                                   const PathOffsetConfig& offset_config,
+                                                   bool has_current_position,
+                                                   double canvas_center_x);
 
   /**
    * @brief 在路径中间绘制编号

@@ -111,38 +111,51 @@ bool should_execute_transition_backward(const std::vector<RouteSegment>& planned
  * @param text_rotation 文字旋转角度（度）
  * @return 应该使用的打印机类型（LEFT_PRINTER 或 RIGHT_PRINTER）
  */
-PrinterType determineTextPrinter(const Point3D& current_position, const Point3D& text_position, double text_rotation)
+PrinterType determineTextPrinterQuiet(const Point3D& current_position, const Point3D& text_position, double text_rotation)
 {
   // 计算从当前位置到文字位置的向量
-  double dx = text_position.x - current_position.x;
-  double dy = text_position.y - current_position.y;
-  
+  const double dx = text_position.x - current_position.x;
+  const double dy = text_position.y - current_position.y;
+
   // 计算运动方向角度（弧度）
-  double motion_angle = std::atan2(dy, dx);
-  
+  const double motion_angle = std::atan2(dy, dx);
+
   // 将文字旋转角度转换为弧度
-  double text_angle_rad = text_rotation * M_PI / 180.0;
-  
+  const double text_angle_rad = text_rotation * M_PI / 180.0;
+
   // 计算运动方向与文字方向的相对角度
   double relative_angle = motion_angle - text_angle_rad;
-  
+
   // 将角度规范化到 [-π, π] 范围
   while (relative_angle > M_PI) relative_angle -= 2 * M_PI;
   while (relative_angle < -M_PI) relative_angle += 2 * M_PI;
-  
-  // 根据相对角度决定使用哪个打印机
+
   // 需求更新：在保持路径运动方向不变的前提下，左右喷码机的“旋转/使用侧”需要对调，
   // 因此在逻辑上将原先的左右选择交换。
   if (relative_angle >= -M_PI / 2 && relative_angle <= M_PI / 2)
   {
-    std::cout << "  文字打印机选择: LEFT_PRINTER (运动方向与文字方向一致，对调后)" << std::endl;
     return PrinterType::LEFT_PRINTER;
+  }
+  return PrinterType::RIGHT_PRINTER;
+}
+
+PrinterType determineTextPrinterByPositionQuiet(const Point3D& text_position, double canvas_center_x)
+{
+  return (text_position.x < canvas_center_x) ? PrinterType::LEFT_PRINTER : PrinterType::RIGHT_PRINTER;
+}
+
+PrinterType determineTextPrinter(const Point3D& current_position, const Point3D& text_position, double text_rotation)
+{
+  const auto result = determineTextPrinterQuiet(current_position, text_position, text_rotation);
+  if (result == PrinterType::LEFT_PRINTER)
+  {
+    std::cout << "  文字打印机选择: LEFT_PRINTER (运动方向与文字方向一致，对调后)" << std::endl;
   }
   else
   {
     std::cout << "  文字打印机选择: RIGHT_PRINTER (运动方向与文字方向相反，对调后)" << std::endl;
-    return PrinterType::RIGHT_PRINTER;
   }
+  return result;
 }
 
 /**
@@ -150,16 +163,16 @@ PrinterType determineTextPrinter(const Point3D& current_position, const Point3D&
  */
 PrinterType determineTextPrinterByPosition(const Point3D& text_position, double canvas_center_x)
 {
-  if (text_position.x < canvas_center_x)
+  const auto result = determineTextPrinterByPositionQuiet(text_position, canvas_center_x);
+  if (result == PrinterType::LEFT_PRINTER)
   {
     std::cout << "  文字打印机选择: LEFT_PRINTER (文字在画布左侧)" << std::endl;
-    return PrinterType::LEFT_PRINTER;
   }
   else
   {
     std::cout << "  文字打印机选择: RIGHT_PRINTER (文字在画布右侧)" << std::endl;
-    return PrinterType::RIGHT_PRINTER;
   }
+  return result;
 }
 
 std::vector<std::shared_ptr<Line>> merge_collinear_lines_if_enabled(const std::vector<std::shared_ptr<Line>>& lines,
@@ -347,37 +360,143 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
 }
 
 std::shared_ptr<Line> PathPlanner::findNearestUnprocessedLine(const Point3D& current_pos,
-                                                             const std::vector<std::shared_ptr<Line>>& lines)
+                                                             const std::vector<std::shared_ptr<Line>>& lines,
+                                                             const PathOffsetConfig& offset_config,
+                                                             bool has_current_position,
+                                                             double canvas_center_x)
 {
-  double min_distance = std::numeric_limits<double>::max();
-  std::shared_ptr<Line> nearest_line = nullptr;
+  double min_distance_any = std::numeric_limits<double>::max();
+  std::shared_ptr<Line> nearest_any = nullptr;
+
+  double min_distance_in_range = std::numeric_limits<double>::max();
+  std::shared_ptr<Line> nearest_in_range = nullptr;
+
+  double min_len = std::max(0.0, planner_config_.transition_length_min);
+  double max_len = planner_config_.transition_length_max;
+  if (!(max_len >= 0.0)) max_len = std::numeric_limits<double>::infinity();
+  if (max_len < min_len) std::swap(max_len, min_len);
 
   std::cout << "\n🔍 从位置 [" << current_pos.x << ", " << current_pos.y << ", " << current_pos.z
             << "] 查找最近的未处理线段..." << std::endl;
+  if (has_current_position)
+  {
+    std::cout << "  转场长度优先范围: [" << min_len << ", " << max_len << "] 米" << std::endl;
+  }
+
+  const double start_extension_length = std::max(0.0, planner_config_.path_extension_start_length);
+  const double end_extension_length = std::max(0.0, planner_config_.path_extension_end_length);
+
+  auto extend_line_points = [&](const Point3D& start, const Point3D& end,
+                                double start_ext, double end_ext) -> std::pair<Point3D, Point3D> {
+    const double original_length = start.distance(end);
+    if (original_length < 1e-6)
+    {
+      return { start, end };
+    }
+    const double start_factor = start_ext / original_length;
+    const double end_factor = end_ext / original_length;
+
+    Point3D extended_start, extended_end;
+    extended_start.x = start.x - (end.x - start.x) * start_factor;
+    extended_start.y = start.y - (end.y - start.y) * start_factor;
+    extended_start.z = start.z - (end.z - start.z) * start_factor;
+
+    extended_end.x = end.x + (end.x - start.x) * end_factor;
+    extended_end.y = end.y + (end.y - start.y) * end_factor;
+    extended_end.z = end.z + (end.z - start.z) * end_factor;
+
+    return { extended_start, extended_end };
+  };
+
+  auto offset_first_point_of_segment = [](const Point3D& p0, const Point3D& p1, double offset) -> Point3D
+  {
+    if (std::abs(offset) <= 1e-9) return p0;
+    const double dx = p1.x - p0.x;
+    const double dy = p1.y - p0.y;
+    const double len = std::hypot(dx, dy);
+    if (len <= 1e-9) return p0;
+    const double nx = -dy / len;
+    const double ny = dx / len;
+    Point3D out = p0;
+    out.x += nx * offset;
+    out.y += ny * offset;
+    return out;
+  };
+
+  auto estimate_next_start = [&](const std::shared_ptr<Line>& line) -> Point3D
+  {
+    if (!line) return Point3D{};
+
+    if (line->type == GeometryType::LINE)
+    {
+      auto [s, e] = extend_line_points(line->start, line->end, start_extension_length, end_extension_length);
+      return offset_first_point_of_segment(s, e, offset_config.center_offset);
+    }
+    if (line->type == GeometryType::TEXT)
+    {
+      auto [s, e] = extend_line_points(line->start, line->end, start_extension_length, end_extension_length);
+      auto text = std::dynamic_pointer_cast<Text>(line);
+      const auto printer = (has_current_position && text)
+                             ? determineTextPrinterQuiet(current_pos, text->position, text->rotation)
+                             : (text ? determineTextPrinterByPositionQuiet(text->position, canvas_center_x)
+                                     : PrinterType::CENTER_PRINTER);
+      double offset = 0.0;
+      switch (printer) {
+        case PrinterType::LEFT_PRINTER: offset = offset_config.left_offset; break;
+        case PrinterType::RIGHT_PRINTER: offset = offset_config.right_offset; break;
+        case PrinterType::CENTER_PRINTER: offset = offset_config.center_offset; break;
+      }
+      return offset_first_point_of_segment(s, e, offset);
+    }
+    if (line->type == GeometryType::POLYLINE)
+    {
+      auto poly = std::dynamic_pointer_cast<Polyline>(line);
+      if (poly && poly->vertices.size() >= 2)
+      {
+        return offset_first_point_of_segment(poly->vertices[0], poly->vertices[1], offset_config.center_offset);
+      }
+      return line->start;
+    }
+
+    return line->start;
+  };
 
   for (const auto& line : lines)
   {
     if (!line->is_printed)
     {
-      double dist = current_pos.distance(line->start);
-      if (dist < min_distance)
+      const auto goal = estimate_next_start(line);
+      double dist = current_pos.distance(goal);
+      if (dist < min_distance_any)
       {
-        min_distance = dist;
-        nearest_line = line;
+        min_distance_any = dist;
+        nearest_any = line;
+      }
+
+      if (has_current_position && dist >= min_len && dist <= max_len && dist < min_distance_in_range)
+      {
+        min_distance_in_range = dist;
+        nearest_in_range = line;
       }
     }
   }
 
-  if (nearest_line)
+  if (nearest_in_range)
   {
-    std::cout << "✅ 找到最近线段 ID: " << nearest_line->id << "，距离: " << min_distance << " 米" << std::endl;
+    std::cout << "✅ 找到最近线段 ID: " << nearest_in_range->id << "，距离: " << min_distance_in_range
+              << " 米（命中优先范围）" << std::endl;
+  }
+  else if (nearest_any)
+  {
+    std::cout << "✅ 找到最近线段 ID: " << nearest_any->id << "，距离: " << min_distance_any
+              << (has_current_position ? " 米（未命中优先范围，使用最近距离）" : " 米") << std::endl;
   }
   else
   {
     std::cout << "❌ 未找到未处理的线段" << std::endl;
   }
 
-  return nearest_line;
+  return nearest_in_range ? nearest_in_range : nearest_any;
 }
 
 RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, const PathOffsetConfig& offset_config)
@@ -732,7 +851,8 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
   while (!remaining_lines.empty())
   {
     // 找到最近的未绘制线段
-    auto nearest_line = findNearestUnprocessedLine(current_position, remaining_lines);
+    auto nearest_line = findNearestUnprocessedLine(current_position, remaining_lines, offset_config, has_current_position,
+                                                   canvas_center_x);
 
     if (nearest_line)
     {

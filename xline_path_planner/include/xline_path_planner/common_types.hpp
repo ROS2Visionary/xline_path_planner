@@ -6,6 +6,7 @@
 #include <memory>
 #include <cstdint>
 #include <stdexcept>
+#include <limits>
 
 namespace path_planner
 {
@@ -832,6 +833,8 @@ struct PathPlannerConfig
 {
   double path_extension_start_length = 0.1;  ///< 起点端延长长度(m)，默认0.1米
   double path_extension_end_length = 0.1;    ///< 终点端延长长度(m)，默认0.1米
+  double transition_length_min = 0.0;        ///< 选择下一条路径时，转场路径长度优先下限(m)
+  double transition_length_max = std::numeric_limits<double>::infinity();  ///< 选择下一条路径时，转场路径长度优先上限(m)
 
   // 几何预处理（REQ-01/REQ-02）
   bool split_polyline = true;           ///< 是否启用 Polyline 拆分

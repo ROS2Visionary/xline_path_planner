@@ -29,7 +29,9 @@ offsets:
 
 path_planner:
   path_extension_start_length: 0.25 # 绘图路径起点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
-  path_extension_end_length: 0.05   # 绘图路径终点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
+  path_extension_end_length: 0.052   # 绘图路径终点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
+  transition_length_min: 0.3        # 选择下一条路径时，转场路径长度优先落在该最小值以上（米）
+  transition_length_max: 1.0   # 选择下一条路径时，转场路径长度优先落在该最大值以下（米）
 
 geometry_preprocessing:
   split_polyline: true              # 是否将 CAD 的 Polyline 拆分为多条 Line 参与规划
@@ -50,5 +52,5 @@ robot_start:
   enabled: true                     # 是否启用机器人起始位置
   pose_topic: "/robot_pose"         # 机器人位置话题名
   pose_timeout_sec: 5.0             # 位置超时时间（秒）
-  required: false                   # 是否必须有位置才能规划（false表示没有位置时使用默认起点）
+  required: true                   # 是否必须有位置才能规划（false表示没有位置时使用默认起点）
   max_initial_distance: 100.0       # 机器人到第一条路径的最大距离限制（米）

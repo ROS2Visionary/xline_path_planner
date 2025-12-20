@@ -242,6 +242,8 @@ public:
     require(planner["path_extension_end_length"], "path_planner.path_extension_end_length");
     path_extension_start_length = planner["path_extension_start_length"].as<double>();
     path_extension_end_length = planner["path_extension_end_length"].as<double>();
+    if (planner["transition_length_min"]) path_planner_config.transition_length_min = planner["transition_length_min"].as<double>();
+    if (planner["transition_length_max"]) path_planner_config.transition_length_max = planner["transition_length_max"].as<double>();
 
     // 5.1) 读取几何预处理参数（可选）
     YAML::Node geo = root["geometry_preprocessing"];
