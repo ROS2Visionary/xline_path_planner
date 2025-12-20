@@ -125,13 +125,13 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
   {
     const auto& seg = segments[seg_idx];
 
-    if (seg.type == RouteType::TRANSITION_PATH)
-    {
-      if (seg.points.size() < 2) continue;
-      for (std::size_t i = 0; i + 1 < seg.points.size(); ++i)
-      {
-        auto j = constructTransitionLineJSON(seg.points[i], seg.points[i + 1], static_cast<int>(seg_idx), seg);
-        root["lines"].push_back(j);
+	    if (seg.type == RouteType::TRANSITION_PATH)
+	    {
+	      if (seg.points.size() < 2) continue;
+	      for (std::size_t i = 0; i + 1 < seg.points.size(); ++i)
+	      {
+	        auto j = constructTransitionLineJSON(seg.points[i], seg.points[i + 1], static_cast<int>(seg_idx), seg);
+	        root["lines"].push_back(j);
 
       }
     }
@@ -144,18 +144,19 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
       if (it != id2line.end()) src = it->second;
 
       // 根据源几何类型进行导出
-      if (src && src->type == GeometryType::TEXT)
-      {
-        // 文字类型：输出格式与 line 类似
-        const Text* text = dynamic_cast<const Text*>(src);
-        nlohmann::json j;
-        j["id"] = (src ? src->id : seg.line_id);
-        j["type"] = "text";
-        j["order"] = static_cast<int>(seg_idx);
-        j["work"] = true;
-        j["printed"] = false;
-        j["printer_type"] = printerTypeToString(seg.printer_type);
-        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);
+	      if (src && src->type == GeometryType::TEXT)
+	      {
+	        // 文字类型：输出格式与 line 类似
+	        const Text* text = dynamic_cast<const Text*>(src);
+	        nlohmann::json j;
+	        j["id"] = (src ? src->id : seg.line_id);
+	        j["type"] = "text";
+	        j["order"] = static_cast<int>(seg_idx);
+	        j["work"] = true;
+	        j["printed"] = false;
+	        j["backward"] = false;
+	        j["printer_type"] = printerTypeToString(seg.printer_type);
+	        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);
 
         j["line_type"] = "text";
         j["thickness"] = (src ? src->thickness : 1.0);
@@ -179,18 +180,19 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 
         root["lines"].push_back(j);
       }
-      else if (src && src->type == GeometryType::CIRCLE)
-      {
-        // 圆：输出 center/radius，并补充 start/end
-        const Circle* circle = dynamic_cast<const Circle*>(src);
-        nlohmann::json j;
-        j["id"] = (src ? src->id : seg.line_id);
-        j["type"] = "circle";
-        j["order"] = static_cast<int>(seg_idx);
-        j["work"] = true;
-        j["printed"] = false;
-        j["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
-        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
+	      else if (src && src->type == GeometryType::CIRCLE)
+	      {
+	        // 圆：输出 center/radius，并补充 start/end
+	        const Circle* circle = dynamic_cast<const Circle*>(src);
+	        nlohmann::json j;
+	        j["id"] = (src ? src->id : seg.line_id);
+	        j["type"] = "circle";
+	        j["order"] = static_cast<int>(seg_idx);
+	        j["work"] = true;
+	        j["printed"] = false;
+	        j["backward"] = false;
+	        j["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
+	        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
 
         j["line_type"] = (src ? src->line_type : std::string("continuous"));
         j["thickness"] = (src ? src->thickness : 1.0);
@@ -216,18 +218,19 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 
         root["lines"].push_back(j);
       }
-      else if (src && src->type == GeometryType::ARC)
-      {
-        // 圆弧：输出 center/radius/start_angle/end_angle（度），并补充 start/end
-        const Arc* arc = dynamic_cast<const Arc*>(src);
-        nlohmann::json j;
-        j["id"] = (src ? src->id : seg.line_id);
-        j["type"] = "arc";
-        j["order"] = static_cast<int>(seg_idx);
-        j["work"] = true;
-        j["printed"] = false;
-        j["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
-        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
+	      else if (src && src->type == GeometryType::ARC)
+	      {
+	        // 圆弧：输出 center/radius/start_angle/end_angle（度），并补充 start/end
+	        const Arc* arc = dynamic_cast<const Arc*>(src);
+	        nlohmann::json j;
+	        j["id"] = (src ? src->id : seg.line_id);
+	        j["type"] = "arc";
+	        j["order"] = static_cast<int>(seg_idx);
+	        j["work"] = true;
+	        j["printed"] = false;
+	        j["backward"] = false;
+	        j["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
+	        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
 
         j["line_type"] = (src ? src->line_type : std::string("continuous"));
         j["thickness"] = (src ? src->thickness : 1.0);
@@ -267,12 +270,13 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 
           nlohmann::json line;
           line["id"] = (src ? src->id : seg.line_id);
-          line["type"] = "line";
-          line["order"] = static_cast<int>(seg_idx);
-          line["work"] = true; // 绘图段：工作
-          line["printed"] = false;
-          line["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
-          line["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
+	          line["type"] = "line";
+	          line["order"] = static_cast<int>(seg_idx);
+	          line["work"] = true; // 绘图段：工作
+	          line["printed"] = false;
+	          line["backward"] = false;
+	          line["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
+	          line["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
 
           line["line_type"] = (src ? src->line_type : std::string("continuous"));
           line["thickness"] = (src ? src->thickness : 1.0);
@@ -294,12 +298,13 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         {
           nlohmann::json poly;
           poly["id"] = (src ? src->id : seg.line_id);
-          poly["type"] = "polyline";
-          poly["order"] = static_cast<int>(seg_idx);
-          poly["work"] = true; // 绘图段：工作
-          poly["printed"] = false;
-          poly["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
-          poly["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
+	          poly["type"] = "polyline";
+	          poly["order"] = static_cast<int>(seg_idx);
+	          poly["work"] = true; // 绘图段：工作
+	          poly["printed"] = false;
+	          poly["backward"] = false;
+	          poly["printer_type"] = printerTypeToString(seg.printer_type);  // 新增：打印机类型
+	          poly["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);  // 新增：ink 对象
 
           poly["line_type"] = (src ? src->line_type : std::string("continuous"));
           poly["thickness"] = (src ? src->thickness : 1.0);
@@ -354,6 +359,7 @@ nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start
   j["order"] = order;
   j["work"] = false;
   j["printed"] = false;
+  j["backward"] = seg.execute_backward;
   j["printer_type"] = printerTypeToString(seg.printer_type);
   
   // 使用下一个路径的 ink 信息

@@ -23,6 +23,73 @@ InkMode deduceInkMode(const std::string& line_type)
   }
 }
 
+inline double normalize_angle(double angle_rad)
+{
+  while (angle_rad > M_PI) angle_rad -= 2.0 * M_PI;
+  while (angle_rad < -M_PI) angle_rad += 2.0 * M_PI;
+  return angle_rad;
+}
+
+inline double abs_angle_diff(double from_rad, double to_rad)
+{
+  return std::abs(normalize_angle(to_rad - from_rad));
+}
+
+std::optional<double> heading_from_first_motion(const std::vector<Point3D>& points, double eps = 1e-6)
+{
+  if (points.size() < 2) return std::nullopt;
+  for (std::size_t i = 0; i + 1 < points.size(); ++i)
+  {
+    const auto& a = points[i];
+    const auto& b = points[i + 1];
+    const double dx = b.x - a.x;
+    const double dy = b.y - a.y;
+    if (std::hypot(dx, dy) <= eps) continue;
+    return std::atan2(dy, dx);
+  }
+  return std::nullopt;
+}
+
+std::optional<double> heading_from_last_motion(const std::vector<Point3D>& points, double eps = 1e-6)
+{
+  if (points.size() < 2) return std::nullopt;
+  for (std::size_t i = points.size() - 1; i > 0; --i)
+  {
+    const auto& a = points[i - 1];
+    const auto& b = points[i];
+    const double dx = b.x - a.x;
+    const double dy = b.y - a.y;
+    if (std::hypot(dx, dy) <= eps) continue;
+    return std::atan2(dy, dx);
+  }
+  return std::nullopt;
+}
+
+std::optional<double> previous_path_end_heading(const std::vector<RouteSegment>& planned_segments)
+{
+  for (auto it = planned_segments.rbegin(); it != planned_segments.rend(); ++it)
+  {
+    if (it->points.size() < 2) continue;
+    auto heading = heading_from_last_motion(it->points);
+    if (heading.has_value()) return heading;
+  }
+  return std::nullopt;
+}
+
+bool should_execute_transition_backward(const std::vector<RouteSegment>& planned_segments_before_transition,
+                                       const RouteSegment& transition_segment)
+{
+  if (transition_segment.type != RouteType::TRANSITION_PATH) return false;
+
+  const auto start_heading = previous_path_end_heading(planned_segments_before_transition);
+  const auto transition_heading = heading_from_first_motion(transition_segment.points);
+  if (!start_heading.has_value() || !transition_heading.has_value()) return false;
+
+  const double head_time = abs_angle_diff(*start_heading, *transition_heading);
+  const double tail_time = abs_angle_diff(*start_heading, *transition_heading + M_PI);
+  return tail_time < head_time;
+}
+
 /**
  * @brief 根据运动方向和文字位置决定使用哪个打印机
  * 
@@ -761,6 +828,8 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
             {
               transition_segment.text_content = drawing_segment.text_content;
             }
+
+            transition_segment.execute_backward = should_execute_transition_backward(path_segments, transition_segment);
 
             path_segments.push_back(transition_segment);
             std::cout << "✅ 转场路径已添加，包含 " << transition_segment.points.size() << " 个点" << std::endl;

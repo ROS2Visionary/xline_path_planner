@@ -43,6 +43,7 @@ public:
    *            - thickness 统一为 1.0；
    *            - layer_id 统一为 1000000；
    *            - layer 统一为 "TRANSITION"。
+   *            - backward 为是否后退执行（转场路径由规划阶段计算；其他路径固定为 false）。
    * @param segments 路径段序列（包含绘图与转场）
    * @param source_file 保留参数（不再使用）
    * @return 仅包含 lines 数组的 JSON 对象

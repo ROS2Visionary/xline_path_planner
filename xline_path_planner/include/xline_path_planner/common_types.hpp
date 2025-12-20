@@ -718,6 +718,7 @@ struct RouteSegment
   PrinterType printer_type;     ///< 该路径段使用的打印机类型
   InkMode ink_mode;             ///< 墨水打印模式（默认实线）
   std::string text_content;     ///< 文字内容（仅当 ink_mode == TEXT 时有效）
+  bool execute_backward = false;  ///< 是否以后退方式执行（仅对转场路径有意义）
 
   /**
    * @brief 构造函数

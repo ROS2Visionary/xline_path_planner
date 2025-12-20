@@ -28,6 +28,7 @@ GeometryType:
 - `line_id`: 关联的原始几何ID
 - `printer_type`: 打印机类型
 - `ink_mode`: 喷墨模式
+- `execute_backward`: 是否后退执行（仅对转场路径有意义）
 
 ---
 
