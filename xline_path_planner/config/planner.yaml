@@ -29,7 +29,7 @@ offsets:
 
 path_planner:
   path_extension_start_length: 0.25 # 绘图路径起点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
-  path_extension_end_length: 0.052   # 绘图路径终点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
+  path_extension_end_length: 0.05   # 绘图路径终点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
   transition_length_min: 0.3        # 选择下一条路径时，转场路径长度优先落在该最小值以上（米）
   transition_length_max: 1.0   # 选择下一条路径时，转场路径长度优先落在该最大值以下（米）
 
