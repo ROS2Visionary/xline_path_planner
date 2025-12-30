@@ -53,5 +53,5 @@ robot_start:
   enabled: true                     # 是否启用机器人起始位置
   pose_topic: "/robot_pose"         # 机器人位置话题名
   pose_timeout_sec: 5.0             # 位置超时时间（秒）
-  required: true                   # 是否必须有位置才能规划（false表示没有位置时使用默认起点）
+  required: false                   # 是否必须有位置才能规划（false表示没有位置时使用默认起点）
   max_initial_distance: 100.0       # 机器人到第一条路径的最大距离限制（米）

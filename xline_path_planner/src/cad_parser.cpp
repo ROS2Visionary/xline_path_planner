@@ -322,6 +322,10 @@ Polyline CADParser::parse_polyline(const nlohmann::json& json_polyline)
   {
     poly.closed = json_polyline["closed"].get<bool>();
   }
+  else if (json_polyline.contains("is_closed") && json_polyline["is_closed"].is_boolean())
+  {
+    poly.closed = json_polyline["is_closed"].get<bool>();
+  }
 
   if (json_polyline.contains("vertices") && json_polyline["vertices"].is_array())
   {
