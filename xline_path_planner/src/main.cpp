@@ -244,6 +244,8 @@ public:
     path_extension_end_length = planner["path_extension_end_length"].as<double>();
     if (planner["transition_length_min"]) path_planner_config.transition_length_min = planner["transition_length_min"].as<double>();
     if (planner["transition_length_max"]) path_planner_config.transition_length_max = planner["transition_length_max"].as<double>();
+    double circle_radius_compensation = path_planner_config.circle_radius_compensation;
+    if (planner["circle_radius_compensation"]) circle_radius_compensation = planner["circle_radius_compensation"].as<double>();
 
     // 5.1) 读取几何预处理参数（可选）
     YAML::Node geo = root["geometry_preprocessing"];
@@ -261,6 +263,7 @@ public:
       if (geo["distance_tolerance"]) distance_tolerance = geo["distance_tolerance"].as<double>();
       if (geo["angle_tolerance"]) angle_tolerance = geo["angle_tolerance"].as<double>();
       if (geo["min_segment_length"]) min_segment_length = geo["min_segment_length"].as<double>();
+      if (geo["circle_radius_compensation"]) circle_radius_compensation = geo["circle_radius_compensation"].as<double>();
     }
 
     // 6) 基于读取参数进行配置对象赋值与检查（不涉及任何文件路径）
@@ -295,6 +298,7 @@ public:
     path_planner_config.distance_tolerance = distance_tolerance;
     path_planner_config.angle_tolerance = angle_tolerance;
     path_planner_config.min_segment_length = min_segment_length;
+    path_planner_config.circle_radius_compensation = circle_radius_compensation;
 
     // 偏移参数
     offset_config.left_offset = left_offset;

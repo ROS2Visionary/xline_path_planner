@@ -28,7 +28,7 @@ offsets:
   center_offset: 0.0      # 中心打印机偏移(m)
 
 path_planner:
-  path_extension_start_length: 0.25 # 绘图路径起点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
+  path_extension_start_length: 0.2 # 绘图路径起点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
   path_extension_end_length: 0.05   # 绘图路径终点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
   transition_length_min: 0.3        # 选择下一条路径时，转场路径长度优先落在该最小值以上（米）
   transition_length_max: 1.0   # 选择下一条路径时，转场路径长度优先落在该最大值以下（米）
@@ -40,6 +40,7 @@ geometry_preprocessing:
   distance_tolerance: 0.001         # 距离容差（米），用于端点相连/点到直线距离判定（默认 1mm）
   angle_tolerance: 0.001            # 角度容差（弧度），用于方向夹角判定（越小越严格）
   min_segment_length: 0.0005        # 最小线段长度（米），短于该值的线段不参与共线合并
+  circle_radius_compensation: -0.005   # 圆/圆弧半径补偿（米），仅对“路径(path)”图层生效：radius += compensation,不影响障碍/空洞图层）
 
 # 可选：TCP服务器配置（用于非ROS客户端调用）
 tcp_server:

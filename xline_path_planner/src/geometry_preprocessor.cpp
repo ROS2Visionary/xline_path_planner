@@ -1,5 +1,7 @@
 #include "xline_path_planner/geometry_preprocessor.hpp"
 #include <limits>
+#include <stdexcept>
+#include <sstream>
 
 namespace path_planner
 {
@@ -15,15 +17,22 @@ void collect_ids(const std::vector<std::shared_ptr<Line>>& lines, std::unordered
   }
 }
 
+void copy_line_meta(Line& dst, const Line& src)
+{
+  dst.is_printed = src.is_printed;
+  dst.line_type = src.line_type;
+  dst.thickness = src.thickness;
+  dst.hidden = src.hidden;
+  dst.layer = src.layer;
+  dst.layer_id = src.layer_id;
+  dst.color = src.color;
+  dst.selected = src.selected;
+}
+
 }  // namespace
 
 CADData GeometryPreprocessor::preprocess(const CADData& cad_data, const PathPlannerConfig& config)
 {
-  if (!config.split_polyline)
-  {
-    return cad_data;
-  }
-
   std::unordered_set<int32_t> used_ids;
   used_ids.reserve(cad_data.path_lines.size() + cad_data.obstacle_lines.size() + cad_data.hole_lines.size());
   collect_ids(cad_data.path_lines, used_ids);
@@ -33,9 +42,9 @@ CADData GeometryPreprocessor::preprocess(const CADData& cad_data, const PathPlan
   CADData result;
   result.origin_points = cad_data.origin_points;
 
-  preprocess_collection(cad_data.path_lines, result.path_lines, config, used_ids);
-  preprocess_collection(cad_data.obstacle_lines, result.obstacle_lines, config, used_ids);
-  preprocess_collection(cad_data.hole_lines, result.hole_lines, config, used_ids);
+  preprocess_collection(cad_data.path_lines, result.path_lines, config, used_ids, true);
+  preprocess_collection(cad_data.obstacle_lines, result.obstacle_lines, config, used_ids, false);
+  preprocess_collection(cad_data.hole_lines, result.hole_lines, config, used_ids, false);
 
   return result;
 }
@@ -43,18 +52,59 @@ CADData GeometryPreprocessor::preprocess(const CADData& cad_data, const PathPlan
 void GeometryPreprocessor::preprocess_collection(const std::vector<std::shared_ptr<Line>>& input,
                                                  std::vector<std::shared_ptr<Line>>& output,
                                                  const PathPlannerConfig& config,
-                                                 std::unordered_set<int32_t>& used_ids)
+                                                 std::unordered_set<int32_t>& used_ids,
+                                                 bool apply_radius_compensation)
 {
   output.clear();
   output.reserve(input.size());
+
+  const bool enable_radius_compensation =
+    apply_radius_compensation && (config.circle_radius_compensation != 0.0);
 
   for (const auto& geom : input)
   {
     if (!geom) continue;
 
-    if (geom->type == GeometryType::POLYLINE)
+    std::shared_ptr<Line> current = geom;
+    if (enable_radius_compensation)
     {
-      auto poly = std::dynamic_pointer_cast<Polyline>(geom);
+      if (geom->type == GeometryType::CIRCLE)
+      {
+        auto circle = std::dynamic_pointer_cast<Circle>(geom);
+        if (!circle) continue;
+        const double new_radius = circle->radius + config.circle_radius_compensation;
+        if (new_radius <= 0.0)
+        {
+          std::ostringstream oss;
+          oss << "circle_radius_compensation 导致圆半径<=0: id=" << circle->id
+              << ", radius=" << circle->radius << ", compensation=" << config.circle_radius_compensation;
+          throw std::runtime_error(oss.str());
+        }
+        auto compensated = std::make_shared<Circle>(circle->id, circle->center, new_radius);
+        copy_line_meta(*compensated, *circle);
+        current = std::move(compensated);
+      }
+      else if (geom->type == GeometryType::ARC)
+      {
+        auto arc = std::dynamic_pointer_cast<Arc>(geom);
+        if (!arc) continue;
+        const double new_radius = arc->radius + config.circle_radius_compensation;
+        if (new_radius <= 0.0)
+        {
+          std::ostringstream oss;
+          oss << "circle_radius_compensation 导致圆弧半径<=0: id=" << arc->id
+              << ", radius=" << arc->radius << ", compensation=" << config.circle_radius_compensation;
+          throw std::runtime_error(oss.str());
+        }
+        auto compensated = std::make_shared<Arc>(arc->id, arc->center, new_radius, arc->start_angle, arc->end_angle);
+        copy_line_meta(*compensated, *arc);
+        current = std::move(compensated);
+      }
+    }
+
+    if (current->type == GeometryType::POLYLINE && config.split_polyline)
+    {
+      auto poly = std::dynamic_pointer_cast<Polyline>(current);
       if (!poly) continue;
       auto segments = split_polyline(*poly, config, used_ids);
       for (auto& seg : segments)
@@ -64,7 +114,7 @@ void GeometryPreprocessor::preprocess_collection(const std::vector<std::shared_p
       continue;
     }
 
-    output.push_back(geom);
+    output.push_back(std::move(current));
   }
 }
 

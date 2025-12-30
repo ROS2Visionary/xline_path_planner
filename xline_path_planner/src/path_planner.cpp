@@ -281,8 +281,8 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
 
   std::vector<RouteSegment> path_segments;
 
-  // 预处理（REQ-01）：拆分 Polyline 等
-  CADData preprocessed = GeometryPreprocessor::preprocess(cad_data, planner_config_);
+  // 注意：CAD 几何预处理（圆/圆弧半径补偿、Polyline 拆分等）应在外部调用完成
+  const CADData& preprocessed = cad_data;
 
   // 如果提供了机器人起始位置，打印信息
   if (robot_start_position.has_value())

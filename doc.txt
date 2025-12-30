@@ -13,6 +13,9 @@ ros2 service call /plan_path xline_path_planner/srv/PlanPath "{file_name: 'robot
 
 export XLINE_WS_ROOT=/root/xline_ws/xline_path_planner/_xline_data_dir
 
+export XLINE_WS_ROOT=/root/xline_ws/_xline_data_dir
+
+
 
   1. 发布机器人位置（在另一个终端）：
   ros2 topic pub /robot_pose geometry_msgs/msg/PoseStamped \

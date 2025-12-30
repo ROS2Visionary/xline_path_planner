@@ -7,13 +7,13 @@ namespace path_planner
 {
 
 /**
- * @brief CAD 几何预处理：Polyline 拆分等
+ * @brief CAD 几何预处理：圆/圆弧半径补偿、Polyline 拆分等
  */
 class GeometryPreprocessor
 {
 public:
   /**
-   * @brief 预处理 CAD 数据（按配置执行 Polyline 拆分）
+   * @brief 预处理 CAD 数据（圆/圆弧半径补偿、Polyline 拆分等）
    */
   static CADData preprocess(const CADData& cad_data, const PathPlannerConfig& config);
 
@@ -21,7 +21,8 @@ private:
   static void preprocess_collection(const std::vector<std::shared_ptr<Line>>& input,
                                     std::vector<std::shared_ptr<Line>>& output,
                                     const PathPlannerConfig& config,
-                                    std::unordered_set<int32_t>& used_ids);
+                                    std::unordered_set<int32_t>& used_ids,
+                                    bool apply_radius_compensation);
 
   static std::vector<std::shared_ptr<Line>> split_polyline(const Polyline& polyline,
                                                            const PathPlannerConfig& config,

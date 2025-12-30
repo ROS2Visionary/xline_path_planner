@@ -843,6 +843,7 @@ struct PathPlannerConfig
   double distance_tolerance = 0.001;    ///< 端点距离容差(米)
   double angle_tolerance = 0.001;       ///< 方向角容差(弧度)
   double min_segment_length = 0.0005;   ///< 最小线段长度(米)，过短线段不参与合并
+  double circle_radius_compensation = 0.0;  ///< 圆/圆弧半径补偿(米)，仅对 path_lines 生效（radius += compensation）
 };
 
 /**
