@@ -630,6 +630,15 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
     auto arc = std::dynamic_pointer_cast<Arc>(line);
     if (arc)
     {
+      // 根据弧长计算延长角度：弧长 = 半径 × 角度（弧度）
+      // 延长角度 = 弧长 / 半径
+      const double arc_ext_length = planner_config_.arc_extension_length;
+      const double max_ext_angle_rad = planner_config_.arc_extension_max_angle * M_PI / 180.0;
+
+      double ext_angle_from_length = (arc->radius > 1e-6) ? (arc_ext_length / arc->radius) : 0.0;
+      // 取弧长计算的角度和最大角度限制的较小值
+      const double arc_ext_angle_rad = std::min(ext_angle_from_length, max_ext_angle_rad);
+
       // 计算角度范围并离散化
       double start_angle = arc->start_angle;
       double end_angle = arc->end_angle;
@@ -640,17 +649,21 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
         end_angle += 2.0 * M_PI;
       }
 
-      // 计算角度差
-      double angle_diff = end_angle - start_angle;
+      // 计算原始角度差
+      double original_angle_diff = end_angle - start_angle;
 
-      // 离散化点数
-      int num_points = std::max(10, static_cast<int>(36 * angle_diff / (2.0 * M_PI)));
-      double angle_step = angle_diff / num_points;
+      // 起点处沿圆弧反向延长（角度减小方向）
+      double extended_start_angle = start_angle - arc_ext_angle_rad;
+      double total_angle_diff = original_angle_diff + arc_ext_angle_rad;
+
+      // 离散化点数（根据总角度范围计算）
+      int num_points = std::max(10, static_cast<int>(36 * total_angle_diff / (2.0 * M_PI)));
+      double angle_step = total_angle_diff / num_points;
 
       std::vector<Point3D> arc_points;
       for (int i = 0; i <= num_points; ++i)
       {
-        double angle = start_angle + i * angle_step;
+        double angle = extended_start_angle + i * angle_step;
         Point3D point;
         point.x = arc->center.x + arc->radius * std::cos(angle);
         point.y = arc->center.y + arc->radius * std::sin(angle);
@@ -659,9 +672,7 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
         arc_points.push_back(point);
       }
 
-      // ARC 类型不进行路径延长，保持原始圆弧几何形状
-      // 这样 segment.points.front()/back() 将严格落在圆弧上，
-      // 便于后续导出的 start/end 与 CAD 中的圆弧几何保持一致。
+      // 圆弧起点沿圆弧路径反向延长，终点保持原始位置
       segment.points = arc_points;
     }
   }
