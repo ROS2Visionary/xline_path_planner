@@ -859,4 +859,39 @@ struct PathOffsetConfig
   double center_offset = 0.0;    ///< 中心打印机偏移距离(m)，默认无偏移
 };
 
+/**
+ * @brief 终点切线策略枚举
+ */
+enum class EndpointTangentMode
+{
+  ALIGN_PATH,     ///< 与下一条路径方向对齐（曲率可能较大）
+  ALIGN_STRAIGHT, ///< 与起终点直线方向对齐（曲率更小）
+  BLEND           ///< 混合策略
+};
+
+/**
+ * @brief 贝塞尔曲线转场路径配置结构体
+ * 用于配置转场路径的贝塞尔曲线参数
+ */
+struct BezierTransitionConfig
+{
+  bool enabled = true;                  ///< 是否启用贝塞尔曲线转场
+  double min_curve_distance = 0.5;      ///< 最小曲线转场距离(m)，小于此距离使用直线
+  double min_angle_for_curve = 15.0;    ///< 最小曲线转场角度(度)，小于此角度使用直线
+  double control_point_ratio = 0.4;     ///< 基础控制点距离比例(0.0-1.0)，相对于起终点距离
+  double min_control_distance = 0.1;    ///< 控制点最小距离(m)
+  double max_control_distance = 2.0;    ///< 控制点最大距离(m)
+  double path_resolution = 0.02;        ///< 路径离散分辨率(m)
+  bool use_quintic = false;             ///< 是否使用五次贝塞尔曲线（更平滑）
+  EndpointTangentMode endpoint_tangent_mode = EndpointTangentMode::ALIGN_STRAIGHT;  ///< 终点切线策略
+  double blend_ratio = 0.5;             ///< 混合比例(0.0=直线,1.0=路径方向)，仅blend模式有效
+  bool consider_backward = true;        ///< 是否考虑后退执行
+
+  // 曲率控制参数
+  double min_turning_radius = 0.3;      ///< 最小转弯半径(m)，用于限制最大曲率
+  bool adaptive_control_point = true;   ///< 是否根据转向角度自适应调整控制点距离
+  double large_angle_threshold = 60.0;  ///< 大角度转向阈值(度)
+  double large_angle_ratio_boost = 0.3; ///< 大角度时控制点距离增量
+};
+
 }  // namespace path_planner

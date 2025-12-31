@@ -249,7 +249,66 @@ public:
     double circle_radius_compensation = path_planner_config.circle_radius_compensation;
     if (planner["circle_radius_compensation"]) circle_radius_compensation = planner["circle_radius_compensation"].as<double>();
 
-    // 5.1) 读取几何预处理参数（可选）
+    // 5.1) 读取贝塞尔曲线转场参数（可选）
+    YAML::Node bezier = root["bezier_transition"];
+    if (bezier && !bezier.IsNull())
+    {
+      if (bezier["enabled"]) bezier_config_.enabled = bezier["enabled"].as<bool>();
+      if (bezier["min_curve_distance"]) bezier_config_.min_curve_distance = bezier["min_curve_distance"].as<double>();
+      if (bezier["min_angle_for_curve"]) bezier_config_.min_angle_for_curve = bezier["min_angle_for_curve"].as<double>();
+      if (bezier["control_point_ratio"]) bezier_config_.control_point_ratio = bezier["control_point_ratio"].as<double>();
+      if (bezier["min_control_distance"]) bezier_config_.min_control_distance = bezier["min_control_distance"].as<double>();
+      if (bezier["max_control_distance"]) bezier_config_.max_control_distance = bezier["max_control_distance"].as<double>();
+      if (bezier["path_resolution"]) bezier_config_.path_resolution = bezier["path_resolution"].as<double>();
+      if (bezier["use_quintic"]) bezier_config_.use_quintic = bezier["use_quintic"].as<bool>();
+      if (bezier["blend_ratio"]) bezier_config_.blend_ratio = bezier["blend_ratio"].as<double>();
+      if (bezier["consider_backward"]) bezier_config_.consider_backward = bezier["consider_backward"].as<bool>();
+
+      // 曲率控制参数
+      if (bezier["min_turning_radius"]) bezier_config_.min_turning_radius = bezier["min_turning_radius"].as<double>();
+      if (bezier["adaptive_control_point"]) bezier_config_.adaptive_control_point = bezier["adaptive_control_point"].as<bool>();
+      if (bezier["large_angle_threshold"]) bezier_config_.large_angle_threshold = bezier["large_angle_threshold"].as<double>();
+      if (bezier["large_angle_ratio_boost"]) bezier_config_.large_angle_ratio_boost = bezier["large_angle_ratio_boost"].as<double>();
+
+      // 解析终点切线策略
+      if (bezier["endpoint_tangent_mode"])
+      {
+        std::string mode_str = bezier["endpoint_tangent_mode"].as<std::string>();
+        if (mode_str == "align_path" || mode_str == "ALIGN_PATH")
+        {
+          bezier_config_.endpoint_tangent_mode = EndpointTangentMode::ALIGN_PATH;
+        }
+        else if (mode_str == "align_straight" || mode_str == "ALIGN_STRAIGHT")
+        {
+          bezier_config_.endpoint_tangent_mode = EndpointTangentMode::ALIGN_STRAIGHT;
+        }
+        else if (mode_str == "blend" || mode_str == "BLEND")
+        {
+          bezier_config_.endpoint_tangent_mode = EndpointTangentMode::BLEND;
+        }
+      }
+
+      std::string mode_name;
+      switch (bezier_config_.endpoint_tangent_mode)
+      {
+        case EndpointTangentMode::ALIGN_PATH: mode_name = "align_path"; break;
+        case EndpointTangentMode::ALIGN_STRAIGHT: mode_name = "align_straight"; break;
+        case EndpointTangentMode::BLEND: mode_name = "blend"; break;
+      }
+
+      RCLCPP_INFO(this->get_logger(), "贝塞尔曲线转场配置: enabled=%s, min_dist=%.2fm, min_angle=%.1f°",
+                  bezier_config_.enabled ? "true" : "false",
+                  bezier_config_.min_curve_distance,
+                  bezier_config_.min_angle_for_curve);
+      RCLCPP_INFO(this->get_logger(), "  曲线参数: ratio=%.2f, resolution=%.3fm, quintic=%s, mode=%s, backward=%s",
+                  bezier_config_.control_point_ratio,
+                  bezier_config_.path_resolution,
+                  bezier_config_.use_quintic ? "true" : "false",
+                  mode_name.c_str(),
+                  bezier_config_.consider_backward ? "true" : "false");
+    }
+
+    // 5.2) 读取几何预处理参数（可选）
     YAML::Node geo = root["geometry_preprocessing"];
     bool split_polyline = path_planner_config.split_polyline;
     bool preserve_polyline_info = path_planner_config.preserve_polyline_info;
@@ -399,6 +458,7 @@ public:
       // 路径规划（传递机器人起始位置）
       PathPlanner path_planner(cfg.path_planner);
       path_planner.set_grid_map(grid_map, &grid_map_generator);
+      path_planner.set_bezier_config(bezier_config_);  // 设置贝塞尔曲线转场配置
       auto path_segments = path_planner.plan_paths(cad_data, cfg.offsets, robot_start_position);
       if (path_segments.empty())
       {
@@ -813,6 +873,8 @@ public:
   GridMapConfig grid_map_config;
   // 设置路径规划配置
   PathPlannerConfig path_planner_config;
+  // 设置贝塞尔曲线转场配置
+  BezierTransitionConfig bezier_config_;
   // 设置路径偏移配置
   PathOffsetConfig offset_config;
   // 设置栅格地图可视化配置

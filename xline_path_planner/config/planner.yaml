@@ -35,6 +35,39 @@ path_planner:
   transition_length_min: 0.3        # 选择下一条路径时，转场路径长度优先落在该最小值以上（米）
   transition_length_max: 1.0   # 选择下一条路径时，转场路径长度优先落在该最大值以下（米）
 
+# 贝塞尔曲线转场路径配置
+bezier_transition:
+  enabled: true                     # 是否启用贝塞尔曲线转场，true→使用曲线转场，false→全部使用直线
+
+  # 距离阈值：决定使用直线还是曲线
+  min_curve_distance: 0.5           # 最小曲线转场距离（米），增大→更多转场用直线，减小→更多转场用曲线
+
+  # 角度阈值：小角度转向时直线更高效
+  min_angle_for_curve: 15.0         # 最小曲线转场角度（度），增大→更多转场用直线，减小→更多转场用曲线
+
+  # 贝塞尔曲线参数
+  control_point_ratio: 0.5          # 控制点距离比例（0.0-1.0），增大→曲线更平缓/曲率更小，减小→曲线更紧凑/曲率更大
+  min_control_distance: 0.2         # 控制点最小距离（米），增大→短距离转场曲线更平缓，减小→允许更紧凑的曲线
+  max_control_distance: 2.0         # 控制点最大距离（米），增大→长距离转场曲线更平缓，减小→限制曲线延展范围
+  path_resolution: 0.02             # 路径离散分辨率（米），增大→路径点更稀疏/计算更快，减小→路径更精细/点更密集
+  use_quintic: true                 # 五次贝塞尔曲线，true→曲率更连续/更平滑，false→三次曲线/计算更快
+
+  # 终点切线对齐：让机器人到达终点时车头对准下一条路径
+  # "align_path" - 与下一条路径方向对齐（终点曲率可能较大，但到达后可直接绘图）
+  # "align_straight" - 与起终点直线方向对齐（曲率更小，但到达后需要调整朝向）
+  # "blend" - 混合策略（通过blend_ratio在两者之间平衡）
+  endpoint_tangent_mode: "align_path"
+  blend_ratio: 0.5                  # 混合比例（仅blend模式），增大→更偏向align_path，减小→更偏向align_straight/曲率更小
+
+  # 后退执行：当后退转向角度更小时，自动选择后退
+  consider_backward: true           # 是否考虑后退执行，true→自动选择前进或后退（转向更小），false→只前进
+
+  # 曲率控制
+  min_turning_radius: 0.5           # 最小转弯半径（米），增大→直接降低最大曲率，减小→允许更急的转弯
+  adaptive_control_point: true      # 自适应控制点，true→大角度转向时自动增大控制点距离，false→固定比例
+  large_angle_threshold: 30.0       # 大角度转向阈值（度），降低→更早触发自适应补偿，增大→只在更大角度时补偿
+  large_angle_ratio_boost: 0.5      # 大角度时控制点距离增量，增大→急转弯曲线更平滑，减小→补偿效果更弱
+
 geometry_preprocessing:
   split_polyline: true              # 是否将 CAD 的 Polyline 拆分为多条 Line 参与规划
   preserve_polyline_info: true      # 拆分后是否保留 polyline 来源信息（parent_id/segment_index）

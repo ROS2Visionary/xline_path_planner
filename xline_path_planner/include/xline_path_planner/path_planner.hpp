@@ -134,9 +134,12 @@ private:
    * @brief 规划转场路径
    * @param start 起点
    * @param goal 终点
+   * @param start_heading 起点朝向（弧度），用于贝塞尔曲线切线方向
+   * @param goal_heading 终点朝向（弧度），用于贝塞尔曲线切线方向
    * @return 转场路径段
    */
-  RouteSegment planConnectionPath(const Point3D& start, const Point3D& goal);
+  RouteSegment planConnectionPath(const Point3D& start, const Point3D& goal,
+                                  double start_heading = 0.0, double goal_heading = 0.0);
 
   /**
    * @brief 离散化曲线为多个点
@@ -225,6 +228,28 @@ private:
   Point3D evaluate_bezier_point(const std::vector<Point3D>& control_points, double t);
 
   /**
+   * @brief 生成三次贝塞尔曲线转场路径
+   * @param start 起点
+   * @param goal 终点
+   * @param start_heading 起点朝向（弧度）
+   * @param goal_heading 终点朝向（弧度）
+   * @return 离散化的路径点序列
+   */
+  std::vector<Point3D> generate_cubic_bezier_transition(const Point3D& start, const Point3D& goal,
+                                                        double start_heading, double goal_heading);
+
+  /**
+   * @brief 生成五次贝塞尔曲线转场路径（更平滑，曲率连续）
+   * @param start 起点
+   * @param goal 终点
+   * @param start_heading 起点朝向（弧度）
+   * @param goal_heading 终点朝向（弧度）
+   * @return 离散化的路径点序列
+   */
+  std::vector<Point3D> generate_quintic_bezier_transition(const Point3D& start, const Point3D& goal,
+                                                          double start_heading, double goal_heading);
+
+  /**
    * @brief 计算NURBS曲线上的点
    * @param curve NURBS曲线
    * @param t 参数 [0,1]
@@ -261,8 +286,22 @@ private:
                        const PathVisualizationConfig& config, double min_x, double min_y, double resolution);
 
   PathPlannerConfig planner_config_;            ///< 路径规划配置
+  BezierTransitionConfig bezier_config_;        ///< 贝塞尔曲线转场配置
   std::vector<std::vector<int>> grid_map_;      ///< 栅格地图
   const GridMapGenerator* grid_map_generator_;  ///< 栅格地图生成器指针
+
+public:
+  /**
+   * @brief 设置贝塞尔曲线转场配置
+   * @param config 贝塞尔曲线配置
+   */
+  void set_bezier_config(const BezierTransitionConfig& config) { bezier_config_ = config; }
+
+  /**
+   * @brief 获取贝塞尔曲线转场配置
+   * @return 当前配置的常量引用
+   */
+  const BezierTransitionConfig& get_bezier_config() const { return bezier_config_; }
 };
 
 }  // namespace path_planner

@@ -759,17 +759,305 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
   return segment;
 }
 
-RouteSegment PathPlanner::planConnectionPath(const Point3D& start, const Point3D& goal)
+RouteSegment PathPlanner::planConnectionPath(const Point3D& start, const Point3D& goal,
+                                             double start_heading, double goal_heading)
 {
   RouteSegment segment(RouteType::TRANSITION_PATH);
 
-  std::cout << "Planning transition path from (" << start.x << ", " << start.y << ") to (" << goal.x << ", " << goal.y
-            << ")" << std::endl;
+  // 计算起终点距离
+  double distance = start.distance(goal);
 
-  // 直接使用起点和终点生成直线路径
-  segment.points = { start, goal };
+  // 计算起点到终点的直线方向
+  double straight_heading = std::atan2(goal.y - start.y, goal.x - start.x);
+
+  // 计算转向角度（考虑后退的情况）
+  double forward_turn = std::abs(normalize_angle(start_heading - straight_heading));
+  double backward_turn = std::abs(normalize_angle(start_heading - straight_heading + M_PI));
+  double min_turn_angle = bezier_config_.consider_backward ? std::min(forward_turn, backward_turn) : forward_turn;
+  double turn_angle_deg = min_turn_angle * 180.0 / M_PI;
+
+  // 计算到达终点后需要的转向角度
+  double goal_turn = std::abs(normalize_angle(straight_heading - goal_heading));
+  double goal_turn_deg = goal_turn * 180.0 / M_PI;
+
+  // 总转向角度 = 起点转向 + 终点转向
+  double total_turn_deg = turn_angle_deg + goal_turn_deg;
+
+  std::cout << "Planning transition path: dist=" << distance << "m, turn=" << total_turn_deg << "°" << std::endl;
+
+  // 判断是否使用曲线转场的条件：
+  // 1. 贝塞尔曲线转场已启用
+  // 2. 距离足够大（>= min_curve_distance）
+  // 3. 转向角度足够大（>= min_angle_for_curve）
+  bool distance_ok = distance >= bezier_config_.min_curve_distance;
+  bool angle_ok = total_turn_deg >= bezier_config_.min_angle_for_curve;
+  bool use_curve = bezier_config_.enabled && distance_ok && angle_ok;
+
+  if (use_curve)
+  {
+    std::cout << "  使用贝塞尔曲线转场 (start=" << start_heading * 180.0 / M_PI
+              << "°, goal=" << goal_heading * 180.0 / M_PI << "°)" << std::endl;
+
+    if (bezier_config_.use_quintic)
+    {
+      segment.points = generate_quintic_bezier_transition(start, goal, start_heading, goal_heading);
+      std::cout << "  生成五次贝塞尔曲线，点数: " << segment.points.size() << std::endl;
+    }
+    else
+    {
+      segment.points = generate_cubic_bezier_transition(start, goal, start_heading, goal_heading);
+      std::cout << "  生成三次贝塞尔曲线，点数: " << segment.points.size() << std::endl;
+    }
+  }
+  else
+  {
+    // 使用直线转场，并说明原因
+    std::string reason;
+    if (!bezier_config_.enabled)
+    {
+      reason = "曲线转场未启用";
+    }
+    else if (!distance_ok)
+    {
+      reason = "距离过近(" + std::to_string(distance).substr(0,4) + "m<" +
+               std::to_string(bezier_config_.min_curve_distance).substr(0,4) + "m)";
+    }
+    else if (!angle_ok)
+    {
+      reason = "转向角过小(" + std::to_string(total_turn_deg).substr(0,4) + "°<" +
+               std::to_string(bezier_config_.min_angle_for_curve).substr(0,4) + "°)";
+    }
+    std::cout << "  使用直线转场: " << reason << std::endl;
+    segment.points = { start, goal };
+  }
 
   return segment;
+}
+
+std::vector<Point3D> PathPlanner::generate_cubic_bezier_transition(const Point3D& start, const Point3D& goal,
+                                                                   double start_heading, double goal_heading)
+{
+  std::vector<Point3D> path_points;
+
+  // 计算起终点距离
+  double distance = start.distance(goal);
+
+  // 如果距离太近，直接返回直线
+  if (distance < bezier_config_.min_control_distance * 2)
+  {
+    path_points.push_back(start);
+    path_points.push_back(goal);
+    return path_points;
+  }
+
+  // 计算起点到终点的直线方向
+  double straight_heading = std::atan2(goal.y - start.y, goal.x - start.x);
+
+  // 判断是否需要后退执行
+  bool execute_backward = false;
+  double effective_start_heading = start_heading;
+  if (bezier_config_.consider_backward)
+  {
+    double head_diff = std::abs(normalize_angle(start_heading - straight_heading));
+    double tail_diff = std::abs(normalize_angle(start_heading - straight_heading + M_PI));
+    execute_backward = (tail_diff < head_diff);
+    if (execute_backward)
+    {
+      effective_start_heading = normalize_angle(start_heading + M_PI);
+    }
+  }
+
+  // 计算起点方向与直线方向的夹角（用于自适应控制点）
+  double angle_diff_start = std::abs(normalize_angle(effective_start_heading - straight_heading));
+  double angle_diff_deg = angle_diff_start * 180.0 / M_PI;
+
+  // 计算基础控制点距离
+  double base_ratio = bezier_config_.control_point_ratio;
+
+  // 自适应调整：大角度转向时增大控制点距离
+  if (bezier_config_.adaptive_control_point && angle_diff_deg > bezier_config_.large_angle_threshold)
+  {
+    // 角度越大，增量越大（线性插值）
+    double angle_factor = (angle_diff_deg - bezier_config_.large_angle_threshold) / (180.0 - bezier_config_.large_angle_threshold);
+    angle_factor = std::min(1.0, angle_factor);
+    base_ratio += bezier_config_.large_angle_ratio_boost * angle_factor;
+    std::cout << "    大角度转向(" << angle_diff_deg << "°)，控制点比例增加到: " << base_ratio << std::endl;
+  }
+
+  // 基于最小转弯半径约束控制点距离
+  // 对于贝塞尔曲线，起点处的曲率近似为: k ≈ 2/3 * |P0P1 × P0P3| / |P0P1|^3
+  // 简化处理：确保控制点距离足够大以满足最小转弯半径
+  double min_control_for_radius = bezier_config_.min_turning_radius * angle_diff_start;
+
+  double control_dist = distance * base_ratio;
+  control_dist = std::max(control_dist, bezier_config_.min_control_distance);
+  control_dist = std::max(control_dist, min_control_for_radius);  // 满足最小转弯半径
+  control_dist = std::min(control_dist, bezier_config_.max_control_distance);
+
+  // 计算起点控制点方向
+  double p1_heading = effective_start_heading;
+
+  // 根据终点切线策略计算终点控制点方向
+  double p2_heading;
+  switch (bezier_config_.endpoint_tangent_mode)
+  {
+    case EndpointTangentMode::ALIGN_PATH:
+      p2_heading = goal_heading;
+      break;
+    case EndpointTangentMode::ALIGN_STRAIGHT:
+      p2_heading = straight_heading;
+      break;
+    case EndpointTangentMode::BLEND:
+    default:
+      {
+        double diff = normalize_angle(goal_heading - straight_heading);
+        p2_heading = normalize_angle(straight_heading + diff * bezier_config_.blend_ratio);
+      }
+      break;
+  }
+
+  if (execute_backward)
+  {
+    p2_heading = normalize_angle(p2_heading + M_PI);
+  }
+
+  // 三次贝塞尔曲线的4个控制点
+  Point3D p0 = start;
+  Point3D p1(start.x + control_dist * std::cos(p1_heading),
+             start.y + control_dist * std::sin(p1_heading),
+             start.z);
+  Point3D p2(goal.x - control_dist * std::cos(p2_heading),
+             goal.y - control_dist * std::sin(p2_heading),
+             goal.z);
+  Point3D p3 = goal;
+
+  std::vector<Point3D> control_points = {p0, p1, p2, p3};
+
+  // 根据分辨率计算采样点数
+  double estimated_arc_length = distance * (1.2 + 0.3 * angle_diff_start / M_PI);  // 大角度时增加采样
+  int num_points = std::max(2, static_cast<int>(std::ceil(estimated_arc_length / bezier_config_.path_resolution)));
+
+  // 采样贝塞尔曲线
+  for (int i = 0; i <= num_points; ++i)
+  {
+    double t = static_cast<double>(i) / num_points;
+    path_points.push_back(evaluate_bezier_point(control_points, t));
+  }
+
+  std::cout << "    转向角度: " << angle_diff_deg << "°, 控制点距离: " << control_dist
+            << "m, 后退: " << (execute_backward ? "是" : "否") << std::endl;
+
+  return path_points;
+}
+
+std::vector<Point3D> PathPlanner::generate_quintic_bezier_transition(const Point3D& start, const Point3D& goal,
+                                                                     double start_heading, double goal_heading)
+{
+  std::vector<Point3D> path_points;
+
+  // 计算起终点距离
+  double distance = start.distance(goal);
+
+  // 如果距离太近，直接返回直线
+  if (distance < bezier_config_.min_control_distance * 2)
+  {
+    path_points.push_back(start);
+    path_points.push_back(goal);
+    return path_points;
+  }
+
+  // 计算起点到终点的直线方向
+  double straight_heading = std::atan2(goal.y - start.y, goal.x - start.x);
+
+  // 判断是否需要后退执行
+  bool execute_backward = false;
+  double effective_start_heading = start_heading;
+  if (bezier_config_.consider_backward)
+  {
+    double head_diff = std::abs(normalize_angle(start_heading - straight_heading));
+    double tail_diff = std::abs(normalize_angle(start_heading - straight_heading + M_PI));
+    execute_backward = (tail_diff < head_diff);
+    if (execute_backward)
+    {
+      effective_start_heading = normalize_angle(start_heading + M_PI);
+    }
+  }
+
+  // 计算起点方向与直线方向的夹角
+  double angle_diff_start = std::abs(normalize_angle(effective_start_heading - straight_heading));
+  double angle_diff_deg = angle_diff_start * 180.0 / M_PI;
+
+  // 自适应控制点距离
+  double base_ratio = bezier_config_.control_point_ratio;
+  if (bezier_config_.adaptive_control_point && angle_diff_deg > bezier_config_.large_angle_threshold)
+  {
+    double angle_factor = (angle_diff_deg - bezier_config_.large_angle_threshold) / (180.0 - bezier_config_.large_angle_threshold);
+    angle_factor = std::min(1.0, angle_factor);
+    base_ratio += bezier_config_.large_angle_ratio_boost * angle_factor;
+  }
+
+  double min_control_for_radius = bezier_config_.min_turning_radius * angle_diff_start;
+  double control_dist = distance * base_ratio;
+  control_dist = std::max(control_dist, bezier_config_.min_control_distance);
+  control_dist = std::max(control_dist, min_control_for_radius);
+  control_dist = std::min(control_dist, bezier_config_.max_control_distance);
+
+  double p1_heading = effective_start_heading;
+
+  double p2_heading;
+  switch (bezier_config_.endpoint_tangent_mode)
+  {
+    case EndpointTangentMode::ALIGN_PATH:
+      p2_heading = goal_heading;
+      break;
+    case EndpointTangentMode::ALIGN_STRAIGHT:
+      p2_heading = straight_heading;
+      break;
+    case EndpointTangentMode::BLEND:
+    default:
+      {
+        double diff = normalize_angle(goal_heading - straight_heading);
+        p2_heading = normalize_angle(straight_heading + diff * bezier_config_.blend_ratio);
+      }
+      break;
+  }
+
+  if (execute_backward)
+  {
+    p2_heading = normalize_angle(p2_heading + M_PI);
+  }
+
+  // 五次贝塞尔曲线的6个控制点
+  Point3D p0 = start;
+  Point3D p1(start.x + control_dist * 0.4 * std::cos(p1_heading),
+             start.y + control_dist * 0.4 * std::sin(p1_heading),
+             start.z);
+  Point3D p2(start.x + control_dist * std::cos(p1_heading),
+             start.y + control_dist * std::sin(p1_heading),
+             start.z);
+  Point3D p3(goal.x - control_dist * std::cos(p2_heading),
+             goal.y - control_dist * std::sin(p2_heading),
+             goal.z);
+  Point3D p4(goal.x - control_dist * 0.4 * std::cos(p2_heading),
+             goal.y - control_dist * 0.4 * std::sin(p2_heading),
+             goal.z);
+  Point3D p5 = goal;
+
+  std::vector<Point3D> control_points = {p0, p1, p2, p3, p4, p5};
+
+  double estimated_arc_length = distance * (1.3 + 0.3 * angle_diff_start / M_PI);
+  int num_points = std::max(2, static_cast<int>(std::ceil(estimated_arc_length / bezier_config_.path_resolution)));
+
+  for (int i = 0; i <= num_points; ++i)
+  {
+    double t = static_cast<double>(i) / num_points;
+    path_points.push_back(evaluate_bezier_point(control_points, t));
+  }
+
+  std::cout << "    转向角度: " << angle_diff_deg << "°, 控制点距离: " << control_dist
+            << "m, 后退: " << (execute_backward ? "是" : "否") << std::endl;
+
+  return path_points;
 }
 
 void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>& lines,
@@ -935,7 +1223,7 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
           }
         }
 
-        // 如果已经有当前位置,则规划一条直线转场路径
+        // 如果已经有当前位置,则规划一条转场路径
         if (has_current_position)
         {
           double distance = current_position.distance(drawing_segment.points.front());
@@ -946,7 +1234,38 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
                     << drawing_segment.points.front().y << ", " << drawing_segment.points.front().z << "]" << std::endl;
           std::cout << "  转场距离: " << distance << " 米" << std::endl;
 
-          RouteSegment transition_segment = planConnectionPath(current_position, drawing_segment.points.front());
+          // 计算起点朝向（从前一条路径的末端方向）
+          double start_heading = 0.0;
+          auto prev_heading = previous_path_end_heading(path_segments);
+          if (prev_heading.has_value())
+          {
+            start_heading = prev_heading.value();
+          }
+          else
+          {
+            // 如果没有前一条路径，使用指向目标的方向
+            double dx = drawing_segment.points.front().x - current_position.x;
+            double dy = drawing_segment.points.front().y - current_position.y;
+            start_heading = std::atan2(dy, dx);
+          }
+
+          // 计算终点朝向（从下一条绘图路径的起始方向）
+          double goal_heading = 0.0;
+          auto next_heading = heading_from_first_motion(drawing_segment.points);
+          if (next_heading.has_value())
+          {
+            goal_heading = next_heading.value();
+          }
+          else
+          {
+            // 如果无法计算，使用从起点指向终点的方向
+            double dx = drawing_segment.points.front().x - current_position.x;
+            double dy = drawing_segment.points.front().y - current_position.y;
+            goal_heading = std::atan2(dy, dx);
+          }
+
+          RouteSegment transition_segment = planConnectionPath(current_position, drawing_segment.points.front(),
+                                                               start_heading, goal_heading);
 
           if (!transition_segment.points.empty())
           {

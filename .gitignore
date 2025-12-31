@@ -52,3 +52,4 @@ log/
 .vscode/browse.vc.db-wal
 other/
 _xline_data_dir/
+temp.txt
