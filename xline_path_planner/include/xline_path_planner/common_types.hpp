@@ -233,7 +233,8 @@ enum class GeometryType
   CURVE = 6,   ///< 曲线
   ARC = 7,     ///< 圆弧
   TEXT = 8,    ///< 文字
-  ELLIPSE = 9  ///< 椭圆/椭圆弧
+  ELLIPSE = 9, ///< 椭圆/椭圆弧
+  SPLINE = 10  ///< 样条曲线（CAD spline）
 };
 
 /**
@@ -376,6 +377,51 @@ struct Polyline : public Line
       if (closed && vertices.size() > 2)
       {
         length += vertices.back().distance(vertices.front());
+      }
+    }
+  }
+};
+
+/**
+ * @brief 样条曲线（Spline），继承自Line
+ *
+ * 说明：
+ * - CAD 导出的 spline 可能同时包含 control_points/knots/weights（NURBS），也可能直接给出离散后的 vertices。
+ * - 当前规划阶段优先使用 vertices（若非空）作为路径点序列；否则可由 control_points/knots/weights 做进一步离散化（预留）。
+ */
+struct Spline : public Line
+{
+  int degree = 3;                 ///< 次数（常见为3）
+  bool periodic = false;          ///< 是否周期样条
+  bool closed = false;            ///< 是否闭合
+  std::vector<Point3D> control_points;  ///< 控制点（可选）
+  std::vector<double> weights;          ///< 权重（可选）
+  std::vector<double> knots;            ///< 节点向量（可选）
+  std::vector<Point3D> vertices;        ///< 离散点（若提供则优先使用）
+
+  Spline() : Line()
+  {
+    type = GeometryType::SPLINE;
+  }
+
+  void update_geometry()
+  {
+    type = GeometryType::SPLINE;
+    if (!vertices.empty())
+    {
+      start = vertices.front();
+      end = vertices.back();
+      length = 0.0;
+      if (vertices.size() >= 2)
+      {
+        for (size_t i = 0; i + 1 < vertices.size(); ++i)
+        {
+          length += vertices[i].distance(vertices[i + 1]);
+        }
+        if (closed && vertices.size() > 2)
+        {
+          length += vertices.back().distance(vertices.front());
+        }
       }
     }
   }

@@ -6,6 +6,10 @@ visualization:
   show_grid_lines: true
   use_antialiasing: true
   image_format: "png"
+  # 路径点标记（用于调试轨迹离散点；点过密会显得不丝滑）
+  draw_path_points: false
+  path_point_radius: 1
+  max_path_point_markers: 300
   save_path_visualization: true
   # 相对路径将自动挂到 ${XLINE_WS_ROOT} 下
   output_dir: "xline_path_planner/path_visualizations"   # 栅格/路径可视化输出目录

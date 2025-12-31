@@ -39,6 +39,9 @@ struct PathVisualizationConfig
   cv::Scalar transition_path_color = cv::Scalar(0, 255, 255);  ///< 转场路径颜色 (黄色)
   int path_thickness = 2;                                      ///< 路径线宽
   int point_radius = 4;                                        ///< 起点和终点的半径
+  bool draw_path_points = false;                               ///< 是否绘制每个路径点的标记（点过密会显得不丝滑）
+  int path_point_radius = 1;                                   ///< 路径点标记半径（draw_path_points=true 时生效）
+  int max_path_point_markers = 300;                            ///< 路径点标记上限，超出则抽样绘制
   bool draw_legend = true;                                     ///< 是否绘制图例
   int label_font_size = 36;                                    ///< 路径编号字体大小
   cv::Scalar label_color = cv::Scalar(0, 0, 255);              ///< 路径编号颜色

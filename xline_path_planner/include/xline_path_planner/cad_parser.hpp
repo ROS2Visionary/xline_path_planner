@@ -64,6 +64,7 @@ struct CADParserConfig
  * - 圆（type: "circle"，键：center{x,y[,z]}、radius）
  * - 圆弧（type: "arc"，键：center{x,y[,z]}、radius、start_angle、end_angle）
  * - 椭圆（type: "ellipse"，键：center{x,y[,z]}、major_axis{x,y[,z]}、ratio、start_angle、end_angle、rotation）
+ * - 样条（type: "spline"，键：degree、control_points/knots/weights（可选）、vertices（离散点，可选）、is_closed/periodic）
  * - 文字（type: "text"，键：position{x,y[,z]}、content、height、rotation、align）
  * 类别归属由根节点中的"layers"动态决定（优先 layer_id 对应 name，失败回退读取元素内 layer 字段）。
  * 我们根据图层名称关键词将图元分配至CADData的不同容器（路径/障碍物/空洞）。
@@ -88,7 +89,7 @@ public:
   /**
    * @brief 解析CAD文件（新JSON格式）
    * 前置条件：文件为 UTF-8，根键包含数组 "lines"；当存在 "layers" 时用于 layer_id→name 映射。
-   * 解析范围：type 为 "line"/"circle"/"arc"/"ellipse"/"text" 的元素；其他类型会被忽略。
+   * 解析范围：type 为 "line"/"circle"/"arc"/"ellipse"/"spline"/"text" 的元素；其他类型会被忽略。
    * 坐标与尺寸：start/end/center、radius 等数值若启用缩放则统一换算到米。
    * 分类归属：优先使用 layer_id 查表得到图层名称；若失败，回退读取元素内 "layer" 字段。
    * 成功条件：至少解析出一个有效几何图元返回 true；否则返回 false。
@@ -213,6 +214,16 @@ private:
    * 处理：按配置缩放 center 与 major_axis；角度按配置转换为弧度；计算起止点。
    */
   Ellipse parse_ellipse(const nlohmann::json& json_ellipse);
+
+  /**
+   * @brief 解析样条（Spline）数据
+   * 支持字段：
+   * - degree（次数）
+   * - control_points/knots/weights（NURBS，可选）
+   * - vertices（离散点序列，可选；若提供则规划优先使用）
+   * - is_closed/closed、periodic
+   */
+  Spline parse_spline(const nlohmann::json& json_spline);
 
   /**
    * @brief 解析文字数据

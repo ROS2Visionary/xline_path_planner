@@ -111,6 +111,24 @@ if(BUILD_TESTING)
       ${OpenCV_LIBS}
     )
   endif()
+
+  ament_add_gtest(test_spline_support
+    test/test_spline_support.cpp
+    src/cad_parser.cpp
+    src/grid_map_generator.cpp
+    src/path_planner.cpp
+    src/output_formatter.cpp
+    src/collinear_merger.cpp
+  )
+  if(TARGET test_spline_support)
+    target_include_directories(test_spline_support PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR}/include
+      ${OpenCV_INCLUDE_DIRS}
+    )
+    target_link_libraries(test_spline_support
+      ${OpenCV_LIBS}
+    )
+  endif()
 endif()
 
 ament_package()

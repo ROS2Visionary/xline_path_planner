@@ -295,8 +295,8 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
   std::cout << "Total path lines in CAD data: " << preprocessed.path_lines.size() << std::endl;
 
   // 统计各类型的轴线数量和已绘制状态
-  int line_count = 0, polyline_count = 0, circle_count = 0, arc_count = 0, ellipse_count = 0, curve_count = 0,
-      text_count = 0, other_count = 0;
+  int line_count = 0, polyline_count = 0, circle_count = 0, arc_count = 0, ellipse_count = 0, spline_count = 0,
+      curve_count = 0, text_count = 0, other_count = 0;
   int printed_count = 0, unprinted_count = 0;
 
   for (const auto& line : preprocessed.path_lines)
@@ -311,6 +311,8 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
       arc_count++;
     else if (line->type == GeometryType::ELLIPSE)
       ellipse_count++;
+    else if (line->type == GeometryType::SPLINE)
+      spline_count++;
     else if (line->type == GeometryType::CURVE)
       curve_count++;
     else if (line->type == GeometryType::TEXT)
@@ -329,8 +331,9 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
   }
 
   std::cout << "Path line types: " << line_count << " lines, " << polyline_count << " polylines, " << circle_count
-            << " circles, " << arc_count << " arcs, " << ellipse_count << " ellipses, " << curve_count << " curves, "
-            << text_count << " texts, " << other_count << " other types" << std::endl;
+            << " circles, " << arc_count << " arcs, " << ellipse_count << " ellipses, " << spline_count
+            << " splines, " << curve_count << " curves, " << text_count << " texts, " << other_count << " other types"
+            << std::endl;
 
   std::cout << "Printed/Unprinted status: " << printed_count << " printed, " << unprinted_count << " unprinted"
             << std::endl;
@@ -459,6 +462,15 @@ std::shared_ptr<Line> PathPlanner::findNearestUnprocessedLine(const Point3D& cur
       }
       return line->start;
     }
+    if (line->type == GeometryType::SPLINE)
+    {
+      auto spline = std::dynamic_pointer_cast<Spline>(line);
+      if (spline && spline->vertices.size() >= 2)
+      {
+        return offset_first_point_of_segment(spline->vertices[0], spline->vertices[1], offset_config.center_offset);
+      }
+      return line->start;
+    }
 
     return line->start;
   };
@@ -565,6 +577,25 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
       if (poly->closed && poly->vertices.size() > 2)
       {
         segment.points.push_back(poly->vertices.front());
+      }
+    }
+    else
+    {
+      segment.points = { line->start, line->end };
+    }
+  }
+  else if (line->type == GeometryType::SPLINE)
+  {
+    auto spline = std::dynamic_pointer_cast<Spline>(line);
+    if (spline && spline->vertices.size() >= 2)
+    {
+      segment.points = spline->vertices;
+      if (spline->closed && spline->vertices.size() > 2)
+      {
+        if (segment.points.front().distance(segment.points.back()) > 1e-6)
+        {
+          segment.points.push_back(segment.points.front());
+        }
       }
     }
     else
@@ -1156,6 +1187,7 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
   std::vector<std::shared_ptr<Line>> straight_lines;
   std::vector<std::shared_ptr<Circle>> circles;
   std::vector<std::shared_ptr<Arc>> arcs;
+  std::vector<std::shared_ptr<Spline>> splines;
   std::vector<std::shared_ptr<Curve>> curves;
   std::vector<std::shared_ptr<Text>> texts;
 
@@ -1176,6 +1208,10 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
       {
         arcs.push_back(std::dynamic_pointer_cast<Arc>(line));
       }
+      else if (line->type == GeometryType::SPLINE)
+      {
+        splines.push_back(std::dynamic_pointer_cast<Spline>(line));
+      }
       else if (line->type == GeometryType::CURVE)
       {
         curves.push_back(std::dynamic_pointer_cast<Curve>(line));
@@ -1188,7 +1224,8 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
   }
 
   std::cout << "Classified lines: " << straight_lines.size() << " straight, " << circles.size() << " circles, "
-            << arcs.size() << " arcs, " << curves.size() << " curves, " << texts.size() << " texts" << std::endl;
+            << arcs.size() << " arcs, " << splines.size() << " splines, " << curves.size() << " curves, "
+            << texts.size() << " texts" << std::endl;
 
   // 创建一个包含所有未绘制线段的列表
   std::vector<std::shared_ptr<Line>> remaining_lines;
@@ -1230,6 +1267,7 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
         case GeometryType::CIRCLE: std::cout << " (CIRCLE)"; break;
         case GeometryType::ARC: std::cout << " (ARC)"; break;
         case GeometryType::ELLIPSE: std::cout << " (ELLIPSE)"; break;
+        case GeometryType::SPLINE: std::cout << " (SPLINE)"; break;
         case GeometryType::CURVE: std::cout << " (CURVE)"; break;
         case GeometryType::TEXT: std::cout << " (TEXT)"; break;
         default: std::cout << " (UNKNOWN)"; break;
@@ -2219,9 +2257,9 @@ void PathPlanner::draw_path_label(cv::Mat& image, const std::vector<Point3D>& pa
     label_point = path[label_position_index];
   }
 
-  // 转换到新的坐标系的图像坐标
-  int img_x = static_cast<int>((label_point.x - min_x) / resolution) * config.scale + config.scale / 2;
-  int img_y = static_cast<int>((label_point.y - min_y) / resolution) * config.scale + config.scale / 2;
+  // 转换到新的坐标系的图像坐标（保留亚栅格精度，绘制更平滑）
+  int img_x = static_cast<int>(std::lround((label_point.x - min_x) / resolution * config.scale + config.scale / 2.0));
+  int img_y = static_cast<int>(std::lround((label_point.y - min_y) / resolution * config.scale + config.scale / 2.0));
 
   cv::Point text_pos(img_x, img_y);
   std::string label_text = std::to_string(label);
@@ -2393,10 +2431,10 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
         grid_map_generator_->convertGridToWorld(axis_point.x1, axis_point.y1, world_x1, world_y1);
         grid_map_generator_->convertGridToWorld(axis_point.x2, axis_point.y2, world_x2, world_y2);
 
-        const int img_x1 = static_cast<int>((world_x1 - min_x) / resolution) * scale + scale / 2;
-        const int img_y1 = static_cast<int>((world_y1 - min_y) / resolution) * scale + scale / 2;
-        const int img_x2 = static_cast<int>((world_x2 - min_x) / resolution) * scale + scale / 2;
-        const int img_y2 = static_cast<int>((world_y2 - min_y) / resolution) * scale + scale / 2;
+        const int img_x1 = static_cast<int>(std::lround((world_x1 - min_x) / resolution * scale + scale / 2.0));
+        const int img_y1 = static_cast<int>(std::lround((world_y1 - min_y) / resolution * scale + scale / 2.0));
+        const int img_x2 = static_cast<int>(std::lround((world_x2 - min_x) / resolution * scale + scale / 2.0));
+        const int img_y2 = static_cast<int>(std::lround((world_y2 - min_y) / resolution * scale + scale / 2.0));
 
         if ((img_x1 >= 0 && img_x1 < new_width * scale && img_y1 >= 0 && img_y1 < new_height * scale) ||
             (img_x2 >= 0 && img_x2 < new_width * scale && img_y2 >= 0 && img_y2 < new_height * scale))
@@ -2430,8 +2468,8 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
         for (const auto& point : segment.points)
         {
           // 转换到新的坐标系
-          int img_x = static_cast<int>((point.x - min_x) / resolution) * scale + scale / 2;
-          int img_y = static_cast<int>((point.y - min_y) / resolution) * scale + scale / 2;
+          int img_x = static_cast<int>(std::lround((point.x - min_x) / resolution * scale + scale / 2.0));
+          int img_y = static_cast<int>(std::lround((point.y - min_y) / resolution * scale + scale / 2.0));
 
           if (img_x >= 0 && img_x < new_width * scale && img_y >= 0 && img_y < new_height * scale)
           {
@@ -2447,10 +2485,19 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
             cv::line(image, image_points[i], image_points[i + 1], path_color, config.path_thickness, cv::LINE_AA);
           }
 
-          // 在路径上的每个点绘制小圆点
-          for (const auto& point : image_points)
+          // 可选：绘制路径点标记（点过密会显得不丝滑，因此支持抽样绘制）
+          if (effective_config.draw_path_points && effective_config.path_point_radius > 0 &&
+              effective_config.max_path_point_markers > 0)
           {
-            cv::circle(image, point, config.path_thickness / 2, path_color, -1, cv::LINE_AA);
+            const std::size_t max_markers =
+              static_cast<std::size_t>(std::max(1, effective_config.max_path_point_markers));
+            const std::size_t step =
+              image_points.size() > max_markers ? (image_points.size() + max_markers - 1) / max_markers : 1;
+
+            for (std::size_t i = 0; i < image_points.size(); i += step)
+            {
+              cv::circle(image, image_points[i], effective_config.path_point_radius, path_color, -1, cv::LINE_AA);
+            }
           }
 
           // 绘制路径编号
@@ -2465,10 +2512,10 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
           const Point3D& end = segment.points.back();
 
           // 转换到新的坐标系
-          int start_x = static_cast<int>((start.x - min_x) / resolution) * scale + scale / 2;
-          int start_y = static_cast<int>((start.y - min_y) / resolution) * scale + scale / 2;
-          int end_x = static_cast<int>((end.x - min_x) / resolution) * scale + scale / 2;
-          int end_y = static_cast<int>((end.y - min_y) / resolution) * scale + scale / 2;
+          int start_x = static_cast<int>(std::lround((start.x - min_x) / resolution * scale + scale / 2.0));
+          int start_y = static_cast<int>(std::lround((start.y - min_y) / resolution * scale + scale / 2.0));
+          int end_x = static_cast<int>(std::lround((end.x - min_x) / resolution * scale + scale / 2.0));
+          int end_y = static_cast<int>(std::lround((end.y - min_y) / resolution * scale + scale / 2.0));
 
           // 绘制起点
           if (start_x >= 0 && start_x < new_width * scale && start_y >= 0 && start_y < new_height * scale)

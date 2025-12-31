@@ -198,6 +198,13 @@ private:
   void convertToGridEllipse(const std::shared_ptr<Ellipse>& ellipse, int value = 1);
 
   /**
+   * @brief 将样条曲线（Spline）光栅化到栅格地图上
+   * @param spline 样条指针
+   * @param value 需要标记的值
+   */
+  void convertToGridSpline(const std::shared_ptr<Spline>& spline, int value = 1);
+
+  /**
    * @brief 使用Bresenham算法将线段光栅化
    * @param x1 起点X栅格坐标
    * @param y1 起点Y栅格坐标
@@ -238,6 +245,12 @@ private:
    * @param ellipse 椭圆/椭圆弧轴线
    */
   void store_ellipse_axis_points(const std::shared_ptr<Ellipse>& ellipse);
+
+  /**
+   * @brief 存储样条轴线点，用于可视化
+   * @param spline 样条轴线
+   */
+  void store_spline_axis_points(const std::shared_ptr<Spline>& spline);
 
   /**
    * @brief 计算地图边界

@@ -185,6 +185,11 @@ public:
     save_path_visualization = vis["save_path_visualization"].as<bool>();
     visualization_output_dir = resolve_path(vis["output_dir"].as<std::string>());
     planned_output_dir_ = resolve_path(vis["planned_output_dir"].as<std::string>());
+    // 额外的路径可视化细节（可选）
+    if (vis["draw_path_points"]) path_viz_config.draw_path_points = vis["draw_path_points"].as<bool>();
+    if (vis["path_point_radius"]) path_viz_config.path_point_radius = vis["path_point_radius"].as<int>();
+    if (vis["max_path_point_markers"])
+      path_viz_config.max_path_point_markers = vis["max_path_point_markers"].as<int>();
 
     // 3) 读取 CAD 解析 参数
     YAML::Node cad = root["cad_parser"];

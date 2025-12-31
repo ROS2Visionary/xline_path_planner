@@ -260,8 +260,8 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 
         root["lines"].push_back(j);
       }
-      else if (src && src->type == GeometryType::ELLIPSE)
-      {
+	      else if (src && src->type == GeometryType::ELLIPSE)
+	      {
         const Ellipse* ellipse = dynamic_cast<const Ellipse*>(src);
         nlohmann::json j;
         j["id"] = (src ? src->id : seg.line_id);
@@ -295,6 +295,63 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
           j["end_angle"] = rad2deg(ellipse->end_angle);
           j["rotation"] = rad2deg(ellipse->rotation);
         }
+
+        const auto& p0 = seg.points.front();
+        const auto& p1 = seg.points.back();
+        j["start"] = point_mm(p0);
+        j["end"] = point_mm(p1);
+
+        root["lines"].push_back(j);
+      }
+      else if (src && src->type == GeometryType::SPLINE)
+      {
+        const Spline* spline = dynamic_cast<const Spline*>(src);
+        nlohmann::json j;
+        j["id"] = (src ? src->id : seg.line_id);
+        j["type"] = "spline";
+        j["order"] = static_cast<int>(seg_idx);
+        j["work"] = true;
+        j["printed"] = false;
+        j["backward"] = false;
+        j["printer_type"] = printerTypeToString(seg.printer_type);
+        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);
+
+        j["line_type"] = (src ? src->line_type : std::string("continuous"));
+        j["thickness"] = (src ? src->thickness : 1.0);
+        j["hidden"] = (src ? src->hidden : false);
+        j["layer"] = (src && !src->layer.empty()) ? src->layer : std::string("Default");
+        j["color"] = (src && !src->color.empty()) ? src->color : std::string("#FFFFFF");
+        if (src)
+        {
+          j["selected"] = src->selected;
+          j["layer_id"] = src->layer_id;
+        }
+
+        if (spline)
+        {
+          j["degree"] = spline->degree;
+          j["periodic"] = spline->periodic;
+          j["is_closed"] = spline->closed;
+          if (!spline->knots.empty()) j["knots"] = spline->knots;
+          if (!spline->weights.empty()) j["weights"] = spline->weights;
+          if (!spline->control_points.empty())
+          {
+            nlohmann::json cps = nlohmann::json::array();
+            for (const auto& p : spline->control_points)
+            {
+              cps.push_back(point_mm(p));
+            }
+            j["control_points"] = cps;
+          }
+        }
+
+        // 规划后的离散点（用于执行/可视化）
+        nlohmann::json vertices = nlohmann::json::array();
+        for (const auto& p : seg.points)
+        {
+          vertices.push_back(point_mm(p));
+        }
+        j["vertices"] = vertices;
 
         const auto& p0 = seg.points.front();
         const auto& p1 = seg.points.back();

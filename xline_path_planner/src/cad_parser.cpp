@@ -59,7 +59,7 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
     // 预先构建 layer_id -> layer_name 映射，供分类用
     build_layer_map(cad_json);
 
-    // 新格式：仅解析根节点"lines"，支持 line/polyline/circle/arc/ellipse/text 六类
+    // 新格式：仅解析根节点"lines"，支持 line/polyline/circle/arc/ellipse/spline/text 七类
     if (!cad_json.contains("lines") || !cad_json["lines"].is_array())
     {
       std::cerr << "Invalid CAD JSON: missing 'lines' array" << std::endl;
@@ -68,7 +68,7 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
 
     const auto& lines = cad_json["lines"];
     size_t parsed_lines = 0, parsed_polylines = 0, parsed_arcs = 0, parsed_circles = 0, parsed_ellipses = 0,
-           parsed_texts = 0;
+           parsed_splines = 0, parsed_texts = 0;
     for (const auto& item : lines)
     {
       // 若存在 selected 且为 false，则舍弃该元素
@@ -166,6 +166,16 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
         store_by_layer(ellipse_ptr, layer_name);
         ++parsed_ellipses;
       }
+      else if (t == "spline")
+      {
+        auto spline_ptr = std::make_shared<Spline>(parse_spline(item));
+        if (spline_ptr->vertices.size() < 2 && spline_ptr->control_points.size() < 2)
+        {
+          continue;
+        }
+        store_by_layer(spline_ptr, layer_name);
+        ++parsed_splines;
+      }
       else if (t == "text")
       {
         // 解析文字类型
@@ -190,10 +200,11 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
 
     std::cout << "Parsed from 'lines' (by layers): " << parsed_lines << " line(s), " << parsed_circles << " circle(s), "
               << parsed_polylines << " polyline(s), " << parsed_arcs << " arc(s), " << parsed_ellipses
-              << " ellipse(s), " << parsed_texts << " text(s)"
+              << " ellipse(s), " << parsed_splines << " spline(s), " << parsed_texts << " text(s)"
               << std::endl;
 
-    return (parsed_lines + parsed_polylines + parsed_arcs + parsed_circles + parsed_ellipses + parsed_texts) > 0;
+    return (parsed_lines + parsed_polylines + parsed_arcs + parsed_circles + parsed_ellipses + parsed_splines +
+            parsed_texts) > 0;
   }
   catch (const std::exception& e)
   {
@@ -751,6 +762,115 @@ Ellipse CADParser::parse_ellipse(const nlohmann::json& json_ellipse)
   ellipse.length = (perimeter > 0.0) ? (perimeter * (angle_diff / (2.0 * M_PI))) : 0.0;
 
   return ellipse;
+}
+
+Spline CADParser::parse_spline(const nlohmann::json& json_spline)
+{
+  Spline spline;
+
+  if (json_spline.contains("id") && json_spline["id"].is_number_integer())
+  {
+    spline.id = json_spline["id"].get<int32_t>();
+  }
+
+  spline.type = GeometryType::SPLINE;
+  spline.is_printed = false;
+
+  if (json_spline.contains("degree") && json_spline["degree"].is_number_integer())
+  {
+    spline.degree = json_spline["degree"].get<int>();
+  }
+
+  if (json_spline.contains("periodic") && json_spline["periodic"].is_boolean())
+  {
+    spline.periodic = json_spline["periodic"].get<bool>();
+  }
+
+  if (json_spline.contains("is_closed") && json_spline["is_closed"].is_boolean())
+  {
+    spline.closed = json_spline["is_closed"].get<bool>();
+  }
+  else if (json_spline.contains("closed") && json_spline["closed"].is_boolean())
+  {
+    spline.closed = json_spline["closed"].get<bool>();
+  }
+
+  // 可选元数据（继承自Line）
+  if (json_spline.contains("line_type") && json_spline["line_type"].is_string())
+  {
+    spline.line_type = json_spline["line_type"].get<std::string>();
+  }
+  if (json_spline.contains("thickness") && json_spline["thickness"].is_number())
+  {
+    spline.thickness = json_spline["thickness"].get<double>();
+  }
+  if (json_spline.contains("hidden") && json_spline["hidden"].is_boolean())
+  {
+    spline.hidden = json_spline["hidden"].get<bool>();
+  }
+  if (json_spline.contains("layer_id") && json_spline["layer_id"].is_number_integer())
+  {
+    spline.layer_id = json_spline["layer_id"].get<int32_t>();
+  }
+  if (json_spline.contains("layer") && json_spline["layer"].is_string())
+  {
+    spline.layer = json_spline["layer"].get<std::string>();
+  }
+  if (json_spline.contains("color") && json_spline["color"].is_string())
+  {
+    spline.color = json_spline["color"].get<std::string>();
+  }
+  if (json_spline.contains("selected") && json_spline["selected"].is_boolean())
+  {
+    spline.selected = json_spline["selected"].get<bool>();
+  }
+
+  // 读取控制点/NURBS参数（可选）
+  auto read_points = [&](const char* key, std::vector<Point3D>& out) {
+    if (json_spline.contains(key) && json_spline[key].is_array())
+    {
+      for (const auto& v : json_spline[key])
+      {
+        if (!v.is_object()) continue;
+        out.push_back(parse_point(v));
+      }
+    }
+  };
+
+  read_points("control_points", spline.control_points);
+  if (spline.control_points.empty())
+  {
+    read_points("controlPoints", spline.control_points);
+  }
+
+  if (json_spline.contains("weights") && json_spline["weights"].is_array())
+  {
+    for (const auto& w : json_spline["weights"])
+    {
+      if (w.is_number()) spline.weights.push_back(w.get<double>());
+    }
+  }
+  if (json_spline.contains("knots") && json_spline["knots"].is_array())
+  {
+    for (const auto& k : json_spline["knots"])
+    {
+      if (k.is_number()) spline.knots.push_back(k.get<double>());
+    }
+  }
+
+  // 读取离散点（优先用于规划）
+  read_points("vertices", spline.vertices);
+  if (spline.vertices.empty())
+  {
+    read_points("fit_points", spline.vertices);
+  }
+  if (spline.vertices.empty())
+  {
+    read_points("fitPoints", spline.vertices);
+  }
+
+  spline.update_geometry();
+  return spline;
 }
 
 /*

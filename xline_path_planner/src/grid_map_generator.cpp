@@ -433,6 +433,14 @@ void GridMapGenerator::convertToGridLine(const std::shared_ptr<Line>& line, int 
       convertToGridEllipse(ellipse, value);
     }
   }
+  else if (line->type == GeometryType::SPLINE)
+  {
+    auto spline = std::dynamic_pointer_cast<Spline>(line);
+    if (spline)
+    {
+      convertToGridSpline(spline, value);
+    }
+  }
 }
 
 void GridMapGenerator::convertToGridCurve(const std::shared_ptr<Curve>& curve, int value)
@@ -731,6 +739,36 @@ void GridMapGenerator::convertToGridEllipse(const std::shared_ptr<Ellipse>& elli
   }
 }
 
+void GridMapGenerator::convertToGridSpline(const std::shared_ptr<Spline>& spline, int value)
+{
+  if (!spline || spline->vertices.size() < 2)
+  {
+    return;
+  }
+
+  for (size_t i = 0; i + 1 < spline->vertices.size(); ++i)
+  {
+    int x1, y1, x2, y2;
+    const auto& p1 = spline->vertices[i];
+    const auto& p2 = spline->vertices[i + 1];
+    if (convertWorldToGrid(p1.x, p1.y, x1, y1) && convertWorldToGrid(p2.x, p2.y, x2, y2))
+    {
+      drawGridLine(x1, y1, x2, y2, value);
+    }
+  }
+
+  if (spline->closed && spline->vertices.size() > 2)
+  {
+    int x1, y1, x2, y2;
+    const auto& p1 = spline->vertices.back();
+    const auto& p2 = spline->vertices.front();
+    if (convertWorldToGrid(p1.x, p1.y, x1, y1) && convertWorldToGrid(p2.x, p2.y, x2, y2))
+    {
+      drawGridLine(x1, y1, x2, y2, value);
+    }
+  }
+}
+
 void GridMapGenerator::set_grid_point(int x, int y, int value)
 {
   if (isCoordinateValid(x, y))
@@ -817,6 +855,14 @@ void GridMapGenerator::store_axis_line_points(const std::shared_ptr<Line>& line)
     if (ellipse)
     {
       store_ellipse_axis_points(ellipse);
+    }
+  }
+  else if (line->type == GeometryType::SPLINE)
+  {
+    auto spline = std::dynamic_pointer_cast<Spline>(line);
+    if (spline)
+    {
+      store_spline_axis_points(spline);
     }
   }
   else if (line->type == GeometryType::CURVE)
@@ -1016,6 +1062,36 @@ void GridMapGenerator::store_ellipse_axis_points(const std::shared_ptr<Ellipse>&
   }
 }
 
+void GridMapGenerator::store_spline_axis_points(const std::shared_ptr<Spline>& spline)
+{
+  if (!spline || spline->vertices.size() < 2)
+  {
+    return;
+  }
+
+  for (size_t i = 0; i + 1 < spline->vertices.size(); ++i)
+  {
+    int x1, y1, x2, y2;
+    const auto& p1 = spline->vertices[i];
+    const auto& p2 = spline->vertices[i + 1];
+    if (convertWorldToGrid(p1.x, p1.y, x1, y1) && convertWorldToGrid(p2.x, p2.y, x2, y2))
+    {
+      axis_points_.push_back({ x1, y1, x2, y2, spline->id });
+    }
+  }
+
+  if (spline->closed && spline->vertices.size() > 2)
+  {
+    int x1, y1, x2, y2;
+    const auto& p1 = spline->vertices.back();
+    const auto& p2 = spline->vertices.front();
+    if (convertWorldToGrid(p1.x, p1.y, x1, y1) && convertWorldToGrid(p2.x, p2.y, x2, y2))
+    {
+      axis_points_.push_back({ x1, y1, x2, y2, spline->id });
+    }
+  }
+}
+
 void GridMapGenerator::store_circle_axis_points(const std::shared_ptr<Circle>& circle)
 {
   if (!circle)
@@ -1141,6 +1217,21 @@ void GridMapGenerator::calculate_map_bounds(const CADData& cad_data)
       if (poly)
       {
         for (const auto& p : poly->vertices)
+        {
+          boundaryMinX = std::min(boundaryMinX, p.x);
+          boundaryMinY = std::min(boundaryMinY, p.y);
+          boundaryMaxX = std::max(boundaryMaxX, p.x);
+          boundaryMaxY = std::max(boundaryMaxY, p.y);
+        }
+      }
+    }
+
+    if (line->type == GeometryType::SPLINE)
+    {
+      auto spline = std::dynamic_pointer_cast<Spline>(line);
+      if (spline)
+      {
+        for (const auto& p : spline->vertices)
         {
           boundaryMinX = std::min(boundaryMinX, p.x);
           boundaryMinY = std::min(boundaryMinY, p.y);
