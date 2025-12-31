@@ -425,6 +425,14 @@ void GridMapGenerator::convertToGridLine(const std::shared_ptr<Line>& line, int 
       convertToGridArc(arc, value);
     }
   }
+  else if (line->type == GeometryType::ELLIPSE)
+  {
+    auto ellipse = std::dynamic_pointer_cast<Ellipse>(line);
+    if (ellipse)
+    {
+      convertToGridEllipse(ellipse, value);
+    }
+  }
 }
 
 void GridMapGenerator::convertToGridCurve(const std::shared_ptr<Curve>& curve, int value)
@@ -646,6 +654,83 @@ void GridMapGenerator::convertToGridArc(const std::shared_ptr<Arc>& arc, int val
   }
 }
 
+void GridMapGenerator::convertToGridEllipse(const std::shared_ptr<Ellipse>& ellipse, int value)
+{
+  if (!ellipse)
+  {
+    return;
+  }
+
+  const double a = ellipse->major_radius();
+  const double b = ellipse->minor_radius();
+  if (!(a > 1e-12) || !(b > 1e-12))
+  {
+    return;
+  }
+
+  double t0 = ellipse->start_angle;
+  double t1 = ellipse->end_angle;
+  double angle_diff = t1 - t0;
+  if (std::fabs(angle_diff) < 1e-9)
+  {
+    angle_diff = 2.0 * M_PI;
+  }
+  if (angle_diff < 0)
+  {
+    angle_diff += 2.0 * M_PI;
+  }
+
+  // 近似弧长用于确定采样密度
+  double perimeter = 0.0;
+  {
+    const double h = std::pow(a - b, 2) / std::pow(a + b, 2);
+    perimeter = M_PI * (a + b) * (1.0 + (3.0 * h) / (10.0 + std::sqrt(4.0 - 3.0 * h)));
+  }
+  const double arc_len = perimeter * (angle_diff / (2.0 * M_PI));
+  const double point_distance = 0.5 * map_config_.resolution;
+  const int min_points = 36;
+  const int max_points = 8000;
+  int num_points = std::max(min_points, static_cast<int>(arc_len / std::max(1e-6, point_distance)) + 1);
+  num_points = std::min(num_points, max_points);
+
+  const double theta = ellipse->orientation();
+  const double cth = std::cos(theta);
+  const double sth = std::sin(theta);
+
+  auto eval = [&](double t) -> Point3D {
+    const double ct = std::cos(t);
+    const double st = std::sin(t);
+    const double xl = a * ct;
+    const double yl = b * st;
+    Point3D p;
+    p.x = ellipse->center.x + xl * cth - yl * sth;
+    p.y = ellipse->center.y + xl * sth + yl * cth;
+    p.z = ellipse->center.z;
+    return p;
+  };
+
+  Point3D prev = eval(t0);
+  int prev_x = 0, prev_y = 0;
+  bool prev_ok = convertWorldToGrid(prev.x, prev.y, prev_x, prev_y);
+
+  for (int i = 1; i <= num_points; ++i)
+  {
+    const double t = t0 + angle_diff * (static_cast<double>(i) / num_points);
+    Point3D cur = eval(t);
+    int cur_x = 0, cur_y = 0;
+    bool cur_ok = convertWorldToGrid(cur.x, cur.y, cur_x, cur_y);
+
+    if (prev_ok && cur_ok)
+    {
+      drawGridLine(prev_x, prev_y, cur_x, cur_y, value);
+    }
+
+    prev_x = cur_x;
+    prev_y = cur_y;
+    prev_ok = cur_ok;
+  }
+}
+
 void GridMapGenerator::set_grid_point(int x, int y, int value)
 {
   if (isCoordinateValid(x, y))
@@ -724,6 +809,14 @@ void GridMapGenerator::store_axis_line_points(const std::shared_ptr<Line>& line)
     if (arc)
     {
       store_arc_axis_points(arc);
+    }
+  }
+  else if (line->type == GeometryType::ELLIPSE)
+  {
+    auto ellipse = std::dynamic_pointer_cast<Ellipse>(line);
+    if (ellipse)
+    {
+      store_ellipse_axis_points(ellipse);
     }
   }
   else if (line->type == GeometryType::CURVE)
@@ -846,6 +939,83 @@ void GridMapGenerator::store_axis_line_points(const std::shared_ptr<Line>& line)
   }
 }
 
+void GridMapGenerator::store_ellipse_axis_points(const std::shared_ptr<Ellipse>& ellipse)
+{
+  if (!ellipse)
+  {
+    return;
+  }
+
+  const double a = ellipse->major_radius();
+  const double b = ellipse->minor_radius();
+  if (!(a > 1e-12) || !(b > 1e-12))
+  {
+    return;
+  }
+
+  double t0 = ellipse->start_angle;
+  double t1 = ellipse->end_angle;
+  double angle_diff = t1 - t0;
+  if (std::fabs(angle_diff) < 1e-9)
+  {
+    angle_diff = 2.0 * M_PI;
+  }
+  if (angle_diff < 0)
+  {
+    angle_diff += 2.0 * M_PI;
+  }
+
+  // 近似弧长用于确定采样密度
+  double perimeter = 0.0;
+  {
+    const double h = std::pow(a - b, 2) / std::pow(a + b, 2);
+    perimeter = M_PI * (a + b) * (1.0 + (3.0 * h) / (10.0 + std::sqrt(4.0 - 3.0 * h)));
+  }
+  const double arc_len = perimeter * (angle_diff / (2.0 * M_PI));
+  const double point_distance = 0.5 * map_config_.resolution;
+  const int min_points = 60;
+  const int max_points = 8000;
+  int num_points = std::max(min_points, static_cast<int>(arc_len / std::max(1e-6, point_distance)) + 1);
+  num_points = std::min(num_points, max_points);
+
+  const double theta = ellipse->orientation();
+  const double cth = std::cos(theta);
+  const double sth = std::sin(theta);
+
+  auto eval = [&](double t) -> Point3D {
+    const double ct = std::cos(t);
+    const double st = std::sin(t);
+    const double xl = a * ct;
+    const double yl = b * st;
+    Point3D p;
+    p.x = ellipse->center.x + xl * cth - yl * sth;
+    p.y = ellipse->center.y + xl * sth + yl * cth;
+    p.z = ellipse->center.z;
+    return p;
+  };
+
+  Point3D prev = eval(t0);
+  int prev_x = 0, prev_y = 0;
+  bool prev_ok = convertWorldToGrid(prev.x, prev.y, prev_x, prev_y);
+
+  for (int i = 1; i <= num_points; ++i)
+  {
+    const double t = t0 + angle_diff * (static_cast<double>(i) / num_points);
+    Point3D cur = eval(t);
+    int cur_x = 0, cur_y = 0;
+    bool cur_ok = convertWorldToGrid(cur.x, cur.y, cur_x, cur_y);
+
+    if (prev_ok && cur_ok)
+    {
+      axis_points_.push_back({ prev_x, prev_y, cur_x, cur_y, ellipse->id });
+    }
+
+    prev_x = cur_x;
+    prev_y = cur_y;
+    prev_ok = cur_ok;
+  }
+}
+
 void GridMapGenerator::store_circle_axis_points(const std::shared_ptr<Circle>& circle)
 {
   if (!circle)
@@ -964,6 +1134,55 @@ void GridMapGenerator::calculate_map_bounds(const CADData& cad_data)
     boundaryMinY = std::min(boundaryMinY, line->end.y);
     boundaryMaxX = std::max(boundaryMaxX, line->end.x);
     boundaryMaxY = std::max(boundaryMaxY, line->end.y);
+
+    if (line->type == GeometryType::POLYLINE)
+    {
+      auto poly = std::dynamic_pointer_cast<Polyline>(line);
+      if (poly)
+      {
+        for (const auto& p : poly->vertices)
+        {
+          boundaryMinX = std::min(boundaryMinX, p.x);
+          boundaryMinY = std::min(boundaryMinY, p.y);
+          boundaryMaxX = std::max(boundaryMaxX, p.x);
+          boundaryMaxY = std::max(boundaryMaxY, p.y);
+        }
+      }
+    }
+
+    if (line->type == GeometryType::CIRCLE || line->type == GeometryType::ARC)
+    {
+      auto circle = std::dynamic_pointer_cast<Circle>(line);
+      if (circle)
+      {
+        boundaryMinX = std::min(boundaryMinX, circle->center.x - circle->radius);
+        boundaryMinY = std::min(boundaryMinY, circle->center.y - circle->radius);
+        boundaryMaxX = std::max(boundaryMaxX, circle->center.x + circle->radius);
+        boundaryMaxY = std::max(boundaryMaxY, circle->center.y + circle->radius);
+      }
+    }
+
+    if (line->type == GeometryType::ELLIPSE)
+    {
+      auto ellipse = std::dynamic_pointer_cast<Ellipse>(line);
+      if (ellipse)
+      {
+        const double a = ellipse->major_radius();
+        const double b = ellipse->minor_radius();
+        if (a > 1e-12 && b > 1e-12)
+        {
+          const double theta = ellipse->orientation();
+          const double c = std::cos(theta);
+          const double s = std::sin(theta);
+          const double rx = std::sqrt(a * a * c * c + b * b * s * s);
+          const double ry = std::sqrt(a * a * s * s + b * b * c * c);
+          boundaryMinX = std::min(boundaryMinX, ellipse->center.x - rx);
+          boundaryMinY = std::min(boundaryMinY, ellipse->center.y - ry);
+          boundaryMaxX = std::max(boundaryMaxX, ellipse->center.x + rx);
+          boundaryMaxY = std::max(boundaryMaxY, ellipse->center.y + ry);
+        }
+      }
+    }
 
     // 如果是曲线，还需要检查所有控制点
     if (line->type == GeometryType::CURVE)

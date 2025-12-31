@@ -94,6 +94,23 @@ if(BUILD_TESTING)
       ${CMAKE_CURRENT_SOURCE_DIR}/include
     )
   endif()
+
+  ament_add_gtest(test_ellipse_support
+    test/test_ellipse_support.cpp
+    src/cad_parser.cpp
+    src/grid_map_generator.cpp
+    src/path_planner.cpp
+    src/collinear_merger.cpp
+  )
+  if(TARGET test_ellipse_support)
+    target_include_directories(test_ellipse_support PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR}/include
+      ${OpenCV_INCLUDE_DIRS}
+    )
+    target_link_libraries(test_ellipse_support
+      ${OpenCV_LIBS}
+    )
+  endif()
 endif()
 
 ament_package()

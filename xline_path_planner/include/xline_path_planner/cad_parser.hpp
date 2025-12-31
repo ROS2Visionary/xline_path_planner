@@ -4,7 +4,7 @@
 /*
 ================================================================================
 CADParser 负责读取新格式的 CAD JSON（cad_transformed.json），
-将几何图元（直线 / 圆 / 圆弧 / 文字）解析为 CADData，供栅格化和路径规划使用。
+将几何图元（直线 / 圆 / 圆弧 / 椭圆 / 文字）解析为 CADData，供栅格化和路径规划使用。
 支持按图层将图元划分为三类集合（路径 / 障碍物 / 空洞），并在需要时做单位换算
 （毫米→米）和角度单位处理。
 ================================================================================
@@ -63,6 +63,7 @@ struct CADParserConfig
  * - 直线（type: "line"，键：start/end{x,y[,z]}）
  * - 圆（type: "circle"，键：center{x,y[,z]}、radius）
  * - 圆弧（type: "arc"，键：center{x,y[,z]}、radius、start_angle、end_angle）
+ * - 椭圆（type: "ellipse"，键：center{x,y[,z]}、major_axis{x,y[,z]}、ratio、start_angle、end_angle、rotation）
  * - 文字（type: "text"，键：position{x,y[,z]}、content、height、rotation、align）
  * 类别归属由根节点中的"layers"动态决定（优先 layer_id 对应 name，失败回退读取元素内 layer 字段）。
  * 我们根据图层名称关键词将图元分配至CADData的不同容器（路径/障碍物/空洞）。
@@ -87,7 +88,7 @@ public:
   /**
    * @brief 解析CAD文件（新JSON格式）
    * 前置条件：文件为 UTF-8，根键包含数组 "lines"；当存在 "layers" 时用于 layer_id→name 映射。
-   * 解析范围：type 为 "line"/"circle"/"arc"/"text" 的元素；其他类型会被忽略。
+   * 解析范围：type 为 "line"/"circle"/"arc"/"ellipse"/"text" 的元素；其他类型会被忽略。
    * 坐标与尺寸：start/end/center、radius 等数值若启用缩放则统一换算到米。
    * 分类归属：优先使用 layer_id 查表得到图层名称；若失败，回退读取元素内 "layer" 字段。
    * 成功条件：至少解析出一个有效几何图元返回 true；否则返回 false。
@@ -199,6 +200,19 @@ private:
    * 处理：按配置缩放 center 与 radius；角度>2π 视为"度"并转弧度；计算起止点与弧长。
    */
   Arc parse_arc(const nlohmann::json& json_arc);
+
+  /**
+   * @brief 解析椭圆/椭圆弧数据
+   * 期望字段：
+   * - id（可选）
+   * - center{x,y[,z]}
+   * - major_axis{x,y[,z]}（向量，模长为长半轴）
+   * - ratio（短长轴比 b/a）
+   * - start_angle/end_angle（参数角）
+   * - rotation（可选，附加旋转角）
+   * 处理：按配置缩放 center 与 major_axis；角度按配置转换为弧度；计算起止点。
+   */
+  Ellipse parse_ellipse(const nlohmann::json& json_ellipse);
 
   /**
    * @brief 解析文字数据

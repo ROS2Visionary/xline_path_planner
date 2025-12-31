@@ -260,6 +260,49 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 
         root["lines"].push_back(j);
       }
+      else if (src && src->type == GeometryType::ELLIPSE)
+      {
+        const Ellipse* ellipse = dynamic_cast<const Ellipse*>(src);
+        nlohmann::json j;
+        j["id"] = (src ? src->id : seg.line_id);
+        j["type"] = "ellipse";
+        j["order"] = static_cast<int>(seg_idx);
+        j["work"] = true;
+        j["printed"] = false;
+        j["backward"] = false;
+        j["printer_type"] = printerTypeToString(seg.printer_type);
+        j["ink"] = constructInkJSON(true, seg.ink_mode, seg.printer_type);
+
+        j["line_type"] = (src ? src->line_type : std::string("continuous"));
+        j["thickness"] = (src ? src->thickness : 1.0);
+        j["hidden"] = (src ? src->hidden : false);
+        j["layer"] = (src && !src->layer.empty()) ? src->layer : std::string("Default");
+        j["color"] = (src && !src->color.empty()) ? src->color : std::string("#FFFFFF");
+        if (src)
+        {
+          j["selected"] = src->selected;
+          j["layer_id"] = src->layer_id;
+        }
+
+        if (ellipse)
+        {
+          j["center"] = { {"x", to_mm(ellipse->center.x)}, {"y", to_mm(ellipse->center.y)} };
+          j["major_axis"] = { {"x", to_mm(ellipse->major_axis.x)}, {"y", to_mm(ellipse->major_axis.y)} };
+          j["ratio"] = ellipse->ratio;
+
+          auto rad2deg = [](double r) { return r * 180.0 / 3.14159265358979323846; };
+          j["start_angle"] = rad2deg(ellipse->start_angle);
+          j["end_angle"] = rad2deg(ellipse->end_angle);
+          j["rotation"] = rad2deg(ellipse->rotation);
+        }
+
+        const auto& p0 = seg.points.front();
+        const auto& p1 = seg.points.back();
+        j["start"] = point_mm(p0);
+        j["end"] = point_mm(p1);
+
+        root["lines"].push_back(j);
+      }
       else
       {
         // 非圆/圆弧/文字：保留之前的 line/polyline 导出策略

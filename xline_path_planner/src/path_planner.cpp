@@ -295,8 +295,8 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
   std::cout << "Total path lines in CAD data: " << preprocessed.path_lines.size() << std::endl;
 
   // 统计各类型的轴线数量和已绘制状态
-  int line_count = 0, polyline_count = 0, circle_count = 0, arc_count = 0, curve_count = 0, text_count = 0,
-      other_count = 0;
+  int line_count = 0, polyline_count = 0, circle_count = 0, arc_count = 0, ellipse_count = 0, curve_count = 0,
+      text_count = 0, other_count = 0;
   int printed_count = 0, unprinted_count = 0;
 
   for (const auto& line : preprocessed.path_lines)
@@ -309,6 +309,8 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
       circle_count++;
     else if (line->type == GeometryType::ARC)
       arc_count++;
+    else if (line->type == GeometryType::ELLIPSE)
+      ellipse_count++;
     else if (line->type == GeometryType::CURVE)
       curve_count++;
     else if (line->type == GeometryType::TEXT)
@@ -327,8 +329,8 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
   }
 
   std::cout << "Path line types: " << line_count << " lines, " << polyline_count << " polylines, " << circle_count
-            << " circles, " << arc_count << " arcs, " << curve_count << " curves, " << text_count << " texts, "
-            << other_count << " other types" << std::endl;
+            << " circles, " << arc_count << " arcs, " << ellipse_count << " ellipses, " << curve_count << " curves, "
+            << text_count << " texts, " << other_count << " other types" << std::endl;
 
   std::cout << "Printed/Unprinted status: " << printed_count << " printed, " << unprinted_count << " unprinted"
             << std::endl;
@@ -674,6 +676,68 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
 
       // 圆弧起点沿圆弧路径反向延长，终点保持原始位置
       segment.points = arc_points;
+    }
+  }
+  else if (line->type == GeometryType::ELLIPSE)
+  {
+    auto ellipse = std::dynamic_pointer_cast<Ellipse>(line);
+    if (ellipse)
+    {
+      const double a = ellipse->major_radius();
+      const double b = ellipse->minor_radius();
+      if (a > 1e-12 && b > 1e-12)
+      {
+        double t0 = ellipse->start_angle;
+        double t1 = ellipse->end_angle;
+        double angle_diff = t1 - t0;
+        if (std::fabs(angle_diff) < 1e-9)
+        {
+          angle_diff = 2.0 * M_PI;
+        }
+        if (angle_diff < 0)
+        {
+          angle_diff += 2.0 * M_PI;
+        }
+
+        // 近似弧长用于确定采样密度（对椭圆弧为近似，但足以用于轨迹离散化）
+        const double h = std::pow(a - b, 2) / std::pow(a + b, 2);
+        const double perimeter = M_PI * (a + b) * (1.0 + (3.0 * h) / (10.0 + std::sqrt(4.0 - 3.0 * h)));
+        const double arc_len = perimeter * (angle_diff / (2.0 * M_PI));
+
+        const double fallback_resolution = 0.05;
+        const double base_res = grid_map_generator_ ? grid_map_generator_->get_resolution() : fallback_resolution;
+        const double point_distance = std::max(1e-4, 0.5 * base_res);
+
+        const int min_points = 60;
+        const int max_points = 8000;
+        int num_points = std::max(min_points, static_cast<int>(arc_len / point_distance) + 1);
+        num_points = std::min(num_points, max_points);
+
+        const double theta = ellipse->orientation();
+        const double cth = std::cos(theta);
+        const double sth = std::sin(theta);
+
+        std::vector<Point3D> pts;
+        pts.reserve(static_cast<size_t>(num_points) + 1);
+        for (int i = 0; i <= num_points; ++i)
+        {
+          const double t = t0 + angle_diff * (static_cast<double>(i) / num_points);
+          const double ct = std::cos(t);
+          const double st = std::sin(t);
+          const double xl = a * ct;
+          const double yl = b * st;
+          Point3D p;
+          p.x = ellipse->center.x + xl * cth - yl * sth;
+          p.y = ellipse->center.y + xl * sth + yl * cth;
+          p.z = ellipse->center.z;
+          pts.push_back(p);
+        }
+        segment.points = pts;
+      }
+      else
+      {
+        segment.points = { line->start, line->end };
+      }
     }
   }
   else if (line->type == GeometryType::CURVE)
@@ -1165,6 +1229,7 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
         case GeometryType::POLYLINE: std::cout << " (POLYLINE)"; break;
         case GeometryType::CIRCLE: std::cout << " (CIRCLE)"; break;
         case GeometryType::ARC: std::cout << " (ARC)"; break;
+        case GeometryType::ELLIPSE: std::cout << " (ELLIPSE)"; break;
         case GeometryType::CURVE: std::cout << " (CURVE)"; break;
         case GeometryType::TEXT: std::cout << " (TEXT)"; break;
         default: std::cout << " (UNKNOWN)"; break;
@@ -1328,6 +1393,69 @@ std::vector<Point3D> PathPlanner::applyPathOffset(const std::vector<Point3D>& or
   if (original_path.size() < 2)
   {
     return original_path;
+  }
+
+  // 对闭合路径（首尾点相同）做环形处理，保证偏移后的路径仍然闭合且连续
+  const bool is_closed = (original_path.size() >= 3) && (original_path.front().distance(original_path.back()) < 1e-6);
+  if (is_closed)
+  {
+    const size_t n = original_path.size() - 1;  // 去掉最后一个重复点
+    if (n < 2)
+    {
+      return original_path;
+    }
+
+    std::vector<Point3D> offset_path;
+    offset_path.reserve(original_path.size());
+
+    for (size_t i = 0; i < n; ++i)
+    {
+      const Point3D& prev = original_path[(i + n - 1) % n];
+      const Point3D& current = original_path[i];
+      const Point3D& next = original_path[(i + 1) % n];
+
+      double dx1 = current.x - prev.x;
+      double dy1 = current.y - prev.y;
+      double len1 = std::sqrt(dx1 * dx1 + dy1 * dy1);
+
+      double dx2 = next.x - current.x;
+      double dy2 = next.y - current.y;
+      double len2 = std::sqrt(dx2 * dx2 + dy2 * dy2);
+
+      if (len1 < 1e-6 || len2 < 1e-6)
+      {
+        offset_path.push_back(current);
+        continue;
+      }
+
+      double nx1 = -dy1 / len1;
+      double ny1 = dx1 / len1;
+      double nx2 = -dy2 / len2;
+      double ny2 = dx2 / len2;
+
+      double nx = (nx1 + nx2) / 2.0;
+      double ny = (ny1 + ny2) / 2.0;
+      double nlen = std::sqrt(nx * nx + ny * ny);
+      if (nlen > 1e-6)
+      {
+        nx /= nlen;
+        ny /= nlen;
+      }
+      else
+      {
+        nx = nx1;
+        ny = ny1;
+      }
+
+      Point3D offset_point;
+      offset_point.x = current.x + nx * offset;
+      offset_point.y = current.y + ny * offset;
+      offset_point.z = current.z;
+      offset_path.push_back(offset_point);
+    }
+
+    offset_path.push_back(offset_path.front());
+    return offset_path;
   }
 
   std::vector<Point3D> offset_path;
@@ -2189,6 +2317,11 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
       std::cout << "New scale factor: " << scale << std::endl;
     }
 
+    // 注意：visualize_paths 可能会在不改变地图尺寸(need_resize=false)的情况下缩小 scale。
+    // 为确保轴线/标签/图例与路径绘制保持一致，后续统一使用 effective_config。
+    PathVisualizationConfig effective_config = config;
+    effective_config.scale = scale;
+
     // 创建自适应大小的图像
     cv::Mat image(new_height * scale, new_width * scale, CV_8UC3, config.free_space_color);
 
@@ -2245,7 +2378,37 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
     else
     {
       // 使用原有的绘制方法
-      draw_grid_map(image, config);
+      draw_grid_map(image, effective_config);
+    }
+
+    // 先绘制轴线（作为参考底图），再绘制规划路径（绘图路径会覆盖轴线）
+    if (need_resize)
+    {
+      const auto& axis_points = grid_map_generator_->get_axis_points();
+      const int axis_thickness = std::max(1, scale / 6);
+
+      for (const auto& axis_point : axis_points)
+      {
+        double world_x1, world_y1, world_x2, world_y2;
+        grid_map_generator_->convertGridToWorld(axis_point.x1, axis_point.y1, world_x1, world_y1);
+        grid_map_generator_->convertGridToWorld(axis_point.x2, axis_point.y2, world_x2, world_y2);
+
+        const int img_x1 = static_cast<int>((world_x1 - min_x) / resolution) * scale + scale / 2;
+        const int img_y1 = static_cast<int>((world_y1 - min_y) / resolution) * scale + scale / 2;
+        const int img_x2 = static_cast<int>((world_x2 - min_x) / resolution) * scale + scale / 2;
+        const int img_y2 = static_cast<int>((world_y2 - min_y) / resolution) * scale + scale / 2;
+
+        if ((img_x1 >= 0 && img_x1 < new_width * scale && img_y1 >= 0 && img_y1 < new_height * scale) ||
+            (img_x2 >= 0 && img_x2 < new_width * scale && img_y2 >= 0 && img_y2 < new_height * scale))
+        {
+          cv::line(image, cv::Point(img_x1, img_y1), cv::Point(img_x2, img_y2), effective_config.axis_line_color,
+                   axis_thickness, cv::LINE_AA);
+        }
+      }
+    }
+    else
+    {
+      draw_axis_lines(image, effective_config);
     }
 
     int path_label = 1;  // 路径编号,从1开始
@@ -2291,7 +2454,7 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
           }
 
           // 绘制路径编号
-          draw_path_label(image, segment.points, path_label, config, min_x, min_y, resolution);
+          draw_path_label(image, segment.points, path_label, effective_config, min_x, min_y, resolution);
           path_label++;
         }
 
@@ -2323,39 +2486,10 @@ bool PathPlanner::visualize_paths(const std::vector<RouteSegment>& path_segments
       }
     }
 
-    // 为了避免“绘图路径延长”遮挡原始轴线导致误判，将轴线绘制放到最后一层（覆盖在规划路径之上）
-    if (need_resize)
-    {
-      const auto& axis_points = grid_map_generator_->get_axis_points();
-      for (const auto& axis_point : axis_points)
-      {
-        double world_x1, world_y1, world_x2, world_y2;
-        grid_map_generator_->convertGridToWorld(axis_point.x1, axis_point.y1, world_x1, world_y1);
-        grid_map_generator_->convertGridToWorld(axis_point.x2, axis_point.y2, world_x2, world_y2);
-
-        int new_x1 = static_cast<int>((world_x1 - min_x) / resolution);
-        int new_y1 = static_cast<int>((world_y1 - min_y) / resolution);
-        int new_x2 = static_cast<int>((world_x2 - min_x) / resolution);
-        int new_y2 = static_cast<int>((world_y2 - min_y) / resolution);
-
-        if ((new_x1 >= 0 && new_x1 < new_width && new_y1 >= 0 && new_y1 < new_height) ||
-            (new_x2 >= 0 && new_x2 < new_width && new_y2 >= 0 && new_y2 < new_height))
-        {
-          cv::line(image, cv::Point(new_x1 * scale + scale / 2, new_y1 * scale + scale / 2),
-                   cv::Point(new_x2 * scale + scale / 2, new_y2 * scale + scale / 2), config.axis_line_color,
-                   std::max(2, scale / 4), cv::LINE_AA);
-        }
-      }
-    }
-    else
-    {
-      draw_axis_lines(image, config);
-    }
-
     // 绘制图例
-    if (config.draw_legend)
+    if (effective_config.draw_legend)
     {
-      draw_legend(image, config);
+      draw_legend(image, effective_config);
     }
 
     // 设置图像压缩参数

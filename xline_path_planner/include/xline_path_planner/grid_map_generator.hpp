@@ -191,6 +191,13 @@ private:
   void convertToGridArc(const std::shared_ptr<Arc>& arc, int value = 1);
 
   /**
+   * @brief 将椭圆/椭圆弧光栅化到栅格地图上
+   * @param ellipse 椭圆指针
+   * @param value 需要标记的值
+   */
+  void convertToGridEllipse(const std::shared_ptr<Ellipse>& ellipse, int value = 1);
+
+  /**
    * @brief 使用Bresenham算法将线段光栅化
    * @param x1 起点X栅格坐标
    * @param y1 起点Y栅格坐标
@@ -225,6 +232,12 @@ private:
    * @param arc 圆弧轴线
    */
   void store_arc_axis_points(const std::shared_ptr<Arc>& arc);
+
+  /**
+   * @brief 存储椭圆轴线点，用于可视化
+   * @param ellipse 椭圆/椭圆弧轴线
+   */
+  void store_ellipse_axis_points(const std::shared_ptr<Ellipse>& ellipse);
 
   /**
    * @brief 计算地图边界

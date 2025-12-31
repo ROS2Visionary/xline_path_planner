@@ -232,7 +232,8 @@ enum class GeometryType
   CIRCLE = 4,  ///< 圆
   CURVE = 6,   ///< 曲线
   ARC = 7,     ///< 圆弧
-  TEXT = 8     ///< 文字
+  TEXT = 8,    ///< 文字
+  ELLIPSE = 9  ///< 椭圆/椭圆弧
 };
 
 /**
@@ -533,6 +534,47 @@ struct Arc : public Circle
    * @brief 虚析构函数
    */
   virtual ~Arc() override = default;
+};
+
+/**
+ * @brief 椭圆结构体，继承自Line
+ * 表示一个椭圆/椭圆弧（center + major_axis + ratio + start_angle + end_angle + rotation）。
+ *
+ * 说明：
+ * - major_axis 表示从 center 指向“长轴端点”的向量，其模长为长半轴 a。
+ * - ratio 表示短半轴与长半轴之比（b = a * ratio）。
+ * - start_angle/end_angle 为参数角（弧度），用于限定椭圆弧范围；若为完整椭圆，通常覆盖 2π。
+ * - rotation 为附加旋转（弧度），用于兼容某些数据源将方向单独以 rotation 表示的情况；
+ *   实际长轴方向角 = atan2(major_axis.y, major_axis.x) + rotation。
+ */
+struct Ellipse : public Line
+{
+  Point3D center;          ///< 椭圆中心
+  Point3D major_axis;      ///< 长轴向量（从中心指向长轴端点）
+  double ratio = 1.0;      ///< 短长轴比（b/a）
+  double start_angle = 0.0;///< 起始参数角（弧度）
+  double end_angle = 2.0 * M_PI;  ///< 结束参数角（弧度）
+  double rotation = 0.0;   ///< 附加旋转（弧度）
+
+  Ellipse() : Line()
+  {
+    type = GeometryType::ELLIPSE;
+  }
+
+  double major_radius() const
+  {
+    return std::hypot(major_axis.x, major_axis.y);
+  }
+
+  double minor_radius() const
+  {
+    return major_radius() * ratio;
+  }
+
+  double orientation() const
+  {
+    return std::atan2(major_axis.y, major_axis.x) + rotation;
+  }
 };
 
 /**

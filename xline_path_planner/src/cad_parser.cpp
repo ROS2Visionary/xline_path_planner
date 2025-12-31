@@ -59,7 +59,7 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
     // 预先构建 layer_id -> layer_name 映射，供分类用
     build_layer_map(cad_json);
 
-    // 新格式：仅解析根节点"lines"，支持 line/polyline/circle/arc/text 五类
+    // 新格式：仅解析根节点"lines"，支持 line/polyline/circle/arc/ellipse/text 六类
     if (!cad_json.contains("lines") || !cad_json["lines"].is_array())
     {
       std::cerr << "Invalid CAD JSON: missing 'lines' array" << std::endl;
@@ -67,7 +67,8 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
     }
 
     const auto& lines = cad_json["lines"];
-    size_t parsed_lines = 0, parsed_polylines = 0, parsed_arcs = 0, parsed_circles = 0, parsed_texts = 0;
+    size_t parsed_lines = 0, parsed_polylines = 0, parsed_arcs = 0, parsed_circles = 0, parsed_ellipses = 0,
+           parsed_texts = 0;
     for (const auto& item : lines)
     {
       // 若存在 selected 且为 false，则舍弃该元素
@@ -151,6 +152,20 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
         store_by_layer(arc_ptr, layer_name);
         ++parsed_arcs;
       }
+      else if (t == "ellipse")
+      {
+        if (!item.contains("center") || !item.contains("major_axis") || !item.contains("ratio"))
+        {
+          continue;
+        }
+        if (!item["center"].is_object() || !item["major_axis"].is_object())
+        {
+          continue;
+        }
+        auto ellipse_ptr = std::make_shared<Ellipse>(parse_ellipse(item));
+        store_by_layer(ellipse_ptr, layer_name);
+        ++parsed_ellipses;
+      }
       else if (t == "text")
       {
         // 解析文字类型
@@ -174,10 +189,11 @@ bool CADParser::parse_from_json_obj(const nlohmann::json& cad_json)
     }
 
     std::cout << "Parsed from 'lines' (by layers): " << parsed_lines << " line(s), " << parsed_circles << " circle(s), "
-              << parsed_polylines << " polyline(s), " << parsed_arcs << " arc(s), " << parsed_texts << " text(s)"
+              << parsed_polylines << " polyline(s), " << parsed_arcs << " arc(s), " << parsed_ellipses
+              << " ellipse(s), " << parsed_texts << " text(s)"
               << std::endl;
 
-    return (parsed_lines + parsed_polylines + parsed_arcs + parsed_circles + parsed_texts) > 0;
+    return (parsed_lines + parsed_polylines + parsed_arcs + parsed_circles + parsed_ellipses + parsed_texts) > 0;
   }
   catch (const std::exception& e)
   {
@@ -590,6 +606,151 @@ Arc CADParser::parse_arc(const nlohmann::json& json_arc)
   arc.length = arc.radius * angle_diff;
 
   return arc;
+}
+
+Ellipse CADParser::parse_ellipse(const nlohmann::json& json_ellipse)
+{
+  Ellipse ellipse;
+
+  if (json_ellipse.contains("id") && json_ellipse["id"].is_number_integer())
+  {
+    ellipse.id = json_ellipse["id"].get<int32_t>();
+  }
+
+  ellipse.type = GeometryType::ELLIPSE;
+  ellipse.is_printed = false;
+
+  if (json_ellipse.contains("center") && json_ellipse["center"].is_object())
+  {
+    ellipse.center = parse_point(json_ellipse["center"]);
+  }
+
+  if (json_ellipse.contains("major_axis") && json_ellipse["major_axis"].is_object())
+  {
+    ellipse.major_axis = parse_point(json_ellipse["major_axis"]);
+  }
+  else if (json_ellipse.contains("majorAxis") && json_ellipse["majorAxis"].is_object())
+  {
+    ellipse.major_axis = parse_point(json_ellipse["majorAxis"]);
+  }
+
+  if (json_ellipse.contains("ratio") && json_ellipse["ratio"].is_number())
+  {
+    ellipse.ratio = json_ellipse["ratio"].get<double>();
+  }
+
+  // 可选元数据（继承自Line）
+  if (json_ellipse.contains("line_type") && json_ellipse["line_type"].is_string())
+  {
+    ellipse.line_type = json_ellipse["line_type"].get<std::string>();
+  }
+  if (json_ellipse.contains("thickness") && json_ellipse["thickness"].is_number())
+  {
+    ellipse.thickness = json_ellipse["thickness"].get<double>();
+  }
+  if (json_ellipse.contains("hidden") && json_ellipse["hidden"].is_boolean())
+  {
+    ellipse.hidden = json_ellipse["hidden"].get<bool>();
+  }
+  if (json_ellipse.contains("layer_id") && json_ellipse["layer_id"].is_number_integer())
+  {
+    ellipse.layer_id = json_ellipse["layer_id"].get<int32_t>();
+  }
+  if (json_ellipse.contains("layer") && json_ellipse["layer"].is_string())
+  {
+    ellipse.layer = json_ellipse["layer"].get<std::string>();
+  }
+  if (json_ellipse.contains("color") && json_ellipse["color"].is_string())
+  {
+    ellipse.color = json_ellipse["color"].get<std::string>();
+  }
+  if (json_ellipse.contains("selected") && json_ellipse["selected"].is_boolean())
+  {
+    ellipse.selected = json_ellipse["selected"].get<bool>();
+  }
+
+  auto to_radians = [&](double angle_val) {
+    if (config_.angle_unit == AngleUnit::DEGREES)
+    {
+      return angle_val * M_PI / 180.0;
+    }
+    return angle_val;
+  };
+
+  double start_val = 0.0;
+  double end_val = 2.0 * M_PI;
+  if (json_ellipse.contains("start_angle") && !json_ellipse["start_angle"].is_null())
+  {
+    start_val = json_ellipse["start_angle"].get<double>();
+  }
+  else if (json_ellipse.contains("startAngle") && !json_ellipse["startAngle"].is_null())
+  {
+    start_val = json_ellipse["startAngle"].get<double>();
+  }
+
+  if (json_ellipse.contains("end_angle") && !json_ellipse["end_angle"].is_null())
+  {
+    end_val = json_ellipse["end_angle"].get<double>();
+  }
+  else if (json_ellipse.contains("endAngle") && !json_ellipse["endAngle"].is_null())
+  {
+    end_val = json_ellipse["endAngle"].get<double>();
+  }
+
+  ellipse.start_angle = to_radians(start_val);
+  ellipse.end_angle = to_radians(end_val);
+
+  // 旋转角（可选）
+  if (json_ellipse.contains("rotation") && json_ellipse["rotation"].is_number())
+  {
+    ellipse.rotation = to_radians(json_ellipse["rotation"].get<double>());
+  }
+  else if (json_ellipse.contains("Rotation") && json_ellipse["Rotation"].is_number())
+  {
+    ellipse.rotation = to_radians(json_ellipse["Rotation"].get<double>());
+  }
+
+  const double a = ellipse.major_radius();
+  const double b = ellipse.minor_radius();
+  const double theta = ellipse.orientation();
+
+  auto eval_point = [&](double t) -> Point3D {
+    Point3D p;
+    const double ct = std::cos(t);
+    const double st = std::sin(t);
+    const double cth = std::cos(theta);
+    const double sth = std::sin(theta);
+    const double xl = a * ct;
+    const double yl = b * st;
+    p.x = ellipse.center.x + xl * cth - yl * sth;
+    p.y = ellipse.center.y + xl * sth + yl * cth;
+    p.z = ellipse.center.z;
+    return p;
+  };
+
+  ellipse.start = eval_point(ellipse.start_angle);
+  ellipse.end = eval_point(ellipse.end_angle);
+
+  // 近似长度：用近似周长按参数角比例估算（对椭圆弧是粗略估计，但用于采样/排序足够）
+  double angle_diff = ellipse.end_angle - ellipse.start_angle;
+  if (std::fabs(angle_diff) < 1e-9)
+  {
+    angle_diff = 2.0 * M_PI;
+  }
+  if (angle_diff < 0)
+  {
+    angle_diff += 2.0 * M_PI;
+  }
+
+  double perimeter = 0.0;
+  if (a > 1e-12 && b > 1e-12)
+  {
+    const double h = std::pow(a - b, 2) / std::pow(a + b, 2);
+    perimeter = M_PI * (a + b) * (1.0 + (3.0 * h) / (10.0 + std::sqrt(4.0 - 3.0 * h)));
+  }
+  ellipse.length = (perimeter > 0.0) ? (perimeter * (angle_diff / (2.0 * M_PI))) : 0.0;
+
+  return ellipse;
 }
 
 /*
