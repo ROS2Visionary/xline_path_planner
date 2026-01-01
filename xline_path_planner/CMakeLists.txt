@@ -139,6 +139,23 @@ if(BUILD_TESTING)
       ${CMAKE_CURRENT_SOURCE_DIR}/include
     )
   endif()
+
+  ament_add_gtest(test_transition_force_straight
+    test/test_transition_force_straight.cpp
+    src/cad_parser.cpp
+    src/grid_map_generator.cpp
+    src/path_planner.cpp
+    src/collinear_merger.cpp
+  )
+  if(TARGET test_transition_force_straight)
+    target_include_directories(test_transition_force_straight PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR}/include
+      ${OpenCV_INCLUDE_DIRS}
+    )
+    target_link_libraries(test_transition_force_straight
+      ${OpenCV_LIBS}
+    )
+  endif()
 endif()
 
 ament_package()

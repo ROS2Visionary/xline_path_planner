@@ -142,7 +142,8 @@ private:
    * @return 转场路径段
    */
   RouteSegment planConnectionPath(const Point3D& start, const Point3D& goal,
-                                  double start_heading = 0.0, double goal_heading = 0.0);
+                                  double start_heading = 0.0, double goal_heading = 0.0,
+                                  bool force_straight = false);
 
   /**
    * @brief 离散化曲线为多个点

@@ -361,6 +361,14 @@ std::vector<RouteSegment> PathPlanner::plan_paths(const CADData& cad_data, const
   // 处理所有线段（传递机器人起始位置）
   processGeometryGroup(lines_to_draw, path_segments, offset_config, robot_start_position);
 
+  for (auto& seg : path_segments)
+  {
+    if (seg.type != RouteType::TRANSITION_PATH)
+    {
+      seg.execute_backward = false;
+    }
+  }
+
   return path_segments;
 }
 
@@ -516,6 +524,7 @@ std::shared_ptr<Line> PathPlanner::findNearestUnprocessedLine(const Point3D& cur
 RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, const PathOffsetConfig& offset_config)
 {
   RouteSegment segment(RouteType::DRAWING_PATH, line->id);
+  segment.execute_backward = false;
   if (auto merged_line = std::dynamic_pointer_cast<MergedLine>(line))
   {
     segment.merged_line_ids = merged_line->source_line_ids;
@@ -855,7 +864,7 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
 }
 
 RouteSegment PathPlanner::planConnectionPath(const Point3D& start, const Point3D& goal,
-                                             double start_heading, double goal_heading)
+                                             double start_heading, double goal_heading, bool force_straight)
 {
   RouteSegment segment(RouteType::TRANSITION_PATH);
 
@@ -887,6 +896,10 @@ RouteSegment PathPlanner::planConnectionPath(const Point3D& start, const Point3D
   bool distance_ok = distance >= bezier_config_.min_curve_distance;
   bool angle_ok = total_turn_deg >= bezier_config_.min_angle_for_curve;
   bool use_curve = bezier_config_.enabled && distance_ok && angle_ok;
+  if (force_straight)
+  {
+    use_curve = false;
+  }
 
   if (use_curve)
   {
@@ -908,7 +921,11 @@ RouteSegment PathPlanner::planConnectionPath(const Point3D& start, const Point3D
   {
     // 使用直线转场，并说明原因
     std::string reason;
-    if (!bezier_config_.enabled)
+    if (force_straight)
+    {
+      reason = "上一段为曲线（圆/圆弧/样条/曲线/椭圆），强制直线转场";
+    }
+    else if (!bezier_config_.enabled)
     {
       reason = "曲线转场未启用";
     }
@@ -1161,6 +1178,7 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
 {
   Point3D current_position;
   bool has_current_position = false;
+  std::optional<GeometryType> last_drawing_geometry_type;
 
   std::cout << "\n" << std::string(80, '=') << std::endl;
   std::cout << "开始处理几何线段组" << std::endl;
@@ -1281,6 +1299,7 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
 
       // 规划该线的绘图路径
       RouteSegment drawing_segment = planGeometryPath(nearest_line, offset_config);
+      drawing_segment.execute_backward = false;
 
       if (drawing_segment.points.empty())
       {
@@ -1367,8 +1386,21 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
             goal_heading = std::atan2(dy, dx);
           }
 
-          RouteSegment transition_segment = planConnectionPath(current_position, drawing_segment.points.front(),
-                                                               start_heading, goal_heading);
+          const bool force_straight_transition =
+            last_drawing_geometry_type.has_value() &&
+            (*last_drawing_geometry_type == GeometryType::CIRCLE ||
+             *last_drawing_geometry_type == GeometryType::ARC ||
+             *last_drawing_geometry_type == GeometryType::SPLINE ||
+             *last_drawing_geometry_type == GeometryType::CURVE ||
+             *last_drawing_geometry_type == GeometryType::ELLIPSE);
+
+          if (force_straight_transition)
+          {
+            std::cout << "  上一段为曲线（圆/圆弧/样条/曲线/椭圆），本次转场强制使用直线" << std::endl;
+          }
+
+          RouteSegment transition_segment = planConnectionPath(
+            current_position, drawing_segment.points.front(), start_heading, goal_heading, force_straight_transition);
 
           if (!transition_segment.points.empty())
           {
@@ -1405,6 +1437,7 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
         // 更新当前位置为绘图路径的终点
         current_position = drawing_segment.points.back();
         has_current_position = true;
+        last_drawing_geometry_type = nearest_line->type;
       }
 
       // 将已规划的线段标记为已绘制
