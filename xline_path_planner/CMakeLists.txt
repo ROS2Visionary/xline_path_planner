@@ -112,6 +112,40 @@ if(BUILD_TESTING)
     )
   endif()
 
+  ament_add_gtest(test_ellipse_extension
+    test/test_ellipse_extension.cpp
+    src/cad_parser.cpp
+    src/grid_map_generator.cpp
+    src/path_planner.cpp
+    src/collinear_merger.cpp
+  )
+  if(TARGET test_ellipse_extension)
+    target_include_directories(test_ellipse_extension PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR}/include
+      ${OpenCV_INCLUDE_DIRS}
+    )
+    target_link_libraries(test_ellipse_extension
+      ${OpenCV_LIBS}
+    )
+  endif()
+
+  ament_add_gtest(test_arc_extension
+    test/test_arc_extension.cpp
+    src/cad_parser.cpp
+    src/grid_map_generator.cpp
+    src/path_planner.cpp
+    src/collinear_merger.cpp
+  )
+  if(TARGET test_arc_extension)
+    target_include_directories(test_arc_extension PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR}/include
+      ${OpenCV_INCLUDE_DIRS}
+    )
+    target_link_libraries(test_arc_extension
+      ${OpenCV_LIBS}
+    )
+  endif()
+
   ament_add_gtest(test_spline_support
     test/test_spline_support.cpp
     src/cad_parser.cpp

@@ -36,6 +36,8 @@ path_planner:
   path_extension_end_length: 0.05   # 绘图路径终点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
   arc_extension_length: 0.4         # 圆弧起点延长弧长（米），沿圆弧路径反向延长
   arc_extension_max_angle: 90.0     # 圆弧起点延长最大角度（度），防止小半径圆弧延长过多
+  ellipse_extension_length: 0.4     # 椭圆弧起点延长弧长（米），沿椭圆弧路径反向延长（完整椭圆不延长）
+  ellipse_extension_max_angle: 90.0 # 椭圆弧起点延长最大参数角（度），防止延长过多
   transition_length_min: 0.3        # 选择下一条路径时，转场路径长度优先落在该最小值以上（米）
   transition_length_max: 1.0   # 选择下一条路径时，转场路径长度优先落在该最大值以下（米）
 

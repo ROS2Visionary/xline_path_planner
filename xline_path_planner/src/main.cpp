@@ -249,6 +249,8 @@ public:
     path_extension_end_length = planner["path_extension_end_length"].as<double>();
     arc_extension_length = planner["arc_extension_length"] ? planner["arc_extension_length"].as<double>() : 0.4;
     arc_extension_max_angle = planner["arc_extension_max_angle"] ? planner["arc_extension_max_angle"].as<double>() : 90.0;
+    ellipse_extension_length = planner["ellipse_extension_length"] ? planner["ellipse_extension_length"].as<double>() : 0.4;
+    ellipse_extension_max_angle = planner["ellipse_extension_max_angle"] ? planner["ellipse_extension_max_angle"].as<double>() : 90.0;
     if (planner["transition_length_min"]) path_planner_config.transition_length_min = planner["transition_length_min"].as<double>();
     if (planner["transition_length_max"]) path_planner_config.transition_length_max = planner["transition_length_max"].as<double>();
     double circle_radius_compensation = path_planner_config.circle_radius_compensation;
@@ -360,6 +362,8 @@ public:
     path_planner_config.path_extension_end_length = path_extension_end_length;
     path_planner_config.arc_extension_length = arc_extension_length;
     path_planner_config.arc_extension_max_angle = arc_extension_max_angle;
+    path_planner_config.ellipse_extension_length = ellipse_extension_length;
+    path_planner_config.ellipse_extension_max_angle = ellipse_extension_max_angle;
     path_planner_config.split_polyline = split_polyline;
     path_planner_config.preserve_polyline_info = preserve_polyline_info;
     path_planner_config.merge_collinear = merge_collinear;
@@ -860,6 +864,8 @@ public:
   double path_extension_end_length;
   double arc_extension_length;
   double arc_extension_max_angle;
+  double ellipse_extension_length;
+  double ellipse_extension_max_angle;
 
   // 规划互斥，防止并发执行
   std::mutex plan_mutex_;

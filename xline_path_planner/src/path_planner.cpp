@@ -660,18 +660,16 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
         circle_points.push_back(point);
       }
 
-      // 为圆形路径保持原始几何形状，不对起点和终点进行切线方向的延长，
-      // 这样 segment.points.front()/back() 将严格落在圆上，便于后续导出的
-      // start/end 与 CAD 中的圆几何保持一致。
+      // 圆无需做反向延长：保持闭合，起点=终点
       segment.points = circle_points;
     }
   }
-  else if (line->type == GeometryType::ARC)
-  {
-    // 圆弧，离散化为多个点
-    auto arc = std::dynamic_pointer_cast<Arc>(line);
-    if (arc)
-    {
+	  else if (line->type == GeometryType::ARC)
+	  {
+	    // 圆弧，离散化为多个点
+	    auto arc = std::dynamic_pointer_cast<Arc>(line);
+	    if (arc)
+	    {
       // 根据弧长计算延长角度：弧长 = 半径 × 角度（弧度）
       // 延长角度 = 弧长 / 半径
       const double arc_ext_length = planner_config_.arc_extension_length;
@@ -685,18 +683,22 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
       double start_angle = arc->start_angle;
       double end_angle = arc->end_angle;
 
-      // 确保终止角度大于起始角度
-      if (end_angle < start_angle)
-      {
-        end_angle += 2.0 * M_PI;
-      }
+	      // 确保终止角度大于起始角度
+	      if (end_angle < start_angle)
+	      {
+	        end_angle += 2.0 * M_PI;
+	      }
 
-      // 计算原始角度差
-      double original_angle_diff = end_angle - start_angle;
+	      // 计算原始角度差
+	      double original_angle_diff = end_angle - start_angle;
+	      if (std::fabs(original_angle_diff) < 1e-9)
+	      {
+	        original_angle_diff = 2.0 * M_PI;
+	      }
 
-      // 起点处沿圆弧反向延长（角度减小方向）
-      double extended_start_angle = start_angle - arc_ext_angle_rad;
-      double total_angle_diff = original_angle_diff + arc_ext_angle_rad;
+	      // 起点处沿圆弧反向延长（角度减小方向）
+	      double extended_start_angle = start_angle - arc_ext_angle_rad;
+	      double total_angle_diff = original_angle_diff + arc_ext_angle_rad;
 
       // 离散化点数（根据总角度范围计算）
       int num_points = std::max(10, static_cast<int>(36 * total_angle_diff / (2.0 * M_PI)));
@@ -737,6 +739,51 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
         if (angle_diff < 0)
         {
           angle_diff += 2.0 * M_PI;
+        }
+
+        // 椭圆弧起点延长：逻辑与圆弧一致（起点沿路径反向延长，终点保持不变）。
+        // 对完整椭圆（闭合）不做延长，避免首尾重复段。
+        const bool is_closed_ellipse = (ellipse->start.distance(ellipse->end) < 1e-6) ||
+                                       (std::fabs(angle_diff - 2.0 * M_PI) < 1e-6);
+        const double ellipse_ext_length = std::max(0.0, planner_config_.ellipse_extension_length);
+        const double ellipse_ext_max_angle_rad =
+          std::max(0.0, planner_config_.ellipse_extension_max_angle) * M_PI / 180.0;
+
+        double ext_delta = 0.0;
+        if (!is_closed_ellipse && ellipse_ext_length > 1e-9 && ellipse_ext_max_angle_rad > 1e-9)
+        {
+          auto ds_dt = [&](double t) {
+            const double st = std::sin(t);
+            const double ct = std::cos(t);
+            return std::sqrt(a * a * st * st + b * b * ct * ct);
+          };
+
+          double remaining_len = ellipse_ext_length;
+          double remaining_ang = ellipse_ext_max_angle_rad;
+          double t = t0;
+          const double max_step = 0.05;  // rad
+          const double min_step = 1e-8;
+          for (int iter = 0; iter < 10000 && remaining_len > 1e-6 && remaining_ang > 1e-9; ++iter)
+          {
+            const double v = std::max(1e-9, ds_dt(t));
+            double step = remaining_len / v;
+            step = std::min(step, max_step);
+            step = std::min(step, remaining_ang);
+            if (step < min_step) break;
+
+            const double t_mid = t - 0.5 * step;
+            const double len_step = std::max(1e-9, ds_dt(t_mid)) * step;
+            remaining_len -= len_step;
+            remaining_ang -= step;
+            t -= step;
+            ext_delta += step;
+          }
+
+          if (ext_delta > 0.0)
+          {
+            t0 -= ext_delta;
+            angle_diff += ext_delta;
+          }
         }
 
         // 近似弧长用于确定采样密度（对椭圆弧为近似，但足以用于轨迹离散化）

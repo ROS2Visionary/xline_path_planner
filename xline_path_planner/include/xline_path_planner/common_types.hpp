@@ -923,6 +923,8 @@ struct PathPlannerConfig
   double path_extension_end_length = 0.1;    ///< 终点端延长长度(m)，默认0.1米
   double arc_extension_length = 0.4;         ///< 圆弧起点延长弧长(m)，沿圆弧反向延长
   double arc_extension_max_angle = 90.0;     ///< 圆弧起点延长最大角度(度)，防止小半径圆弧延长过多
+  double ellipse_extension_length = 0.4;     ///< 椭圆弧起点延长弧长(m)，沿椭圆弧反向延长（完整椭圆不延长）
+  double ellipse_extension_max_angle = 90.0; ///< 椭圆弧起点延长最大参数角(度)，防止延长过多
   double transition_length_min = 0.0;        ///< 选择下一条路径时，转场路径长度优先下限(m)
   double transition_length_max = std::numeric_limits<double>::infinity();  ///< 选择下一条路径时，转场路径长度优先上限(m)
 
