@@ -129,6 +129,16 @@ if(BUILD_TESTING)
       ${OpenCV_LIBS}
     )
   endif()
+
+  ament_add_gtest(test_transition_spline_export
+    test/test_transition_spline_export.cpp
+    src/output_formatter.cpp
+  )
+  if(TARGET test_transition_spline_export)
+    target_include_directories(test_transition_spline_export PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
+  endif()
 endif()
 
 ament_package()

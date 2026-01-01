@@ -90,10 +90,7 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
     if (seg.points.size() < 2)
       continue;
 
-    for (std::size_t i = 0; i + 1 < seg.points.size(); ++i)
-    {
-      root["lines"].push_back(constructTransitionLineJSON(seg.points[i], seg.points[i + 1], static_cast<int>(seg_idx), seg));
-    }
+    root["lines"].push_back(constructTransitionSplineJSON(seg.points, static_cast<int>(seg_idx), seg));
   }
 
   // 仅返回 { "lines": [...] }
@@ -125,15 +122,10 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
   {
     const auto& seg = segments[seg_idx];
 
-	    if (seg.type == RouteType::TRANSITION_PATH)
-	    {
-	      if (seg.points.size() < 2) continue;
-	      for (std::size_t i = 0; i + 1 < seg.points.size(); ++i)
-	      {
-	        auto j = constructTransitionLineJSON(seg.points[i], seg.points[i + 1], static_cast<int>(seg_idx), seg);
-	        root["lines"].push_back(j);
-
-      }
+    if (seg.type == RouteType::TRANSITION_PATH)
+    {
+      if (seg.points.size() < 2) continue;
+      root["lines"].push_back(constructTransitionSplineJSON(seg.points, static_cast<int>(seg_idx), seg));
     }
     else if (seg.type == RouteType::DRAWING_PATH)
     {
@@ -441,13 +433,13 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
   return only_lines;
 }
 
-// 辅助：构造转场路径的线段 JSON
-nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start, const Point3D& end, int order, const RouteSegment& seg)
+// 辅助：构造转场路径的样条 JSON
+nlohmann::json OutputFormatter::constructTransitionSplineJSON(const std::vector<Point3D>& points, int order, const RouteSegment& seg)
 {
   nlohmann::json j;
 
   j["id"] = 1000000;
-  j["type"] = "line";
+  j["type"] = "spline";
   j["line_type"] = "";
   j["thickness"] = 1.0;
   j["hidden"] = false;
@@ -461,6 +453,14 @@ nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start
   j["printed"] = false;
   j["backward"] = seg.execute_backward;
   j["printer_type"] = printerTypeToString(seg.printer_type);
+
+  // 与导入侧 spline 描述保持一致的字段（control_points/knots/weights 允许为空）
+  j["degree"] = 3;
+  j["periodic"] = false;
+  j["is_closed"] = false;
+  j["control_points"] = nlohmann::json::array();
+  j["knots"] = nlohmann::json::array();
+  j["weights"] = nlohmann::json::array();
   
   // 使用下一个路径的 ink 信息
   nlohmann::json ink;
@@ -475,8 +475,17 @@ nlohmann::json OutputFormatter::constructTransitionLineJSON(const Point3D& start
   }
   
   j["ink"] = ink;
-  j["start"] = point_mm(start);
-  j["end"] = point_mm(end);
+
+  // 转场离散点序列（用于执行/可视化）
+  nlohmann::json vertices = nlohmann::json::array();
+  for (const auto& p : points)
+  {
+    vertices.push_back(point_mm(p));
+  }
+  j["vertices"] = vertices;
+
+  j["start"] = point_mm(points.front());
+  j["end"] = point_mm(points.back());
 
   return j;
 }

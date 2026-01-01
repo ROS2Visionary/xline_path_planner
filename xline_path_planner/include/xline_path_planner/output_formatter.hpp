@@ -36,7 +36,7 @@ public:
    *          其中对于转场路径（RouteType::TRANSITION_PATH）生成的实体：
    *            - color 统一为浅灰色（#D3D3D3），并附加 opacity=0.5 字段；
    *            - id 统一为 1000000；
-   *            - type 统一为 "line"；
+   *            - type 统一为 "spline"（vertices 为转场路径离散点序列）；
    *            - selected 统一为 false；
    *            - line_type 统一为空字符串；
    *            - hidden 统一为 false；
@@ -60,14 +60,13 @@ public:
 
 private:
   /**
-   * @brief 构建一个转场路径的线段 JSON（按照新版导出结构的 lines[*] 条目）
-   * @param start 起点
-   * @param end 终点
+   * @brief 构建一个转场路径的样条 JSON（按照新版导出结构的 lines[*] 条目）
+   * @param points 转场路径点序列
    * @param order 顺序
    * @param seg 路径段信息（用于获取 ink 信息）
    * @return JSON 对象
    */
-  nlohmann::json constructTransitionLineJSON(const Point3D& start, const Point3D& end, int order, const RouteSegment& seg);
+  nlohmann::json constructTransitionSplineJSON(const std::vector<Point3D>& points, int order, const RouteSegment& seg);
 };
 
 }  // namespace path_planner
