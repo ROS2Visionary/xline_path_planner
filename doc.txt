@@ -8,7 +8,7 @@ source install/setup.sh
 ros2 run xline_path_planner planner_node
 
 source install/setup.sh
-ros2 service call /plan_path xline_path_planner/srv/PlanPath "{file_name: 'Drawing6.json'}"
+ros2 service call /plan_path xline_path_planner/srv/PlanPath "{file_name: 'arc_rectangle.json'}"
 
 
 export XLINE_WS_ROOT=/root/xline_ws/xline_path_planner/_xline_data_dir

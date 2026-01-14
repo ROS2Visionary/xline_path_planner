@@ -200,7 +200,9 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         if (circle)
         {
           j["center"] = { {"x", to_mm(circle->center.x)}, {"y", to_mm(circle->center.y)} };
-          j["radius"] = to_mm(circle->radius);
+          // 使用调整后的半径（如果有），否则使用原始半径
+          double export_radius = seg.adjusted_radius.has_value() ? seg.adjusted_radius.value() : circle->radius;
+          j["radius"] = to_mm(export_radius);
         }
 
         const auto& p0 = seg.points.front();
@@ -238,7 +240,9 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         if (arc)
         {
           j["center"] = { {"x", to_mm(arc->center.x)}, {"y", to_mm(arc->center.y)} };
-          j["radius"] = to_mm(arc->radius);
+          // 使用调整后的半径（如果有），否则使用原始半径
+          double export_radius = seg.adjusted_radius.has_value() ? seg.adjusted_radius.value() : arc->radius;
+          j["radius"] = to_mm(export_radius);
           // 角度以度导出（避免依赖 M_PI）
           auto rad2deg = [](double r) { return r * 180.0 / 3.14159265358979323846; };
           j["start_angle"] = rad2deg(arc->start_angle);
@@ -279,8 +283,27 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         if (ellipse)
         {
           j["center"] = { {"x", to_mm(ellipse->center.x)}, {"y", to_mm(ellipse->center.y)} };
-          j["major_axis"] = { {"x", to_mm(ellipse->major_axis.x)}, {"y", to_mm(ellipse->major_axis.y)} };
-          j["ratio"] = ellipse->ratio;
+
+          // 使用调整后的长短轴半径（如果有），重新计算 major_axis 和 ratio
+          if (seg.adjusted_major_radius.has_value() && seg.adjusted_minor_radius.has_value())
+          {
+            double adjusted_a = seg.adjusted_major_radius.value();
+            double adjusted_b = seg.adjusted_minor_radius.value();
+
+            // 计算调整后的 major_axis 向量（保持原始方向，调整长度）
+            double original_length = std::sqrt(ellipse->major_axis.x * ellipse->major_axis.x +
+                                              ellipse->major_axis.y * ellipse->major_axis.y);
+            double scale = adjusted_a / std::max(1e-9, original_length);
+
+            j["major_axis"] = { {"x", to_mm(ellipse->major_axis.x * scale)},
+                               {"y", to_mm(ellipse->major_axis.y * scale)} };
+            j["ratio"] = adjusted_b / adjusted_a;
+          }
+          else
+          {
+            j["major_axis"] = { {"x", to_mm(ellipse->major_axis.x)}, {"y", to_mm(ellipse->major_axis.y)} };
+            j["ratio"] = ellipse->ratio;
+          }
 
           auto rad2deg = [](double r) { return r * 180.0 / 3.14159265358979323846; };
           j["start_angle"] = rad2deg(ellipse->start_angle);
@@ -433,13 +456,16 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
   return only_lines;
 }
 
-// 辅助：构造转场路径的样条 JSON
+// 辅助：构造转场路径的 JSON（根据点数自动判断类型）
 nlohmann::json OutputFormatter::constructTransitionSplineJSON(const std::vector<Point3D>& points, int order, const RouteSegment& seg)
 {
   nlohmann::json j;
 
+  // 根据点数判断类型：2个点为直线，多个点为样条
+  bool is_straight_line = (points.size() == 2);
+
   j["id"] = 1000000;
-  j["type"] = "spline";
+  j["type"] = is_straight_line ? "line" : "spline";
   j["line_type"] = "";
   j["thickness"] = 1.0;
   j["hidden"] = false;
@@ -454,13 +480,17 @@ nlohmann::json OutputFormatter::constructTransitionSplineJSON(const std::vector<
   j["backward"] = seg.execute_backward;
   j["printer_type"] = printerTypeToString(seg.printer_type);
 
-  // 与导入侧 spline 描述保持一致的字段（control_points/knots/weights 允许为空）
-  j["degree"] = 3;
-  j["periodic"] = false;
-  j["is_closed"] = false;
-  j["control_points"] = nlohmann::json::array();
-  j["knots"] = nlohmann::json::array();
-  j["weights"] = nlohmann::json::array();
+  // 仅当为样条类型时添加样条相关字段
+  if (!is_straight_line)
+  {
+    // 与导入侧 spline 描述保持一致的字段（control_points/knots/weights 允许为空）
+    j["degree"] = 3;
+    j["periodic"] = false;
+    j["is_closed"] = false;
+    j["control_points"] = nlohmann::json::array();
+    j["knots"] = nlohmann::json::array();
+    j["weights"] = nlohmann::json::array();
+  }
   
   // 使用下一个路径的 ink 信息
   nlohmann::json ink;
@@ -476,16 +506,27 @@ nlohmann::json OutputFormatter::constructTransitionSplineJSON(const std::vector<
   
   j["ink"] = ink;
 
-  // 转场离散点序列（用于执行/可视化）
-  nlohmann::json vertices = nlohmann::json::array();
-  for (const auto& p : points)
+  // 根据类型导出路径点
+  if (is_straight_line)
   {
-    vertices.push_back(point_mm(p));
+    // 直线类型：只导出起点和终点
+    j["start"] = point_mm(points.front());
+    j["end"] = point_mm(points.back());
   }
-  j["vertices"] = vertices;
+  else
+  {
+    // 样条类型：导出所有离散点序列（用于执行/可视化）
+    nlohmann::json vertices = nlohmann::json::array();
+    for (const auto& p : points)
+    {
+      vertices.push_back(point_mm(p));
+    }
+    j["vertices"] = vertices;
 
-  j["start"] = point_mm(points.front());
-  j["end"] = point_mm(points.back());
+    // 同时提供起点和终点，方便消费端使用
+    j["start"] = point_mm(points.front());
+    j["end"] = point_mm(points.back());
+  }
 
   return j;
 }

@@ -479,6 +479,141 @@ std::shared_ptr<Line> PathPlanner::findNearestUnprocessedLine(const Point3D& cur
       }
       return line->start;
     }
+    if (line->type == GeometryType::CIRCLE)
+    {
+      auto circle = std::dynamic_pointer_cast<Circle>(line);
+      if (circle)
+      {
+        // 圆形闭合路径，起点位于圆周上（假设从0度角开始）
+        // 半径调整后，起点沿径向移动
+        double adjusted_radius = circle->radius + offset_config.center_offset;
+        Point3D offset_start;
+        offset_start.x = circle->center.x + adjusted_radius;  // 0度角位置
+        offset_start.y = circle->center.y;
+        offset_start.z = circle->center.z;
+        return offset_start;
+      }
+      return line->start;
+    }
+    if (line->type == GeometryType::ARC)
+    {
+      auto arc = std::dynamic_pointer_cast<Arc>(line);
+      if (arc)
+      {
+        // 圆弧起点在圆周上，半径调整后起点沿径向移动
+        // 注意：圆弧起点会反向延长，需要考虑延长后的角度
+        double adjusted_radius = arc->radius + offset_config.center_offset;
+
+        // 计算延长角度（与 planGeometryPath 中的逻辑保持一致）
+        const double arc_ext_length = planner_config_.arc_extension_length;
+        const double max_ext_angle_rad = planner_config_.arc_extension_max_angle * M_PI / 180.0;
+        double ext_angle_from_length = (adjusted_radius > 1e-6) ? (arc_ext_length / adjusted_radius) : 0.0;
+        const double arc_ext_angle_rad = std::min(ext_angle_from_length, max_ext_angle_rad);
+
+        // 延长后的起始角度
+        double extended_start_angle = arc->start_angle - arc_ext_angle_rad;
+
+        Point3D offset_start;
+        offset_start.x = arc->center.x + adjusted_radius * std::cos(extended_start_angle);
+        offset_start.y = arc->center.y + adjusted_radius * std::sin(extended_start_angle);
+        offset_start.z = arc->center.z;
+        return offset_start;
+      }
+      return line->start;
+    }
+    if (line->type == GeometryType::ELLIPSE)
+    {
+      auto ellipse = std::dynamic_pointer_cast<Ellipse>(line);
+      if (ellipse)
+      {
+        // 椭圆起点在椭圆周上，长短轴半径同时调整后起点位置改变
+        // 注意：椭圆起点可能会反向延长，需要考虑延长后的角度
+        double a = ellipse->major_radius() + offset_config.center_offset;
+        double b = ellipse->minor_radius() + offset_config.center_offset;
+        double t0 = ellipse->start_angle;
+        double t1 = ellipse->end_angle;
+        double theta = ellipse->orientation();
+
+        // 判断是否为闭合椭圆
+        double angle_diff = t1 - t0;
+        if (std::fabs(angle_diff) < 1e-9) angle_diff = 2.0 * M_PI;
+        if (angle_diff < 0) angle_diff += 2.0 * M_PI;
+
+        const bool is_closed_ellipse = (ellipse->start.distance(ellipse->end) < 1e-6) ||
+                                       (std::fabs(angle_diff - 2.0 * M_PI) < 1e-6);
+
+        // 计算延长（与 planGeometryPath 中的逻辑保持一致）
+        if (!is_closed_ellipse)
+        {
+          const double ellipse_ext_length = std::max(0.0, planner_config_.ellipse_extension_length);
+          const double ellipse_ext_max_angle_rad = std::max(0.0, planner_config_.ellipse_extension_max_angle) * M_PI / 180.0;
+
+          if (ellipse_ext_length > 1e-9 && ellipse_ext_max_angle_rad > 1e-9)
+          {
+            auto ds_dt = [&](double t) {
+              const double st = std::sin(t);
+              const double ct = std::cos(t);
+              return std::sqrt(a * a * st * st + b * b * ct * ct);
+            };
+
+            double ext_delta = 0.0;
+            double remaining_len = ellipse_ext_length;
+            double remaining_ang = ellipse_ext_max_angle_rad;
+            double t = t0;
+            const double max_step = 0.05;
+            const double min_step = 1e-8;
+
+            for (int iter = 0; iter < 10000 && remaining_len > 1e-6 && remaining_ang > 1e-9; ++iter)
+            {
+              const double v = std::max(1e-9, ds_dt(t));
+              double step = remaining_len / v;
+              step = std::min(step, max_step);
+              step = std::min(step, remaining_ang);
+              if (step < min_step) break;
+
+              const double t_mid = t - 0.5 * step;
+              const double len_step = std::max(1e-9, ds_dt(t_mid)) * step;
+              remaining_len -= len_step;
+              remaining_ang -= step;
+              t -= step;
+              ext_delta += step;
+            }
+
+            if (ext_delta > 0.0)
+            {
+              t0 -= ext_delta;
+            }
+          }
+        }
+
+        // 计算椭圆上的点（参数方程，使用延长后的 t0）
+        double ct = std::cos(t0);
+        double st = std::sin(t0);
+        double xl = a * ct;
+        double yl = b * st;
+
+        // 旋转到世界坐标系
+        double cth = std::cos(theta);
+        double sth = std::sin(theta);
+        Point3D offset_start;
+        offset_start.x = ellipse->center.x + xl * cth - yl * sth;
+        offset_start.y = ellipse->center.y + xl * sth + yl * cth;
+        offset_start.z = ellipse->center.z;
+        return offset_start;
+      }
+      return line->start;
+    }
+    if (line->type == GeometryType::CURVE)
+    {
+      auto curve = std::dynamic_pointer_cast<Curve>(line);
+      if (curve && curve->control_points.size() >= 2)
+      {
+        // NURBS曲线会被离散化，然后应用偏移
+        // 估算起点：使用第一个和第二个控制点的方向
+        return offset_first_point_of_segment(curve->control_points[0], curve->control_points[1], offset_config.center_offset);
+      }
+      return line->start;
+    }
 
     return line->start;
   };
@@ -644,6 +779,29 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
     auto circle = std::dynamic_pointer_cast<Circle>(line);
     if (circle)
     {
+      // 根据打印机类型获取偏移量
+      double offset = 0.0;
+      switch (segment.printer_type) {
+        case PrinterType::LEFT_PRINTER:
+          offset = offset_config.left_offset;
+          break;
+        case PrinterType::RIGHT_PRINTER:
+          offset = offset_config.right_offset;
+          break;
+        case PrinterType::CENTER_PRINTER:
+          offset = offset_config.center_offset;
+          break;
+      }
+
+      // 对于圆形，正偏移（往左，即逆时针方向的外侧）增加半径，负偏移（往右，即内侧）减小半径
+      double adjusted_radius = circle->radius + offset;
+
+      // 确保半径为正
+      if (adjusted_radius < 1e-6) {
+        std::cerr << "Warning: Circle radius becomes too small after offset adjustment. Using minimum radius." << std::endl;
+        adjusted_radius = 1e-6;
+      }
+
       // 以固定角度间隔离散化圆
       const int num_points = 36;  // 每10度一个点
       const double angle_step = 2.0 * M_PI / num_points;
@@ -653,8 +811,8 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
       {
         double angle = i * angle_step;
         Point3D point;
-        point.x = circle->center.x + circle->radius * std::cos(angle);
-        point.y = circle->center.y + circle->radius * std::sin(angle);
+        point.x = circle->center.x + adjusted_radius * std::cos(angle);
+        point.y = circle->center.y + adjusted_radius * std::sin(angle);
         point.z = circle->center.z;
 
         circle_points.push_back(point);
@@ -662,6 +820,9 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
 
       // 圆无需做反向延长：保持闭合，起点=终点
       segment.points = circle_points;
+
+      // 保存调整后的半径，用于导出JSON
+      segment.adjusted_radius = adjusted_radius;
     }
   }
 	  else if (line->type == GeometryType::ARC)
@@ -670,12 +831,35 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
 	    auto arc = std::dynamic_pointer_cast<Arc>(line);
 	    if (arc)
 	    {
+      // 根据打印机类型获取偏移量
+      double offset = 0.0;
+      switch (segment.printer_type) {
+        case PrinterType::LEFT_PRINTER:
+          offset = offset_config.left_offset;
+          break;
+        case PrinterType::RIGHT_PRINTER:
+          offset = offset_config.right_offset;
+          break;
+        case PrinterType::CENTER_PRINTER:
+          offset = offset_config.center_offset;
+          break;
+      }
+
+      // 对于圆弧，正偏移（往左，即逆时针方向的外侧）增加半径，负偏移（往右，即内侧）减小半径
+      double adjusted_radius = arc->radius + offset;
+
+      // 确保半径为正
+      if (adjusted_radius < 1e-6) {
+        std::cerr << "Warning: Arc radius becomes too small after offset adjustment. Using minimum radius." << std::endl;
+        adjusted_radius = 1e-6;
+      }
+
       // 根据弧长计算延长角度：弧长 = 半径 × 角度（弧度）
       // 延长角度 = 弧长 / 半径
       const double arc_ext_length = planner_config_.arc_extension_length;
       const double max_ext_angle_rad = planner_config_.arc_extension_max_angle * M_PI / 180.0;
 
-      double ext_angle_from_length = (arc->radius > 1e-6) ? (arc_ext_length / arc->radius) : 0.0;
+      double ext_angle_from_length = (adjusted_radius > 1e-6) ? (arc_ext_length / adjusted_radius) : 0.0;
       // 取弧长计算的角度和最大角度限制的较小值
       const double arc_ext_angle_rad = std::min(ext_angle_from_length, max_ext_angle_rad);
 
@@ -709,8 +893,8 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
       {
         double angle = extended_start_angle + i * angle_step;
         Point3D point;
-        point.x = arc->center.x + arc->radius * std::cos(angle);
-        point.y = arc->center.y + arc->radius * std::sin(angle);
+        point.x = arc->center.x + adjusted_radius * std::cos(angle);
+        point.y = arc->center.y + adjusted_radius * std::sin(angle);
         point.z = arc->center.z;
 
         arc_points.push_back(point);
@@ -718,6 +902,9 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
 
       // 圆弧起点沿圆弧路径反向延长，终点保持原始位置
       segment.points = arc_points;
+
+      // 保存调整后的半径，用于导出JSON
+      segment.adjusted_radius = adjusted_radius;
     }
   }
   else if (line->type == GeometryType::ELLIPSE)
@@ -725,8 +912,32 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
     auto ellipse = std::dynamic_pointer_cast<Ellipse>(line);
     if (ellipse)
     {
-      const double a = ellipse->major_radius();
-      const double b = ellipse->minor_radius();
+      // 根据打印机类型获取偏移量
+      double offset = 0.0;
+      switch (segment.printer_type) {
+        case PrinterType::LEFT_PRINTER:
+          offset = offset_config.left_offset;
+          break;
+        case PrinterType::RIGHT_PRINTER:
+          offset = offset_config.right_offset;
+          break;
+        case PrinterType::CENTER_PRINTER:
+          offset = offset_config.center_offset;
+          break;
+      }
+
+      // 对于椭圆，正偏移（往左，即逆时针方向的外侧）增加半径，负偏移（往右，即内侧）减小半径
+      // 同时调整长轴和短轴半径
+      double a = ellipse->major_radius() + offset;
+      double b = ellipse->minor_radius() + offset;
+
+      // 确保半径为正
+      if (a < 1e-6 || b < 1e-6) {
+        std::cerr << "Warning: Ellipse radii become too small after offset adjustment. Using minimum radii." << std::endl;
+        a = std::max(a, 1e-6);
+        b = std::max(b, 1e-6);
+      }
+
       if (a > 1e-12 && b > 1e-12)
       {
         double t0 = ellipse->start_angle;
@@ -820,6 +1031,10 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
           pts.push_back(p);
         }
         segment.points = pts;
+
+        // 保存调整后的长短轴半径，用于导出JSON
+        segment.adjusted_major_radius = a;
+        segment.adjusted_minor_radius = b;
       }
       else
       {
@@ -887,7 +1102,12 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
 
   // 应用偏移（根据路径段自身的printer_type）
   // 注意：TEXT类型的 printer_type 在 processGeometryGroup 中动态确定，偏移也在那里应用
-  if (!segment.points.empty() && line->type != GeometryType::TEXT)
+  // 注意：CIRCLE、ARC、ELLIPSE类型已经在生成时调整了半径，不需要再应用偏移
+  if (!segment.points.empty() &&
+      line->type != GeometryType::TEXT &&
+      line->type != GeometryType::CIRCLE &&
+      line->type != GeometryType::ARC &&
+      line->type != GeometryType::ELLIPSE)
   {
     double offset = 0.0;
     switch (segment.printer_type) {
@@ -1508,6 +1728,11 @@ void PathPlanner::processGeometryGroup(const std::vector<std::shared_ptr<Line>>&
 
 std::vector<Point3D> PathPlanner::applyPathOffset(const std::vector<Point3D>& original_path, double offset)
 {
+  // 偏移方向说明：
+  // - 正偏移：从起点指向终点方向的左侧（即路径方向向量逆时针旋转90度）
+  // - 负偏移：从起点指向终点方向的右侧（即路径方向向量顺时针旋转90度）
+  // - 对于闭合路径（逆时针方向），正偏移向外扩张，负偏移向内收缩
+
   if (original_path.size() < 2)
   {
     return original_path;

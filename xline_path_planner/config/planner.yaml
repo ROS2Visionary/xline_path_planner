@@ -29,7 +29,7 @@ grid_map:
 offsets:
   left_offset: -0.25      # 左侧打印机偏移(m)
   right_offset: 0.25      # 右侧打印机偏移(m)
-  center_offset: 0.0      # 中心打印机偏移(m)
+  center_offset: 0.005      # 中心打印机偏移(m)
 
 path_planner:
   path_extension_start_length: 0.2 # 绘图路径起点端延长长度（米），仅影响输出轨迹/可视化，不参与共线判断
@@ -43,10 +43,10 @@ path_planner:
 
 # 贝塞尔曲线转场路径配置
 bezier_transition:
-  enabled: true                     # 是否启用贝塞尔曲线转场，true→使用曲线转场，false→全部使用直线
+  enabled: false                     # 是否启用贝塞尔曲线转场，true→使用曲线转场，false→全部使用直线
 
   # 距离阈值：决定使用直线还是曲线
-  min_curve_distance: 0.5           # 最小曲线转场距离（米），增大→更多转场用直线，减小→更多转场用曲线
+  min_curve_distance: 0.75           # 最小曲线转场距离（米），增大→更多转场用直线，减小→更多转场用曲线
 
   # 角度阈值：小角度转向时直线更高效
   min_angle_for_curve: 15.0         # 最小曲线转场角度（度），增大→更多转场用直线，减小→更多转场用曲线

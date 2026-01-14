@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <stdexcept>
 #include <limits>
+#include <optional>
 
 namespace path_planner
 {
@@ -808,6 +809,11 @@ struct RouteSegment
   InkMode ink_mode;             ///< 墨水打印模式（默认实线）
   std::string text_content;     ///< 文字内容（仅当 ink_mode == TEXT 时有效）
   bool execute_backward = false;  ///< 是否以后退方式执行（仅对转场路径有意义）
+
+  // 调整后的几何参数（应用偏移后的值，用于导出JSON）
+  std::optional<double> adjusted_radius;       ///< 圆/圆弧的调整后半径
+  std::optional<double> adjusted_major_radius; ///< 椭圆的调整后长轴半径
+  std::optional<double> adjusted_minor_radius; ///< 椭圆的调整后短轴半径
 
   /**
    * @brief 构造函数

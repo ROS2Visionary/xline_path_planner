@@ -97,7 +97,7 @@ public:
   /**
    * @brief 应用偏移量到路径
    * @param original_path 原始路径
-   * @param offset 偏移量（正值向右偏移，负值向左偏移）
+   * @param offset 偏移量（正值为从起点指向终点方向的左侧偏移，负值为右侧偏移）
    * @return 偏移后的路径
    */
   std::vector<Point3D> applyPathOffset(const std::vector<Point3D>& original_path, double offset);
