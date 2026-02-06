@@ -475,6 +475,56 @@ std::shared_ptr<Line> PathPlanner::findNearestUnprocessedLine(const Point3D& cur
       auto spline = std::dynamic_pointer_cast<Spline>(line);
       if (spline && spline->vertices.size() >= 2)
       {
+        // 检查样条是否闭合
+        const bool is_closed_spline = spline->closed ||
+                                       (spline->vertices.size() > 2 &&
+                                        spline->vertices.front().distance(spline->vertices.back()) < 1e-6);
+
+        // 如果样条不闭合且配置了延长，计算延长后的起点
+        const double spline_ext_length = std::max(0.0, planner_config_.spline_extension_length);
+
+        if (!is_closed_spline && spline_ext_length > 1e-6)
+        {
+          // 计算起点处的切线方向
+          Point3D p0 = spline->vertices[0];
+          Point3D p1 = spline->vertices[1];
+
+          // 如果前两个点距离太近，尝试使用第三个点
+          double segment_length = p0.distance(p1);
+          if (segment_length < 1e-6 && spline->vertices.size() >= 3)
+          {
+            p1 = spline->vertices[2];
+            segment_length = p0.distance(p1);
+          }
+
+          if (segment_length > 1e-6)
+          {
+            // 计算切线方向（从p0指向p1）
+            double dx = p1.x - p0.x;
+            double dy = p1.y - p0.y;
+            double dz = p1.z - p0.z;
+            double length = std::sqrt(dx*dx + dy*dy + dz*dz);
+
+            if (length > 1e-6)
+            {
+              // 归一化切线向量
+              dx /= length;
+              dy /= length;
+              dz /= length;
+
+              // 计算延长后的起点（沿切线反方向）
+              Point3D extended_start;
+              extended_start.x = p0.x - dx * spline_ext_length;
+              extended_start.y = p0.y - dy * spline_ext_length;
+              extended_start.z = p0.z - dz * spline_ext_length;
+
+              // 应用偏移：使用延长后的起点和原始第一个顶点
+              return offset_first_point_of_segment(extended_start, p0, offset_config.center_offset);
+            }
+          }
+        }
+
+        // 未延长的情况：使用原始前两个顶点
         return offset_first_point_of_segment(spline->vertices[0], spline->vertices[1], offset_config.center_offset);
       }
       return line->start;
@@ -733,14 +783,140 @@ RouteSegment PathPlanner::planGeometryPath(const std::shared_ptr<Line>& line, co
     auto spline = std::dynamic_pointer_cast<Spline>(line);
     if (spline && spline->vertices.size() >= 2)
     {
-      segment.points = spline->vertices;
-      if (spline->closed && spline->vertices.size() > 2)
+      // 检查样条是否闭合
+      const bool is_closed_spline = spline->closed ||
+                                     (spline->vertices.size() > 2 &&
+                                      spline->vertices.front().distance(spline->vertices.back()) < 1e-6);
+
+      // 样条曲线起点延长：沿起点切线方向反向延长（闭合样条不延长）
+      const double spline_ext_length = std::max(0.0, planner_config_.spline_extension_length);
+      // 样条曲线终点延长：沿终点切线方向正向延长（闭合样条不延长）
+      const double spline_end_ext_length = std::max(0.0, planner_config_.spline_end_extension_length);
+
+      std::vector<Point3D> extended_vertices;
+
+      // 起点延长
+      if (!is_closed_spline && spline_ext_length > 1e-6 && spline->vertices.size() >= 2)
       {
-        if (segment.points.front().distance(segment.points.back()) > 1e-6)
+        // 计算起点处的切线方向：使用前两个顶点
+        Point3D p0 = spline->vertices[0];
+        Point3D p1 = spline->vertices[1];
+
+        // 如果前两个点距离太近，尝试使用第三个点
+        double segment_length = p0.distance(p1);
+        if (segment_length < 1e-6 && spline->vertices.size() >= 3)
         {
-          segment.points.push_back(segment.points.front());
+          p1 = spline->vertices[2];
+          segment_length = p0.distance(p1);
+        }
+
+        if (segment_length > 1e-6)
+        {
+          // 计算切线方向（从p0指向p1）
+          double dx = p1.x - p0.x;
+          double dy = p1.y - p0.y;
+          double dz = p1.z - p0.z;
+          double length = std::sqrt(dx*dx + dy*dy + dz*dz);
+
+          if (length > 1e-6)
+          {
+            // 归一化切线向量
+            dx /= length;
+            dy /= length;
+            dz /= length;
+
+            // 沿切线反方向延长：以小曲率（直线，曲率为0）切入原始路径
+            // 生成延长段的离散点，密度与栅格分辨率一致
+            const double fallback_resolution = 0.05;
+            const double base_res = grid_map_generator_ ? grid_map_generator_->get_resolution() : fallback_resolution;
+            const double point_distance = std::max(1e-4, 0.5 * base_res);
+
+            // 计算需要生成的延长点数量
+            int num_ext_points = std::max(2, static_cast<int>(spline_ext_length / point_distance));
+            double actual_point_distance = spline_ext_length / num_ext_points;
+
+            // 生成延长点（从远到近，不包括起点本身）
+            for (int i = num_ext_points; i >= 1; --i)
+            {
+              Point3D ext_point;
+              double dist = i * actual_point_distance;
+              ext_point.x = p0.x - dx * dist;
+              ext_point.y = p0.y - dy * dist;
+              ext_point.z = p0.z - dz * dist;
+              extended_vertices.push_back(ext_point);
+            }
+          }
         }
       }
+
+      // 添加原始顶点
+      extended_vertices.insert(extended_vertices.end(), spline->vertices.begin(), spline->vertices.end());
+
+      // 终点延长
+      if (!is_closed_spline && spline_end_ext_length > 1e-6 && spline->vertices.size() >= 2)
+      {
+        // 计算终点处的切线方向：使用最后两个顶点
+        size_t n = spline->vertices.size();
+        Point3D pn = spline->vertices[n - 1];  // 终点
+        Point3D pn1 = spline->vertices[n - 2]; // 倒数第二个点
+
+        // 如果最后两个点距离太近，尝试使用倒数第三个点
+        double segment_length = pn.distance(pn1);
+        if (segment_length < 1e-6 && n >= 3)
+        {
+          pn1 = spline->vertices[n - 3];
+          segment_length = pn.distance(pn1);
+        }
+
+        if (segment_length > 1e-6)
+        {
+          // 计算切线方向（从pn1指向pn，即终点方向）
+          double dx = pn.x - pn1.x;
+          double dy = pn.y - pn1.y;
+          double dz = pn.z - pn1.z;
+          double length = std::sqrt(dx*dx + dy*dy + dz*dz);
+
+          if (length > 1e-6)
+          {
+            // 归一化切线向量
+            dx /= length;
+            dy /= length;
+            dz /= length;
+
+            // 沿切线正方向延长：以小曲率（直线，曲率为0）从原始路径延伸出去
+            // 生成延长段的离散点，密度与栅格分辨率一致
+            const double fallback_resolution = 0.05;
+            const double base_res = grid_map_generator_ ? grid_map_generator_->get_resolution() : fallback_resolution;
+            const double point_distance = std::max(1e-4, 0.5 * base_res);
+
+            // 计算需要生成的延长点数量
+            int num_ext_points = std::max(2, static_cast<int>(spline_end_ext_length / point_distance));
+            double actual_point_distance = spline_end_ext_length / num_ext_points;
+
+            // 生成延长点（从近到远，不包括终点本身）
+            for (int i = 1; i <= num_ext_points; ++i)
+            {
+              Point3D ext_point;
+              double dist = i * actual_point_distance;
+              ext_point.x = pn.x + dx * dist;
+              ext_point.y = pn.y + dy * dist;
+              ext_point.z = pn.z + dz * dist;
+              extended_vertices.push_back(ext_point);
+            }
+          }
+        }
+      }
+
+      // 处理闭合样条：添加首点到末尾（注意：闭合样条不会执行延长）
+      if (is_closed_spline && extended_vertices.size() > 2)
+      {
+        if (extended_vertices.front().distance(extended_vertices.back()) > 1e-6)
+        {
+          extended_vertices.push_back(extended_vertices.front());
+        }
+      }
+
+      segment.points = extended_vertices;
     }
     else
     {
