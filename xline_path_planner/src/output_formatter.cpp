@@ -1,6 +1,7 @@
 #include "xline_path_planner/output_formatter.hpp"
 #include <iostream>
 #include <unordered_map>
+#include <cmath>
 
 namespace {
 inline double to_mm(double meters) { return meters * 1000.0; }
@@ -66,6 +67,26 @@ inline nlohmann::json constructInkJSON(bool enabled,
   return ink;
 }
 
+// 计算下一条路径的航向（如果下一条路径是 line 类型）
+// 返回航向值（弧度）或 -999.0（表示无效）
+inline double calculateNextPathHeading(const path_planner::RouteSegment* next_segment)
+{
+  if (next_segment != nullptr && next_segment->points.size() == 2)
+  {
+    // 下一条路径是直线（2个点）
+    const auto& start = next_segment->points.front();
+    const auto& end = next_segment->points.back();
+    double dx = end.x - start.x;
+    double dy = end.y - start.y;
+    return std::atan2(dy, dx);
+  }
+  else
+  {
+    // 不是 line 类型或没有下一条路径，返回 -999.0 表示无效
+    return -999.0;
+  }
+}
+
 } // anonymous namespace
 
 namespace path_planner
@@ -90,7 +111,14 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
     if (seg.points.size() < 2)
       continue;
 
-    root["lines"].push_back(constructTransitionSplineJSON(seg.points, static_cast<int>(seg_idx), seg));
+    // 查找下一条路径段（可能是转场路径或绘图路径）
+    const RouteSegment* next_segment = nullptr;
+    if (seg_idx + 1 < segments.size())
+    {
+      next_segment = &segments[seg_idx + 1];
+    }
+
+    root["lines"].push_back(constructTransitionSplineJSON(seg.points, static_cast<int>(seg_idx), seg, next_segment));
   }
 
   // 仅返回 { "lines": [...] }
@@ -125,11 +153,27 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
     if (seg.type == RouteType::TRANSITION_PATH)
     {
       if (seg.points.size() < 2) continue;
-      root["lines"].push_back(constructTransitionSplineJSON(seg.points, static_cast<int>(seg_idx), seg));
+
+      // 查找下一条路径段（可能是转场路径或绘图路径）
+      const RouteSegment* next_segment = nullptr;
+      if (seg_idx + 1 < segments.size())
+      {
+        next_segment = &segments[seg_idx + 1];
+      }
+
+      root["lines"].push_back(constructTransitionSplineJSON(seg.points, static_cast<int>(seg_idx), seg, next_segment));
     }
     else if (seg.type == RouteType::DRAWING_PATH)
     {
       if (seg.points.size() < 2) continue;
+
+      // 查找下一条路径段（用于计算 next_path_heading）
+      const RouteSegment* next_segment = nullptr;
+      if (seg_idx + 1 < segments.size())
+      {
+        next_segment = &segments[seg_idx + 1];
+      }
+      double next_path_heading = calculateNextPathHeading(next_segment);
 
       const Line* src = nullptr;
       auto it = id2line.find(seg.line_id);
@@ -170,6 +214,9 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         j["start"] = point_mm(p0);
         j["end"] = point_mm(p1);
 
+        // 添加下一条路径的航向
+        j["next_path_heading"] = next_path_heading;
+
         root["lines"].push_back(j);
       }
 	      else if (src && src->type == GeometryType::CIRCLE)
@@ -209,6 +256,9 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         const auto& p1 = seg.points.back();
         j["start"] = point_mm(p0);
         j["end"] = point_mm(p1);
+
+        // 添加下一条路径的航向
+        j["next_path_heading"] = next_path_heading;
 
         root["lines"].push_back(j);
       }
@@ -253,6 +303,9 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         const auto& p1 = seg.points.back();
         j["start"] = point_mm(p0);
         j["end"] = point_mm(p1);
+
+        // 添加下一条路径的航向
+        j["next_path_heading"] = next_path_heading;
 
         root["lines"].push_back(j);
       }
@@ -316,6 +369,9 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         j["start"] = point_mm(p0);
         j["end"] = point_mm(p1);
 
+        // 添加下一条路径的航向
+        j["next_path_heading"] = next_path_heading;
+
         root["lines"].push_back(j);
       }
       else if (src && src->type == GeometryType::SPLINE)
@@ -373,6 +429,9 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
         j["start"] = point_mm(p0);
         j["end"] = point_mm(p1);
 
+        // 添加下一条路径的航向
+        j["next_path_heading"] = next_path_heading;
+
         root["lines"].push_back(j);
       }
       else
@@ -406,6 +465,9 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 
           line["start"] = point_mm(p0);
           line["end"] = point_mm(p1);
+
+          // 添加下一条路径的航向
+          line["next_path_heading"] = next_path_heading;
 
           root["lines"].push_back(line);
         }
@@ -444,6 +506,9 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
           poly["start"] = point_mm(p0);
           poly["end"] = point_mm(p1);
 
+          // 添加下一条路径的航向
+          poly["next_path_heading"] = next_path_heading;
+
           root["lines"].push_back(poly);
         }
       }
@@ -457,7 +522,8 @@ nlohmann::json OutputFormatter::format_planned_paths_to_cad_json(const std::vect
 }
 
 // 辅助：构造转场路径的 JSON（根据点数自动判断类型）
-nlohmann::json OutputFormatter::constructTransitionSplineJSON(const std::vector<Point3D>& points, int order, const RouteSegment& seg)
+nlohmann::json OutputFormatter::constructTransitionSplineJSON(const std::vector<Point3D>& points, int order, const RouteSegment& seg,
+                                                               const RouteSegment* next_segment)
 {
   nlohmann::json j;
 
@@ -491,20 +557,25 @@ nlohmann::json OutputFormatter::constructTransitionSplineJSON(const std::vector<
     j["knots"] = nlohmann::json::array();
     j["weights"] = nlohmann::json::array();
   }
-  
+
   // 使用下一个路径的 ink 信息
   nlohmann::json ink;
   ink["enabled"] = false;  // 转场路径不喷墨
   ink["mode"] = inkModeToString(seg.ink_mode);
   ink["printer"] = printerTypeToLowerString(seg.printer_type);
-  
+
   // 如果下一个路径是 TEXT 类型，包含文字内容
   if (seg.ink_mode == InkMode::TEXT && !seg.text_content.empty())
   {
     ink["content"] = seg.text_content;
   }
-  
+
   j["ink"] = ink;
+
+  // 计算下一条路径的航向（如果下一条路径是 line 类型）
+  // 为了保持数据一致性，所有路径都包含此字段
+  // 使用 -999.0 表示无效值（不是 line 类型或没有下一条路径）
+  j["next_path_heading"] = calculateNextPathHeading(next_segment);
 
   // 根据类型导出路径点
   if (is_straight_line)

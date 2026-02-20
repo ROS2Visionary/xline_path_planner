@@ -64,9 +64,11 @@ private:
    * @param points 转场路径点序列
    * @param order 顺序
    * @param seg 路径段信息（用于获取 ink 信息）
+   * @param next_segment 下一条路径段的指针（可选），用于计算下一条路径的航向
    * @return JSON 对象
    */
-  nlohmann::json constructTransitionSplineJSON(const std::vector<Point3D>& points, int order, const RouteSegment& seg);
+  nlohmann::json constructTransitionSplineJSON(const std::vector<Point3D>& points, int order, const RouteSegment& seg,
+                                               const RouteSegment* next_segment = nullptr);
 };
 
 }  // namespace path_planner
